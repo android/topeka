@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copyright 2014 Google Inc.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+  -->
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/topeka_primary</item>
+        <item name="colorPrimaryDark">@color/topeka_primary_dark</item>
+        <item name="android:textColorPrimary">@android:color/black</item>
+        <item name="android:textColorPrimaryInverse">@android:color/white</item>
+        <!-- Enable transitions between activities -->
+        <item name="android:windowContentTransitions">true</item>
+        <!-- Custom transitions for activity transitions -->
+        <item name="android:windowSharedElementEnterTransition">@transition/grid_detail_transition
+        </item>
+        <item name="android:windowSharedElementExitTransition">@transition/grid_detail_transition
+        </item>
+    </style>
+
+    <style name="Topeka.Blue" parent="AppTheme">
+        <item name="colorPrimary">@color/theme_blue_primary</item>
+        <item name="android:windowBackground">@color/theme_blue_background</item>
+        <item name="android:textColorPrimary">@color/theme_blue_foreground</item>
+    </style>
+
+    <style name="Topeka.Green" parent="AppTheme">
+        <item name="colorPrimary">@color/theme_green_primary</item>
+        <item name="android:windowBackground">@color/theme_green_background</item>
+        <item name="android:textColorPrimary">@color/theme_green_foreground</item>
+    </style>
+
+    <style name="Topeka.Purple" parent="AppTheme">
+        <item name="colorPrimary">@color/theme_purple_primary</item>
+        <item name="android:windowBackground">@color/theme_purple_background</item>
+        <item name="android:textColorPrimary">@color/theme_purple_foreground</item>
+    </style>
+
+    <style name="Topeka.Red" parent="AppTheme">
+        <item name="colorPrimary">@color/theme_red_primary</item>
+        <item name="android:windowBackground">@color/theme_red_background</item>
+        <item name="android:textColorPrimary">@color/theme_red_foreground</item>
+    </style>
+
+    <style name="Topeka.Yellow" parent="AppTheme">
+        <item name="colorPrimary">@color/theme_yellow_primary</item>
+        <item name="android:windowBackground">@color/theme_yellow_background</item>
+        <item name="android:textColorPrimary">@color/theme_yellow_foreground</item>
+    </style>
+
+</resources>
