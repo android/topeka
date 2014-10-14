@@ -16,15 +16,13 @@
 
 package com.google.samples.apps.topeka.adapter;
 
-import com.google.samples.apps.topeka.QuizActivity;
 import com.google.samples.apps.topeka.R;
+import com.google.samples.apps.topeka.activity.QuizActivity;
 import com.google.samples.apps.topeka.model.Category;
 
 import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.res.Resources;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.ActivityOptionsCompat;
-import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -70,13 +68,13 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryViewHolder> {
         holder.getCardView().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //TODO finalize the animations
+                ActivityOptions activityOptions = ActivityOptions.makeSceneTransitionAnimation(
+                        mActivity, mActivity.findViewById(R.id.name),
+                        mActivity.getString(R.string.transition_background));
 
-                ActivityCompat.startActivity(mActivity, QuizActivity.getStartIntent(mActivity,
-                                category),
-                        ActivityOptionsCompat.makeScaleUpAnimation(
-                                view, (int) ViewCompat.getX(view), (int) ViewCompat.getY(view),
-                                view.getWidth(), view.getHeight())
-                                .toBundle());
+                mActivity.startActivity(QuizActivity.getStartIntent(mActivity, category),
+                        activityOptions.toBundle());
             }
         });
     }

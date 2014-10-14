@@ -14,8 +14,9 @@
  * limitations under the License.
  */
 
-package com.google.samples.apps.topeka;
+package com.google.samples.apps.topeka.fragment;
 
+import com.google.samples.apps.topeka.R;
 import com.google.samples.apps.topeka.adapter.CategoryAdapter;
 import com.google.samples.apps.topeka.model.Category;
 

@@ -14,36 +14,34 @@
  * limitations under the License.
  */
 
-package com.google.samples.apps.topeka;
+package com.google.samples.apps.topeka.activity;
 
+import com.google.samples.apps.topeka.R;
 import com.google.samples.apps.topeka.model.Category;
 import com.google.samples.apps.topeka.model.Theme;
 
 import android.annotation.TargetApi;
+import android.app.ActionBar;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import static com.google.samples.apps.topeka.adapter.CategoryAdapter.ICON_CATEGORY;
 import static com.google.samples.apps.topeka.adapter.CategoryAdapter.DRAWABLE;
 
-public class QuizActivity extends ActionBarActivity implements View.OnClickListener {
-
-    public static final String BACKGROUND = "_background";
-    public static final String PRIMARY = "_primary";
-    public static final String FOREGROUND = "_foreground";
+public class QuizActivity extends Activity implements View.OnClickListener {
 
     private static final String TAG = "QuizActivity";
+    private static final String BACKGROUND = "_background";
+    private static final String PRIMARY = "_primary";
+    private static final String FOREGROUND = "_foreground";
     private static final String THEME = "theme_";
     private static final String COLOR = "color";
     private static final String IMAGE_CATEGORY = "image_category_";
@@ -70,8 +68,8 @@ public class QuizActivity extends ActionBarActivity implements View.OnClickListe
                 break;
             default:
                 throw new IllegalArgumentException(
-                        "OnClick has not been implemented for " + getResources()
-                                .getResourceName(v.getId()));
+                        "OnClick has not been implemented for " + getResources().getResourceName(
+                                v.getId()));
 
         }
     }
@@ -103,13 +101,11 @@ public class QuizActivity extends ActionBarActivity implements View.OnClickListe
 
         int colorBackground = getColor(theme, BACKGROUND);
         int colorPrimary = getColor(theme, PRIMARY);
-        int colorForeground = getColor(theme, FOREGROUND);
 
         findViewById(R.id.quiz_container).setBackgroundColor(colorBackground);
 
         setStatusAndNavigationBarColor(colorPrimary);
         setActionBarColor(colorPrimary);
-        setToolbarColor(colorForeground);
 
         setTheme(theme.getResId());
         Log.d(TAG, "Current theme is" + getResources().getResourceName(theme.getResId()));
@@ -132,17 +128,9 @@ public class QuizActivity extends ActionBarActivity implements View.OnClickListe
     }
 
     private void setActionBarColor(int colorPrimary) {
-        ActionBar actionBar = getSupportActionBar();
+        ActionBar actionBar = getActionBar();
         if (null != actionBar) {
             actionBar.setBackgroundDrawable(new ColorDrawable(colorPrimary));
         }
     }
-
-    private void setToolbarColor(int colorForeground) {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.action_bar);
-        if (null != toolbar) {
-            toolbar.setTitleTextColor(colorForeground);
-        }
-    }
-
 }

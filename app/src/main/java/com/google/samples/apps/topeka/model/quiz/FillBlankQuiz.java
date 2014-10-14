@@ -47,8 +47,8 @@ public final class FillBlankQuiz extends Quiz<String> {
     @Override
     public JSONObject toJSON() throws JSONException {
         JSONObject quizJSON = super.toJSON();
-        quizJSON.put(com.google.samples.apps.topeka.model.JsonAttributes.START, mStart);
-        quizJSON.put(com.google.samples.apps.topeka.model.JsonAttributes.END, mEnd);
+        quizJSON.put(JsonAttributes.START, mStart);
+        quizJSON.put(JsonAttributes.END, mEnd);
         return quizJSON;
     }
 }

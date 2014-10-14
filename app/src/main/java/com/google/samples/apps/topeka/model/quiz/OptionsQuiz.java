@@ -44,7 +44,7 @@ public final class OptionsQuiz<T> extends Quiz<int[]> {
         for (T option : mOptions) {
             optionsJSON.put(option);
         }
-        quizJSON.put(com.google.samples.apps.topeka.model.JsonAttributes.OPTIONS, optionsJSON);
+        quizJSON.put(JsonAttributes.OPTIONS, optionsJSON);
         return quizJSON;
     }
 }

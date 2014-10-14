@@ -47,8 +47,8 @@ public final class MinMaxQuiz extends Quiz<Integer> {
     @Override
     public JSONObject toJSON() throws JSONException {
         JSONObject quizJSON = super.toJSON();
-        quizJSON.put(com.google.samples.apps.topeka.model.JsonAttributes.MIN, mMin);
-        quizJSON.put(com.google.samples.apps.topeka.model.JsonAttributes.MAX, mMax);
+        quizJSON.put(JsonAttributes.MIN, mMin);
+        quizJSON.put(JsonAttributes.MAX, mMax);
         return quizJSON;
     }
 }

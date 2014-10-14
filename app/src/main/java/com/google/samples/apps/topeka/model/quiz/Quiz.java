@@ -59,8 +59,8 @@ public abstract class Quiz<A> implements Parcelable {
 
     public JSONObject toJSON() throws JSONException {
         JSONObject quizJSON = new JSONObject();
-        quizJSON.put(com.google.samples.apps.topeka.model.JsonAttributes.QUESTION, mQuestion);
-        quizJSON.put(com.google.samples.apps.topeka.model.JsonAttributes.ANSWER, mAnswer);
+        quizJSON.put(JsonAttributes.QUESTION, mQuestion);
+        quizJSON.put(JsonAttributes.ANSWER, mAnswer);
         return quizJSON;
     }
 

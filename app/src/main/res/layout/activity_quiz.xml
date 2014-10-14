@@ -26,6 +26,7 @@
         android:layout_height="match_parent"
         android:layout_margin="@dimen/padding_icon"
         android:contentDescription="@null"
+        android:transitionName="@string/transition_background"
         android:scaleType="center" />
 
     <ImageView

@@ -14,9 +14,11 @@
  * limitations under the License.
  */
 
-package com.google.samples.apps.topeka;
+package com.google.samples.apps.topeka.activity;
 
 import com.google.gson.Gson;
+import com.google.samples.apps.topeka.fragment.CategoryGridFragment;
+import com.google.samples.apps.topeka.R;
 import com.google.samples.apps.topeka.model.Category;
 
 import com.android.volley.RequestQueue;
@@ -29,12 +31,10 @@ import org.json.JSONArray;
 
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v4.app.FragmentActivity;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 
-public class MainActivity extends ActionBarActivity {
+public class QuizSelectionActivity extends FragmentActivity {
 
     private static final String TAG = "MainActivity";
 
@@ -45,7 +45,7 @@ public class MainActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_quiz);
         if (savedInstanceState == null) {
             loadCategories();
             if (Build.VERSION_CODES.KITKAT < Build.VERSION.SDK_INT) {
@@ -65,7 +65,7 @@ public class MainActivity extends ActionBarActivity {
                         Category[] categories = new Gson()
                                 .fromJson(array.toString(), Category[].class);
                         getSupportFragmentManager().beginTransaction()
-                                .add(R.id.main_activity_container,
+                                .replace(R.id.quiz_selection_container,
                                         CategoryGridFragment.newInstance(categories)).commit();
                     }
                 },
