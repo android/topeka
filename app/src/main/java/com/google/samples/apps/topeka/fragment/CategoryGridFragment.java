@@ -31,7 +31,6 @@ import android.view.ViewGroup;
 public class CategoryGridFragment extends Fragment {
 
     private static final String EXTRA_CATEGORY = "Extra.Category";
-
     private static final int SPAN_COUNT = 2;
 
     public static CategoryGridFragment newInstance(Category[] categories) {
@@ -43,10 +42,10 @@ public class CategoryGridFragment extends Fragment {
         return categoryGridFragment;
     }
 
-    private static void checkArguments(Category[] categories) {
-        if (null == categories || categories.length == 0) {
+    private static void checkArguments(Category[] args) {
+        if (null == args || args.length == 0) {
             throw new IllegalArgumentException(
-                    "You'll need to provide categories in order for this to work.");
+                    "You'll need to provide arguments in order for this to work.");
         }
     }
 
@@ -58,10 +57,15 @@ public class CategoryGridFragment extends Fragment {
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
-        RecyclerView categoriesView = (RecyclerView) view.findViewById(R.id.categories);
+        Bundle args = getArguments();
+        setUpQuizGrid((Category[]) args.getParcelableArray(EXTRA_CATEGORY),
+                (RecyclerView) view.findViewById(R.id.categories));
+        super.onViewCreated(view, savedInstanceState);
+    }
+
+    private void setUpQuizGrid(Category[] categories, RecyclerView categoriesView) {
         categoriesView.setLayoutManager(
                 new StaggeredGridLayoutManager(SPAN_COUNT, StaggeredGridLayoutManager.VERTICAL));
-        Category[] categories = (Category[]) getArguments().getParcelableArray(EXTRA_CATEGORY);
         CategoryAdapter adapter = new CategoryAdapter(getActivity(), categories);
         categoriesView.setAdapter(adapter);
     }

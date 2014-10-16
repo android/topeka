@@ -20,6 +20,7 @@ import com.google.gson.Gson;
 import com.google.samples.apps.topeka.fragment.CategoryGridFragment;
 import com.google.samples.apps.topeka.R;
 import com.google.samples.apps.topeka.model.Category;
+import com.google.samples.apps.topeka.model.Player;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -29,30 +30,54 @@ import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
 
-import android.os.Build;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
+import android.view.View;
+import android.widget.Toolbar;
 
 public class QuizSelectionActivity extends FragmentActivity {
 
     private static final String TAG = "MainActivity";
-
     private static final String URL
             = "http://www.polymer-project.org/apps/topeka/components/topeka-elements/categories.json";
+    private static final String EXTRA_PLAYER = "player";
 
+    public static void start(Context context, Player player) {
+        Intent starter = new Intent(context, QuizSelectionActivity.class);
+        starter.putExtra(EXTRA_PLAYER, player);
+        context.startActivity(starter);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_quiz);
+        setContentView(R.layout.activity_quiz_selection);
+        Player player = getIntent().getParcelableExtra(EXTRA_PLAYER);
+        setUpToolbar(player, (Toolbar) findViewById(R.id.toolbar_player));
         if (savedInstanceState == null) {
             loadCategories();
-            if (Build.VERSION_CODES.KITKAT < Build.VERSION.SDK_INT) {
-                getWindow().setNavigationBarColor(
-                        getResources().getColor(R.color.topeka_primary_dark));
-            }
         }
+    }
+
+    private void setUpToolbar(Player player, Toolbar toolbar) {
+        toolbar.setTitle(getDisplayName(player));
+        //TODO fix navigation icon size
+        toolbar.setNavigationIcon(player.getAvatar().getDrawableId());
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+        toolbar.setNavigationContentDescription(getString(R.string.description_user_preferences));
+    }
+
+    private String getDisplayName(Player player) {
+        return getString(R.string.player_display_name, player.getFirstName(),
+                player.getLastInitial());
     }
 
     private void loadCategories() {
@@ -65,8 +90,9 @@ public class QuizSelectionActivity extends FragmentActivity {
                         Category[] categories = new Gson()
                                 .fromJson(array.toString(), Category[].class);
                         getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.quiz_selection_container,
+                                .replace(R.id.quiz_container,
                                         CategoryGridFragment.newInstance(categories)).commit();
+                        setProgressBarVisibility(View.GONE);
                     }
                 },
                 new Response.ErrorListener() {
@@ -77,5 +103,8 @@ public class QuizSelectionActivity extends FragmentActivity {
                 }));
     }
 
+    private void setProgressBarVisibility(int visibility) {
+        findViewById(R.id.progress).setVisibility(visibility);
+    }
 }
 

@@ -19,6 +19,7 @@
     android:id="@+id/card"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:layout_margin="@dimen/padding_default"
     android:elevation="@dimen/cardview_default_elevation">
 
     <LinearLayout
@@ -35,8 +36,8 @@
             android:paddingTop="@dimen/padding_category_icon"
             android:scaleType="center"
             tools:background="@color/category_icon_background"
-            android:contentDescription="@string/description_category_icon"
-            tools:src="@drawable/ic_launcher" />
+            tools:src="@drawable/ic_launcher"
+            android:contentDescription="@null" />
 
         <TextView
             android:id="@+id/name"

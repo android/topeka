@@ -29,18 +29,11 @@
         android:transitionName="@string/transition_background"
         android:scaleType="center" />
 
-    <ImageView
+    <com.google.samples.apps.topeka.widget.PlayArrow
         android:id="@+id/btn_start_quiz"
         android:layout_width="@dimen/play_arrow_size"
         android:layout_height="@dimen/play_arrow_size"
-        android:layout_gravity="bottom|center_horizontal"
         android:layout_margin="@dimen/play_arrow_size"
-        android:background="@drawable/fab_background"
-        android:clickable="true"
-        android:elevation="@dimen/elevation_default"
-        android:focusable="true"
-        android:padding="@dimen/padding_play_arrow"
-        android:src="@drawable/ic_play_arrow"
-        android:contentDescription="@string/description_play_arrow" />
+        android:layout_gravity="bottom|center_horizontal" />
 
 </FrameLayout>

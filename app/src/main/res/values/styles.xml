@@ -17,7 +17,7 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="@android:style/Theme.Material.Light">
+    <style name="AppTheme" parent="@android:style/Theme.Material.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="android:colorPrimary">@color/topeka_primary</item>
         <item name="android:colorPrimaryDark">@color/topeka_primary_dark</item>
@@ -30,6 +30,7 @@
         </item>
         <item name="android:windowSharedElementExitTransition">@transition/grid_detail_transition
         </item>
+        <item name="android:titleTextAppearance">@style/AppTheme.TextAppearance.Title</item>
     </style>
 
     <style name="Topeka.Blue" parent="AppTheme">
@@ -60,6 +61,14 @@
         <item name="android:colorPrimary">@color/theme_yellow_primary</item>
         <item name="android:windowBackground">@color/theme_yellow_background</item>
         <item name="android:textColorPrimary">@color/theme_yellow_foreground</item>
+    </style>
+
+    <style name="AppTheme.TextAppearance">
+
+    </style>
+
+    <style name="AppTheme.TextAppearance.Title" parent="android:TextAppearance.Material.Title">
+        <item name="android:textColor">@color/topeka_primary</item>
     </style>
 
 </resources>

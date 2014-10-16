@@ -67,10 +67,9 @@ public class QuizActivity extends Activity implements View.OnClickListener {
                         .show();
                 break;
             default:
-                throw new IllegalArgumentException(
+                throw new UnsupportedOperationException(
                         "OnClick has not been implemented for " + getResources().getResourceName(
                                 v.getId()));
-
         }
     }
 
@@ -119,7 +118,6 @@ public class QuizActivity extends Activity implements View.OnClickListener {
         return resources.getColor(resourceId);
     }
 
-    @TargetApi(Build.VERSION_CODES.L)
     private void setStatusAndNavigationBarColor(int colorPrimary) {
         if (Build.VERSION_CODES.KITKAT < Build.VERSION.SDK_INT) {
             getWindow().setStatusBarColor(colorPrimary);

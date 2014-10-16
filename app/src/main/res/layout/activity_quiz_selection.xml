@@ -14,10 +14,32 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/quiz_selection_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.QuizSelectionActivity"
-    tools:ignore="MergeRootFrame" />
+    android:orientation="vertical">
+
+    <android.widget.Toolbar
+        android:id="@+id/toolbar_player"
+        android:layout_width="match_parent"
+        android:layout_height="?android:attr/actionBarSize"
+        android:titleTextAppearance="@style/AppTheme.TextAppearance.Title" />
+
+    <FrameLayout
+        android:id="@+id/quiz_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="activity.QuizSelectionActivity"
+        tools:ignore="MergeRootFrame">
+
+        <ProgressBar
+            android:layout_width="@dimen/play_arrow_size"
+            android:layout_height="@dimen/play_arrow_size"
+            android:id="@+id/progress"
+            android:layout_gravity="center"
+            android:indeterminateOnly="true" />
+
+    </FrameLayout>
+
+</LinearLayout>

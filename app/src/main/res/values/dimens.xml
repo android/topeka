@@ -26,6 +26,7 @@
     <dimen name="padding_category_icon">24dp</dimen>
     <dimen name="padding_category">4dp</dimen>
     <dimen name="padding_default">4dp</dimen>
+    <dimen name="padding_avatar">8dp</dimen>
     <dimen name="play_arrow_size">56dp</dimen>
     <dimen name="size_edit_text">18sp</dimen>
     <dimen name="stroke_width_avatar">2dp</dimen>

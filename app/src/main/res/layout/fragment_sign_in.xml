@@ -14,62 +14,75 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:weightSum="3">
+    android:layout_height="match_parent">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:orientation="vertical"
-        android:layout_weight="1">
-
-        <Toolbar
-            android:id="@+id/toolbar_sign_in"
-            android:layout_width="match_parent"
-            android:layout_height="?android:attr/actionBarSize"
-            android:background="@color/topeka_primary" />
-
-        <EditText
-            android:id="@+id/first_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minHeight="?android:attr/actionBarSize"
-            android:padding="@dimen/padding_default"
-            android:textSize="@dimen/size_edit_text"
-            android:hint="@string/first_name"
-            android:imeOptions="actionNext" />
-
-        <EditText
-            android:id="@+id/last_initial"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minHeight="?android:attr/actionBarSize"
-            android:padding="@dimen/padding_default"
-            android:textSize="@dimen/size_edit_text"
-            android:hint="@string/last_initial"
-            android:imeOptions="actionDone" />
-    </LinearLayout>
+    <com.google.samples.apps.topeka.widget.PlayArrow
+        android:id="@+id/check"
+        android:layout_height="@dimen/play_arrow_size"
+        android:layout_width="@dimen/play_arrow_size"
+        android:layout_marginEnd="@dimen/padding_default"
+        android:layout_marginTop="@dimen/padding_default"
+        android:layout_gravity="top|end" />
 
     <LinearLayout
         android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="2">
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:weightSum="3"
+        android:layout_gravity="center">
 
-        <Toolbar
-            android:id="@+id/toolbar_choose_avatar"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="?android:attr/actionBarSize" />
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            android:layout_weight="1">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/avatars"
+            <Toolbar
+                android:id="@+id/toolbar_sign_in"
+                android:layout_width="match_parent"
+                android:layout_height="?android:attr/actionBarSize"
+                android:titleTextAppearance="@style/AppTheme.TextAppearance.Title" />
+
+            <EditText
+                android:id="@+id/first_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="?android:attr/actionBarSize"
+                android:padding="@dimen/padding_default"
+                android:textSize="@dimen/size_edit_text"
+                android:hint="@string/first_name"
+                android:imeOptions="actionNext" />
+
+            <EditText
+                android:id="@+id/last_initial"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="?android:attr/actionBarSize"
+                android:padding="@dimen/padding_default"
+                android:textSize="@dimen/size_edit_text"
+                android:hint="@string/last_initial"
+                android:imeOptions="actionDone" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="0dp"
+            android:layout_weight="2">
+
+            <Toolbar
+                android:id="@+id/toolbar_choose_avatar"
+                android:layout_width="match_parent"
+                android:layout_height="?android:attr/actionBarSize"
+                android:titleTextAppearance="@style/AppTheme.TextAppearance.Title" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/avatars"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
     </LinearLayout>
-</LinearLayout>
-
-
+</FrameLayout>
 

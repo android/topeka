@@ -35,5 +35,4 @@ public class SignInActivity extends FragmentActivity {
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.sign_in_container, new SignInFragment()).commit();
     }
-
 }
