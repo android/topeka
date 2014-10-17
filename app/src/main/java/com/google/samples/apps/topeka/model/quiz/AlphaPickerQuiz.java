@@ -13,52 +13,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package com.google.samples.apps.topeka.model.quiz;
 
 import android.os.Parcel;
 
-import com.google.gson.annotations.SerializedName;
-import com.google.samples.apps.topeka.model.JsonAttributes;
 import com.google.samples.apps.topeka.model.quiz.abstracts.Quiz;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+public class AlphaPickerQuiz extends Quiz<String> {
 
-public final class FillBlankQuiz extends Quiz<String> {
-
-    @SerializedName(JsonAttributes.START)
-    private final String mStart;
-
-    @SerializedName(JsonAttributes.END)
-    private final String mEnd;
-
-    public FillBlankQuiz(String question, String answer, String start, String end) {
+    protected AlphaPickerQuiz(String question, String answer) {
         super(question, answer);
-        mStart = start;
-        mEnd = end;
     }
 
-    protected FillBlankQuiz(Parcel in) {
+    protected AlphaPickerQuiz(Parcel in) {
         super(in);
         setAnswer(in.readString());
-        mStart = in.readString();
-        mEnd = in.readString();
-    }
-
-    public String getStart() {
-        return mStart;
-    }
-
-    public String getEnd() {
-        return mEnd;
     }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         super.writeToParcel(dest, flags);
         dest.writeString(getAnswer());
-        dest.writeString(mStart);
-        dest.writeString(mEnd);
     }
 }

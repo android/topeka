@@ -16,46 +16,59 @@
 
 package com.google.samples.apps.topeka.adapter;
 
-import android.app.Activity;
-import android.app.ActivityOptions;
-import android.content.res.Resources;
-import android.support.v7.widget.RecyclerView;
-import android.util.Pair;
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
+import com.google.samples.apps.topeka.AvatarOutlineProvider;
 import com.google.samples.apps.topeka.R;
-import com.google.samples.apps.topeka.activity.QuizActivity;
 import com.google.samples.apps.topeka.model.Avatar;
-import com.google.samples.apps.topeka.model.Category;
 
-public class AvatarAdapter extends RecyclerView.Adapter<AvatarViewHolder> {
+public class AvatarAdapter extends BaseAdapter {
 
     private static final Avatar[] mAvatars = Avatar.values();
 
-    protected final Activity mActivity;
+    private final Context mContext;
 
-    public AvatarAdapter(Activity activity) {
-        mActivity = activity;
+
+    public AvatarAdapter(Context context) {
+        mContext = context;
+    }
+
+
+
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        if (null == convertView) {
+            convertView = LayoutInflater.from(mContext).inflate(R.layout.item_avatar, parent, false);
+        }
+        ImageView mIcon = (ImageView) convertView.findViewById(R.id.avatar);
+        setAvatar(mIcon, mAvatars[position]);
+        return convertView;
+    }
+
+    private void setAvatar(ImageView mIcon, Avatar avatar) {
+        mIcon.setClipToOutline(true);
+        mIcon.setOutlineProvider(new AvatarOutlineProvider());
+        mIcon.setImageResource(avatar.getDrawableId());
+        mIcon.setContentDescription(avatar.getNameForAccessibility());
     }
 
     @Override
-    public AvatarViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
-        return new AvatarViewHolder(LayoutInflater.from(mActivity)
-                .inflate(R.layout.item_avatar, viewGroup, false));
-    }
-
-    @Override
-    public void onBindViewHolder(final AvatarViewHolder holder, int position) {
-        final Avatar avatar = mAvatars[position];
-        holder.setImageResource(avatar.getDrawableId());
-        holder.getIcon().setContentDescription(avatar.getNameForAccessibility());
-    }
-
-    @Override
-    public int getItemCount() {
+    public int getCount() {
         return mAvatars.length;
+    }
+
+    @Override
+    public Object getItem(int position) {
+        return mAvatars[position];
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
     }
 }

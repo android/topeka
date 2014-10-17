@@ -14,16 +14,15 @@
  * limitations under the License.
  */
 
-package com.google.samples.apps.topeka.model.quiz;
+package com.google.samples.apps.topeka.model.quiz.abstracts;
+
+import android.os.Parcel;
+import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
 import com.google.samples.apps.topeka.model.JsonAttributes;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-public final class OptionsQuiz<T> extends Quiz<int[]> {
+public abstract class OptionsQuiz<T> extends Quiz<int[]> {
 
     @SerializedName(JsonAttributes.OPTIONS)
     private T[] mOptions;
@@ -37,14 +36,26 @@ public final class OptionsQuiz<T> extends Quiz<int[]> {
         return mOptions;
     }
 
+    protected void setOptions(T[] options) {
+        mOptions = options;
+    }
+
+    protected OptionsQuiz(Parcel in) {
+        super(in);
+        final int answerLength = in.readInt();
+        final int answer[] = new int[answerLength];
+        in.readIntArray(answer);
+        setAnswer(answer);
+    }
+
     @Override
-    public JSONObject toJSON() throws JSONException {
-        JSONObject quizJSON = super.toJSON();
-        JSONArray optionsJSON = new JSONArray();
-        for (T option : mOptions) {
-            optionsJSON.put(option);
-        }
-        quizJSON.put(JsonAttributes.OPTIONS, optionsJSON);
-        return quizJSON;
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(getAnswer().length);
+        dest.writeIntArray(getAnswer());
     }
 }

@@ -16,6 +16,7 @@
 
 package com.google.samples.apps.topeka.activity;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.Window;
@@ -30,7 +31,8 @@ public class SignInActivity extends FragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setNavigationBarColor(Color.TRANSPARENT);
+        getWindow().setStatusBarColor(getResources().getColor(R.color.topeka_primary));
         setContentView(R.layout.activity_sign_in);
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.sign_in_container, new SignInFragment()).commit();

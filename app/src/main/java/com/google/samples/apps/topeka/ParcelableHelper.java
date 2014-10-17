@@ -13,27 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package com.google.samples.apps.topeka;
 
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
+import android.os.Parcel;
 
-buildscript {
-    repositories {
-        mavenCentral()
+public class ParcelableHelper {
+
+    public static void writeBoolean(Parcel dest, boolean toWrite) {
+        dest.writeInt(toWrite ? 0 : 1);
     }
-    dependencies {
-        classpath 'com.android.tools.build:gradle:0.13.1'
 
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
-    }
-}
-
-task wrapper(type: Wrapper) {
-    gradleVersion = "2.1"
-}
-
-allprojects {
-    repositories {
-        mavenCentral()
+    public static boolean readBoolean(Parcel in) {
+        return 0 == in.readInt();
     }
 }

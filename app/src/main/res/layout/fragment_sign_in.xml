@@ -78,10 +78,15 @@
                 android:layout_height="?android:attr/actionBarSize"
                 android:titleTextAppearance="@style/AppTheme.TextAppearance.Title" />
 
-            <android.support.v7.widget.RecyclerView
+            <GridView
                 android:id="@+id/avatars"
+                android:horizontalSpacing="@dimen/padding_default"
+                android:verticalSpacing="@dimen/padding_default"
+                android:padding="@dimen/padding_default"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:drawSelectorOnTop="true"
+                android:cropToPadding="true"
+                android:layout_height="match_parent" />
         </LinearLayout>
     </LinearLayout>
 </FrameLayout>

@@ -28,8 +28,11 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.GridView;
 import android.widget.ImageButton;
+import android.widget.Toast;
 import android.widget.Toolbar;
 
 import com.google.samples.apps.topeka.PreferencesHelper;
@@ -40,13 +43,14 @@ import com.google.samples.apps.topeka.model.Avatar;
 import com.google.samples.apps.topeka.model.Player;
 import com.google.samples.apps.topeka.widget.PlayArrow;
 
-public class SignInFragment extends Fragment implements View.OnClickListener {
+public class SignInFragment extends Fragment implements View.OnClickListener,
+        AdapterView.OnItemClickListener {
 
     private Player mPlayer;
-    private RecyclerView mRecyclerView;
+    private GridView mGridView;
     private EditText mFirstName;
     private EditText mLastName;
-    private PlayArrow mCheck;
+    private Avatar mSelectedAvatar = Avatar.ONE;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
@@ -59,20 +63,27 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
         getToolbar(view, R.id.toolbar_sign_in).setTitle(R.string.sign_in);
         getToolbar(view, R.id.toolbar_choose_avatar).setTitle(R.string.choose_avatar);
         initViews(view);
-        mCheck.setOnClickListener(this);
-
         initPlayerCredentials();
         super.onViewCreated(view, savedInstanceState);
+    }
+
+    private void initViews(View view) {
+        mFirstName = getView(view, R.id.first_name);
+        mLastName = getView(view, R.id.last_initial);
+        PlayArrow check = getView(view, R.id.check);
+        check.setOnClickListener(this);
+        mGridView = (GridView) view.findViewById(R.id.avatars);
+        mGridView.setAdapter(new AvatarAdapter(getActivity()));
+        mGridView.setOnItemClickListener(this);
+        mGridView.setNumColumns(calculateSpanCount());
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.check:
-                //TODO set selected avatar here
                 mPlayer = new Player(mFirstName.getText().toString(),
-                        mLastName.getText().toString(),
-                        Avatar.NINE);
+                        mLastName.getText().toString(), mSelectedAvatar);
                 PreferencesHelper.writeToPreferences(getActivity(), mPlayer);
                 QuizSelectionActivity.start(getActivity(), mPlayer);
                 break;
@@ -82,23 +93,14 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
         }
     }
 
-    private void initViews(View view) {
-        mFirstName = getView(view, R.id.first_name);
-        mLastName = getView(view, R.id.last_initial);
-        mCheck = getView(view, R.id.check);
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.avatars);
-        GridLayoutManager layoutManager = new GridLayoutManager(view.getContext(),
-                calculateSpanCount());
-        mRecyclerView.setLayoutManager(layoutManager);
-        mRecyclerView.setAdapter(new AvatarAdapter(getActivity()));
-    }
+
 
     private void initPlayerCredentials() {
         mPlayer = PreferencesHelper.getPlayer(getActivity());
         if (null != mPlayer) {
             mFirstName.setText(mPlayer.getFirstName());
             mLastName.setText(mPlayer.getLastInitial());
-            //TODO Select avatar
+            mGridView.setSelection(mPlayer.getAvatar().ordinal());
         }
     }
 
@@ -117,5 +119,10 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
 
     private Toolbar getToolbar(View view, int resId) {
         return (Toolbar) view.findViewById(resId);
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        mSelectedAvatar = Avatar.values()[position];
     }
 }

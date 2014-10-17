@@ -17,7 +17,7 @@
 package com.google.samples.apps.topeka.model;
 
 import com.google.gson.annotations.SerializedName;
-import com.google.samples.apps.topeka.model.quiz.Quiz;
+import com.google.samples.apps.topeka.model.quiz.abstracts.Quiz;
 
 import org.json.JSONException;
 import org.json.JSONObject;

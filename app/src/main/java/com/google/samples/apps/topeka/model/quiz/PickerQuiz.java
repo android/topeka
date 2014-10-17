@@ -16,13 +16,16 @@
 
 package com.google.samples.apps.topeka.model.quiz;
 
+import android.os.Parcel;
+
 import com.google.gson.annotations.SerializedName;
 import com.google.samples.apps.topeka.model.JsonAttributes;
+import com.google.samples.apps.topeka.model.quiz.abstracts.Quiz;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public final class MinMaxQuiz extends Quiz<Integer> {
+public final class PickerQuiz extends Quiz<Integer> {
 
     @SerializedName(JsonAttributes.MIN)
     private final int mMin;
@@ -30,10 +33,21 @@ public final class MinMaxQuiz extends Quiz<Integer> {
     @SerializedName(JsonAttributes.MAX)
     private final int mMax;
 
-    public MinMaxQuiz(String question, Integer answer, int min, int max) {
+    @SerializedName(JsonAttributes.STEP)
+    private final int mStep;
+
+    public PickerQuiz(String question, Integer answer, int min, int max, int step) {
         super(question, answer);
         mMin = min;
         mMax = max;
+        mStep = step;
+    }
+
+    protected PickerQuiz(Parcel in) {
+        super(in);
+        mMin = in.readInt();
+        mMax = in.readInt();
+        mStep = in.readInt();
     }
 
     public int getMin() {
@@ -44,11 +58,15 @@ public final class MinMaxQuiz extends Quiz<Integer> {
         return mMax;
     }
 
+    public int getStep() {
+        return mStep;
+    }
+
     @Override
-    public JSONObject toJSON() throws JSONException {
-        JSONObject quizJSON = super.toJSON();
-        quizJSON.put(JsonAttributes.MIN, mMin);
-        quizJSON.put(JsonAttributes.MAX, mMax);
-        return quizJSON;
+    public void writeToParcel(Parcel dest, int flags) {
+        super.writeToParcel(dest, flags);
+        dest.writeInt(mMin);
+        dest.writeInt(mMax);
+        dest.writeInt(mStep);
     }
 }

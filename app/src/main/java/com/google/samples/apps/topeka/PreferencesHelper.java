@@ -38,7 +38,6 @@ public class PreferencesHelper {
     }
 
     public static Player getPlayer(Context context) {
-        //TODO catch messed up player values and handle them
         SharedPreferences preferences = getSharedPreferences(context);
         final String firstName = preferences.getString(PREFERENCE_FIRST_NAME, "");
         final String lastInitial = preferences.getString(PREFERENCE_LAST_INITIAL, "");

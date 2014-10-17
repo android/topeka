@@ -17,10 +17,13 @@
 package com.google.samples.apps.topeka.activity;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.samples.apps.topeka.fragment.CategoryGridFragment;
 import com.google.samples.apps.topeka.R;
 import com.google.samples.apps.topeka.model.Category;
 import com.google.samples.apps.topeka.model.Player;
+import com.google.samples.apps.topeka.model.QuizAdapter;
+import com.google.samples.apps.topeka.model.quiz.abstracts.Quiz;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -87,7 +90,7 @@ public class QuizSelectionActivity extends FragmentActivity {
                     @Override
                     public void onResponse(JSONArray array) {
                         Log.d(TAG, "Array: " + array.length());
-                        Category[] categories = new Gson()
+                        Category[] categories = getCustomizedGson()
                                 .fromJson(array.toString(), Category[].class);
                         getSupportFragmentManager().beginTransaction()
                                 .replace(R.id.quiz_container,
@@ -101,6 +104,12 @@ public class QuizSelectionActivity extends FragmentActivity {
                         //FIXME handle error responses
                     }
                 }));
+    }
+
+    private Gson getCustomizedGson() {
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        gsonBuilder.registerTypeAdapter(Quiz.class, new QuizAdapter());
+        return gsonBuilder.create();
     }
 
     private void setProgressBarVisibility(int visibility) {
