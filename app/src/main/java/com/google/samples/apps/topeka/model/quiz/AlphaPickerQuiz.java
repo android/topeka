@@ -17,18 +17,22 @@ package com.google.samples.apps.topeka.model.quiz;
 
 import android.os.Parcel;
 
-import com.google.samples.apps.topeka.model.quiz.abstracts.Quiz;
-
 public class AlphaPickerQuiz extends Quiz<String> {
 
-    protected AlphaPickerQuiz(String question, String answer) {
+    public AlphaPickerQuiz(String question, String answer) {
         super(question, answer);
     }
 
-    protected AlphaPickerQuiz(Parcel in) {
+    public AlphaPickerQuiz(Parcel in) {
         super(in);
         setAnswer(in.readString());
     }
+
+    @Override
+    protected Type getType() {
+        return Type.ALPHA_PICKER;
+    }
+
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {

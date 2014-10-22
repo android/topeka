@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-package com.google.samples.apps.topeka.model.quiz.abstracts;
+package com.google.samples.apps.topeka.model.quiz;
 
 import android.os.Parcel;
-import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
+import com.google.samples.apps.topeka.ParcelableHelper;
 import com.google.samples.apps.topeka.model.JsonAttributes;
 
 public abstract class OptionsQuiz<T> extends Quiz<int[]> {
@@ -32,20 +32,18 @@ public abstract class OptionsQuiz<T> extends Quiz<int[]> {
         mOptions = options;
     }
 
+    public OptionsQuiz(Parcel in) {
+        super(in);
+        final int answer[] = in.createIntArray();
+        setAnswer(answer);
+    }
+
     public T[] getOptions() {
         return mOptions;
     }
 
     protected void setOptions(T[] options) {
         mOptions = options;
-    }
-
-    protected OptionsQuiz(Parcel in) {
-        super(in);
-        final int answerLength = in.readInt();
-        final int answer[] = new int[answerLength];
-        in.readIntArray(answer);
-        setAnswer(answer);
     }
 
     @Override
@@ -55,7 +53,7 @@ public abstract class OptionsQuiz<T> extends Quiz<int[]> {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(getAnswer().length);
+        super.writeToParcel(dest, flags);
         dest.writeIntArray(getAnswer());
     }
 }

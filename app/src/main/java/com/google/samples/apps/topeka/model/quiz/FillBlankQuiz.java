@@ -20,10 +20,6 @@ import android.os.Parcel;
 
 import com.google.gson.annotations.SerializedName;
 import com.google.samples.apps.topeka.model.JsonAttributes;
-import com.google.samples.apps.topeka.model.quiz.abstracts.Quiz;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 public final class FillBlankQuiz extends Quiz<String> {
 
@@ -39,7 +35,7 @@ public final class FillBlankQuiz extends Quiz<String> {
         mEnd = end;
     }
 
-    protected FillBlankQuiz(Parcel in) {
+    public FillBlankQuiz(Parcel in) {
         super(in);
         setAnswer(in.readString());
         mStart = in.readString();
@@ -53,6 +49,12 @@ public final class FillBlankQuiz extends Quiz<String> {
     public String getEnd() {
         return mEnd;
     }
+
+    @Override
+    protected Type getType() {
+        return Type.FILL_BLANK;
+    }
+
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {

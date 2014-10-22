@@ -23,7 +23,7 @@ import com.google.samples.apps.topeka.R;
 import com.google.samples.apps.topeka.model.Category;
 import com.google.samples.apps.topeka.model.Player;
 import com.google.samples.apps.topeka.model.QuizAdapter;
-import com.google.samples.apps.topeka.model.quiz.abstracts.Quiz;
+import com.google.samples.apps.topeka.model.quiz.Quiz;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;

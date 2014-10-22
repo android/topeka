@@ -17,7 +17,7 @@
 package com.google.samples.apps.topeka.model;
 
 import com.google.gson.annotations.SerializedName;
-import com.google.samples.apps.topeka.model.quiz.abstracts.Quiz;
+import com.google.samples.apps.topeka.model.quiz.Quiz;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -25,6 +25,7 @@ import org.json.JSONObject;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Category implements Parcelable {
@@ -66,21 +67,12 @@ public class Category implements Parcelable {
         return mQuizzes;
     }
 
-
-    public JSONObject toJSON() throws JSONException {
-        JSONObject categoryJSON = new JSONObject();
-        categoryJSON.put(JsonAttributes.NAME, mName);
-        categoryJSON.put(JsonAttributes.ID, mId);
-        categoryJSON.put(JsonAttributes.THEME, mTheme.name());
-        return categoryJSON;
-    }
-
     protected Category(Parcel in) {
         mName = in.readString();
         mId = in.readString();
         mTheme = Theme.values()[in.readInt()];
-        //TODO read quizzes
-        mQuizzes = null;
+        mQuizzes = new ArrayList<Quiz>();
+        in.readTypedList(mQuizzes, Quiz.CREATOR);
     }
 
     @Override
@@ -93,7 +85,7 @@ public class Category implements Parcelable {
         dest.writeString(mName);
         dest.writeString(mId);
         dest.writeInt(mTheme.ordinal());
-        //TODO provide quizzes
+        dest.writeTypedList(getQuizzes());
     }
 
     public static final Creator<Category> CREATOR = new Creator<Category>() {

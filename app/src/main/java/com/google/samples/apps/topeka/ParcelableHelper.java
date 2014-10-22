@@ -26,4 +26,8 @@ public class ParcelableHelper {
     public static boolean readBoolean(Parcel in) {
         return 0 == in.readInt();
     }
+
+    public static void writeEnumValue(Parcel dest, Enum e) {
+        dest.writeInt(e.ordinal());
+    }
 }

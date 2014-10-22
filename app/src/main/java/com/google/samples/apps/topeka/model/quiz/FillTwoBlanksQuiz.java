@@ -17,19 +17,21 @@ package com.google.samples.apps.topeka.model.quiz;
 
 import android.os.Parcel;
 
-import com.google.samples.apps.topeka.model.quiz.abstracts.Quiz;
-
 public class FillTwoBlanksQuiz extends Quiz<String[]> {
 
-    protected FillTwoBlanksQuiz(String question, String[] answer) {
+    public FillTwoBlanksQuiz(String question, String[] answer) {
         super(question, answer);
     }
 
-    protected FillTwoBlanksQuiz(Parcel in) {
+    public FillTwoBlanksQuiz(Parcel in) {
         super(in);
         String answer[] = in.createStringArray();
-        in.readStringArray(answer);
         setAnswer(answer);
+    }
+
+    @Override
+    protected Type getType() {
+        return Type.FILL_TWO_BLANKS;
     }
 
     @Override

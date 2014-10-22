@@ -17,8 +17,6 @@ package com.google.samples.apps.topeka.model.quiz;
 
 import android.os.Parcel;
 
-import com.google.samples.apps.topeka.model.quiz.abstracts.OptionsQuiz;
-
 public class ToggleTranslateQuiz extends OptionsQuiz<String[]> {
 
     public ToggleTranslateQuiz(String question, int[] answer, String[][] options) {
@@ -27,16 +25,17 @@ public class ToggleTranslateQuiz extends OptionsQuiz<String[]> {
 
     public ToggleTranslateQuiz(Parcel in) {
         super(in);
-        int[] answer = in.createIntArray();
-        in.readIntArray(answer);
-        setAnswer(answer);
         setOptions((String[][]) in.readSerializable());
+    }
+
+    @Override
+    protected Type getType() {
+        return Type.TOGGLE_TRANSLATE;
     }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         super.writeToParcel(dest, flags);
-        dest.writeIntArray(getAnswer());
         dest.writeSerializable(getOptions());
     }
 }

@@ -18,24 +18,26 @@ package com.google.samples.apps.topeka.model.quiz;
 
 import android.os.Parcel;
 
-import com.google.samples.apps.topeka.model.quiz.abstracts.OptionsQuiz;
-
 public class MultiSelectQuiz extends OptionsQuiz<String> {
 
     public MultiSelectQuiz(String question, int[] answer, String[] options) {
         super(question, answer, options);
     }
 
-    protected MultiSelectQuiz(Parcel in) {
+    public MultiSelectQuiz(Parcel in) {
         super(in);
-        int answer[] = in.createIntArray();
-        in.readIntArray(answer);
-        setAnswer(answer);
+        String options[] = in.createStringArray();
+        setOptions(options);
+    }
+
+    @Override
+    protected Type getType() {
+        return Type.MULTI_SELECT;
     }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         super.writeToParcel(dest, flags);
-        dest.writeIntArray(getAnswer());
+        dest.writeStringArray(getOptions());
     }
 }

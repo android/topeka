@@ -14,29 +14,31 @@
  * limitations under the License.
  */
 
-package com.google.samples.apps.topeka.model.quiz.abstracts;
+package com.google.samples.apps.topeka.model.quiz;
 
 import com.google.gson.annotations.SerializedName;
+import com.google.samples.apps.topeka.ParcelableHelper;
 import com.google.samples.apps.topeka.model.JsonAttributes;
-import com.google.samples.apps.topeka.model.quiz.AlphaPickerQuiz;
-import com.google.samples.apps.topeka.model.quiz.FillBlankQuiz;
-import com.google.samples.apps.topeka.model.quiz.FillTwoBlanksQuiz;
-import com.google.samples.apps.topeka.model.quiz.FourQuarterQuiz;
-import com.google.samples.apps.topeka.model.quiz.MultiSelectQuiz;
-import com.google.samples.apps.topeka.model.quiz.PickerQuiz;
-import com.google.samples.apps.topeka.model.quiz.SelectItemQuiz;
-import com.google.samples.apps.topeka.model.quiz.ToggleTranslateQuiz;
-import com.google.samples.apps.topeka.model.quiz.TrueFalseQuiz;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.EventLogTags;
+import android.util.Log;
+
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+
+import javax.security.auth.login.LoginException;
 
 import static com.google.samples.apps.topeka.model.JsonAttributes.QuizType;
 
 public abstract class Quiz<A> implements Parcelable {
 
+    private static final String TAG = "Quiz";
+
     @SerializedName(JsonAttributes.QUESTION)
     private final String mQuestion;
+
     @SerializedName(JsonAttributes.ANSWER)
     private A mAnswer;
 
@@ -61,6 +63,8 @@ public abstract class Quiz<A> implements Parcelable {
         mAnswer = answer;
     }
 
+    protected abstract Type getType();
+
     @Override
     public int describeContents() {
         return 0;
@@ -68,8 +72,36 @@ public abstract class Quiz<A> implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        ParcelableHelper.writeEnumValue(dest, getType());
         dest.writeString(mQuestion);
     }
+
+    public static final Creator<Quiz> CREATOR = new Creator<Quiz>() {
+        @Override
+        public Quiz createFromParcel(Parcel in) {
+            int ordinal = in.readInt();
+            Type type = Type.values()[ordinal];
+            try {
+                Constructor<? extends Quiz> constructor = type.getType().getConstructor(
+                        Parcel.class);
+                return constructor.newInstance(in);
+            } catch (InstantiationException e) {
+                Log.e(TAG, "createFromParcel ", e);
+            } catch (IllegalAccessException e) {
+                Log.e(TAG, "createFromParcel ", e);
+            } catch (InvocationTargetException e) {
+                Log.e(TAG, "createFromParcel ", e);
+            } catch (NoSuchMethodException e) {
+                Log.e(TAG, "createFromParcel ", e);
+            }
+            throw new UnsupportedOperationException("Could not create Quiz");
+        }
+
+        @Override
+        public Quiz[] newArray(int size) {
+            return new Quiz[size];
+        }
+    };
 
     public enum Type {
         ALPHA_PICKER(QuizType.ALPHA_PICKER, AlphaPickerQuiz.class),
@@ -84,7 +116,7 @@ public abstract class Quiz<A> implements Parcelable {
         TRUE_FALSE(QuizType.TRUE_FALSE, TrueFalseQuiz.class);
 
         private final String mJsonName;
-        private final Class<?> mType;
+        private final Class<? extends Quiz> mType;
 
         private Type(final String jsonName, final Class<? extends Quiz> type) {
             mJsonName = jsonName;
@@ -95,8 +127,9 @@ public abstract class Quiz<A> implements Parcelable {
             return mJsonName;
         }
 
-        public Class<?> getType() {
+        public Class<? extends Quiz> getType() {
             return mType;
         }
     }
+
 }

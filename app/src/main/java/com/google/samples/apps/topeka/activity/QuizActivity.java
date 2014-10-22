@@ -16,8 +16,10 @@
 
 package com.google.samples.apps.topeka.activity;
 
+import com.google.samples.apps.topeka.PreferencesHelper;
 import com.google.samples.apps.topeka.R;
 import com.google.samples.apps.topeka.model.Category;
+import com.google.samples.apps.topeka.model.Player;
 import com.google.samples.apps.topeka.model.Theme;
 
 import android.annotation.TargetApi;
@@ -33,6 +35,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 import static com.google.samples.apps.topeka.adapter.CategoryAdapter.DRAWABLE;
 
@@ -45,6 +48,7 @@ public class QuizActivity extends Activity implements View.OnClickListener {
     private static final String THEME = "theme_";
     private static final String COLOR = "color";
     private static final String IMAGE_CATEGORY = "image_category_";
+    private Player mPlayer;
 
     public static Intent getStartIntent(Context context, Category category) {
         Intent starter = new Intent(context, QuizActivity.class);
@@ -76,7 +80,7 @@ public class QuizActivity extends Activity implements View.OnClickListener {
     private void populate(Category category) {
         initLayout(category.getId());
         setTheme(category.getTheme());
-        setTitle(category.getName());
+        setToolbar(category);
     }
 
     private void initLayout(String categoryId) {
@@ -108,6 +112,14 @@ public class QuizActivity extends Activity implements View.OnClickListener {
 
         setTheme(theme.getResId());
         Log.d(TAG, "Current theme is" + getResources().getResourceName(theme.getResId()));
+    }
+
+    private void setToolbar(Category category) {
+        mPlayer = PreferencesHelper.getPlayer(this);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_quiz);
+        toolbar.setNavigationIcon(mPlayer.getAvatar().getDrawableId());
+        toolbar.setSubtitle(getString(R.string.quiz_of_quizzes, 0, category.getQuizzes().size()));
+        toolbar.setTitle(category.getName());
     }
 
     private int getColor(Theme theme, String colorType) {

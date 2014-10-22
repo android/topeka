@@ -20,10 +20,6 @@ import android.os.Parcel;
 
 import com.google.gson.annotations.SerializedName;
 import com.google.samples.apps.topeka.model.JsonAttributes;
-import com.google.samples.apps.topeka.model.quiz.abstracts.Quiz;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 public final class PickerQuiz extends Quiz<Integer> {
 
@@ -43,7 +39,7 @@ public final class PickerQuiz extends Quiz<Integer> {
         mStep = step;
     }
 
-    protected PickerQuiz(Parcel in) {
+    public PickerQuiz(Parcel in) {
         super(in);
         mMin = in.readInt();
         mMax = in.readInt();
@@ -60,6 +56,11 @@ public final class PickerQuiz extends Quiz<Integer> {
 
     public int getStep() {
         return mStep;
+    }
+
+    @Override
+    protected Type getType() {
+        return Type.PICKER;
     }
 
     @Override

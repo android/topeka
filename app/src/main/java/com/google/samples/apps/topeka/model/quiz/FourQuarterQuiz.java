@@ -18,8 +18,6 @@ package com.google.samples.apps.topeka.model.quiz;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.google.samples.apps.topeka.model.quiz.abstracts.OptionsQuiz;
-
 public class FourQuarterQuiz extends OptionsQuiz<String> {
 
     public static final Parcelable.Creator<FourQuarterQuiz> CREATOR
@@ -39,11 +37,15 @@ public class FourQuarterQuiz extends OptionsQuiz<String> {
         super(question, answer, options);
     }
 
-    protected FourQuarterQuiz(Parcel in) {
+    public FourQuarterQuiz(Parcel in) {
         super(in);
         String options[] = in.createStringArray();
-        in.readStringArray(options);
         setOptions(options);
+    }
+
+    @Override
+    protected Type getType() {
+        return Type.FOUR_QUARTER;
     }
 
     @Override
