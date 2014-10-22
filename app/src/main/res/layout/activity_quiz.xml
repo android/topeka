@@ -32,18 +32,18 @@
 
         <ImageView
             android:id="@+id/icon"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="@dimen/padding_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:contentDescription="@null"
             android:transitionName="@string/transition_background"
-            android:scaleType="center" />
+            android:scaleType="center"
+            android:layout_gravity="center" />
 
         <com.google.samples.apps.topeka.widget.PlayArrow
             android:id="@+id/btn_start_quiz"
             android:layout_width="@dimen/play_arrow_size"
             android:layout_height="@dimen/play_arrow_size"
-            android:layout_margin="@dimen/play_arrow_size"
+            android:layout_marginBottom="@dimen/play_arrow_size"
             android:layout_gravity="bottom|center_horizontal" />
 
     </FrameLayout>

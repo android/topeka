@@ -31,7 +31,7 @@
         <item name="android:windowSharedElementExitTransition">@transition/grid_detail_transition
         </item>
         <item name="android:titleTextAppearance">@style/AppTheme.TextAppearance.Title</item>
-        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@color/topeka_primary</item>
         <item name="android:statusBarColor">@color/topeka_primary</item>
     </style>
 

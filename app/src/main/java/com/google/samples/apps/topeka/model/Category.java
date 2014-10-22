@@ -19,9 +19,6 @@ package com.google.samples.apps.topeka.model;
 import com.google.gson.annotations.SerializedName;
 import com.google.samples.apps.topeka.model.quiz.Quiz;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -99,4 +96,14 @@ public class Category implements Parcelable {
             return new Category[size];
         }
     };
+
+    @Override
+    public String toString() {
+        return "Category{" +
+                "mName='" + mName + '\'' +
+                ", mId='" + mId + '\'' +
+                ", mTheme=" + mTheme +
+                ", mQuizzes=" + mQuizzes +
+                '}';
+    }
 }

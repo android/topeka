@@ -17,4 +17,5 @@
 <resources>
     <string name="transition_icon_to_image">IconToImageTransition</string>
     <string name="transition_background">BackgroundTransition</string>
+    <string name="transition_sign_in">SignInTransition</string>
 </resources>

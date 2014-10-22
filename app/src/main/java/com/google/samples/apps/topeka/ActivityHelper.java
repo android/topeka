@@ -13,22 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package com.google.samples.apps.topeka;
 
-package com.google.samples.apps.topeka.activity;
+import android.app.Activity;
 
-import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
+public class ActivityHelper {
 
-import com.google.samples.apps.topeka.R;
-import com.google.samples.apps.topeka.fragment.SignInFragment;
-
-public class SignInActivity extends FragmentActivity {
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sign_in);
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.sign_in_container, new SignInFragment()).commit();
+    private ActivityHelper() {
+        //no instance
     }
+
+    public static void setStatusAndNavigationBarColor(Activity activity, int colorPrimary) {
+        if (null != activity) {
+            activity.getWindow().setStatusBarColor(colorPrimary);
+            activity.getWindow().setNavigationBarColor(colorPrimary);
+        }
+    }
+
 }

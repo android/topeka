@@ -17,36 +17,23 @@
 package com.google.samples.apps.topeka.fragment;
 
 import com.google.samples.apps.topeka.R;
-import com.google.samples.apps.topeka.adapter.CategoryAdapter;
-import com.google.samples.apps.topeka.model.Category;
+import com.google.samples.apps.topeka.activity.QuizActivity;
+import com.google.samples.apps.topeka.adapter.CategoryCursorAdapter;
 
+import android.app.Activity;
+import android.app.ActivityOptions;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.GridView;
 
-public class CategoryGridFragment extends Fragment {
+public class CategoryGridFragment extends Fragment implements AdapterView.OnItemClickListener {
 
-    private static final String EXTRA_CATEGORY = "Extra.Category";
-    private static final int SPAN_COUNT = 2;
-
-    public static CategoryGridFragment newInstance(Category[] categories) {
-        checkArguments(categories);
-        Bundle args = new Bundle();
-        args.putParcelableArray(EXTRA_CATEGORY, categories);
-        CategoryGridFragment categoryGridFragment = new CategoryGridFragment();
-        categoryGridFragment.setArguments(args);
-        return categoryGridFragment;
-    }
-
-    private static void checkArguments(Category[] args) {
-        if (null == args || args.length == 0) {
-            throw new IllegalArgumentException(
-                    "You'll need to provide arguments in order for this to work.");
-        }
+    public static CategoryGridFragment newInstance() {
+        return new CategoryGridFragment();
     }
 
     @Override
@@ -57,16 +44,24 @@ public class CategoryGridFragment extends Fragment {
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
-        Bundle args = getArguments();
-        setUpQuizGrid((Category[]) args.getParcelableArray(EXTRA_CATEGORY),
-                (RecyclerView) view.findViewById(R.id.categories));
+        setUpQuizGrid((GridView) view.findViewById(R.id.categories));
         super.onViewCreated(view, savedInstanceState);
     }
 
-    private void setUpQuizGrid(Category[] categories, RecyclerView categoriesView) {
-        categoriesView.setLayoutManager(
-                new StaggeredGridLayoutManager(SPAN_COUNT, StaggeredGridLayoutManager.VERTICAL));
-        CategoryAdapter adapter = new CategoryAdapter(getActivity(), categories);
+    private void setUpQuizGrid(GridView categoriesView) {
+        categoriesView.setOnItemClickListener(this);
+        CategoryCursorAdapter adapter = new CategoryCursorAdapter(getActivity());
         categoriesView.setAdapter(adapter);
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Activity activity = getActivity();
+        //TODO: finalize the animations
+        ActivityOptions activityOptions = ActivityOptions
+                .makeSceneTransitionAnimation(activity, view.findViewById(R.id.name),
+                        activity.getString(R.string.transition_background));
+        activity.startActivity(QuizActivity.getStartIntent(activity, position + 1),
+                activityOptions.toBundle());
     }
 }

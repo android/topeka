@@ -16,23 +16,19 @@
 
 package com.google.samples.apps.topeka.fragment;
 
+import android.app.Activity;
+import android.app.ActivityOptions;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.GridView;
-import android.widget.ImageButton;
-import android.widget.Toast;
 import android.widget.Toolbar;
 
 import com.google.samples.apps.topeka.PreferencesHelper;
@@ -82,10 +78,14 @@ public class SignInFragment extends Fragment implements View.OnClickListener,
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.check:
+                Activity activity = getActivity();
                 mPlayer = new Player(mFirstName.getText().toString(),
                         mLastName.getText().toString(), mSelectedAvatar);
-                PreferencesHelper.writeToPreferences(getActivity(), mPlayer);
-                QuizSelectionActivity.start(getActivity(), mPlayer);
+                PreferencesHelper.writeToPreferences(activity, mPlayer);
+                ActivityOptions activityOptions = ActivityOptions
+                        .makeSceneTransitionAnimation(activity, v,
+                                activity.getString(R.string.transition_sign_in));
+                QuizSelectionActivity.start(activity, mPlayer, activityOptions);
                 break;
             default:
                 throw new UnsupportedOperationException(
@@ -94,13 +94,13 @@ public class SignInFragment extends Fragment implements View.OnClickListener,
     }
 
 
-
     private void initPlayerCredentials() {
         mPlayer = PreferencesHelper.getPlayer(getActivity());
         if (null != mPlayer) {
             mFirstName.setText(mPlayer.getFirstName());
             mLastName.setText(mPlayer.getLastInitial());
-            mGridView.setSelection(mPlayer.getAvatar().ordinal());
+            mSelectedAvatar = mPlayer.getAvatar();
+            mGridView.setSelection(mSelectedAvatar.ordinal());
         }
     }
 

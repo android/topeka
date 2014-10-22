@@ -28,6 +28,9 @@ public class PreferencesHelper {
     private static final String PREFERENCE_LAST_INITIAL = PLAYER_PREFERENCES + ".lastInitial";
     private static final String PREFERENCE_AVATAR = PLAYER_PREFERENCES + ".avatar";
 
+    private PreferencesHelper() {
+        //no instance
+    }
 
     public static void writeToPreferences(Context context, Player player) {
         SharedPreferences.Editor editor = getEditor(context);

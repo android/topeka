@@ -22,7 +22,7 @@
     <dimen name="elevation_default">4dp</dimen>
     <dimen name="padding_play_arrow">12dp</dimen>
     <dimen name="padding_icon">56dp</dimen>
-    <dimen name="padding_recycler_view">4dp</dimen>
+    <dimen name="padding_grid">4dp</dimen>
     <dimen name="padding_category_icon">24dp</dimen>
     <dimen name="padding_category">4dp</dimen>
     <dimen name="padding_default">4dp</dimen>

@@ -16,20 +16,20 @@
 
 package com.google.samples.apps.topeka.activity;
 
+import com.google.samples.apps.topeka.ActivityHelper;
 import com.google.samples.apps.topeka.PreferencesHelper;
 import com.google.samples.apps.topeka.R;
 import com.google.samples.apps.topeka.model.Category;
 import com.google.samples.apps.topeka.model.Player;
 import com.google.samples.apps.topeka.model.Theme;
+import com.google.samples.apps.topeka.persistence.TopekaDatabaseHelper;
 
-import android.annotation.TargetApi;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.drawable.ColorDrawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -37,7 +37,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 import android.widget.Toolbar;
 
-import static com.google.samples.apps.topeka.adapter.CategoryAdapter.DRAWABLE;
+import static com.google.samples.apps.topeka.adapter.CategoryCursorAdapter.DRAWABLE;
 
 public class QuizActivity extends Activity implements View.OnClickListener {
 
@@ -48,9 +48,10 @@ public class QuizActivity extends Activity implements View.OnClickListener {
     private static final String THEME = "theme_";
     private static final String COLOR = "color";
     private static final String IMAGE_CATEGORY = "image_category_";
+    private static final int NO_CATEGORY = -1;
     private Player mPlayer;
 
-    public static Intent getStartIntent(Context context, Category category) {
+    public static Intent getStartIntent(Context context, int category) {
         Intent starter = new Intent(context, QuizActivity.class);
         starter.putExtra(Category.TAG, category);
         return starter;
@@ -59,14 +60,14 @@ public class QuizActivity extends Activity implements View.OnClickListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        populate((Category) getIntent().getParcelableExtra(Category.TAG));
+        populate(getIntent().getIntExtra(Category.TAG, NO_CATEGORY));
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_start_quiz:
-                //TOTO replace with real action
+                //TODO: replace with real action
                 Toast.makeText(this, "I'm sorry Dave, I can't let you do this.", Toast.LENGTH_LONG)
                         .show();
                 break;
@@ -77,7 +78,12 @@ public class QuizActivity extends Activity implements View.OnClickListener {
         }
     }
 
-    private void populate(Category category) {
+    private void populate(int categoryId) {
+        if (categoryId < 0) {
+            //TODO: handle failing
+            finish();
+        }
+        Category category = TopekaDatabaseHelper.getCategoryAt(this, categoryId);
         initLayout(category.getId());
         setTheme(category.getTheme());
         setToolbar(category);
@@ -100,14 +106,14 @@ public class QuizActivity extends Activity implements View.OnClickListener {
             Log.d(TAG, "No theme found. Falling back to default");
             theme = Theme.topeka;
         }
-        //TODO find a way to set the theme without string matching
+        //TODO: find a way to set the theme without string matching
 
         int colorBackground = getColor(theme, BACKGROUND);
         int colorPrimary = getColor(theme, PRIMARY);
 
         findViewById(R.id.quiz_container).setBackgroundColor(colorBackground);
 
-        setStatusAndNavigationBarColor(colorPrimary);
+        ActivityHelper.setStatusAndNavigationBarColor(this, colorPrimary);
         setActionBarColor(colorPrimary);
 
         setTheme(theme.getResId());
@@ -128,13 +134,6 @@ public class QuizActivity extends Activity implements View.OnClickListener {
                 .getIdentifier(THEME + theme.name() + colorType, COLOR,
                         getApplicationContext().getPackageName());
         return resources.getColor(resourceId);
-    }
-
-    private void setStatusAndNavigationBarColor(int colorPrimary) {
-        if (Build.VERSION_CODES.KITKAT < Build.VERSION.SDK_INT) {
-            getWindow().setStatusBarColor(colorPrimary);
-            getWindow().setNavigationBarColor(colorPrimary);
-        }
     }
 
     private void setActionBarColor(int colorPrimary) {

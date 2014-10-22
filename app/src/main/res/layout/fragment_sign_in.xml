@@ -53,6 +53,7 @@
                 android:padding="@dimen/padding_default"
                 android:textSize="@dimen/size_edit_text"
                 android:hint="@string/first_name"
+                android:inputType="textCapWords"
                 android:imeOptions="actionNext" />
 
             <EditText
@@ -62,7 +63,9 @@
                 android:minHeight="?android:attr/actionBarSize"
                 android:padding="@dimen/padding_default"
                 android:textSize="@dimen/size_edit_text"
+                android:maxLength="1"
                 android:hint="@string/last_initial"
+                android:inputType="textCapWords"
                 android:imeOptions="actionDone" />
         </LinearLayout>
 

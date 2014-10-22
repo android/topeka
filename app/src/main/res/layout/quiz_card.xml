@@ -14,14 +14,19 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
-
-<GridView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/categories"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:padding="@dimen/padding_grid"
-    android:numColumns="auto_fit"
-    android:stretchMode="columnWidth"
-    android:horizontalSpacing="@dimen/padding_default"
-    android:verticalSpacing="@dimen/padding_default" />
+    android:layout_height="match_parent">
+
+    <Toolbar
+        android:id="@+id/quiz_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?android:attr/actionBarSize" />
+
+    <FrameLayout
+        android:id="@+id/quiz_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+</android.support.v7.widget.CardView>

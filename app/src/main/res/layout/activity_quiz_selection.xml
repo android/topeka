@@ -28,6 +28,7 @@
 
     <FrameLayout
         android:id="@+id/quiz_container"
+        android:transitionName="@string/transition_sign_in"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context="activity.QuizSelectionActivity"

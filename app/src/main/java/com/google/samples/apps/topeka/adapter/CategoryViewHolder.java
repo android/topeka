@@ -19,14 +19,12 @@ package com.google.samples.apps.topeka.adapter;
 import com.google.samples.apps.topeka.R;
 
 import android.support.v7.widget.CardView;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-public class CategoryViewHolder extends RecyclerView.ViewHolder {
+public class CategoryViewHolder {
 
     private final ImageView mIcon;
     private final TextView mName;
@@ -34,7 +32,6 @@ public class CategoryViewHolder extends RecyclerView.ViewHolder {
     private final CardView mCardView;
 
     public CategoryViewHolder(View itemView) {
-        super(itemView);
         mIcon = (ImageView) itemView.findViewById(R.id.icon);
         mName = (TextView) itemView.findViewById(R.id.name);
         mContainer = (LinearLayout) itemView.findViewById(R.id.item_category_container);

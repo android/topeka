@@ -16,28 +16,15 @@
 
 package com.google.samples.apps.topeka.activity;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.samples.apps.topeka.fragment.CategoryGridFragment;
 import com.google.samples.apps.topeka.R;
-import com.google.samples.apps.topeka.model.Category;
 import com.google.samples.apps.topeka.model.Player;
-import com.google.samples.apps.topeka.model.QuizAdapter;
-import com.google.samples.apps.topeka.model.quiz.Quiz;
 
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.Volley;
-
-import org.json.JSONArray;
-
+import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toolbar;
 
@@ -48,10 +35,10 @@ public class QuizSelectionActivity extends FragmentActivity {
             = "http://www.polymer-project.org/apps/topeka/components/topeka-elements/categories.json";
     private static final String EXTRA_PLAYER = "player";
 
-    public static void start(Context context, Player player) {
+    public static void start(Context context, Player player, ActivityOptions options) {
         Intent starter = new Intent(context, QuizSelectionActivity.class);
         starter.putExtra(EXTRA_PLAYER, player);
-        context.startActivity(starter);
+        context.startActivity(starter, options.toBundle());
     }
 
     @Override
@@ -62,12 +49,14 @@ public class QuizSelectionActivity extends FragmentActivity {
         setUpToolbar(player, (Toolbar) findViewById(R.id.toolbar_player));
         if (savedInstanceState == null) {
             loadCategories();
+        } else {
+            setProgressBarVisibility(View.GONE);
         }
     }
 
     private void setUpToolbar(Player player, Toolbar toolbar) {
         toolbar.setTitle(getDisplayName(player));
-        //TODO fix navigation icon size
+        //TODO: fix navigation icon size
         toolbar.setNavigationIcon(player.getAvatar().getDrawableId());
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,6 +65,7 @@ public class QuizSelectionActivity extends FragmentActivity {
             }
         });
         toolbar.setNavigationContentDescription(getString(R.string.description_user_preferences));
+        setActionBar(toolbar);
     }
 
     private String getDisplayName(Player player) {
@@ -84,32 +74,10 @@ public class QuizSelectionActivity extends FragmentActivity {
     }
 
     private void loadCategories() {
-        RequestQueue queue = Volley.newRequestQueue(this);
-        queue.add(new JsonArrayRequest(URL,
-                new Response.Listener<JSONArray>() {
-                    @Override
-                    public void onResponse(JSONArray array) {
-                        Log.d(TAG, "Array: " + array.length());
-                        Category[] categories = getCustomizedGson()
-                                .fromJson(array.toString(), Category[].class);
-                        getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.quiz_container,
-                                        CategoryGridFragment.newInstance(categories)).commit();
-                        setProgressBarVisibility(View.GONE);
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError volleyError) {
-                        //FIXME handle error responses
-                    }
-                }));
-    }
-
-    private Gson getCustomizedGson() {
-        GsonBuilder gsonBuilder = new GsonBuilder();
-        gsonBuilder.registerTypeAdapter(Quiz.class, new QuizAdapter());
-        return gsonBuilder.create();
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.quiz_container, CategoryGridFragment.newInstance())
+                .commit();
+        setProgressBarVisibility(View.GONE);
     }
 
     private void setProgressBarVisibility(int visibility) {

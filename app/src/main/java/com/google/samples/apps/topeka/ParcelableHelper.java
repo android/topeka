@@ -19,6 +19,10 @@ import android.os.Parcel;
 
 public class ParcelableHelper {
 
+    private ParcelableHelper() {
+        //no instance
+    }
+
     public static void writeBoolean(Parcel dest, boolean toWrite) {
         dest.writeInt(toWrite ? 0 : 1);
     }
