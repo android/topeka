@@ -24,4 +24,7 @@
     android:numColumns="auto_fit"
     android:stretchMode="columnWidth"
     android:horizontalSpacing="@dimen/padding_default"
-    android:verticalSpacing="@dimen/padding_default" />
+    android:verticalSpacing="@dimen/padding_default"
+    android:background="@color/topeka_blank"
+    android:listSelector="@drawable/ripple"
+    android:drawSelectorOnTop="true" />

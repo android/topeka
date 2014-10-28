@@ -19,15 +19,19 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="avatar_size">64dp</dimen>
-    <dimen name="elevation_default">4dp</dimen>
-    <dimen name="padding_play_arrow">12dp</dimen>
+    <dimen name="padding_fab">12dp</dimen>
     <dimen name="padding_icon">56dp</dimen>
     <dimen name="padding_grid">4dp</dimen>
     <dimen name="padding_category_icon">24dp</dimen>
     <dimen name="padding_category">4dp</dimen>
     <dimen name="padding_default">4dp</dimen>
     <dimen name="padding_avatar">8dp</dimen>
-    <dimen name="play_arrow_size">56dp</dimen>
+    <dimen name="padding_card_name">16dp</dimen>
+    <dimen name="fab_size">56dp</dimen>
+    <dimen name="elevation_default">2dp</dimen>
+    <dimen name="elevation_fab">8dp</dimen>
+    <dimen name="elevation_header">4dp</dimen>
     <dimen name="size_edit_text">18sp</dimen>
-    <dimen name="stroke_width_avatar">2dp</dimen>
+    <dimen name="size_card_name">14sp</dimen>
+    <dimen name="stroke_width_avatar">4dp</dimen>
 </resources>

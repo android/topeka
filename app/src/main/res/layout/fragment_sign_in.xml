@@ -18,13 +18,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.google.samples.apps.topeka.widget.PlayArrow
+    <com.google.samples.apps.topeka.widget.FloatingActionButton
         android:id="@+id/check"
-        android:layout_height="@dimen/play_arrow_size"
-        android:layout_width="@dimen/play_arrow_size"
+        android:layout_height="@dimen/fab_size"
+        android:layout_width="@dimen/fab_size"
         android:layout_marginEnd="@dimen/padding_default"
         android:layout_marginTop="@dimen/padding_default"
-        android:layout_gravity="top|end" />
+        android:layout_gravity="top|end"
+        android:src="@drawable/ic_play_arrow" />
 
     <LinearLayout
         android:orientation="vertical"
@@ -85,11 +86,11 @@
                 android:id="@+id/avatars"
                 android:horizontalSpacing="@dimen/padding_default"
                 android:verticalSpacing="@dimen/padding_default"
-                android:padding="@dimen/padding_default"
                 android:layout_width="match_parent"
                 android:drawSelectorOnTop="true"
                 android:cropToPadding="true"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:listSelector="@drawable/selector_avatar" />
         </LinearLayout>
     </LinearLayout>
 </FrameLayout>

@@ -13,17 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.google.samples.apps.topeka;
+package com.google.samples.apps.topeka.widget.outlineprovider;
 
-import android.graphics.Outline;
-import android.view.View;
-import android.view.ViewOutlineProvider;
+import com.google.samples.apps.topeka.R;
 
-public class AvatarOutlineProvider extends ViewOutlineProvider {
+public class FabOutlineProvider extends CircularOutlineProvider {
 
     @Override
-    public void getOutline(View view, Outline outline) {
-        final int size = view.getResources().getDimensionPixelSize(R.dimen.avatar_size);
-        outline.setOval(0, 0, size, size);
+    public int getSizeResourceId() {
+        return R.dimen.fab_size;
     }
 }

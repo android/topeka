@@ -26,10 +26,6 @@
         <!-- Enable transitions between activities -->
         <item name="android:windowContentTransitions">true</item>
         <!-- Custom transitions for activity transitions -->
-        <item name="android:windowSharedElementEnterTransition">@transition/grid_detail_transition
-        </item>
-        <item name="android:windowSharedElementExitTransition">@transition/grid_detail_transition
-        </item>
         <item name="android:titleTextAppearance">@style/AppTheme.TextAppearance.Title</item>
         <item name="android:navigationBarColor">@color/topeka_primary</item>
         <item name="android:statusBarColor">@color/topeka_primary</item>

@@ -37,13 +37,12 @@ import com.google.samples.apps.topeka.activity.QuizSelectionActivity;
 import com.google.samples.apps.topeka.adapter.AvatarAdapter;
 import com.google.samples.apps.topeka.model.Avatar;
 import com.google.samples.apps.topeka.model.Player;
-import com.google.samples.apps.topeka.widget.PlayArrow;
+import com.google.samples.apps.topeka.widget.FloatingActionButton;
 
 public class SignInFragment extends Fragment implements View.OnClickListener,
         AdapterView.OnItemClickListener {
 
     private Player mPlayer;
-    private GridView mGridView;
     private EditText mFirstName;
     private EditText mLastName;
     private Avatar mSelectedAvatar = Avatar.ONE;
@@ -66,12 +65,12 @@ public class SignInFragment extends Fragment implements View.OnClickListener,
     private void initViews(View view) {
         mFirstName = getView(view, R.id.first_name);
         mLastName = getView(view, R.id.last_initial);
-        PlayArrow check = getView(view, R.id.check);
+        FloatingActionButton check = getView(view, R.id.check);
         check.setOnClickListener(this);
-        mGridView = (GridView) view.findViewById(R.id.avatars);
-        mGridView.setAdapter(new AvatarAdapter(getActivity()));
-        mGridView.setOnItemClickListener(this);
-        mGridView.setNumColumns(calculateSpanCount());
+        GridView gridView = (GridView) view.findViewById(R.id.avatars);
+        gridView.setAdapter(new AvatarAdapter(getActivity()));
+        gridView.setOnItemClickListener(this);
+        gridView.setNumColumns(calculateSpanCount());
     }
 
     @Override
@@ -100,7 +99,7 @@ public class SignInFragment extends Fragment implements View.OnClickListener,
             mFirstName.setText(mPlayer.getFirstName());
             mLastName.setText(mPlayer.getLastInitial());
             mSelectedAvatar = mPlayer.getAvatar();
-            mGridView.setSelection(mSelectedAvatar.ordinal());
+            //TODO: 10/28/14 keep avatar selected on GridView
         }
     }
 

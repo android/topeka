@@ -14,14 +14,9 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
-
-    <ImageView
-        android:id="@+id/avatar"
-        android:layout_width="@dimen/avatar_size"
-        android:layout_height="@dimen/avatar_size"
-        android:contentDescription="@string/an_avatar"
-        android:layout_gravity="center" />
-</FrameLayout>
+<ImageView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/avatar"
+    android:layout_width="@dimen/avatar_size"
+    android:layout_height="@dimen/avatar_size"
+    android:contentDescription="@string/an_avatar"
+    android:layout_gravity="center" />

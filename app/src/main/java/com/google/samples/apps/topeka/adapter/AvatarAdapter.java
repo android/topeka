@@ -23,8 +23,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
-import com.google.samples.apps.topeka.AvatarOutlineProvider;
 import com.google.samples.apps.topeka.R;
+import com.google.samples.apps.topeka.widget.outlineprovider.AvatarOutlineProvider;
 import com.google.samples.apps.topeka.model.Avatar;
 
 public class AvatarAdapter extends BaseAdapter {
@@ -33,20 +33,16 @@ public class AvatarAdapter extends BaseAdapter {
 
     private final Context mContext;
 
-
     public AvatarAdapter(Context context) {
         mContext = context;
     }
-
-
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         if (null == convertView) {
             convertView = LayoutInflater.from(mContext).inflate(R.layout.item_avatar, parent, false);
         }
-        ImageView mIcon = (ImageView) convertView.findViewById(R.id.avatar);
-        setAvatar(mIcon, mAvatars[position]);
+        setAvatar((ImageView) convertView, mAvatars[position]);
         return convertView;
     }
 

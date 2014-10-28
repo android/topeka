@@ -138,13 +138,13 @@ public class TopekaDatabaseHelper extends SQLiteOpenHelper {
         /* no-op */
     }
 
-    interface CategoryTable {
+    public interface CategoryTable {
 
         static final String NAME = "category";
 
         static final String COLUMN_ID = BaseColumns._ID;
         static final String COLUMN_DATA = "data";
-        static final String[] PROJECTION = new String[]{CategoryTable.COLUMN_ID,
+        public static final String[] PROJECTION = new String[]{CategoryTable.COLUMN_ID,
                 CategoryTable.COLUMN_DATA};
     }
 
@@ -165,16 +165,12 @@ public class TopekaDatabaseHelper extends SQLiteOpenHelper {
         }
 
         public int getId() {
-            int catId = getInt(getColumnIndex(CategoryTable.COLUMN_ID));
-            Log.d(TAG, "getId " + catId);
-            return catId;
+            return getInt(getColumnIndex(CategoryTable.COLUMN_ID));
         }
 
         public Category getCategory() {
-            Category category = getCustomizedGson()
+            return getCustomizedGson()
                     .fromJson(getString(getColumnIndex(CategoryTable.COLUMN_DATA)), Category.class);
-            Log.d(TAG, "getCategory " + category);
-            return category;
         }
 
         public List<Quiz> getQuizzes() {

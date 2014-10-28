@@ -24,7 +24,9 @@
         android:id="@+id/toolbar_player"
         android:layout_width="match_parent"
         android:layout_height="?android:attr/actionBarSize"
-        android:titleTextAppearance="@style/AppTheme.TextAppearance.Title" />
+        android:titleTextAppearance="@style/AppTheme.TextAppearance.Title"
+        android:transitionName="@string/transition_avatar"
+        android:elevation="@dimen/elevation_header" />
 
     <FrameLayout
         android:id="@+id/quiz_container"
@@ -35,8 +37,8 @@
         tools:ignore="MergeRootFrame">
 
         <ProgressBar
-            android:layout_width="@dimen/play_arrow_size"
-            android:layout_height="@dimen/play_arrow_size"
+            android:layout_width="@dimen/fab_size"
+            android:layout_height="@dimen/fab_size"
             android:id="@+id/progress"
             android:layout_gravity="center"
             android:indeterminateOnly="true" />

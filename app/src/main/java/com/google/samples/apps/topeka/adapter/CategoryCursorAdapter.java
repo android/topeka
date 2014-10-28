@@ -19,14 +19,12 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
 import android.database.Cursor;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CursorAdapter;
-
-import com.google.samples.apps.topeka.R;
 import com.google.samples.apps.topeka.model.Category;
 import com.google.samples.apps.topeka.persistence.TopekaDatabaseHelper;
+import com.google.samples.apps.topeka.widget.CategoryLayout;
 
 public class CategoryCursorAdapter extends CursorAdapter {
 
@@ -37,48 +35,55 @@ public class CategoryCursorAdapter extends CursorAdapter {
     public static final String PRIMARY = "_primary";
     public static final String FOREGROUND = "_foreground";
     public static final String DRAWABLE = "drawable";
+    private final Resources mResources;
+    private final String mPackageName;
 
     public CategoryCursorAdapter(Activity activity) {
-        super(activity, TopekaDatabaseHelper.getCategoryCursor(activity), true);
+        super(activity,TopekaDatabaseHelper.getCategoryCursor(activity), true);
+        mResources = activity.getResources();
+        mPackageName = activity.getPackageName();
+    }
+
+    private static void adjustStyles(Resources resources, String themeName, String packageName,
+            CategoryLayout categoryLayout) {
+        categoryLayout.setBackgroundResource(resources.getIdentifier(
+                THEME + themeName + BACKGROUND, COLOR, packageName));
+        categoryLayout.getName().setBackgroundResource(resources.getIdentifier(
+                THEME + themeName + PRIMARY, COLOR, packageName));
+        categoryLayout.getName().setTextColor(resources.getColor(resources.getIdentifier(
+                THEME + themeName + FOREGROUND, COLOR, packageName)));
     }
 
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
-        return LayoutInflater.from(context).inflate(R.layout.item_category, parent, false);
+        return new CategoryLayout(context);
     }
 
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
+        Category category = getCategoryOrThrow(cursor);
+        // Set contents
+        if (view instanceof CategoryLayout) {
+            CategoryLayout categoryLayout = (CategoryLayout) view;
+            categoryLayout.setImageResource(mResources.getIdentifier(
+                    ICON_CATEGORY + category.getId(), DRAWABLE, mPackageName));
+            categoryLayout.setText(category.getName());
+
+            adjustStyles(mResources, category.getTheme().name(), mPackageName, categoryLayout);
+        }
+    }
+
+    private Category getCategoryOrThrow(Cursor cursor) {
+        final TopekaDatabaseHelper.CategoryCursor categoryCursor = getCategoryCursorOrThrow(cursor);
+        return categoryCursor.getCategory();
+    }
+
+    private TopekaDatabaseHelper.CategoryCursor getCategoryCursorOrThrow(Cursor cursor) {
         if (cursor instanceof TopekaDatabaseHelper.CategoryCursor) {
-            final TopekaDatabaseHelper.CategoryCursor categoryCursor
-                    = (TopekaDatabaseHelper.CategoryCursor) cursor;
-            final Category category = categoryCursor.getCategory();
-            final Resources resources = context.getResources();
-            final String packageName = context.getPackageName();
-            final String categoryId = category.getId();
-
-            CategoryViewHolder holder = new CategoryViewHolder(view);
-
-            // Set contents
-            holder.getIcon().setImageResource(resources.getIdentifier(
-                    ICON_CATEGORY + categoryId, DRAWABLE, packageName));
-            holder.getName().setText(category.getName());
-            // Adjust styles
-            adjustStyles(resources, category.getTheme().name(), packageName, holder);
+            return (TopekaDatabaseHelper.CategoryCursor) cursor;
         } else {
             throw new UnsupportedOperationException(
                     "This adapter only works with an CategoryCursor");
         }
     }
-
-    private static void adjustStyles(Resources resources, String themeName, String packageName,
-            CategoryViewHolder holder) {
-        holder.getContainer().setBackgroundResource(resources.getIdentifier(
-                THEME + themeName + BACKGROUND, COLOR, packageName));
-        holder.getName().setBackgroundResource(resources.getIdentifier(
-                THEME + themeName + PRIMARY, COLOR, packageName));
-        holder.getName().setTextColor(resources.getColor(resources.getIdentifier(
-                THEME + themeName + FOREGROUND, COLOR, packageName)));
-    }
-
 }

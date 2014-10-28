@@ -20,27 +20,29 @@ import android.content.res.Resources;
 import android.util.AttributeSet;
 import android.widget.ImageView;
 
+import com.google.samples.apps.topeka.widget.outlineprovider.FabOutlineProvider;
 import com.google.samples.apps.topeka.R;
 
-public class PlayArrow extends ImageView {
+public class FloatingActionButton extends ImageView {
 
-    public PlayArrow(Context context) {
+    public FloatingActionButton(Context context) {
         this(context, null);
     }
 
-    public PlayArrow(Context context, AttributeSet attrs) {
+    public FloatingActionButton(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public PlayArrow(Context context, AttributeSet attrs, int defStyle) {
+    public FloatingActionButton(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         setFocusable(true);
         setClickable(true);
         Resources resources = getResources();
-        final int arrowPadding = resources.getDimensionPixelSize(R.dimen.padding_play_arrow);
-        setPadding(arrowPadding, arrowPadding, arrowPadding, arrowPadding);
-        setImageResource(R.drawable.ic_play_arrow);
+        final int fabPadding = resources.getDimensionPixelSize(R.dimen.padding_fab);
+        setPadding(fabPadding, fabPadding, fabPadding, fabPadding);
+        setOutlineProvider(new FabOutlineProvider());
+        setClipToOutline(true);
         setBackgroundResource(R.drawable.fab_background);
-        setElevation(resources.getDimension(R.dimen.elevation_default));
+        setElevation(resources.getDimension(R.dimen.elevation_fab));
     }
 }

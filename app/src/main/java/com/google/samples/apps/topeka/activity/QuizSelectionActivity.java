@@ -48,7 +48,7 @@ public class QuizSelectionActivity extends FragmentActivity {
         Player player = getIntent().getParcelableExtra(EXTRA_PLAYER);
         setUpToolbar(player, (Toolbar) findViewById(R.id.toolbar_player));
         if (savedInstanceState == null) {
-            loadCategories();
+            attachCategoryGridFragment();
         } else {
             setProgressBarVisibility(View.GONE);
         }
@@ -73,7 +73,7 @@ public class QuizSelectionActivity extends FragmentActivity {
                 player.getLastInitial());
     }
 
-    private void loadCategories() {
+    private void attachCategoryGridFragment() {
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.quiz_container, CategoryGridFragment.newInstance())
                 .commit();

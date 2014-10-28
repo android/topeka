@@ -19,11 +19,13 @@ package com.google.samples.apps.topeka.fragment;
 import com.google.samples.apps.topeka.R;
 import com.google.samples.apps.topeka.activity.QuizActivity;
 import com.google.samples.apps.topeka.adapter.CategoryCursorAdapter;
+import com.google.samples.apps.topeka.widget.CategoryLayout;
 
 import android.app.Activity;
 import android.app.ActivityOptions;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,10 +60,17 @@ public class CategoryGridFragment extends Fragment implements AdapterView.OnItem
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Activity activity = getActivity();
         //TODO: finalize the animations
-        ActivityOptions activityOptions = ActivityOptions
-                .makeSceneTransitionAnimation(activity, view.findViewById(R.id.name),
-                        activity.getString(R.string.transition_background));
-        activity.startActivity(QuizActivity.getStartIntent(activity, position + 1),
-                activityOptions.toBundle());
+        if (view instanceof CategoryLayout) {
+            CategoryLayout categoryLayout = (CategoryLayout) view;
+            Pair[] pairs = new Pair[2];
+            pairs[0] = Pair.create(categoryLayout.getIcon(), activity.getString(R.string.transition_background));
+            pairs[1] = Pair.create(categoryLayout.getName(), activity.getString(R.string.transition_name));
+            ActivityOptions sceneTransitionAnimation = ActivityOptions
+                    .makeSceneTransitionAnimation(activity, pairs);
+            activity.startActivity(QuizActivity.getStartIntent(activity, position + 1),
+                    sceneTransitionAnimation.toBundle());
+        } else {
+            throw new UnsupportedOperationException("Only CategoryLayout is supported");
+        }
     }
 }

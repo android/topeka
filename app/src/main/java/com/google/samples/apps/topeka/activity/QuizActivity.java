@@ -141,5 +141,6 @@ public class QuizActivity extends Activity implements View.OnClickListener {
         if (null != actionBar) {
             actionBar.setBackgroundDrawable(new ColorDrawable(colorPrimary));
         }
+        getWindow().setNavigationBarColor(colorPrimary);
     }
 }
