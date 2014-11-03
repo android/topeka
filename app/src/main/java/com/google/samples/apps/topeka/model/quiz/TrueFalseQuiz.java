@@ -31,7 +31,7 @@ public class TrueFalseQuiz extends Quiz<Boolean> {
     }
 
     @Override
-    protected Type getType() {
+    public Type getType() {
         return Type.TRUE_FALSE;
     }
 

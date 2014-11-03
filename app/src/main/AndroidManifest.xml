@@ -35,11 +35,11 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".activity.QuizSelectionActivity" />
+        <activity android:name=".activity.CategoryGridActivity" />
 
         <activity
             android:name=".activity.QuizActivity"
-            android:parentActivityName=".activity.QuizSelectionActivity" />
+            android:parentActivityName=".activity.CategoryGridActivity" />
 
     </application>
 </manifest>

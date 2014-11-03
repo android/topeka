@@ -34,4 +34,7 @@
     <dimen name="size_edit_text">18sp</dimen>
     <dimen name="size_card_name">14sp</dimen>
     <dimen name="stroke_width_avatar">4dp</dimen>
+    <dimen name="vector_icon_size">48dp</dimen>
+    <item type="integer" name="vector_icon_viewport">48</item>
+    <item type="integer" name="vector_avatar_viewport">128</item>
 </resources>

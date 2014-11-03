@@ -19,37 +19,35 @@ package com.google.samples.apps.topeka.activity;
 import com.google.samples.apps.topeka.ActivityHelper;
 import com.google.samples.apps.topeka.PreferencesHelper;
 import com.google.samples.apps.topeka.R;
+import com.google.samples.apps.topeka.fragment.QuizFragment;
 import com.google.samples.apps.topeka.model.Category;
 import com.google.samples.apps.topeka.model.Player;
 import com.google.samples.apps.topeka.model.Theme;
 import com.google.samples.apps.topeka.persistence.TopekaDatabaseHelper;
 
 import android.app.ActionBar;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.annotation.IdRes;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.Toast;
 import android.widget.Toolbar;
 
 import static com.google.samples.apps.topeka.adapter.CategoryCursorAdapter.DRAWABLE;
 
-public class QuizActivity extends Activity implements View.OnClickListener {
+public class QuizActivity extends FragmentActivity implements View.OnClickListener {
 
     private static final String TAG = "QuizActivity";
-    private static final String BACKGROUND = "_background";
-    private static final String PRIMARY = "_primary";
-    private static final String FOREGROUND = "_foreground";
-    private static final String THEME = "theme_";
-    private static final String COLOR = "color";
     private static final String IMAGE_CATEGORY = "image_category_";
     private static final int NO_CATEGORY = -1;
     private Player mPlayer;
+    private int mCategoryId;
 
     public static Intent getStartIntent(Context context, int category) {
         Intent starter = new Intent(context, QuizActivity.class);
@@ -60,16 +58,19 @@ public class QuizActivity extends Activity implements View.OnClickListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        populate(getIntent().getIntExtra(Category.TAG, NO_CATEGORY));
+        mPlayer = PreferencesHelper.getPlayer(this);
+        mCategoryId = getIntent().getIntExtra(Category.TAG, NO_CATEGORY);
+        populate(mCategoryId);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_start_quiz:
-                //TODO: replace with real action
-                Toast.makeText(this, "I'm sorry Dave, I can't let you do this.", Toast.LENGTH_LONG)
-                        .show();
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.quiz_fragment_container, QuizFragment.newInstance(mCategoryId))
+                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                        .commit();
                 break;
             default:
                 throw new UnsupportedOperationException(
@@ -86,12 +87,12 @@ public class QuizActivity extends Activity implements View.OnClickListener {
         Category category = TopekaDatabaseHelper.getCategoryAt(this, categoryId);
         initLayout(category.getId());
         setTheme(category.getTheme());
-        setToolbar(category);
+        initToolbar(category);
     }
 
     private void initLayout(String categoryId) {
         setContentView(R.layout.activity_quiz);
-
+        //TODO: 11/3/14 find a better way to do this, which doesn't include resource lookup.
         ImageView icon = (ImageView) findViewById(R.id.icon);
         icon.setImageResource(getResources().getIdentifier(IMAGE_CATEGORY + categoryId, DRAWABLE,
                 getApplicationContext().getPackageName()));
@@ -101,39 +102,39 @@ public class QuizActivity extends Activity implements View.OnClickListener {
     }
 
     private void setTheme(Theme theme) {
-
         if (null == theme) {
             Log.d(TAG, "No theme found. Falling back to default");
             theme = Theme.topeka;
         }
-        //TODO: find a way to set the theme without string matching
-
-        int colorBackground = getColor(theme, BACKGROUND);
-        int colorPrimary = getColor(theme, PRIMARY);
-
-        findViewById(R.id.quiz_container).setBackgroundColor(colorBackground);
-
-        ActivityHelper.setStatusAndNavigationBarColor(this, colorPrimary);
-        setActionBarColor(colorPrimary);
-
-        setTheme(theme.getResId());
-        Log.d(TAG, "Current theme is" + getResources().getResourceName(theme.getResId()));
+        setPrimaryColors(theme);
+        setBackgroundColors(theme);
+        Log.d(TAG, "Current theme is " + theme.name());
     }
 
-    private void setToolbar(Category category) {
-        mPlayer = PreferencesHelper.getPlayer(this);
+    private void setPrimaryColors(Theme theme) {
+        int colorPrimary = getColor(theme.getColorPrimaryColor());
+        ActivityHelper.setStatusAndNavigationBarColor(this, colorPrimary);
+        setActionBarColor(colorPrimary);
+    }
+
+    private void setBackgroundColors(Theme theme) {
+        int colorBackground = getColor(theme.getWindowBackgroundColor());
+        setBackgroundColor(R.id.quiz_container, colorBackground);
+        setBackgroundColor(R.id.toolbar_quiz, colorBackground);
+    }
+
+    private void setBackgroundColor(@IdRes int viewResId, int colorBackground) {
+        findViewById(viewResId).setBackgroundColor(colorBackground);
+    }
+
+    private void initToolbar(Category category) {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_quiz);
-        toolbar.setNavigationIcon(mPlayer.getAvatar().getDrawableId());
-        toolbar.setSubtitle(getString(R.string.quiz_of_quizzes, 0, category.getQuizzes().size()));
         toolbar.setTitle(category.getName());
     }
 
-    private int getColor(Theme theme, String colorType) {
+    private int getColor(int colorId) {
         Resources resources = getResources();
-        int resourceId = resources
-                .getIdentifier(THEME + theme.name() + colorType, COLOR,
-                        getApplicationContext().getPackageName());
-        return resources.getColor(resourceId);
+        return resources.getColor(colorId);
     }
 
     private void setActionBarColor(int colorPrimary) {

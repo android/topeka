@@ -19,6 +19,16 @@ package com.google.samples.apps.topeka.model.quiz;
 import com.google.gson.annotations.SerializedName;
 import com.google.samples.apps.topeka.ParcelableHelper;
 import com.google.samples.apps.topeka.model.JsonAttributes;
+import com.google.samples.apps.topeka.widget.quiz.AbsQuizView;
+import com.google.samples.apps.topeka.widget.quiz.AlphaPickerQuizView;
+import com.google.samples.apps.topeka.widget.quiz.FillBlankQuizView;
+import com.google.samples.apps.topeka.widget.quiz.FillTwoBlanksQuizView;
+import com.google.samples.apps.topeka.widget.quiz.FourQuarterQuizView;
+import com.google.samples.apps.topeka.widget.quiz.MultiSelectQuizView;
+import com.google.samples.apps.topeka.widget.quiz.PickerQuizView;
+import com.google.samples.apps.topeka.widget.quiz.SelectItemQuizView;
+import com.google.samples.apps.topeka.widget.quiz.ToggleTranslateQuizView;
+import com.google.samples.apps.topeka.widget.quiz.TrueFalseQuizView;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -35,47 +45,6 @@ import static com.google.samples.apps.topeka.model.JsonAttributes.QuizType;
 public abstract class Quiz<A> implements Parcelable {
 
     private static final String TAG = "Quiz";
-
-    @SerializedName(JsonAttributes.QUESTION)
-    private final String mQuestion;
-
-    @SerializedName(JsonAttributes.ANSWER)
-    private A mAnswer;
-
-    protected Quiz(String question, A answer) {
-        mQuestion = question;
-        mAnswer = answer;
-    }
-
-    protected Quiz(Parcel in) {
-        mQuestion = in.readString();
-    }
-
-    public String getQuestion() {
-        return mQuestion;
-    }
-
-    public A getAnswer() {
-        return mAnswer;
-    }
-
-    protected void setAnswer(A answer) {
-        mAnswer = answer;
-    }
-
-    protected abstract Type getType();
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        ParcelableHelper.writeEnumValue(dest, getType());
-        dest.writeString(mQuestion);
-    }
-
     public static final Creator<Quiz> CREATOR = new Creator<Quiz>() {
         @Override
         public Quiz createFromParcel(Parcel in) {
@@ -102,6 +71,44 @@ public abstract class Quiz<A> implements Parcelable {
             return new Quiz[size];
         }
     };
+    @SerializedName(JsonAttributes.QUESTION)
+    private final String mQuestion;
+    @SerializedName(JsonAttributes.ANSWER)
+    private A mAnswer;
+
+    protected Quiz(String question, A answer) {
+        mQuestion = question;
+        mAnswer = answer;
+    }
+
+    protected Quiz(Parcel in) {
+        mQuestion = in.readString();
+    }
+
+    public String getQuestion() {
+        return mQuestion;
+    }
+
+    public A getAnswer() {
+        return mAnswer;
+    }
+
+    protected void setAnswer(A answer) {
+        mAnswer = answer;
+    }
+
+    public abstract Type getType();
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        ParcelableHelper.writeEnumValue(dest, getType());
+        dest.writeString(mQuestion);
+    }
 
     public enum Type {
         ALPHA_PICKER(QuizType.ALPHA_PICKER, AlphaPickerQuiz.class),

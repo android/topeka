@@ -59,7 +59,7 @@ public final class PickerQuiz extends Quiz<Integer> {
     }
 
     @Override
-    protected Type getType() {
+    public Type getType() {
         return Type.PICKER;
     }
 

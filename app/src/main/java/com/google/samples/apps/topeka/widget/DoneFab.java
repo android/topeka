@@ -13,30 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.google.samples.apps.topeka.model.quiz;
+package com.google.samples.apps.topeka.widget;
 
-import android.os.Parcel;
+import android.content.Context;
+import android.util.AttributeSet;
 
-public class FillTwoBlanksQuiz extends Quiz<String[]> {
+import com.google.samples.apps.topeka.R;
 
-    public FillTwoBlanksQuiz(String question, String[] answer) {
-        super(question, answer);
+public class DoneFab extends FloatingActionButton {
+
+    public DoneFab(Context context) {
+        this(context, null);
     }
 
-    public FillTwoBlanksQuiz(Parcel in) {
-        super(in);
-        String answer[] = in.createStringArray();
-        setAnswer(answer);
+    public DoneFab(Context context, AttributeSet attrs) {
+        this(context, attrs, 0);
     }
 
-    @Override
-    public Type getType() {
-        return Type.FILL_TWO_BLANKS;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        super.writeToParcel(dest, flags);
-        dest.writeStringArray(getAnswer());
+    public DoneFab(Context context, AttributeSet attrs, int defStyle) {
+        super(context, attrs, defStyle);
+        setImageResource(R.drawable.ic_done);
     }
 }

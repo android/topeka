@@ -13,31 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.google.samples.apps.topeka.model.quiz;
+package com.google.samples.apps.topeka.widget.quiz;
 
+import android.content.Context;
+import android.view.View;
+import android.widget.EditText;
 
-import android.os.Parcel;
+import com.google.samples.apps.topeka.model.Category;
+import com.google.samples.apps.topeka.model.quiz.FillBlankQuiz;
 
-public class MultiSelectQuiz extends OptionsQuiz<String> {
+public class FillBlankQuizView extends AbsQuizView<FillBlankQuiz> {
 
-    public MultiSelectQuiz(String question, int[] answer, String[] options) {
-        super(question, answer, options);
-    }
-
-    public MultiSelectQuiz(Parcel in) {
-        super(in);
-        String options[] = in.createStringArray();
-        setOptions(options);
-    }
-
-    @Override
-    public Type getType() {
-        return Type.MULTI_SELECT;
+    public FillBlankQuizView(Context context, Category category, FillBlankQuiz quiz) {
+        super(context, category, quiz);
     }
 
     @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        super.writeToParcel(dest, flags);
-        dest.writeStringArray(getOptions());
+    protected View getQuizContentView() {
+        return new EditText(getContext());
     }
 }

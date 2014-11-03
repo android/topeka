@@ -29,7 +29,7 @@ public class AlphaPickerQuiz extends Quiz<String> {
     }
 
     @Override
-    protected Type getType() {
+    public Type getType() {
         return Type.ALPHA_PICKER;
     }
 

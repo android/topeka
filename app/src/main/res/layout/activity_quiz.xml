@@ -14,8 +14,9 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 -->
-<LinearLayout
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/quiz_container"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -24,12 +25,22 @@
         android:id="@+id/toolbar_quiz"
         android:layout_width="match_parent"
         android:layout_height="?android:attr/actionBarSize"
-        android:elevation="@dimen/elevation_header" />
+        android:elevation="@dimen/elevation_header"
+        android:layout_gravity="top" />
+
+    <com.google.samples.apps.topeka.widget.PlayFab
+        android:id="@+id/btn_start_quiz"
+        android:layout_width="@dimen/fab_size"
+        android:layout_height="@dimen/fab_size"
+        android:layout_gravity="top|end"
+        android:layout_marginEnd="@dimen/padding_default"
+        android:layout_marginTop="@dimen/padding_default" />
 
     <FrameLayout
-        android:id="@+id/quiz_container"
+        android:layout_marginTop="?android:attr/actionBarSize"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_gravity="center">
 
         <ImageView
             android:id="@+id/icon"
@@ -40,13 +51,10 @@
             android:scaleType="center"
             android:layout_gravity="center" />
 
-        <com.google.samples.apps.topeka.widget.FloatingActionButton
-            android:id="@+id/btn_start_quiz"
-            android:layout_width="@dimen/fab_size"
-            android:layout_height="@dimen/fab_size"
-            android:layout_marginBottom="@dimen/fab_size"
-            android:transitionName="@string/transition_name"
-            android:layout_gravity="bottom|center_horizontal" />
-
+        <FrameLayout
+            android:id="@+id/quiz_fragment_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
     </FrameLayout>
-</LinearLayout>
+</FrameLayout>

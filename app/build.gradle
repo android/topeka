@@ -17,9 +17,8 @@
 apply plugin: 'com.android.application'
 
 android {
-    buildToolsVersion "21.0.0"
+    buildToolsVersion "21.0.2"
     compileSdkVersion 21
-    useOldManifestMerger true
 
     defaultConfig {
         applicationId "com.google.samples.apps.topeka"

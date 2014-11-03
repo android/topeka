@@ -28,7 +28,7 @@ import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.Toolbar;
 
-public class QuizSelectionActivity extends FragmentActivity {
+public class CategoryGridActivity extends FragmentActivity {
 
     private static final String TAG = "MainActivity";
     private static final String URL
@@ -36,7 +36,7 @@ public class QuizSelectionActivity extends FragmentActivity {
     private static final String EXTRA_PLAYER = "player";
 
     public static void start(Context context, Player player, ActivityOptions options) {
-        Intent starter = new Intent(context, QuizSelectionActivity.class);
+        Intent starter = new Intent(context, CategoryGridActivity.class);
         starter.putExtra(EXTRA_PLAYER, player);
         context.startActivity(starter, options.toBundle());
     }

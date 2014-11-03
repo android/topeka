@@ -19,20 +19,36 @@ package com.google.samples.apps.topeka.model;
 import com.google.samples.apps.topeka.R;
 
 public enum Theme {
-    topeka(R.style.AppTheme),
-    blue(R.style.Topeka_Blue),
-    green(R.style.Topeka_Green),
-    purple(R.style.Topeka_Purple),
-    red(R.style.Topeka_Red),
-    yellow(R.style.Topeka_Yellow);
+    topeka(R.color.topeka_primary, R.color.theme_blue_background, R.color.theme_blue_foreground),
+    blue(R.color.theme_blue_primary, R.color.theme_blue_background, R.color.theme_blue_foreground),
+    green(R.color.theme_green_primary, R.color.theme_green_background,
+            R.color.theme_green_foreground),
+    purple(R.color.theme_purple_primary, R.color.theme_purple_background,
+            R.color.theme_purple_foreground),
+    red(R.color.theme_red_primary, R.color.theme_red_background, R.color.theme_red_foreground),
+    yellow(R.color.theme_yellow_primary, R.color.theme_yellow_background,
+            R.color.theme_yellow_foreground);
 
-    private int mThemeId;
+    private final int mColorPrimaryId;
+    private final int mWindowBackgroundId;
+    private final int mTextColorPrimaryId;
 
-    private Theme(final int themeId) {
-        this.mThemeId = themeId;
+    private Theme(final int colorPrimaryId, final int windowBackgroundId,
+            final int textColorPrimaryId) {
+        mColorPrimaryId = colorPrimaryId;
+        mWindowBackgroundId = windowBackgroundId;
+        mTextColorPrimaryId = textColorPrimaryId;
     }
 
-    public int getResId() {
-        return mThemeId;
+    public int getTextColorPrimaryColor() {
+        return mTextColorPrimaryId;
+    }
+
+    public int getWindowBackgroundColor() {
+        return mWindowBackgroundId;
+    }
+
+    public int getColorPrimaryColor() {
+        return mColorPrimaryId;
     }
 }

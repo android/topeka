@@ -33,7 +33,7 @@ import android.widget.Toolbar;
 
 import com.google.samples.apps.topeka.PreferencesHelper;
 import com.google.samples.apps.topeka.R;
-import com.google.samples.apps.topeka.activity.QuizSelectionActivity;
+import com.google.samples.apps.topeka.activity.CategoryGridActivity;
 import com.google.samples.apps.topeka.adapter.AvatarAdapter;
 import com.google.samples.apps.topeka.model.Avatar;
 import com.google.samples.apps.topeka.model.Player;
@@ -77,19 +77,22 @@ public class SignInFragment extends Fragment implements View.OnClickListener,
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.check:
-                Activity activity = getActivity();
-                mPlayer = new Player(mFirstName.getText().toString(),
-                        mLastName.getText().toString(), mSelectedAvatar);
-                PreferencesHelper.writeToPreferences(activity, mPlayer);
-                ActivityOptions activityOptions = ActivityOptions
-                        .makeSceneTransitionAnimation(activity, v,
-                                activity.getString(R.string.transition_sign_in));
-                QuizSelectionActivity.start(activity, mPlayer, activityOptions);
+                performSignIn(v);
                 break;
             default:
                 throw new UnsupportedOperationException(
                         "This click handler has not been implemented.");
         }
+    }
+
+    private void performSignIn(View v) {
+        Activity activity = getActivity();
+        mPlayer = new Player(mFirstName.getText().toString(), mLastName.getText().toString(),
+                mSelectedAvatar);
+        PreferencesHelper.writeToPreferences(activity, mPlayer);
+        ActivityOptions activityOptions = ActivityOptions.makeSceneTransitionAnimation(activity, v,
+                activity.getString(R.string.transition_sign_in));
+        CategoryGridActivity.start(activity, mPlayer, activityOptions);
     }
 
 

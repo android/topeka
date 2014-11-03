@@ -39,7 +39,7 @@ public interface JsonAttributes {
         public static final String FILL_TWO_BLANKS = "fill-two-blanks";
         public static final String FOUR_QUARTER = "four-quarter";
         public static final String MULTI_SELECT = "multi-select";
-        public static final String PICKER = "type-picker";
+        public static final String PICKER = "picker";
         public static final String SINGLE_SELECT = "single-select";
         public static final String SINGLE_SELECT_ITEM = "single-select-item";
         public static final String TOGGLE_TRANSLATE = "toggle-translate";

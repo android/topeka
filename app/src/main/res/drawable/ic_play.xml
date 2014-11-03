@@ -14,19 +14,18 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <Toolbar
-        android:id="@+id/toolbar_quiz"
-        android:layout_width="match_parent"
-        android:layout_height="?android:attr/actionBarSize" />
-
-    <FrameLayout
-        android:id="@+id/quiz_content"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-
-</android.support.v7.widget.CardView>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="@dimen/vector_icon_size"
+    android:height="@dimen/vector_icon_size"
+    android:viewportWidth="@integer/vector_icon_viewport"
+    android:viewportHeight="@integer/vector_icon_viewport">
+    <path
+        android:pathData="M-838-2232H562v3600H-838z"
+        android:fillColor="@null" />
+    <path
+        android:pathData="M16 10v28l22-14z"
+        android:fillColor="@android:color/black" />
+    <path
+        android:pathData="M0 0h48v48H0z"
+        android:fillColor="@null" />
+</vector>

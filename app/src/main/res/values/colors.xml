@@ -21,26 +21,29 @@
     <color name="topeka_primary_dark">#008c9e</color>
     <color name="topeka_blank">#424242</color>
 
+    <color name="font_bright">#fff</color>
+    <color name="font_dark">#616161</color>
+
     <!-- theme colors -->
     <color name="theme_blue_background">#84ffff</color>
     <color name="theme_blue_primary">#03a9f4</color>
-    <color name="theme_blue_foreground">#fff</color>
+    <color name="theme_blue_foreground">@color/font_bright</color>
 
     <color name="theme_green_background">#b9f6ca</color>
     <color name="theme_green_primary">#1de9b6</color>
-    <color name="theme_green_foreground">#616161</color>
+    <color name="theme_green_foreground">@color/font_dark</color>
 
     <color name="theme_purple_background">#b388ff</color>
     <color name="theme_purple_primary">#7e57c2</color>
-    <color name="theme_purple_foreground">#fff</color>
+    <color name="theme_purple_foreground">@color/font_bright</color>
 
     <color name="theme_red_background">#ff8a80</color>
     <color name="theme_red_primary">#ff5252</color>
-    <color name="theme_red_foreground">#fff</color>
+    <color name="theme_red_foreground">@color/font_bright</color>
 
     <color name="theme_yellow_background">#ffff8d</color>
     <color name="theme_yellow_primary">#ffeb3b</color>
-    <color name="theme_yellow_foreground">#616161</color>
+    <color name="theme_yellow_foreground">@color/font_dark</color>
 
     <color name="category_icon_background">#ff9</color>
     <color name="category_name_background">#dd6</color>

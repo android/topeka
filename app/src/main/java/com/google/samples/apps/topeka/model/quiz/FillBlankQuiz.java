@@ -51,7 +51,7 @@ public final class FillBlankQuiz extends Quiz<String> {
     }
 
     @Override
-    protected Type getType() {
+    public Type getType() {
         return Type.FILL_BLANK;
     }
 

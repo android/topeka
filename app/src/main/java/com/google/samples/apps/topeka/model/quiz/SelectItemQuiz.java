@@ -30,7 +30,7 @@ public class SelectItemQuiz extends OptionsQuiz<String> {
     }
 
     @Override
-    protected Type getType() {
+    public Type getType() {
         return Type.SINGLE_SELECT;
     }
 

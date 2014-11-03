@@ -25,7 +25,6 @@ import android.app.Activity;
 import android.app.ActivityOptions;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,11 +61,9 @@ public class CategoryGridFragment extends Fragment implements AdapterView.OnItem
         //TODO: finalize the animations
         if (view instanceof CategoryLayout) {
             CategoryLayout categoryLayout = (CategoryLayout) view;
-            Pair[] pairs = new Pair[2];
-            pairs[0] = Pair.create(categoryLayout.getIcon(), activity.getString(R.string.transition_background));
-            pairs[1] = Pair.create(categoryLayout.getName(), activity.getString(R.string.transition_name));
             ActivityOptions sceneTransitionAnimation = ActivityOptions
-                    .makeSceneTransitionAnimation(activity, pairs);
+                    .makeSceneTransitionAnimation(activity, categoryLayout.getIcon(),
+                            activity.getString(R.string.transition_background));
             activity.startActivity(QuizActivity.getStartIntent(activity, position + 1),
                     sceneTransitionAnimation.toBundle());
         } else {

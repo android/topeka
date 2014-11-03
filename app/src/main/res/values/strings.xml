@@ -27,4 +27,6 @@
     <string name="description_user_preferences">User preferences</string>
     <string name="player_display_name">%1$s %2$s</string>
     <string name="quiz_of_quizzes">%1$s / %2$s</string>
+    <string name="btn_true">True</string>
+    <string name="btn_false">False</string>
 </resources>

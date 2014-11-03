@@ -44,7 +44,7 @@ public class FourQuarterQuiz extends OptionsQuiz<String> {
     }
 
     @Override
-    protected Type getType() {
+    public Type getType() {
         return Type.FOUR_QUARTER;
     }
 

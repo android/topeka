@@ -18,14 +18,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.google.samples.apps.topeka.widget.FloatingActionButton
+    <com.google.samples.apps.topeka.widget.DoneFab
         android:id="@+id/check"
         android:layout_height="@dimen/fab_size"
         android:layout_width="@dimen/fab_size"
         android:layout_marginEnd="@dimen/padding_default"
         android:layout_marginTop="@dimen/padding_default"
-        android:layout_gravity="top|end"
-        android:src="@drawable/ic_play_arrow" />
+        android:layout_gravity="top|end" />
 
     <LinearLayout
         android:orientation="vertical"
