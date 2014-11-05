@@ -45,13 +45,12 @@ public class QuizActivity extends FragmentActivity implements View.OnClickListen
 
     private static final String TAG = "QuizActivity";
     private static final String IMAGE_CATEGORY = "image_category_";
-    private static final int NO_CATEGORY = -1;
     private Player mPlayer;
-    private int mCategoryId;
+    private String mCategoryId;
 
-    public static Intent getStartIntent(Context context, int category) {
+    public static Intent getStartIntent(Context context, Category category) {
         Intent starter = new Intent(context, QuizActivity.class);
-        starter.putExtra(Category.TAG, category);
+        starter.putExtra(Category.TAG, category.getId());
         return starter;
     }
 
@@ -59,7 +58,7 @@ public class QuizActivity extends FragmentActivity implements View.OnClickListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mPlayer = PreferencesHelper.getPlayer(this);
-        mCategoryId = getIntent().getIntExtra(Category.TAG, NO_CATEGORY);
+        mCategoryId = getIntent().getStringExtra(Category.TAG);
         populate(mCategoryId);
     }
 
@@ -79,12 +78,12 @@ public class QuizActivity extends FragmentActivity implements View.OnClickListen
         }
     }
 
-    private void populate(int categoryId) {
-        if (categoryId < 0) {
+    private void populate(String categoryId) {
+        if (null == categoryId) {
             //TODO: handle failing
             finish();
         }
-        Category category = TopekaDatabaseHelper.getCategoryAt(this, categoryId);
+        Category category = TopekaDatabaseHelper.getCategoryWith(this, categoryId);
         initLayout(category.getId());
         setTheme(category.getTheme());
         initToolbar(category);
@@ -112,15 +111,16 @@ public class QuizActivity extends FragmentActivity implements View.OnClickListen
     }
 
     private void setPrimaryColors(Theme theme) {
-        int colorPrimary = getColor(theme.getColorPrimaryColor());
+        int colorPrimary = getColor(theme.getPrimaryColor());
         ActivityHelper.setStatusAndNavigationBarColor(this, colorPrimary);
         setActionBarColor(colorPrimary);
     }
 
     private void setBackgroundColors(Theme theme) {
         int colorBackground = getColor(theme.getWindowBackgroundColor());
+        int colorPrimary = getColor(theme.getPrimaryColor());
         setBackgroundColor(R.id.quiz_container, colorBackground);
-        setBackgroundColor(R.id.toolbar_quiz, colorBackground);
+        setBackgroundColor(R.id.toolbar_quiz, colorPrimary);
     }
 
     private void setBackgroundColor(@IdRes int viewResId, int colorBackground) {

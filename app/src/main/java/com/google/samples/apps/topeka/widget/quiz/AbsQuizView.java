@@ -16,41 +16,61 @@
 package com.google.samples.apps.topeka.widget.quiz;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
+import android.support.v7.widget.CardView;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.Toolbar;
+import android.widget.TextView;
 
 import com.google.samples.apps.topeka.R;
 import com.google.samples.apps.topeka.model.Category;
+import com.google.samples.apps.topeka.model.Theme;
 import com.google.samples.apps.topeka.model.quiz.Quiz;
 import com.google.samples.apps.topeka.widget.DoneFab;
 import com.google.samples.apps.topeka.widget.FloatingActionButton;
 
 
-public abstract class AbsQuizView<Q extends Quiz> extends LinearLayout implements
+public abstract class AbsQuizView<Q extends Quiz> extends CardView implements
         View.OnClickListener {
 
     private final FloatingActionButton mSubmitAnswer;
-    private final Toolbar mToolbar;
+    private final TextView mQuestionView;
     private Q mQuiz;
 
     public AbsQuizView(Context context, Category category, Q quiz) {
         super(context);
         mQuiz = quiz;
-        setOrientation(VERTICAL);
-
-        mToolbar = new Toolbar(context);
-        mToolbar.setTitle(getQuiz().getQuestion());
-        int backgroundColor = getResources()
-                .getColor(category.getTheme().getWindowBackgroundColor());
-        mToolbar.setBackgroundColor(backgroundColor);
-        addView(mToolbar,
-                new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
-
+        LinearLayout container = new LinearLayout(context);
+        container.setOrientation(LinearLayout.VERTICAL);
+        mQuestionView = new TextView(context);
+        setupQuestionView(category);
         mSubmitAnswer = new DoneFab(context);
         mSubmitAnswer.setId(R.id.submitAnswer);
-        addView(getQuizContentView(),
-                new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+        View quizContentView = getQuizContentView();
+        setDefaultPadding(quizContentView);
+
+        LayoutParams childLayoutParams = new LayoutParams(LayoutParams.MATCH_PARENT,
+                LayoutParams.WRAP_CONTENT);
+        container.addView(mQuestionView, childLayoutParams);
+        container.addView(quizContentView, childLayoutParams);
+        LayoutParams containerLayoutParams = new LayoutParams(LayoutParams.MATCH_PARENT,
+                LayoutParams.WRAP_CONTENT);
+
+        addView(container, containerLayoutParams);
+    }
+
+    private void setupQuestionView(Category category) {
+        mQuestionView.setText(getQuiz().getQuestion());
+        mQuestionView
+                .setTextAppearance(getContext(), android.R.style.TextAppearance_Material_Subhead);
+        mQuestionView.setTextColor(category.getTheme().getTextPrimaryColor());
+        int backgroundColor = getResources().getColor(category.getTheme().getPrimaryColor());
+        mQuestionView.setBackgroundColor(backgroundColor);
+    }
+
+    private void setDefaultPadding(View view) {
+        final int padding = getResources().getDimensionPixelSize(R.dimen.padding_default);
+        view.setPadding(padding, padding, padding, padding);
     }
 
     protected abstract View getQuizContentView();

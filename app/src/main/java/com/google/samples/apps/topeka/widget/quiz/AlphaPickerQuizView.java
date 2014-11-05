@@ -40,7 +40,7 @@ public class AlphaPickerQuizView extends AbsQuizView<AlphaPickerQuiz> implements
     @Override
     protected View getQuizContentView() {
         LinearLayout layout = new LinearLayout(getContext());
-        layout.setOrientation(VERTICAL);
+        layout.setOrientation(LinearLayout.VERTICAL);
         mCurrentSelection = new TextView(getContext());
         layout.addView(mCurrentSelection, new LayoutParams(LayoutParams.MATCH_PARENT, 0, 2));
         mCurrentSelection.setText(ALPHABET[0]);

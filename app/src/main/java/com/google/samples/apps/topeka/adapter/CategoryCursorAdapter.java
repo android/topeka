@@ -23,6 +23,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CursorAdapter;
 import com.google.samples.apps.topeka.model.Category;
+import com.google.samples.apps.topeka.persistence.CategoryCursor;
 import com.google.samples.apps.topeka.persistence.TopekaDatabaseHelper;
 import com.google.samples.apps.topeka.widget.CategoryLayout;
 
@@ -74,13 +75,13 @@ public class CategoryCursorAdapter extends CursorAdapter {
     }
 
     private Category getCategoryOrThrow(Cursor cursor) {
-        final TopekaDatabaseHelper.CategoryCursor categoryCursor = getCategoryCursorOrThrow(cursor);
+        final CategoryCursor categoryCursor = getCategoryCursorOrThrow(cursor);
         return categoryCursor.getCategory();
     }
 
-    private TopekaDatabaseHelper.CategoryCursor getCategoryCursorOrThrow(Cursor cursor) {
-        if (cursor instanceof TopekaDatabaseHelper.CategoryCursor) {
-            return (TopekaDatabaseHelper.CategoryCursor) cursor;
+    private CategoryCursor getCategoryCursorOrThrow(Cursor cursor) {
+        if (cursor instanceof CategoryCursor) {
+            return (CategoryCursor) cursor;
         } else {
             throw new UnsupportedOperationException(
                     "This adapter only works with an CategoryCursor");

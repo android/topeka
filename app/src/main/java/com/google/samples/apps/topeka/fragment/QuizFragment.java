@@ -31,14 +31,13 @@ import com.google.samples.apps.topeka.persistence.TopekaDatabaseHelper;
 public class QuizFragment extends Fragment {
 
     private Category mCategory;
-    private ViewPager mViewPager;
 
-    public static QuizFragment newInstance(int category) {
-        if (0 > category) {
+    public static QuizFragment newInstance(String categoryId) {
+        if (categoryId == null) {
             throw new IllegalArgumentException("The category can not be null");
         }
         Bundle args = new Bundle();
-        args.putInt(Category.TAG, category);
+        args.putString(Category.TAG, categoryId);
         QuizFragment fragment = new QuizFragment();
         fragment.setArguments(args);
         return fragment;
@@ -46,8 +45,8 @@ public class QuizFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        int catId = getArguments().getInt(Category.TAG);
-        mCategory = TopekaDatabaseHelper.getCategoryAt(getActivity(), catId);
+        String categoryId = getArguments().getString(Category.TAG);
+        mCategory = TopekaDatabaseHelper.getCategoryWith(getActivity(), categoryId);
         super.onCreate(savedInstanceState);
     }
 
@@ -60,8 +59,8 @@ public class QuizFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mViewPager = (ViewPager) view.findViewById(R.id.quiz_pager);
-        mViewPager.setBackgroundResource(mCategory.getTheme().getWindowBackgroundColor());
-        mViewPager.setAdapter(new QuizPagerAdapter(getActivity(), mCategory));
+        ViewPager viewPager = (ViewPager) view.findViewById(R.id.quiz_pager);
+        viewPager.setBackgroundResource(mCategory.getTheme().getWindowBackgroundColor());
+        viewPager.setAdapter(new QuizPagerAdapter(getActivity(), mCategory));
     }
 }

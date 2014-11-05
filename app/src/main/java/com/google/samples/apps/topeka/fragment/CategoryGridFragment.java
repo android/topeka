@@ -19,6 +19,7 @@ package com.google.samples.apps.topeka.fragment;
 import com.google.samples.apps.topeka.R;
 import com.google.samples.apps.topeka.activity.QuizActivity;
 import com.google.samples.apps.topeka.adapter.CategoryCursorAdapter;
+import com.google.samples.apps.topeka.persistence.CategoryCursor;
 import com.google.samples.apps.topeka.widget.CategoryLayout;
 
 import android.app.Activity;
@@ -32,6 +33,8 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 
 public class CategoryGridFragment extends Fragment implements AdapterView.OnItemClickListener {
+
+    private CategoryCursorAdapter mAdapter;
 
     public static CategoryGridFragment newInstance() {
         return new CategoryGridFragment();
@@ -51,8 +54,8 @@ public class CategoryGridFragment extends Fragment implements AdapterView.OnItem
 
     private void setUpQuizGrid(GridView categoriesView) {
         categoriesView.setOnItemClickListener(this);
-        CategoryCursorAdapter adapter = new CategoryCursorAdapter(getActivity());
-        categoriesView.setAdapter(adapter);
+        mAdapter = new CategoryCursorAdapter(getActivity());
+        categoriesView.setAdapter(mAdapter);
     }
 
     @Override
@@ -64,7 +67,8 @@ public class CategoryGridFragment extends Fragment implements AdapterView.OnItem
             ActivityOptions sceneTransitionAnimation = ActivityOptions
                     .makeSceneTransitionAnimation(activity, categoryLayout.getIcon(),
                             activity.getString(R.string.transition_background));
-            activity.startActivity(QuizActivity.getStartIntent(activity, position + 1),
+            CategoryCursor item = (CategoryCursor) mAdapter.getItem(position);
+            activity.startActivity(QuizActivity.getStartIntent(activity, item.getCategory()),
                     sceneTransitionAnimation.toBundle());
         } else {
             throw new UnsupportedOperationException("Only CategoryLayout is supported");

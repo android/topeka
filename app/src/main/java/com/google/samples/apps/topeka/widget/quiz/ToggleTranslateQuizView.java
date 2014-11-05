@@ -37,7 +37,7 @@ public class ToggleTranslateQuizView extends AbsQuizView<ToggleTranslateQuiz> {
             mOptionsParams = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
         }
         LinearLayout layout = new LinearLayout(getContext());
-        layout.setOrientation(VERTICAL);
+        layout.setOrientation(LinearLayout.VERTICAL);
         for (String[] option : getQuiz().getOptions()) {
             layout.addView(getOptionsView(option), mOptionsParams);
         }

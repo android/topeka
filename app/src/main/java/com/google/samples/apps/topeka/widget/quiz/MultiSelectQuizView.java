@@ -37,7 +37,7 @@ public class MultiSelectQuizView extends AbsQuizView<MultiSelectQuiz> {
             mOptionsParams = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
         }
         LinearLayout layout = new LinearLayout(getContext());
-        layout.setOrientation(VERTICAL);
+        layout.setOrientation(LinearLayout.VERTICAL);
         for (String option : getQuiz().getOptions()) {
             CheckBox checkBox = new CheckBox(getContext());
             checkBox.setText(option);

@@ -37,7 +37,7 @@ public class PickerQuizView extends AbsQuizView<PickerQuiz>
     @Override
     protected View getQuizContentView() {
         LinearLayout layout = new LinearLayout(getContext());
-        layout.setOrientation(VERTICAL);
+        layout.setOrientation(LinearLayout.VERTICAL);
         mCurrentSelection = new TextView(getContext());
         layout.addView(mCurrentSelection, new LayoutParams(LayoutParams.MATCH_PARENT, 0, 2));
         mSeekBar = new SeekBar(getContext());

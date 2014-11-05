@@ -40,7 +40,7 @@ public enum Theme {
         mTextColorPrimaryId = textColorPrimaryId;
     }
 
-    public int getTextColorPrimaryColor() {
+    public int getTextPrimaryColor() {
         return mTextColorPrimaryId;
     }
 
@@ -48,7 +48,7 @@ public enum Theme {
         return mWindowBackgroundId;
     }
 
-    public int getColorPrimaryColor() {
+    public int getPrimaryColor() {
         return mColorPrimaryId;
     }
 }

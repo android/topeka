@@ -19,26 +19,13 @@ package com.google.samples.apps.topeka.model.quiz;
 import com.google.gson.annotations.SerializedName;
 import com.google.samples.apps.topeka.ParcelableHelper;
 import com.google.samples.apps.topeka.model.JsonAttributes;
-import com.google.samples.apps.topeka.widget.quiz.AbsQuizView;
-import com.google.samples.apps.topeka.widget.quiz.AlphaPickerQuizView;
-import com.google.samples.apps.topeka.widget.quiz.FillBlankQuizView;
-import com.google.samples.apps.topeka.widget.quiz.FillTwoBlanksQuizView;
-import com.google.samples.apps.topeka.widget.quiz.FourQuarterQuizView;
-import com.google.samples.apps.topeka.widget.quiz.MultiSelectQuizView;
-import com.google.samples.apps.topeka.widget.quiz.PickerQuizView;
-import com.google.samples.apps.topeka.widget.quiz.SelectItemQuizView;
-import com.google.samples.apps.topeka.widget.quiz.ToggleTranslateQuizView;
-import com.google.samples.apps.topeka.widget.quiz.TrueFalseQuizView;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.util.EventLogTags;
 import android.util.Log;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-
-import javax.security.auth.login.LoginException;
 
 import static com.google.samples.apps.topeka.model.JsonAttributes.QuizType;
 
@@ -85,6 +72,8 @@ public abstract class Quiz<A> implements Parcelable {
         mQuestion = in.readString();
     }
 
+    public abstract Type getType();
+
     public String getQuestion() {
         return mQuestion;
     }
@@ -96,8 +85,6 @@ public abstract class Quiz<A> implements Parcelable {
     protected void setAnswer(A answer) {
         mAnswer = answer;
     }
-
-    public abstract Type getType();
 
     @Override
     public int describeContents() {

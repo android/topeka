@@ -37,17 +37,20 @@ public class FillTwoBlanksQuizView extends AbsQuizView<FillTwoBlanksQuiz> {
     @Override
     protected View getQuizContentView() {
         LinearLayout layout = new LinearLayout(getContext());
-        layout.setOrientation(VERTICAL);
+        layout.setOrientation(LinearLayout.VERTICAL);
         addEditText(layout, mAnswerOne);
         addEditText(layout, mAnswerTwo);
         return layout;
     }
 
     private void addEditText(LinearLayout layout, EditText editText) {
-        layout.addView(editText, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT, 1));
+        layout.addView(editText,
+                new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT, 1));
     }
 
     private EditText getEditText() {
-        return new EditText(getContext());
+        EditText editText = new EditText(getContext());
+        editText.setTextAppearance(getContext(), android.R.style.TextAppearance_Material);
+        return editText;
     }
 }
