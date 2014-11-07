@@ -16,9 +16,5 @@
 -->
 <ripple xmlns:android="http://schemas.android.com/apk/res/android"
     android:color="@color/topeka_primary">
-    <item>
-        <shape>
-            <solid android:color="@color/topeka_primary" />
-        </shape>
-    </item>
+    <item android:drawable="@android:color/white" />
 </ripple>

@@ -42,18 +42,25 @@ public class AlphaPickerQuizView extends AbsQuizView<AlphaPickerQuiz> implements
         LinearLayout layout = new LinearLayout(getContext());
         layout.setOrientation(LinearLayout.VERTICAL);
         mCurrentSelection = new TextView(getContext());
-        layout.addView(mCurrentSelection, new LayoutParams(LayoutParams.MATCH_PARENT, 0, 2));
+        mCurrentSelection
+                .setTextAppearance(getContext(), android.R.style.TextAppearance_Material_Title);
+        layout.addView(mCurrentSelection,
+                new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, 0, 2));
         mCurrentSelection.setText(ALPHABET[0]);
         mSeekBar = new SeekBar(getContext());
         mSeekBar.setMax(ALPHABET.length);
         mSeekBar.setOnSeekBarChangeListener(this);
-        layout.addView(mSeekBar, new LayoutParams(LayoutParams.MATCH_PARENT, 0, 1));
+        setMinHeight(mSeekBar);
+        layout.addView(mSeekBar, new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, 0, 1));
         return layout;
     }
 
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
         mCurrentSelection.setText(ALPHABET[progress]);
+        if (!isAnswered()) {
+            setAnswered(true);
+        }
     }
 
     @Override

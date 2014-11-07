@@ -17,13 +17,16 @@ package com.google.samples.apps.topeka.widget.quiz;
 
 import android.content.Context;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.GridView;
 
+import com.google.samples.apps.topeka.R;
 import com.google.samples.apps.topeka.model.Category;
 import com.google.samples.apps.topeka.model.quiz.FourQuarterQuiz;
 
-public class FourQuarterQuizView extends AbsQuizView<FourQuarterQuiz> {
+public class FourQuarterQuizView extends AbsQuizView<FourQuarterQuiz>
+        implements AdapterView.OnItemClickListener {
 
     public FourQuarterQuizView(Context context, Category category, FourQuarterQuiz quiz) {
         super(context, category, quiz);
@@ -34,9 +37,17 @@ public class FourQuarterQuizView extends AbsQuizView<FourQuarterQuiz> {
         GridView layout = new GridView(getContext());
         layout.setNumColumns(2);
         layout.setAdapter(
-                new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1,
+                new ArrayAdapter<String>(getContext(), R.layout.item_answer,
                         getQuiz().getOptions()));
+
+        layout.setOnItemClickListener(this);
         return layout;
     }
 
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        if (!isAnswered()) {
+            setAnswered(true);
+        }
+    }
 }

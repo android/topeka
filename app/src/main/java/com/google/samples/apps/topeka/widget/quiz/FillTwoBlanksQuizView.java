@@ -23,7 +23,7 @@ import android.widget.LinearLayout;
 import com.google.samples.apps.topeka.model.Category;
 import com.google.samples.apps.topeka.model.quiz.FillTwoBlanksQuiz;
 
-public class FillTwoBlanksQuizView extends AbsQuizView<FillTwoBlanksQuiz> {
+public class FillTwoBlanksQuizView extends TextInputQuizView<FillTwoBlanksQuiz> {
 
     private final EditText mAnswerOne;
     private final EditText mAnswerTwo;
@@ -44,13 +44,6 @@ public class FillTwoBlanksQuizView extends AbsQuizView<FillTwoBlanksQuiz> {
     }
 
     private void addEditText(LinearLayout layout, EditText editText) {
-        layout.addView(editText,
-                new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT, 1));
-    }
-
-    private EditText getEditText() {
-        EditText editText = new EditText(getContext());
-        editText.setTextAppearance(getContext(), android.R.style.TextAppearance_Material);
-        return editText;
+        layout.addView(editText, new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, 0, 1));
     }
 }

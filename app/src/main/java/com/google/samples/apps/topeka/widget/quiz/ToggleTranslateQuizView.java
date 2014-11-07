@@ -19,6 +19,7 @@ import android.content.Context;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.RadioGroup;
 
 import com.google.samples.apps.topeka.model.Category;
 import com.google.samples.apps.topeka.model.quiz.ToggleTranslateQuiz;
@@ -49,7 +50,14 @@ public class ToggleTranslateQuizView extends AbsQuizView<ToggleTranslateQuiz> {
             throw new IllegalArgumentException("The options provided were invalid: " + options);
         }
         Button button = new Button(getContext());
-        button.setText(options[0] + "<>" + options[1]);
+        button.setText(options[0] + " <> " + options[1]);
+        button.setOnClickListener(this);
         return button;
+    }
+
+    @Override
+    public void onClick(View v) {
+        super.onClick(v);
+        setAnswered(true);
     }
 }

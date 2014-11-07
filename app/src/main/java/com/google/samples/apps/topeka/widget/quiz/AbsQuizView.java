@@ -18,7 +18,9 @@ package com.google.samples.apps.topeka.widget.quiz;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.support.v7.widget.CardView;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -33,9 +35,10 @@ import com.google.samples.apps.topeka.widget.FloatingActionButton;
 public abstract class AbsQuizView<Q extends Quiz> extends CardView implements
         View.OnClickListener {
 
-    private final FloatingActionButton mSubmitAnswer;
     private final TextView mQuestionView;
+    private FloatingActionButton mSubmitAnswer;
     private Q mQuiz;
+    private boolean mAnswered;
 
     public AbsQuizView(Context context, Category category, Q quiz) {
         super(context);
@@ -43,20 +46,33 @@ public abstract class AbsQuizView<Q extends Quiz> extends CardView implements
         LinearLayout container = new LinearLayout(context);
         container.setOrientation(LinearLayout.VERTICAL);
         mQuestionView = new TextView(context);
+        mQuestionView
+                .setTextAppearance(getContext(), android.R.style.TextAppearance_Material_Subhead);
+        setMinHeight(mQuestionView);
         setupQuestionView(category);
-        mSubmitAnswer = new DoneFab(context);
-        mSubmitAnswer.setId(R.id.submitAnswer);
+
+        //TODO: 11/7/14 attach to parent
+
         View quizContentView = getQuizContentView();
         setDefaultPadding(quizContentView);
 
-        LayoutParams childLayoutParams = new LayoutParams(LayoutParams.MATCH_PARENT,
+        LayoutParams layoutParams = new LayoutParams(LayoutParams.MATCH_PARENT,
                 LayoutParams.WRAP_CONTENT);
-        container.addView(mQuestionView, childLayoutParams);
-        container.addView(quizContentView, childLayoutParams);
-        LayoutParams containerLayoutParams = new LayoutParams(LayoutParams.MATCH_PARENT,
-                LayoutParams.WRAP_CONTENT);
+        container.addView(mQuestionView, layoutParams);
+        container.addView(quizContentView, layoutParams);
+        addView(container, layoutParams);
+        mSubmitAnswer = getSubmitButton(context);
+        addView(mSubmitAnswer, new LayoutParams(LayoutParams.WRAP_CONTENT,
+                LayoutParams.WRAP_CONTENT, Gravity.END));
+    }
 
-        addView(container, containerLayoutParams);
+    private FloatingActionButton getSubmitButton(Context context) {
+        if (null == mSubmitAnswer) {
+            mSubmitAnswer = new DoneFab(context);
+            mSubmitAnswer.setId(R.id.submitAnswer);
+            mSubmitAnswer.setVisibility(GONE);
+        }
+        return mSubmitAnswer;
     }
 
     private void setupQuestionView(Category category) {
@@ -79,12 +95,17 @@ public abstract class AbsQuizView<Q extends Quiz> extends CardView implements
         return mQuiz;
     }
 
+    protected boolean isAnswered() {
+        return mAnswered;
+    }
+
     protected void setAnswered(boolean answered) {
         if (answered) {
             mSubmitAnswer.setVisibility(View.VISIBLE);
         } else {
-            mSubmitAnswer.setVisibility(View.INVISIBLE);
+            mSubmitAnswer.setVisibility(View.GONE);
         }
+        mAnswered = answered;
     }
 
     @Override
@@ -95,5 +116,10 @@ public abstract class AbsQuizView<Q extends Quiz> extends CardView implements
                 break;
             }
         }
+    }
+
+    protected void setMinHeight(View view) {
+        view.setMinimumHeight(
+                getResources().getDimensionPixelSize(R.dimen.min_height_touch_target));
     }
 }

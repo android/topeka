@@ -23,6 +23,7 @@ import android.widget.TextView;
 
 import com.google.samples.apps.topeka.model.Category;
 import com.google.samples.apps.topeka.model.quiz.PickerQuiz;
+
 //TODO: 11/3/14 add steps
 public class PickerQuizView extends AbsQuizView<PickerQuiz>
         implements SeekBar.OnSeekBarChangeListener {
@@ -39,7 +40,10 @@ public class PickerQuizView extends AbsQuizView<PickerQuiz>
         LinearLayout layout = new LinearLayout(getContext());
         layout.setOrientation(LinearLayout.VERTICAL);
         mCurrentSelection = new TextView(getContext());
-        layout.addView(mCurrentSelection, new LayoutParams(LayoutParams.MATCH_PARENT, 0, 2));
+        mCurrentSelection
+                .setTextAppearance(getContext(), android.R.style.TextAppearance_Material_Title);
+        layout.addView(mCurrentSelection,
+                new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, 0, 2));
         mSeekBar = new SeekBar(getContext());
         int max = getQuiz().getMax();
         int initialSelection = max / 2;
@@ -47,13 +51,17 @@ public class PickerQuizView extends AbsQuizView<PickerQuiz>
         mSeekBar.setProgress(initialSelection);
         setCurrentSelectionText(initialSelection);
         mSeekBar.setOnSeekBarChangeListener(this);
-        layout.addView(mSeekBar, new LayoutParams(LayoutParams.MATCH_PARENT, 0, 1));
+        setMinHeight(mSeekBar);
+        layout.addView(mSeekBar, new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, 0, 1));
         return layout;
     }
 
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
         setCurrentSelectionText(progress);
+        if (!isAnswered()) {
+            setAnswered(true);
+        }
     }
 
     private void setCurrentSelectionText(int progress) {

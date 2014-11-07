@@ -19,18 +19,44 @@ import android.content.Context;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.widget.EditText;
 
+import com.google.samples.apps.topeka.R;
 import com.google.samples.apps.topeka.model.Category;
-import com.google.samples.apps.topeka.model.quiz.FillBlankQuiz;
+import com.google.samples.apps.topeka.model.quiz.Quiz;
 
-public class FillBlankQuizView extends TextInputQuizView<FillBlankQuiz> {
+public abstract class TextInputQuizView<Q extends Quiz> extends AbsQuizView<Q> implements
+        TextWatcher {
 
-    public FillBlankQuizView(Context context, Category category, FillBlankQuiz quiz) {
+    public TextInputQuizView(Context context, Category category, Q quiz) {
         super(context, category, quiz);
     }
 
     @Override
     protected View getQuizContentView() {
         return getEditText();
+    }
+
+    protected final EditText getEditText() {
+        EditText editText = new EditText(getContext());
+        editText.setTextAppearance(getContext(), android.R.style.TextAppearance_Material);
+        setMinHeight(editText);
+        editText.addTextChangedListener(this);
+        return editText;
+    }
+
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        setAnswered(after > 0);
+    }
+
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+    }
+
+    @Override
+    public void afterTextChanged(Editable s) {
+
     }
 }

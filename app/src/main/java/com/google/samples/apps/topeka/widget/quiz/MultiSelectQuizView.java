@@ -16,14 +16,17 @@
 package com.google.samples.apps.topeka.widget.quiz;
 
 import android.content.Context;
+import android.util.SparseBooleanArray;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 
 import com.google.samples.apps.topeka.model.Category;
 import com.google.samples.apps.topeka.model.quiz.MultiSelectQuiz;
 
-public class MultiSelectQuizView extends AbsQuizView<MultiSelectQuiz> {
+public class MultiSelectQuizView extends AbsQuizView<MultiSelectQuiz>
+        implements CompoundButton.OnCheckedChangeListener {
 
     private LayoutParams mOptionsParams;
 
@@ -38,12 +41,24 @@ public class MultiSelectQuizView extends AbsQuizView<MultiSelectQuiz> {
         }
         LinearLayout layout = new LinearLayout(getContext());
         layout.setOrientation(LinearLayout.VERTICAL);
-        for (String option : getQuiz().getOptions()) {
+
+        String[] options = getQuiz().getOptions();
+        for (String option : options) {
             CheckBox checkBox = new CheckBox(getContext());
+            checkBox.setOnCheckedChangeListener(this);
+            checkBox.setTextAppearance(getContext(), android.R.style.TextAppearance_Material_Subhead);
             checkBox.setText(option);
+            setMinHeight(checkBox);
             layout.addView(checkBox, mOptionsParams);
         }
 
         return layout;
+    }
+
+    @Override
+    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        if (!isAnswered()) {
+            setAnswered(true);
+        }
     }
 }
