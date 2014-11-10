@@ -57,7 +57,7 @@ public class QuizPagerAdapter extends PagerAdapter {
         mCategory = category;
         mQuizzes = category.getQuizzes();
         mLayoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.MATCH_PARENT);
+                ViewGroup.LayoutParams.WRAP_CONTENT);
     }
 
     @Override

@@ -70,6 +70,7 @@ public class QuizActivity extends FragmentActivity implements View.OnClickListen
                         .replace(R.id.quiz_fragment_container, QuizFragment.newInstance(mCategoryId))
                         .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                         .commit();
+                v.setVisibility(View.GONE);
                 break;
             default:
                 throw new UnsupportedOperationException(

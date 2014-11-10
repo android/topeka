@@ -34,7 +34,8 @@
         android:layout_height="@dimen/fab_size"
         android:layout_gravity="top|end"
         android:layout_marginEnd="@dimen/padding_default"
-        android:layout_marginTop="@dimen/padding_default" />
+        android:layout_marginTop="@dimen/padding_default"
+        android:transitionName="@string/transition_avatar" />
 
     <FrameLayout
         android:layout_marginTop="?android:attr/actionBarSize"

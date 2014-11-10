@@ -21,6 +21,7 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 
 import com.google.samples.apps.topeka.model.Category;
 import com.google.samples.apps.topeka.model.quiz.MultiSelectQuiz;
@@ -39,6 +40,7 @@ public class MultiSelectQuizView extends AbsQuizView<MultiSelectQuiz>
         if (null == mOptionsParams) {
             mOptionsParams = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
         }
+        ScrollView scrollView = new ScrollView(getContext());
         LinearLayout layout = new LinearLayout(getContext());
         layout.setOrientation(LinearLayout.VERTICAL);
 
@@ -46,13 +48,15 @@ public class MultiSelectQuizView extends AbsQuizView<MultiSelectQuiz>
         for (String option : options) {
             CheckBox checkBox = new CheckBox(getContext());
             checkBox.setOnCheckedChangeListener(this);
-            checkBox.setTextAppearance(getContext(), android.R.style.TextAppearance_Material_Subhead);
+            checkBox.setTextAppearance(getContext(),
+                    android.R.style.TextAppearance_Material_Subhead);
             checkBox.setText(option);
             setMinHeight(checkBox);
             layout.addView(checkBox, mOptionsParams);
         }
 
-        return layout;
+        scrollView.addView(layout, mOptionsParams);
+        return scrollView;
     }
 
     @Override

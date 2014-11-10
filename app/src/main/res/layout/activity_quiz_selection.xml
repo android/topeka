@@ -25,12 +25,37 @@
         android:layout_width="match_parent"
         android:layout_height="?android:attr/actionBarSize"
         android:titleTextAppearance="@style/AppTheme.TextAppearance.Title"
-        android:transitionName="@string/transition_avatar"
-        android:elevation="@dimen/elevation_header" />
+        android:elevation="@dimen/elevation_header">
+
+        <ImageView
+            android:id="@+id/avatar"
+            android:transitionName="@string/transition_avatar"
+            android:layout_width="?android:attr/actionBarSize"
+            android:layout_height="?android:attr/actionBarSize"
+            android:contentDescription="@string/an_avatar"
+            android:layout_gravity="start" />
+
+        <TextView
+            android:id="@+id/name"
+            style="@style/AppTheme.TextAppearance.Title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:paddingStart="@dimen/padding_default"
+            android:paddingEnd="@dimen/padding_default" />
+
+        <TextView
+            android:id="@+id/score"
+            style="@style/AppTheme.TextAppearance.Subhead"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/padding_default"
+            android:paddingEnd="@dimen/padding_default"
+            android:layout_gravity="end" />
+    </android.widget.Toolbar>
 
     <FrameLayout
         android:id="@+id/quiz_container"
-        android:transitionName="@string/transition_sign_in"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context="activity.QuizSelectionActivity"

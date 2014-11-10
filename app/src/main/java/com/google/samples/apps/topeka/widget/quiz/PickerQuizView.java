@@ -24,12 +24,13 @@ import android.widget.TextView;
 import com.google.samples.apps.topeka.model.Category;
 import com.google.samples.apps.topeka.model.quiz.PickerQuiz;
 
-//TODO: 11/3/14 add steps
 public class PickerQuizView extends AbsQuizView<PickerQuiz>
         implements SeekBar.OnSeekBarChangeListener {
 
     private TextView mCurrentSelection;
     private SeekBar mSeekBar;
+    private int mStep;
+    private int mMin;
 
     public PickerQuizView(Context context, Category category, PickerQuiz quiz) {
         super(context, category, quiz);
@@ -37,34 +38,61 @@ public class PickerQuizView extends AbsQuizView<PickerQuiz>
 
     @Override
     protected View getQuizContentView() {
+        initStep();
+        mMin = getQuiz().getMin();
         LinearLayout layout = new LinearLayout(getContext());
         layout.setOrientation(LinearLayout.VERTICAL);
+        initCurrentSelection();
+        layout.addView(mCurrentSelection,
+                new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, 0, 2));
+        initSeekBar();
+        layout.addView(mSeekBar, new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, 0, 1));
+        setCurrentSelectionText(mMin);
+        return layout;
+    }
+
+    private void initCurrentSelection() {
         mCurrentSelection = new TextView(getContext());
         mCurrentSelection
                 .setTextAppearance(getContext(), android.R.style.TextAppearance_Material_Title);
-        layout.addView(mCurrentSelection,
-                new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, 0, 2));
+    }
+
+    private void initSeekBar() {
+        int viewMax = getSeekBarMax();
         mSeekBar = new SeekBar(getContext());
-        int max = getQuiz().getMax();
-        int initialSelection = max / 2;
-        mSeekBar.setMax(max);
-        mSeekBar.setProgress(initialSelection);
-        setCurrentSelectionText(initialSelection);
-        mSeekBar.setOnSeekBarChangeListener(this);
         setMinHeight(mSeekBar);
-        layout.addView(mSeekBar, new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, 0, 1));
-        return layout;
+        mSeekBar.setMax(viewMax);
+        mSeekBar.setOnSeekBarChangeListener(this);
+    }
+
+    private void initStep() {
+        int tmpStep = getQuiz().getStep();
+        //make sure steps are never 0
+        if (0 == tmpStep) {
+            mStep = 1;
+        } else {
+            mStep = tmpStep;
+        }
+    }
+
+    private int getSeekBarMax() {
+        final int absMin = Math.abs(getQuiz().getMin());
+        final int absMax = Math.abs(getQuiz().getMax());
+        final int realMin = Math.min(absMin, absMax);
+        final int realMax = Math.max(absMin, absMax);
+        return realMax - realMin;
     }
 
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-        setCurrentSelectionText(progress);
+        setCurrentSelectionText(mMin + progress);
         if (!isAnswered()) {
             setAnswered(true);
         }
     }
 
     private void setCurrentSelectionText(int progress) {
+        progress = progress / mStep * mStep;
         mCurrentSelection.setText(String.valueOf(progress));
     }
 

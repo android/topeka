@@ -26,6 +26,7 @@ import android.app.Activity;
 import android.app.ActivityOptions;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -64,14 +65,27 @@ public class CategoryGridFragment extends Fragment implements AdapterView.OnItem
         //TODO: finalize the animations
         if (view instanceof CategoryLayout) {
             CategoryLayout categoryLayout = (CategoryLayout) view;
+            Pair[] participants = getTransitionParticipants(activity, categoryLayout);
             ActivityOptions sceneTransitionAnimation = ActivityOptions
-                    .makeSceneTransitionAnimation(activity, categoryLayout.getIcon(),
-                            activity.getString(R.string.transition_background));
+                    .makeSceneTransitionAnimation(activity, participants);
             CategoryCursor item = (CategoryCursor) mAdapter.getItem(position);
             activity.startActivity(QuizActivity.getStartIntent(activity, item.getCategory()),
                     sceneTransitionAnimation.toBundle());
         } else {
             throw new UnsupportedOperationException("Only CategoryLayout is supported");
         }
+    }
+
+    private Pair[] getTransitionParticipants(Activity activity, CategoryLayout categoryLayout) {
+        Pair[] participants = new Pair[2];
+        participants[0] = new Pair<View, String>(categoryLayout.getIcon(),
+                activity.getString(R.string.transition_background));
+        View toolbar = getActivity().findViewById(R.id.toolbar_player);
+        if (null != toolbar) {
+            participants[1] = new Pair<View, String>(
+                    toolbar.findViewById(R.id.avatar),
+                    activity.getString(R.string.transition_avatar));
+        }
+        return participants;
     }
 }

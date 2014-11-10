@@ -19,6 +19,7 @@ package com.google.samples.apps.topeka.activity;
 import com.google.samples.apps.topeka.fragment.CategoryGridFragment;
 import com.google.samples.apps.topeka.R;
 import com.google.samples.apps.topeka.model.Player;
+import com.google.samples.apps.topeka.widget.outlineprovider.ToolbarIconOutlineProvider;
 
 import android.app.ActivityOptions;
 import android.content.Context;
@@ -26,13 +27,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toolbar;
 
 public class CategoryGridActivity extends FragmentActivity {
 
     private static final String TAG = "MainActivity";
-    private static final String URL
-            = "http://www.polymer-project.org/apps/topeka/components/topeka-elements/categories.json";
     private static final String EXTRA_PLAYER = "player";
 
     public static void start(Context context, Player player, ActivityOptions options) {
@@ -56,15 +57,12 @@ public class CategoryGridActivity extends FragmentActivity {
 
     private void setUpToolbar(Player player, Toolbar toolbar) {
         toolbar.setTitle(getDisplayName(player));
-        //TODO: fix navigation icon size
-        toolbar.setNavigationIcon(player.getAvatar().getDrawableId());
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-        toolbar.setNavigationContentDescription(getString(R.string.description_user_preferences));
+        ImageView avatarView = (ImageView) findViewById(R.id.avatar);
+        avatarView.setClipToOutline(true);
+        avatarView.setOutlineProvider(new ToolbarIconOutlineProvider());
+        avatarView.setImageResource(player.getAvatar().getDrawableId());
+        TextView name = (TextView) findViewById(R.id.name);
+        name.setText(player.getFirstName() + " " + player.getLastInitial());
         setActionBar(toolbar);
     }
 

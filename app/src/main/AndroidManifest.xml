@@ -39,7 +39,8 @@
 
         <activity
             android:name=".activity.QuizActivity"
-            android:parentActivityName=".activity.CategoryGridActivity" />
+            android:parentActivityName=".activity.CategoryGridActivity"
+            android:windowSoftInputMode="adjustPan" />
 
     </application>
 </manifest>

@@ -91,7 +91,7 @@ public class SignInFragment extends Fragment implements View.OnClickListener,
                 mSelectedAvatar);
         PreferencesHelper.writeToPreferences(activity, mPlayer);
         ActivityOptions activityOptions = ActivityOptions.makeSceneTransitionAnimation(activity, v,
-                activity.getString(R.string.transition_sign_in));
+                activity.getString(R.string.transition_avatar));
         CategoryGridActivity.start(activity, mPlayer, activityOptions);
     }
 

@@ -51,8 +51,6 @@ public abstract class AbsQuizView<Q extends Quiz> extends CardView implements
         setMinHeight(mQuestionView);
         setupQuestionView(category);
 
-        //TODO: 11/7/14 attach to parent
-
         View quizContentView = getQuizContentView();
         setDefaultPadding(quizContentView);
 
@@ -62,8 +60,9 @@ public abstract class AbsQuizView<Q extends Quiz> extends CardView implements
         container.addView(quizContentView, layoutParams);
         addView(container, layoutParams);
         mSubmitAnswer = getSubmitButton(context);
-        addView(mSubmitAnswer, new LayoutParams(LayoutParams.WRAP_CONTENT,
-                LayoutParams.WRAP_CONTENT, Gravity.END));
+        final int fabSize = getResources().getDimensionPixelSize(R.dimen.fab_size);
+        addView(mSubmitAnswer, new LayoutParams(fabSize,
+                fabSize, Gravity.END));
     }
 
     private FloatingActionButton getSubmitButton(Context context) {

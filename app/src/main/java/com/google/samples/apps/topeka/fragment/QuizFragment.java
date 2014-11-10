@@ -58,9 +58,9 @@ public class QuizFragment extends Fragment {
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
         ViewPager viewPager = (ViewPager) view.findViewById(R.id.quiz_pager);
         viewPager.setBackgroundResource(mCategory.getTheme().getWindowBackgroundColor());
         viewPager.setAdapter(new QuizPagerAdapter(getActivity(), mCategory));
+        super.onViewCreated(view, savedInstanceState);
     }
 }
