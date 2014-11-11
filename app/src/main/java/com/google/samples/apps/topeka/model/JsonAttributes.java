@@ -32,7 +32,7 @@ public interface JsonAttributes {
     public static final String THEME = "theme";
     public static final String TYPE = "type";
 
-    public interface QuizType {
+    public interface QuizName {
 
         public static final String ALPHA_PICKER = "alpha-picker";
         public static final String FILL_BLANK = "fill-blank";

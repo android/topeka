@@ -58,9 +58,7 @@ public class AlphaPickerQuizView extends AbsQuizView<AlphaPickerQuiz> implements
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
         mCurrentSelection.setText(ALPHABET[progress]);
-        if (!isAnswered()) {
-            setAnswered(true);
-        }
+        answerQuiz();
     }
 
     @Override

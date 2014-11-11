@@ -58,6 +58,6 @@ public class TrueFalseQuizView extends AbsQuizView<TrueFalseQuiz> {
     @Override
     public void onClick(View v) {
         super.onClick(v);
-        setAnswered(true);
+        answerQuiz();
     }
 }

@@ -37,26 +37,35 @@ public class CategoryCursor extends CursorWrapper {
     /**
      * Creates a cursor wrapper.
      *
-     * @param cursor The underlying cursor to wrap.
+     * @param cursor Underlying cursor to wrap.
      */
     public CategoryCursor(Cursor cursor) {
         super(cursor);
     }
 
+    /**
+     * @return Id of the current category.
+     */
     public String getId() {
         return getString(getColumnIndex(CategoryTable.COLUMN_ID));
     }
 
+    /**
+     * @return Category stored at the current location of the cursor.
+     */
     public Category getCategory() {
         int columnIndex = getColumnIndex(CategoryTable.COLUMN_DATA);
-        return getCustomizedGson().fromJson(getString(columnIndex), Category.class);
+        return getQuizGson().fromJson(getString(columnIndex), Category.class);
     }
 
+    /**
+     * @return Quizzes stored in the current category.
+     */
     public List<Quiz> getQuizzes() {
         return getCategory().getQuizzes();
     }
 
-    private Gson getCustomizedGson() {
+    private Gson getQuizGson() {
         if (null == mGson) {
             GsonBuilder gsonBuilder = new GsonBuilder();
             gsonBuilder.registerTypeAdapter(Quiz.class, new QuizAdapter());

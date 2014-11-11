@@ -17,7 +17,7 @@ package com.google.samples.apps.topeka.model.quiz;
 
 import android.os.Parcel;
 
-import com.google.samples.apps.topeka.ParcelableHelper;
+import com.google.samples.apps.topeka.helper.ParcelableHelper;
 
 public class TrueFalseQuiz extends Quiz<Boolean> {
 
@@ -31,8 +31,8 @@ public class TrueFalseQuiz extends Quiz<Boolean> {
     }
 
     @Override
-    public Type getType() {
-        return Type.TRUE_FALSE;
+    public QuizType getType() {
+        return QuizType.TRUE_FALSE;
     }
 
     @Override

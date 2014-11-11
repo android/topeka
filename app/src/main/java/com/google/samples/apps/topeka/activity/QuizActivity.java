@@ -16,8 +16,8 @@
 
 package com.google.samples.apps.topeka.activity;
 
-import com.google.samples.apps.topeka.ActivityHelper;
-import com.google.samples.apps.topeka.PreferencesHelper;
+import com.google.samples.apps.topeka.helper.ActivityHelper;
+import com.google.samples.apps.topeka.helper.PreferencesHelper;
 import com.google.samples.apps.topeka.R;
 import com.google.samples.apps.topeka.fragment.QuizFragment;
 import com.google.samples.apps.topeka.model.Category;

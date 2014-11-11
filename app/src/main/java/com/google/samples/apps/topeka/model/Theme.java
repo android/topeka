@@ -18,6 +18,10 @@ package com.google.samples.apps.topeka.model;
 
 import com.google.samples.apps.topeka.R;
 
+/**
+ * A way to make simple changes to the application's appearance at runtime in correlation to its
+ * {@link Category}.
+ */
 public enum Theme {
     topeka(R.color.topeka_primary, R.color.theme_blue_background, R.color.theme_blue_foreground),
     blue(R.color.theme_blue_primary, R.color.theme_blue_background, R.color.theme_blue_foreground),

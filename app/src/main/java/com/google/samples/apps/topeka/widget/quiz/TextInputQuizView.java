@@ -52,11 +52,11 @@ public abstract class TextInputQuizView<Q extends Quiz> extends AbsQuizView<Q> i
 
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
-
+        /* no-op */
     }
 
     @Override
     public void afterTextChanged(Editable s) {
-
+        /* no-op */
     }
 }

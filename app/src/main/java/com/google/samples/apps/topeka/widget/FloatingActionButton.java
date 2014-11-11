@@ -23,6 +23,13 @@ import android.widget.ImageView;
 import com.google.samples.apps.topeka.widget.outlineprovider.FabOutlineProvider;
 import com.google.samples.apps.topeka.R;
 
+/**
+ * Generic implementation of the
+ * <a href=
+ * "http://www.google.com/design/spec/components/buttons.html#buttons-floating-action-button">
+ * floating action button</a>
+ * described in the material design guidelines.
+ */
 public class FloatingActionButton extends ImageView {
 
     public FloatingActionButton(Context context) {

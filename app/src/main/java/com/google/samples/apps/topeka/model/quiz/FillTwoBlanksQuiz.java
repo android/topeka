@@ -30,8 +30,8 @@ public class FillTwoBlanksQuiz extends Quiz<String[]> {
     }
 
     @Override
-    public Type getType() {
-        return Type.FILL_TWO_BLANKS;
+    public QuizType getType() {
+        return QuizType.FILL_TWO_BLANKS;
     }
 
     @Override

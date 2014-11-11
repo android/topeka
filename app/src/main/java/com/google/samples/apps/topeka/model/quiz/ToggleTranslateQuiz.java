@@ -29,8 +29,8 @@ public class ToggleTranslateQuiz extends OptionsQuiz<String[]> {
     }
 
     @Override
-    public Type getType() {
-        return Type.TOGGLE_TRANSLATE;
+    public QuizType getType() {
+        return QuizType.TOGGLE_TRANSLATE;
     }
 
     @Override

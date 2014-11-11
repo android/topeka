@@ -86,9 +86,7 @@ public class PickerQuizView extends AbsQuizView<PickerQuiz>
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
         setCurrentSelectionText(mMin + progress);
-        if (!isAnswered()) {
-            setAnswered(true);
-        }
+        answerQuiz();
     }
 
     private void setCurrentSelectionText(int progress) {

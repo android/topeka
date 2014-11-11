@@ -58,6 +58,6 @@ public class ToggleTranslateQuizView extends AbsQuizView<ToggleTranslateQuiz> {
     @Override
     public void onClick(View v) {
         super.onClick(v);
-        setAnswered(true);
+        answerQuiz();
     }
 }

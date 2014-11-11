@@ -23,11 +23,12 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonPrimitive;
 import com.google.samples.apps.topeka.model.quiz.Quiz;
+import com.google.samples.apps.topeka.model.quiz.QuizType;
 
 import java.lang.reflect.Type;
 
 /**
- * Enables Gson deserialization of Quiz's children.
+ * Allows {@link Gson} deserialization of subclasses of {@link Quiz}.
  */
 public class QuizAdapter implements JsonDeserializer<Quiz> {
 
@@ -35,19 +36,26 @@ public class QuizAdapter implements JsonDeserializer<Quiz> {
     @Override
     public Quiz deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context)
             throws JsonParseException {
+        // check if typeOfT is a Quiz.
         if (null == typeOfT || !((Class) typeOfT).isAssignableFrom(Quiz.class)) {
             return null;
         }
+        // get the type attribute.
         JsonPrimitive typeAsPrimitive = ((JsonObject) json).getAsJsonPrimitive(JsonAttributes.TYPE);
         final String type = typeAsPrimitive.getAsString();
+        // create and return the quiz.
         return createQuizDueToType(type, json);
     }
 
     private Quiz createQuizDueToType(String typeName, JsonElement json) {
-        for (Quiz.Type type : Quiz.Type.values()) {
+        // iterate over available quiz types.
+        for (QuizType type : QuizType.values()) {
+            // check if the names match
             if (typeName.equals(type.getJsonName())) {
+                // and the type is valid
                 if (null != type.getType()) {
-                    return (Quiz) new Gson().fromJson(json, type.getType());
+                    // deserialize the quiz.
+                    return new Gson().fromJson(json, type.getType());
                 }
             }
         }

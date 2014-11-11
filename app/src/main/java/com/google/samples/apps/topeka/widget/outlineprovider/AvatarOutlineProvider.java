@@ -17,7 +17,7 @@ package com.google.samples.apps.topeka.widget.outlineprovider;
 
 import com.google.samples.apps.topeka.R;
 
-public class AvatarOutlineProvider extends CircularOutlineProvider {
+public class AvatarOutlineProvider extends RoundOutlineProvider {
 
     @Override
     public int getSizeResourceId() {

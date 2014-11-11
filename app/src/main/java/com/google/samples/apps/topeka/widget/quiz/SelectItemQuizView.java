@@ -44,8 +44,6 @@ public class SelectItemQuizView extends AbsQuizView<SelectItemQuiz>
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        if (!isAnswered()) {
-            setAnswered(true);
-        }
+        answerQuiz();
     }
 }

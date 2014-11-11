@@ -19,7 +19,10 @@ import android.graphics.Outline;
 import android.view.View;
 import android.view.ViewOutlineProvider;
 
-public abstract class CircularOutlineProvider extends ViewOutlineProvider {
+/**
+ * Abstract class to create round outlines for views.
+ */
+public abstract class RoundOutlineProvider extends ViewOutlineProvider {
 
     @Override
     public final void getOutline(View view, Outline outline) {
@@ -27,5 +30,10 @@ public abstract class CircularOutlineProvider extends ViewOutlineProvider {
         outline.setOval(0, 0, size, size);
     }
 
+    /**
+     * Implementations need to provide a dimension resource which is used as the outline's size.
+     *
+     * @return The dimension resource id.
+     */
     public abstract int getSizeResourceId();
 }

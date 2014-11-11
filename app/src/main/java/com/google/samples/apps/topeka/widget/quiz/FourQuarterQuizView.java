@@ -46,8 +46,6 @@ public class FourQuarterQuizView extends AbsQuizView<FourQuarterQuiz>
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        if (!isAnswered()) {
-            setAnswered(true);
-        }
+        answerQuiz();
     }
 }

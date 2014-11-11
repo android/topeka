@@ -47,6 +47,7 @@ public class CategoryCursorAdapter extends CursorAdapter {
 
     private static void adjustStyles(Resources resources, String themeName, String packageName,
             CategoryLayout categoryLayout) {
+        //TODO: 11/11/14 don't use resource lookup
         categoryLayout.setBackgroundResource(resources.getIdentifier(
                 THEME + themeName + BACKGROUND, COLOR, packageName));
         categoryLayout.getName().setBackgroundResource(resources.getIdentifier(
@@ -63,13 +64,12 @@ public class CategoryCursorAdapter extends CursorAdapter {
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
         Category category = getCategoryOrThrow(cursor);
-        // Set contents
         if (view instanceof CategoryLayout) {
+            //TODO: 11/11/14 don't use resource lookup
             CategoryLayout categoryLayout = (CategoryLayout) view;
             categoryLayout.setImageResource(mResources.getIdentifier(
                     ICON_CATEGORY + category.getId(), DRAWABLE, mPackageName));
             categoryLayout.setText(category.getName());
-
             adjustStyles(mResources, category.getTheme().name(), mPackageName, categoryLayout);
         }
     }

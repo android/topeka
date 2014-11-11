@@ -31,7 +31,19 @@ import com.google.samples.apps.topeka.model.quiz.Quiz;
 import com.google.samples.apps.topeka.widget.DoneFab;
 import com.google.samples.apps.topeka.widget.FloatingActionButton;
 
-
+/**
+ * This is the base class for displaying a {@link com.google.samples.apps.topeka.model.quiz.Quiz}.
+ * <p>
+ * Subclasses need to implement {@link AbsQuizView#getQuizContentView()}
+ * in order to allow solution of a quiz.
+ * </p>
+ * <p>
+ * Also {@link AbsQuizView#setAnswered(boolean)} needs to be called with
+ * <code>true</code> in order to mark the quiz solved.
+ * </p>
+ * @param <Q> The type of {@link com.google.samples.apps.topeka.model.quiz.Quiz} you want to
+ *            display.
+ */
 public abstract class AbsQuizView<Q extends Quiz> extends CardView implements
         View.OnClickListener {
 
@@ -88,6 +100,12 @@ public abstract class AbsQuizView<Q extends Quiz> extends CardView implements
         view.setPadding(padding, padding, padding, padding);
     }
 
+    /**
+     * Implementations should create the content view for the type of
+     * {@link com.google.samples.apps.topeka.model.quiz.Quiz} they want to display.
+     *
+     * @return the created view to solve the quiz.
+     */
     protected abstract View getQuizContentView();
 
     public Q getQuiz() {
@@ -98,6 +116,11 @@ public abstract class AbsQuizView<Q extends Quiz> extends CardView implements
         return mAnswered;
     }
 
+    /**
+     * Sets the quiz to answered or unanswered.
+     *
+     * @param answered <code>true</code> if an answer was selected, else <code>false</code>.
+     */
     protected void setAnswered(boolean answered) {
         if (answered) {
             mSubmitAnswer.setVisibility(View.VISIBLE);
@@ -105,6 +128,16 @@ public abstract class AbsQuizView<Q extends Quiz> extends CardView implements
             mSubmitAnswer.setVisibility(View.GONE);
         }
         mAnswered = answered;
+    }
+
+    /**
+     * Sets the quiz to answered if it not already has been answered.
+     * Otherwise does nothing.
+     */
+    protected void answerQuiz() {
+        if (!isAnswered()) {
+            setAnswered(true);
+        }
     }
 
     @Override

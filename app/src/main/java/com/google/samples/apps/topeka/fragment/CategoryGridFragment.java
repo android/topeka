@@ -19,6 +19,7 @@ package com.google.samples.apps.topeka.fragment;
 import com.google.samples.apps.topeka.R;
 import com.google.samples.apps.topeka.activity.QuizActivity;
 import com.google.samples.apps.topeka.adapter.CategoryCursorAdapter;
+import com.google.samples.apps.topeka.helper.ViewHelper;
 import com.google.samples.apps.topeka.persistence.CategoryCursor;
 import com.google.samples.apps.topeka.widget.CategoryLayout;
 
@@ -49,7 +50,7 @@ public class CategoryGridFragment extends Fragment implements AdapterView.OnItem
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
-        setUpQuizGrid((GridView) view.findViewById(R.id.categories));
+        setUpQuizGrid(ViewHelper.<GridView>getView(view, R.id.categories));
         super.onViewCreated(view, savedInstanceState);
     }
 

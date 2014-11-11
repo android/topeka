@@ -17,7 +17,7 @@
 package com.google.samples.apps.topeka.model.quiz;
 
 import com.google.gson.annotations.SerializedName;
-import com.google.samples.apps.topeka.ParcelableHelper;
+import com.google.samples.apps.topeka.helper.ParcelableHelper;
 import com.google.samples.apps.topeka.model.JsonAttributes;
 
 import android.os.Parcel;
@@ -27,8 +27,12 @@ import android.util.Log;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
-import static com.google.samples.apps.topeka.model.JsonAttributes.QuizType;
-
+/**
+ * This abstract class provides general structure for quizzes.
+ *
+ * @see com.google.samples.apps.topeka.model.quiz.QuizType
+ * @see com.google.samples.apps.topeka.widget.quiz.AbsQuizView
+ */
 public abstract class Quiz<A> implements Parcelable {
 
     private static final String TAG = "Quiz";
@@ -36,7 +40,7 @@ public abstract class Quiz<A> implements Parcelable {
         @Override
         public Quiz createFromParcel(Parcel in) {
             int ordinal = in.readInt();
-            Type type = Type.values()[ordinal];
+            QuizType type = QuizType.values()[ordinal];
             try {
                 Constructor<? extends Quiz> constructor = type.getType().getConstructor(
                         Parcel.class);
@@ -72,7 +76,7 @@ public abstract class Quiz<A> implements Parcelable {
         mQuestion = in.readString();
     }
 
-    public abstract Type getType();
+    public abstract QuizType getType();
 
     public String getQuestion() {
         return mQuestion;
@@ -95,35 +99,6 @@ public abstract class Quiz<A> implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         ParcelableHelper.writeEnumValue(dest, getType());
         dest.writeString(mQuestion);
-    }
-
-    public enum Type {
-        ALPHA_PICKER(QuizType.ALPHA_PICKER, AlphaPickerQuiz.class),
-        FILL_BLANK(QuizType.FILL_BLANK, FillBlankQuiz.class),
-        FILL_TWO_BLANKS(QuizType.FILL_TWO_BLANKS, FillTwoBlanksQuiz.class),
-        FOUR_QUARTER(QuizType.FOUR_QUARTER, FourQuarterQuiz.class),
-        MULTI_SELECT(QuizType.MULTI_SELECT, MultiSelectQuiz.class),
-        PICKER(QuizType.PICKER, PickerQuiz.class),
-        SINGLE_SELECT(QuizType.SINGLE_SELECT, SelectItemQuiz.class),
-        SINGLE_SELECT_ITEM(QuizType.SINGLE_SELECT_ITEM, SelectItemQuiz.class),
-        TOGGLE_TRANSLATE(QuizType.TOGGLE_TRANSLATE, ToggleTranslateQuiz.class),
-        TRUE_FALSE(QuizType.TRUE_FALSE, TrueFalseQuiz.class);
-
-        private final String mJsonName;
-        private final Class<? extends Quiz> mType;
-
-        private Type(final String jsonName, final Class<? extends Quiz> type) {
-            mJsonName = jsonName;
-            mType = type;
-        }
-
-        public String getJsonName() {
-            return mJsonName;
-        }
-
-        public Class<? extends Quiz> getType() {
-            return mType;
-        }
     }
 
 }

@@ -61,8 +61,6 @@ public class MultiSelectQuizView extends AbsQuizView<MultiSelectQuiz>
 
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-        if (!isAnswered()) {
-            setAnswered(true);
-        }
+        answerQuiz();
     }
 }

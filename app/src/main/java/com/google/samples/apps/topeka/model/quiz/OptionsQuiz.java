@@ -19,7 +19,6 @@ package com.google.samples.apps.topeka.model.quiz;
 import android.os.Parcel;
 
 import com.google.gson.annotations.SerializedName;
-import com.google.samples.apps.topeka.ParcelableHelper;
 import com.google.samples.apps.topeka.model.JsonAttributes;
 
 public abstract class OptionsQuiz<T> extends Quiz<int[]> {

@@ -17,6 +17,9 @@ package com.google.samples.apps.topeka.persistence;
 
 import android.provider.BaseColumns;
 
+/**
+ * Structure for the category table.
+ */
 public interface CategoryTable {
 
     static final String NAME = "category";

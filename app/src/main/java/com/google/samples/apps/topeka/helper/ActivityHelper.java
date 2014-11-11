@@ -13,14 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package com.google.samples.apps.topeka.helper;
 
-package com.google.samples.apps.topeka.exception;
+import android.app.Activity;
 
-import android.net.Uri;
+/**
+ * Collection of shared methods for use in activities.
+ */
+public class ActivityHelper {
 
-public class IllegalURIException extends IllegalArgumentException {
-
-    public IllegalURIException(Uri uri) {
-        super("Illegal URI: " + uri);
+    private ActivityHelper() {
+        //no instance
     }
+
+    public static void setStatusAndNavigationBarColor(Activity activity, int colorPrimary) {
+        if (null != activity) {
+            activity.getWindow().setStatusBarColor(colorPrimary);
+            activity.getWindow().setNavigationBarColor(colorPrimary);
+        }
+    }
+
 }

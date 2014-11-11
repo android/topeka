@@ -31,8 +31,8 @@ public class MultiSelectQuiz extends OptionsQuiz<String> {
     }
 
     @Override
-    public Type getType() {
-        return Type.MULTI_SELECT;
+    public QuizType getType() {
+        return QuizType.MULTI_SELECT;
     }
 
     @Override

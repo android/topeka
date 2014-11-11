@@ -49,21 +49,28 @@ public class TopekaDatabaseHelper extends SQLiteOpenHelper {
 
     private static final String SQL_DATABASE_CREATE = CategoryTable.CREATE;
     private static Category[] mCategories;
-    private static TopekaDatabaseHelper instance;
+    private static TopekaDatabaseHelper mInstance;
     private final Resources mResources;
 
     private TopekaDatabaseHelper(Context context) {
+        //prevents external instance creation
         super(context, DB_NAME + DB_SUFFIX, null, DB_VERSION);
         mResources = context.getResources();
     }
 
     private static TopekaDatabaseHelper getInstance(Context context) {
-        if (null == instance) {
-            instance = new TopekaDatabaseHelper(context);
+        if (null == mInstance) {
+            mInstance = new TopekaDatabaseHelper(context);
         }
-        return instance;
+        return mInstance;
     }
 
+    /**
+     * Gets all categories wrapped in a {@link CategoryCursor}.
+     *
+     * @param context The context this is running in.
+     * @return All categories stored in the database.
+     */
     public static CategoryCursor getCategoryCursor(Context context) {
         SQLiteDatabase readableDatabase = getReadableDatabase(context);
         Cursor data = readableDatabase
@@ -71,6 +78,12 @@ public class TopekaDatabaseHelper extends SQLiteOpenHelper {
         return new CategoryCursor(data);
     }
 
+    /**
+     * Gets all categories.
+     *
+     * @param context The context this is running in.
+     * @return All categories stored in the database.
+     */
     public static Category[] getAllCategories(Context context) {
         if (null == mCategories) {
             CategoryCursor categoryCursor = TopekaDatabaseHelper.getCategoryCursor(context);
@@ -85,6 +98,13 @@ public class TopekaDatabaseHelper extends SQLiteOpenHelper {
         return mCategories;
     }
 
+    /**
+     * Looks for a category with a given id.
+     *
+     * @param context The context this is running in.
+     * @param categoryId Id of the category to look for.
+     * @return The found category.
+     */
     public static Category getCategoryWith(Context context, String categoryId) {
         SQLiteDatabase readableDatabase = getReadableDatabase(context);
         String[] selectionArgs = {categoryId};
@@ -108,6 +128,11 @@ public class TopekaDatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(SQL_DATABASE_CREATE);
         preFillDatabase(db);
+    }
+
+    @Override
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        /* no-op */
     }
 
     private void preFillDatabase(SQLiteDatabase db) {
@@ -140,11 +165,6 @@ public class TopekaDatabaseHelper extends SQLiteOpenHelper {
             categoriesJson.append(line);
         }
         return categoriesJson.toString();
-    }
-
-    @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        /* no-op */
     }
 
 }

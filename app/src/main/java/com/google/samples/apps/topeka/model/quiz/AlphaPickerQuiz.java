@@ -29,8 +29,8 @@ public class AlphaPickerQuiz extends Quiz<String> {
     }
 
     @Override
-    public Type getType() {
-        return Type.ALPHA_PICKER;
+    public QuizType getType() {
+        return QuizType.ALPHA_PICKER;
     }
 
 

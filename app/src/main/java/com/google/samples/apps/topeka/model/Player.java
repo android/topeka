@@ -18,6 +18,9 @@ package com.google.samples.apps.topeka.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+/**
+ * Stores values to identify the subject that is currently attempting to solve quizzes.
+ */
 public class Player implements Parcelable {
 
     public static final Creator<Player> CREATOR = new Creator<Player>() {

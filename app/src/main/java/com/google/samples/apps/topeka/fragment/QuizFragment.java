@@ -25,9 +25,13 @@ import android.view.ViewGroup;
 
 import com.google.samples.apps.topeka.R;
 import com.google.samples.apps.topeka.adapter.QuizPagerAdapter;
+import com.google.samples.apps.topeka.helper.ViewHelper;
 import com.google.samples.apps.topeka.model.Category;
 import com.google.samples.apps.topeka.persistence.TopekaDatabaseHelper;
 
+/**
+ * Encapsulates Quiz solving and displays it to the user.
+ */
 public class QuizFragment extends Fragment {
 
     private Category mCategory;
@@ -58,7 +62,7 @@ public class QuizFragment extends Fragment {
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        ViewPager viewPager = (ViewPager) view.findViewById(R.id.quiz_pager);
+        ViewPager viewPager = ViewHelper.getView(view, R.id.quiz_pager);
         viewPager.setBackgroundResource(mCategory.getTheme().getWindowBackgroundColor());
         viewPager.setAdapter(new QuizPagerAdapter(getActivity(), mCategory));
         super.onViewCreated(view, savedInstanceState);

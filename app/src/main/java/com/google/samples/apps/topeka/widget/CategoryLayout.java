@@ -25,9 +25,8 @@ import android.widget.TextView;
 import com.google.samples.apps.topeka.R;
 
 /**
- * Custom {@link android.widget.LinearLayout} to wrap a
- * {@link com.google.samples.apps.topeka.model.Category}
- * view representation.
+ * Custom {@link android.widget.LinearLayout} to display a
+ * {@link com.google.samples.apps.topeka.model.Category}.
  */
 public class CategoryLayout extends LinearLayout {
 

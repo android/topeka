@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.google.samples.apps.topeka;
+package com.google.samples.apps.topeka.helper;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -21,6 +21,9 @@ import android.content.SharedPreferences;
 import com.google.samples.apps.topeka.model.Avatar;
 import com.google.samples.apps.topeka.model.Player;
 
+/**
+ * Easy storage and retrieval of preferences.
+ */
 public class PreferencesHelper {
 
     private static final String PLAYER_PREFERENCES = "playerPreferences";
@@ -32,6 +35,12 @@ public class PreferencesHelper {
         //no instance
     }
 
+    /**
+     * Writes a {@link com.google.samples.apps.topeka.model.Player} to preferences.
+     *
+     * @param context The Context which to obtain the SharedPreferences from.
+     * @param player The {@link com.google.samples.apps.topeka.model.Player} to write.
+     */
     public static void writeToPreferences(Context context, Player player) {
         SharedPreferences.Editor editor = getEditor(context);
         editor.putString(PREFERENCE_FIRST_NAME, player.getFirstName());
@@ -40,6 +49,12 @@ public class PreferencesHelper {
         editor.apply();
     }
 
+    /**
+     * Retrieves a {@link com.google.samples.apps.topeka.model.Player} from preferences.
+     *
+     * @param context The Context which to obtain the SharedPreferences from.
+     * @return A previously saved player or a player with sane initial values.
+     */
     public static Player getPlayer(Context context) {
         SharedPreferences preferences = getSharedPreferences(context);
         final String firstName = preferences.getString(PREFERENCE_FIRST_NAME, "");

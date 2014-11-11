@@ -27,6 +27,9 @@ import com.google.samples.apps.topeka.R;
 import com.google.samples.apps.topeka.widget.outlineprovider.AvatarOutlineProvider;
 import com.google.samples.apps.topeka.model.Avatar;
 
+/**
+ * Adapter to display {@link Avatar} icons.
+ */
 public class AvatarAdapter extends BaseAdapter {
 
     private static final Avatar[] mAvatars = Avatar.values();

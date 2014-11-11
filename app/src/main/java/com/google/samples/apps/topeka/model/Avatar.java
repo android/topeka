@@ -18,6 +18,9 @@ package com.google.samples.apps.topeka.model;
 
 import com.google.samples.apps.topeka.R;
 
+/**
+ * The available avatars with their corresponding drawable resource ids.
+ */
 public enum Avatar {
 
     ONE(R.drawable.avatar_1),

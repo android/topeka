@@ -30,8 +30,8 @@ public class SelectItemQuiz extends OptionsQuiz<String> {
     }
 
     @Override
-    public Type getType() {
-        return Type.SINGLE_SELECT;
+    public QuizType getType() {
+        return QuizType.SINGLE_SELECT;
     }
 
     @Override
