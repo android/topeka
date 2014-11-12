@@ -16,10 +16,12 @@
 package com.google.samples.apps.topeka.widget.quiz;
 
 import android.content.Context;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toolbar;
 
 import com.google.samples.apps.topeka.model.Category;
 import com.google.samples.apps.topeka.model.quiz.AlphaPickerQuiz;
@@ -30,8 +32,10 @@ public class AlphaPickerQuizView extends AbsQuizView<AlphaPickerQuiz> implements
     private static final CharSequence[] ALPHABET = new CharSequence[]
             {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q",
                     "R", "S", "T", "U", "V", "W", "X", "Y", "Z"};
+    private static final LinearLayout.LayoutParams LAYOUT_PARAMS =
+            new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+
     private TextView mCurrentSelection;
-    private SeekBar mSeekBar;
 
     public AlphaPickerQuizView(Context context, Category category, AlphaPickerQuiz quiz) {
         super(context, category, quiz);
@@ -44,14 +48,13 @@ public class AlphaPickerQuizView extends AbsQuizView<AlphaPickerQuiz> implements
         mCurrentSelection = new TextView(getContext());
         mCurrentSelection
                 .setTextAppearance(getContext(), android.R.style.TextAppearance_Material_Title);
-        layout.addView(mCurrentSelection,
-                new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, 0, 2));
+        layout.addView(mCurrentSelection, LAYOUT_PARAMS);
         mCurrentSelection.setText(ALPHABET[0]);
-        mSeekBar = new SeekBar(getContext());
-        mSeekBar.setMax(ALPHABET.length);
-        mSeekBar.setOnSeekBarChangeListener(this);
-        setMinHeight(mSeekBar);
-        layout.addView(mSeekBar, new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, 0, 1));
+        SeekBar seekBar = new SeekBar(getContext());
+        seekBar.setMax(ALPHABET.length);
+        seekBar.setOnSeekBarChangeListener(this);
+        setMinHeightForTouchTarget(seekBar);
+        layout.addView(seekBar, LAYOUT_PARAMS);
         return layout;
     }
 

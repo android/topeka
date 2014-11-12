@@ -17,6 +17,7 @@ package com.google.samples.apps.topeka.widget.quiz;
 
 import android.content.Context;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
@@ -31,6 +32,7 @@ public class FillTwoBlanksQuizView extends TextInputQuizView<FillTwoBlanksQuiz> 
     public FillTwoBlanksQuizView(Context context, Category category, FillTwoBlanksQuiz quiz) {
         super(context, category, quiz);
         mAnswerOne = getEditText();
+        mAnswerOne.setImeOptions(EditorInfo.IME_ACTION_NEXT);
         mAnswerTwo = getEditText();
     }
 

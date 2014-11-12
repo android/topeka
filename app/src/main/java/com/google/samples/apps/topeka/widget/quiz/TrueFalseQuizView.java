@@ -17,10 +17,9 @@ package com.google.samples.apps.topeka.widget.quiz;
 
 import android.content.Context;
 import android.support.annotation.StringRes;
+import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
 import com.google.samples.apps.topeka.R;
@@ -29,8 +28,12 @@ import com.google.samples.apps.topeka.model.quiz.TrueFalseQuiz;
 
 public class TrueFalseQuizView extends AbsQuizView<TrueFalseQuiz> {
 
-    private static final LinearLayout.LayoutParams mButtonParams =
-            new LinearLayout.LayoutParams(0, LayoutParams.MATCH_PARENT, 1);
+    private static final LinearLayout.LayoutParams LAYOUT_PARAMS =
+            new LinearLayout.LayoutParams(0, LayoutParams.WRAP_CONTENT, 1);
+
+    static {
+        LAYOUT_PARAMS.gravity = Gravity.CENTER;
+    }
 
     public TrueFalseQuizView(Context context, Category category, TrueFalseQuiz quiz) {
         super(context, category, quiz);
@@ -45,7 +48,7 @@ public class TrueFalseQuizView extends AbsQuizView<TrueFalseQuiz> {
     }
 
     private void addButtonWithText(LinearLayout layout, @StringRes int textId) {
-        layout.addView(getButton(textId), mButtonParams);
+        layout.addView(getButton(textId), LAYOUT_PARAMS);
     }
 
     private Button getButton(@StringRes int textId) {

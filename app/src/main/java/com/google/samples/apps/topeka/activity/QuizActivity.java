@@ -17,14 +17,14 @@
 package com.google.samples.apps.topeka.activity;
 
 import com.google.samples.apps.topeka.helper.ActivityHelper;
-import com.google.samples.apps.topeka.helper.PreferencesHelper;
 import com.google.samples.apps.topeka.R;
 import com.google.samples.apps.topeka.fragment.QuizFragment;
 import com.google.samples.apps.topeka.model.Category;
-import com.google.samples.apps.topeka.model.Player;
 import com.google.samples.apps.topeka.model.Theme;
 import com.google.samples.apps.topeka.persistence.TopekaDatabaseHelper;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
@@ -36,6 +36,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.AccelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.Toolbar;
 
@@ -45,8 +46,8 @@ public class QuizActivity extends FragmentActivity implements View.OnClickListen
 
     private static final String TAG = "QuizActivity";
     private static final String IMAGE_CATEGORY = "image_category_";
-    private Player mPlayer;
     private String mCategoryId;
+    private QuizFragment mQuizFragment;
 
     public static Intent getStartIntent(Context context, Category category) {
         Intent starter = new Intent(context, QuizActivity.class);
@@ -57,20 +58,35 @@ public class QuizActivity extends FragmentActivity implements View.OnClickListen
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mPlayer = PreferencesHelper.getPlayer(this);
         mCategoryId = getIntent().getStringExtra(Category.TAG);
         populate(mCategoryId);
     }
 
     @Override
-    public void onClick(View v) {
+    public void onClick(final View v) {
         switch (v.getId()) {
             case R.id.btn_start_quiz:
+                mQuizFragment = QuizFragment.newInstance(mCategoryId);
                 getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.quiz_fragment_container, QuizFragment.newInstance(mCategoryId))
+                        .replace(R.id.quiz_fragment_container, mQuizFragment)
                         .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                         .commit();
-                v.setVisibility(View.GONE);
+
+                v.animate().alphaBy(-1f).setInterpolator(new AccelerateInterpolator(1f))
+                        .setListener(new AnimatorListenerAdapter() {
+                            @Override
+                            public void onAnimationEnd(Animator animation) {
+                                v.setVisibility(View.GONE);
+                                super.onAnimationEnd(animation);
+                            }
+                        });
+                break;
+
+            case R.id.submitAnswer:
+                if (!mQuizFragment.nextPage()) {
+                    //TODO: 11/12/14 create summary page, then finish
+                    finish();
+                }
                 break;
             default:
                 throw new UnsupportedOperationException(

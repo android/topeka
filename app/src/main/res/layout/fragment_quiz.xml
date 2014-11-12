@@ -14,7 +14,8 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
-<android.support.v4.view.ViewPager xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.samples.apps.topeka.widget.NoTouchViewPager
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/quiz_pager"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"

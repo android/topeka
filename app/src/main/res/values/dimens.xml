@@ -36,6 +36,7 @@
     <dimen name="stroke_width_avatar">4dp</dimen>
     <dimen name="vector_icon_size">48dp</dimen>
     <dimen name="min_height_touch_target">48dp</dimen>
+    <dimen name="min_height_question">144dp</dimen>
     <dimen name="navigation_width">240dp</dimen>
     <dimen name="toolbar_height">56dp</dimen>
     <item type="integer" name="vector_icon_viewport">48</item>

@@ -28,9 +28,4 @@ public class FillBlankQuizView extends TextInputQuizView<FillBlankQuiz> {
     public FillBlankQuizView(Context context, Category category, FillBlankQuiz quiz) {
         super(context, category, quiz);
     }
-
-    @Override
-    protected View getQuizContentView() {
-        return getEditText();
-    }
 }
