@@ -95,7 +95,8 @@
                 ],
                 "answer": [1]
             }
-        ]
+        ],
+        "scores": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     },
     {
         "name": "General Knowledge",
@@ -205,7 +206,8 @@
                 ],
                 "answer": [1]
             }
-        ]
+        ],
+        "scores": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     },
     {
         "name": "History",
@@ -303,7 +305,8 @@
                 ],
                 "answer": [1,3,6]
             }
-        ]
+        ],
+        "scores": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     },
     {
         "name": "Geography",
@@ -416,7 +419,8 @@
                 ],
                 "answer": [2]
             }
-        ]
+        ],
+        "scores": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     },
     {
         "name": "Science and Nature",
@@ -540,7 +544,8 @@
                     "Zinc"
                 ]
             }
-        ]
+        ],
+        "scores": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     },
     {
         "name": "TV & Movies",
@@ -628,7 +633,8 @@
                 "question": "In which film did Robert De Niro ask “Are you talkin’ to me?”",
                 "answer": "Taxi Driver"
             }
-        ]
+        ],
+        "scores": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     },
     {
         "name": "Music",
@@ -748,8 +754,10 @@
                 ],
                 "answer": [0]
             }
-        ]
-    },    {
+        ],
+        "scores": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    },
+    {
         "name": "Entertainment",
         "id": "entertainment",
         "theme": "red",
@@ -832,7 +840,8 @@
                 "question": "What is Mr. Burns’ first name?",
                 "answer": "Charles"
             }
-        ]
+        ],
+        "scores": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     },
     {
         "name": "Sports",
@@ -945,6 +954,7 @@
                 "max": 65,
                 "answer": 42
             }
-        ]
+        ],
+        "scores": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     }
 ]

@@ -31,6 +31,7 @@ public interface JsonAttributes {
     public static final String STEP = "step";
     public static final String THEME = "theme";
     public static final String TYPE = "type";
+    public static final String SCORES = "scores";
 
     public interface QuizName {
 

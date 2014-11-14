@@ -48,4 +48,15 @@ public class FillTwoBlanksQuizView extends TextInputQuizView<FillTwoBlanksQuiz> 
     private void addEditText(LinearLayout layout, EditText editText) {
         layout.addView(editText, new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, 0, 1));
     }
+
+    @Override
+    protected boolean isAnswerCorrect() {
+        String partOne = getAnswerFrom(mAnswerOne);
+        String partTwo = getAnswerFrom(mAnswerTwo);
+        return getQuiz().isAnswerCorrect(new String[]{partOne, partTwo});
+    }
+
+    private String getAnswerFrom(EditText view) {
+        return view.getText().toString();
+    }
 }

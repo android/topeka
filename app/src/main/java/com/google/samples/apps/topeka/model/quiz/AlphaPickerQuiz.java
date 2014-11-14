@@ -17,7 +17,7 @@ package com.google.samples.apps.topeka.model.quiz;
 
 import android.os.Parcel;
 
-public class AlphaPickerQuiz extends Quiz<String> {
+public final class AlphaPickerQuiz extends Quiz<String> {
 
     public AlphaPickerQuiz(String question, String answer) {
         super(question, answer);

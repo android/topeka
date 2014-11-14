@@ -38,7 +38,7 @@
         <TextView
             android:id="@+id/name"
             style="@style/AppTheme.TextAppearance.Title"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:paddingStart="@dimen/padding_default"
@@ -46,7 +46,7 @@
 
         <TextView
             android:id="@+id/score"
-            style="@style/AppTheme.TextAppearance.Subhead"
+            style="@style/AppTheme.TextAppearance.Title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingStart="@dimen/padding_default"

@@ -16,11 +16,6 @@
 
 package com.google.samples.apps.topeka.activity;
 
-import com.google.samples.apps.topeka.fragment.CategoryGridFragment;
-import com.google.samples.apps.topeka.R;
-import com.google.samples.apps.topeka.model.Player;
-import com.google.samples.apps.topeka.widget.outlineprovider.ToolbarIconOutlineProvider;
-
 import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
@@ -31,10 +26,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toolbar;
 
+import com.google.samples.apps.topeka.R;
+import com.google.samples.apps.topeka.fragment.CategoryGridFragment;
+import com.google.samples.apps.topeka.model.Player;
+import com.google.samples.apps.topeka.persistence.TopekaDatabaseHelper;
+import com.google.samples.apps.topeka.widget.outlineprovider.ToolbarIconOutlineProvider;
+
 public class CategoryGridActivity extends FragmentActivity {
 
     private static final String TAG = "MainActivity";
     private static final String EXTRA_PLAYER = "player";
+    private Toolbar mToolbar;
 
     public static void start(Context context, Player player, ActivityOptions options) {
         Intent starter = new Intent(context, CategoryGridActivity.class);
@@ -47,7 +49,8 @@ public class CategoryGridActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz_selection);
         Player player = getIntent().getParcelableExtra(EXTRA_PLAYER);
-        setUpToolbar(player, (Toolbar) findViewById(R.id.toolbar_player));
+        mToolbar = (Toolbar) findViewById(R.id.toolbar_player);
+        setUpToolbar(player);
         if (savedInstanceState == null) {
             attachCategoryGridFragment();
         } else {
@@ -55,14 +58,21 @@ public class CategoryGridActivity extends FragmentActivity {
         }
     }
 
-    private void setUpToolbar(Player player, Toolbar toolbar) {
+    @Override
+    protected void onResume() {
+        super.onResume();
+        TextView scoreView = (TextView) findViewById(R.id.score);
+        final int score = TopekaDatabaseHelper.getScore(this);
+        scoreView.setText(String.valueOf(score));
+    }
+
+    private void setUpToolbar(Player player) {
         ImageView avatarView = (ImageView) findViewById(R.id.avatar);
         avatarView.setClipToOutline(true);
         avatarView.setOutlineProvider(new ToolbarIconOutlineProvider());
         avatarView.setImageResource(player.getAvatar().getDrawableId());
         TextView name = (TextView) findViewById(R.id.name);
         name.setText(getDisplayName(player));
-        setActionBar(toolbar);
     }
 
     private String getDisplayName(Player player) {

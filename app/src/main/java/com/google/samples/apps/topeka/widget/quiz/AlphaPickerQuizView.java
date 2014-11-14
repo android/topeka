@@ -16,12 +16,10 @@
 package com.google.samples.apps.topeka.widget.quiz;
 
 import android.content.Context;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import android.widget.Toolbar;
 
 import com.google.samples.apps.topeka.model.Category;
 import com.google.samples.apps.topeka.model.quiz.AlphaPickerQuiz;
@@ -59,9 +57,14 @@ public class AlphaPickerQuizView extends AbsQuizView<AlphaPickerQuiz> implements
     }
 
     @Override
+    protected boolean isAnswerCorrect() {
+        return getQuiz().isAnswerCorrect((String) mCurrentSelection.getText());
+    }
+
+    @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
         mCurrentSelection.setText(ALPHABET[progress]);
-        answerQuiz();
+        allowAnswer();
     }
 
     @Override

@@ -19,7 +19,7 @@ import android.os.Parcel;
 
 import com.google.samples.apps.topeka.helper.ParcelableHelper;
 
-public class TrueFalseQuiz extends Quiz<Boolean> {
+public final class TrueFalseQuiz extends Quiz<Boolean> {
 
     protected TrueFalseQuiz(String question, Boolean answer) {
         super(question, answer);

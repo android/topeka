@@ -17,7 +17,7 @@ package com.google.samples.apps.topeka.model.quiz;
 
 import android.os.Parcel;
 
-public class ToggleTranslateQuiz extends OptionsQuiz<String[]> {
+public final class ToggleTranslateQuiz extends OptionsQuiz<String[]> {
 
     public ToggleTranslateQuiz(String question, int[] answer, String[][] options) {
         super(question, answer, options);

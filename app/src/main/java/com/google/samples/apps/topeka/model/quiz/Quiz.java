@@ -66,14 +66,18 @@ public abstract class Quiz<A> implements Parcelable {
     private final String mQuestion;
     @SerializedName(JsonAttributes.ANSWER)
     private A mAnswer;
+    @SerializedName(JsonAttributes.TYPE)
+    private final String mQuizType;
 
     protected Quiz(String question, A answer) {
         mQuestion = question;
         mAnswer = answer;
+        mQuizType = getType().getJsonName();
     }
 
     protected Quiz(Parcel in) {
         mQuestion = in.readString();
+        mQuizType = getType().getJsonName();
     }
 
     public abstract QuizType getType();
@@ -88,6 +92,10 @@ public abstract class Quiz<A> implements Parcelable {
 
     protected void setAnswer(A answer) {
         mAnswer = answer;
+    }
+
+    public boolean isAnswerCorrect(A answer) {
+        return mAnswer.equals(answer);
     }
 
     @Override

@@ -28,6 +28,8 @@ import com.google.samples.apps.topeka.model.quiz.FourQuarterQuiz;
 public class FourQuarterQuizView extends AbsQuizView<FourQuarterQuiz>
         implements AdapterView.OnItemClickListener {
 
+    private int mAnswered = -1;
+
     public FourQuarterQuizView(Context context, Category category, FourQuarterQuiz quiz) {
         super(context, category, quiz);
     }
@@ -46,6 +48,13 @@ public class FourQuarterQuizView extends AbsQuizView<FourQuarterQuiz>
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        answerQuiz();
+        allowAnswer();
+        mAnswered = position;
+    }
+
+    @Override
+    protected boolean isAnswerCorrect() {
+
+        return getQuiz().isAnswerCorrect(new int[]{mAnswered});
     }
 }

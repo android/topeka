@@ -19,13 +19,29 @@ import android.content.Context;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.widget.EditText;
 
 import com.google.samples.apps.topeka.model.Category;
 import com.google.samples.apps.topeka.model.quiz.FillBlankQuiz;
 
 public class FillBlankQuizView extends TextInputQuizView<FillBlankQuiz> {
 
+    private EditText mAnswerView;
+
     public FillBlankQuizView(Context context, Category category, FillBlankQuiz quiz) {
         super(context, category, quiz);
+    }
+
+    @Override
+    protected View getQuizContentView() {
+        if (null == mAnswerView) {
+            mAnswerView = getEditText();
+        }
+        return mAnswerView;
+    }
+
+    @Override
+    protected boolean isAnswerCorrect() {
+        return getQuiz().isAnswerCorrect(mAnswerView.getText().toString());
     }
 }

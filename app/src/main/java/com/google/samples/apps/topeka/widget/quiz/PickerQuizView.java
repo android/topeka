@@ -16,7 +16,6 @@
 package com.google.samples.apps.topeka.widget.quiz;
 
 import android.content.Context;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
@@ -25,7 +24,7 @@ import android.widget.TextView;
 import com.google.samples.apps.topeka.model.Category;
 import com.google.samples.apps.topeka.model.quiz.PickerQuiz;
 
-public class PickerQuizView extends AbsQuizView<PickerQuiz>
+public final class PickerQuizView extends AbsQuizView<PickerQuiz>
         implements SeekBar.OnSeekBarChangeListener {
 
     private static final LinearLayout.LayoutParams LAYOUT_PARAMS =
@@ -35,6 +34,7 @@ public class PickerQuizView extends AbsQuizView<PickerQuiz>
     private SeekBar mSeekBar;
     private int mStep;
     private int mMin;
+    private int mProgress;
 
     public PickerQuizView(Context context, Category category, PickerQuiz quiz) {
         super(context, category, quiz);
@@ -52,6 +52,11 @@ public class PickerQuizView extends AbsQuizView<PickerQuiz>
         layout.addView(mSeekBar, LAYOUT_PARAMS);
         setCurrentSelectionText(mMin);
         return layout;
+    }
+
+    @Override
+    protected boolean isAnswerCorrect() {
+        return getQuiz().isAnswerCorrect(mProgress);
     }
 
     private void initCurrentSelection() {
@@ -92,11 +97,11 @@ public class PickerQuizView extends AbsQuizView<PickerQuiz>
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
         setCurrentSelectionText(mMin + progress);
-        answerQuiz();
+        allowAnswer();
     }
 
     private void setCurrentSelectionText(int progress) {
-        progress = progress / mStep * mStep;
+        mProgress = progress / mStep * mStep;
         mCurrentSelection.setText(String.valueOf(progress));
     }
 

@@ -53,7 +53,7 @@ public abstract class TextInputQuizView<Q extends Quiz> extends AbsQuizView<Q> i
 
     @Override
     public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-        setAnswered(after > 0);
+        allowAnswer(after > 0);
     }
 
     @Override

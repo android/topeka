@@ -16,6 +16,7 @@
 package com.google.samples.apps.topeka.widget.quiz;
 
 import android.content.Context;
+import android.support.annotation.IdRes;
 import android.support.annotation.StringRes;
 import android.view.Gravity;
 import android.view.View;
@@ -30,10 +31,10 @@ public class TrueFalseQuizView extends AbsQuizView<TrueFalseQuiz> {
 
     private static final LinearLayout.LayoutParams LAYOUT_PARAMS =
             new LinearLayout.LayoutParams(0, LayoutParams.WRAP_CONTENT, 1);
-
     static {
         LAYOUT_PARAMS.gravity = Gravity.CENTER;
     }
+    private boolean mAnswer;
 
     public TrueFalseQuizView(Context context, Category category, TrueFalseQuiz quiz) {
         super(context, category, quiz);
@@ -42,18 +43,24 @@ public class TrueFalseQuizView extends AbsQuizView<TrueFalseQuiz> {
     @Override
     protected View getQuizContentView() {
         LinearLayout layout = new LinearLayout(getContext());
-        addButtonWithText(layout, R.string.btn_true);
-        addButtonWithText(layout, R.string.btn_false);
+        addButtonWithText(layout, R.string.btn_true, R.id.answerTrue);
+        addButtonWithText(layout, R.string.btn_false, R.id.answerFalse);
         return layout;
     }
 
-    private void addButtonWithText(LinearLayout layout, @StringRes int textId) {
-        layout.addView(getButton(textId), LAYOUT_PARAMS);
+    @Override
+    protected boolean isAnswerCorrect() {
+        return getQuiz().isAnswerCorrect(mAnswer);
     }
 
-    private Button getButton(@StringRes int textId) {
+    private void addButtonWithText(LinearLayout layout, @StringRes int textId, @IdRes int viewId) {
+        layout.addView(getButton(textId, viewId), LAYOUT_PARAMS);
+    }
+
+    private Button getButton(@StringRes int textId, @IdRes int viewId) {
         Button button = new Button(getContext());
         button.setText(textId);
+        button.setId(viewId);
         button.setOnClickListener(this);
         return button;
     }
@@ -61,6 +68,14 @@ public class TrueFalseQuizView extends AbsQuizView<TrueFalseQuiz> {
     @Override
     public void onClick(View v) {
         super.onClick(v);
-        answerQuiz();
+        switch (v.getId()) {
+            case R.id.answerTrue:
+                mAnswer = true;
+                break;
+            case R.id.answerFalse:
+                mAnswer = false;
+                break;
+        }
+        allowAnswer();
     }
 }

@@ -23,29 +23,43 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Category implements Parcelable {
 
     public static final String TAG = "Category";
 
+    private static final int SCORE = 8;
+    private static final int NO_SCORE = 0;
+
     @SerializedName(JsonAttributes.NAME)
     private final String mName;
-
     @SerializedName(JsonAttributes.ID)
     private final String mId;
-
     @SerializedName(JsonAttributes.THEME)
     private final Theme mTheme;
-
     @SerializedName(JsonAttributes.QUIZZES)
     private final List<Quiz> mQuizzes;
+    @SerializedName(JsonAttributes.SCORES)
+    private final int[] mScores;
 
     public Category(String name, String id, Theme theme, List<Quiz> quizzes) {
         mName = name;
         mId = id;
         mTheme = theme;
         mQuizzes = quizzes;
+        mScores = new int[quizzes.size()];
+    }
+
+
+    protected Category(Parcel in) {
+        mName = in.readString();
+        mId = in.readString();
+        mTheme = Theme.values()[in.readInt()];
+        mQuizzes = new ArrayList<Quiz>();
+        in.readTypedList(mQuizzes, Quiz.CREATOR);
+        mScores = in.createIntArray();
     }
 
     public String getName() {
@@ -64,25 +78,55 @@ public class Category implements Parcelable {
         return mQuizzes;
     }
 
-    protected Category(Parcel in) {
-        mName = in.readString();
-        mId = in.readString();
-        mTheme = Theme.values()[in.readInt()];
-        mQuizzes = new ArrayList<Quiz>();
-        in.readTypedList(mQuizzes, Quiz.CREATOR);
+    /**
+     * Updates a score for a provided quiz within this category.
+     *
+     * @param which The quiz to rate.
+     * @param solved <code>true</code> if the quiz was solved else <code>false</code>.
+     */
+    public void setScore(Quiz which, boolean solved) {
+        int index = mQuizzes.indexOf(which);
+        if (-1 == index) {
+            return;
+        }
+        mScores[index] = solved ? SCORE : NO_SCORE;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
+    /**
+     * Gets the score for a single quiz.
+     *
+     * @param which The quiz to look for
+     * @return The score if found, else 0.
+     */
+    public int getScore(Quiz which) {
+        try {
+            return mScores[mQuizzes.indexOf(which)];
+        } catch (IndexOutOfBoundsException ioobe) {
+            return 0;
+        }
     }
 
+    /**
+     * @return The sum of all quiz scores within this category.
+     */
+    public int getScore() {
+        int categoryScore = 0;
+        for (int quizScore : mScores) {
+            categoryScore += quizScore;
+        }
+        return categoryScore;
+    }
+
+
     @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(mName);
-        dest.writeString(mId);
-        dest.writeInt(mTheme.ordinal());
-        dest.writeTypedList(getQuizzes());
+    public String toString() {
+        return "Category{" +
+                "mName='" + mName + '\'' +
+                ", mId='" + mId + '\'' +
+                ", mTheme=" + mTheme +
+                ", mQuizzes=" + mQuizzes +
+                ", mScores=" + Arrays.toString(mScores) +
+                '}';
     }
 
     public static final Creator<Category> CREATOR = new Creator<Category>() {
@@ -98,12 +142,16 @@ public class Category implements Parcelable {
     };
 
     @Override
-    public String toString() {
-        return "Category{" +
-                "mName='" + mName + '\'' +
-                ", mId='" + mId + '\'' +
-                ", mTheme=" + mTheme +
-                ", mQuizzes=" + mQuizzes +
-                '}';
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(mName);
+        dest.writeString(mId);
+        dest.writeInt(mTheme.ordinal());
+        dest.writeTypedList(getQuizzes());
+        dest.writeIntArray(mScores);
     }
 }

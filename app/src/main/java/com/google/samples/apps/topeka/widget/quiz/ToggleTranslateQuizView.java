@@ -19,17 +19,20 @@ import android.content.Context;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.RadioGroup;
 
 import com.google.samples.apps.topeka.model.Category;
 import com.google.samples.apps.topeka.model.quiz.ToggleTranslateQuiz;
 
+import java.util.ArrayList;
+
 public class ToggleTranslateQuizView extends AbsQuizView<ToggleTranslateQuiz> {
 
     private LayoutParams mOptionsParams;
+    private boolean[] mAnswers;
 
     public ToggleTranslateQuizView(Context context, Category category, ToggleTranslateQuiz quiz) {
         super(context, category, quiz);
+        mAnswers = new boolean[quiz.getOptions().length];
     }
 
     @Override
@@ -39,25 +42,61 @@ public class ToggleTranslateQuizView extends AbsQuizView<ToggleTranslateQuiz> {
         }
         LinearLayout layout = new LinearLayout(getContext());
         layout.setOrientation(LinearLayout.VERTICAL);
-        for (String[] option : getQuiz().getOptions()) {
-            layout.addView(getOptionsView(option), mOptionsParams);
+        String[][] options = getQuiz().getOptions();
+        for (int i = 0; i < options.length; i++) {
+            layout.addView(getOptionsView(options[i], i), mOptionsParams);
         }
         return layout;
     }
 
-    private Button getOptionsView(String[] options) {
+    @Override
+    protected boolean isAnswerCorrect() {
+        return getQuiz().isAnswerCorrect(getCheckedAnswers());
+    }
+
+    private Button getOptionsView(String[] options, int optionId) {
         if (null == options || options.length != 2) {
             throw new IllegalArgumentException("The options provided were invalid: " + options);
         }
         Button button = new Button(getContext());
         button.setText(options[0] + " <> " + options[1]);
         button.setOnClickListener(this);
+        button.setTag(optionId);
         return button;
     }
 
     @Override
     public void onClick(View v) {
         super.onClick(v);
-        answerQuiz();
+        Object tag = v.getTag();
+        if (null != tag) {
+            Integer answerId = (Integer) tag;
+            toggleAnswerFor(answerId);
+            allowAnswer();
+        }
+    }
+
+    private void toggleAnswerFor(int answerId) {
+        mAnswers[answerId] = !mAnswers[answerId];
+    }
+
+    private int[] getCheckedAnswers() {
+        ArrayList<Integer> answers = new ArrayList<Integer>();
+        for (int i = 0; i < mAnswers.length; i++) {
+            if (mAnswers[i]) {
+                answers.add(i);
+            }
+        }
+        if (!answers.isEmpty()) {
+            //manual int extraction to avoid boxing issues
+            final int answersSize = answers.size();
+            int[] answersArray = new int[answersSize];
+            for (int i = 0; i < answersSize; i++) {
+                answersArray[i] = answers.get(i);
+            }
+            return answersArray;
+        }
+
+        return null;
     }
 }

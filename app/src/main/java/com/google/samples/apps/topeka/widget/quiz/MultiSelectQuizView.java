@@ -59,7 +59,12 @@ public class MultiSelectQuizView extends AbsQuizView<MultiSelectQuiz>
     }
 
     @Override
+    protected boolean isAnswerCorrect() {
+        return false;
+    }
+
+    @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-        answerQuiz();
+        allowAnswer();
     }
 }

@@ -17,7 +17,7 @@ package com.google.samples.apps.topeka.model.quiz;
 
 import android.os.Parcel;
 
-public class FillTwoBlanksQuiz extends Quiz<String[]> {
+public final class FillTwoBlanksQuiz extends Quiz<String[]> {
 
     public FillTwoBlanksQuiz(String question, String[] answer) {
         super(question, answer);

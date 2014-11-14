@@ -99,6 +99,29 @@ public class TopekaDatabaseHelper extends SQLiteOpenHelper {
     }
 
     /**
+     * Scooooooooooore!
+     *
+     * @param context The context this is running in.
+     * @return The score over all Categories.
+     */
+    public static int getScore(Context context) {
+        Category[] allCategories = getAllCategories(context);
+        int score = 0;
+        for (Category cat : allCategories) {
+            score += cat.getScore();
+        }
+        return score;
+    }
+
+    public static void updateScoreFor(Context context, Category category) {
+        SQLiteDatabase writableDatabase = getWriteableDatabase(context);
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(CategoryTable.COLUMN_DATA, new Gson().toJson(category));
+        writableDatabase.update(CategoryTable.NAME, contentValues, CategoryTable.COLUMN_ID + "= ?",
+                new String[]{category.getId()});
+    }
+
+    /**
      * Looks for a category with a given id.
      *
      * @param context The context this is running in.

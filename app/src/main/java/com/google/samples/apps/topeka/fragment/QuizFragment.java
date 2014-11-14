@@ -69,6 +69,12 @@ public class QuizFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
     }
 
+    @Override
+    public void onStop() {
+        TopekaDatabaseHelper.updateScoreFor(getActivity(), mCategory);
+        super.onStop();
+    }
+
     public void setPage(int page) {
         mViewPager.setCurrentItem(page, false);
     }

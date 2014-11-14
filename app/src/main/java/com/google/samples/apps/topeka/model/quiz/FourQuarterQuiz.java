@@ -18,7 +18,8 @@ package com.google.samples.apps.topeka.model.quiz;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class FourQuarterQuiz extends OptionsQuiz<String> {
+//TODO: 11/13/14 maybe not use an OptionsQuiz as parent for this.
+public final class FourQuarterQuiz extends OptionsQuiz<String> {
 
     public static final Parcelable.Creator<FourQuarterQuiz> CREATOR
             = new Parcelable.Creator<FourQuarterQuiz>() {

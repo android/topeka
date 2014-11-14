@@ -16,4 +16,6 @@
   -->
 <resources>
     <item name="submitAnswer" type="id" />
+    <item name="answerTrue" type="id" />
+    <item name="answerFalse" type="id" />
 </resources>

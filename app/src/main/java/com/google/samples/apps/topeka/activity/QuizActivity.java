@@ -16,13 +16,6 @@
 
 package com.google.samples.apps.topeka.activity;
 
-import com.google.samples.apps.topeka.helper.ActivityHelper;
-import com.google.samples.apps.topeka.R;
-import com.google.samples.apps.topeka.fragment.QuizFragment;
-import com.google.samples.apps.topeka.model.Category;
-import com.google.samples.apps.topeka.model.Theme;
-import com.google.samples.apps.topeka.persistence.TopekaDatabaseHelper;
-
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.app.ActionBar;
@@ -39,6 +32,13 @@ import android.view.View;
 import android.view.animation.AccelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.Toolbar;
+
+import com.google.samples.apps.topeka.R;
+import com.google.samples.apps.topeka.fragment.QuizFragment;
+import com.google.samples.apps.topeka.helper.ActivityHelper;
+import com.google.samples.apps.topeka.model.Category;
+import com.google.samples.apps.topeka.model.Theme;
+import com.google.samples.apps.topeka.persistence.TopekaDatabaseHelper;
 
 import static com.google.samples.apps.topeka.adapter.CategoryCursorAdapter.DRAWABLE;
 

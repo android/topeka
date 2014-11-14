@@ -54,11 +54,11 @@ public abstract class AbsQuizView<Q extends Quiz> extends CardView implements
         View.OnClickListener {
 
     private final Category mCategory;
+    private final Q mQuiz;
+    private final int mDefaultPadding;
     private TextView mQuestionView;
     private FloatingActionButton mSubmitAnswer;
-    private Q mQuiz;
     private boolean mAnswered;
-    private int mDefaultPadding;
 
     public AbsQuizView(Context context, Category category, Q quiz) {
         super(context);
@@ -129,6 +129,13 @@ public abstract class AbsQuizView<Q extends Quiz> extends CardView implements
      */
     protected abstract View getQuizContentView();
 
+    /**
+     * Implementations must make sure that the answer provided is evaluated and correctly rated.
+     *
+     * @return <code>true</code> if the question has been correctly answered, else <code>false</code>.
+     */
+    protected abstract boolean isAnswerCorrect();
+
     public Q getQuiz() {
         return mQuiz;
     }
@@ -142,8 +149,8 @@ public abstract class AbsQuizView<Q extends Quiz> extends CardView implements
      *
      * @param answered <code>true</code> if an answer was selected, else <code>false</code>.
      */
-    protected void setAnswered(final boolean answered) {
-        if (null != mSubmitAnswer) {
+ protected void allowAnswer(final boolean answered) {
+         if (null != mSubmitAnswer) {
             mSubmitAnswer.setVisibility(answered ? View.VISIBLE : View.GONE);
             mAnswered = answered;
         }
@@ -153,9 +160,9 @@ public abstract class AbsQuizView<Q extends Quiz> extends CardView implements
      * Sets the quiz to answered if it not already has been answered.
      * Otherwise does nothing.
      */
-    protected void answerQuiz() {
+    protected void allowAnswer() {
         if (!isAnswered()) {
-            setAnswered(true);
+            allowAnswer(true);
         }
     }
 
@@ -163,11 +170,10 @@ public abstract class AbsQuizView<Q extends Quiz> extends CardView implements
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.submitAnswer: {
-                //TODO: 11/3/14 handle
                 if (getContext() instanceof QuizActivity) {
                     ((QuizActivity) getContext()).onClick(v);
                 }
-                //perform answering in mCategory
+                mCategory.setScore(getQuiz(), isAnswerCorrect());
                 break;
             }
         }

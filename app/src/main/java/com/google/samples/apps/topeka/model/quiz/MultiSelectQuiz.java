@@ -18,7 +18,7 @@ package com.google.samples.apps.topeka.model.quiz;
 
 import android.os.Parcel;
 
-public class MultiSelectQuiz extends OptionsQuiz<String> {
+public final class MultiSelectQuiz extends OptionsQuiz<String> {
 
     public MultiSelectQuiz(String question, int[] answer, String[] options) {
         super(question, answer, options);

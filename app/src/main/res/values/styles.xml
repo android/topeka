@@ -15,7 +15,6 @@
   limitations under the License.
   -->
 <resources>
-
     <!-- Base application theme. -->
     <style name="AppTheme" parent="@android:style/Theme.Material.Light.NoActionBar">
         <!-- Customize your theme here. -->
@@ -42,5 +41,4 @@
     <style name="AppTheme.TextAppearance.Subhead" parent="android:TextAppearance.Material.Subhead">
         <item name="android:textColor">@color/topeka_primary</item>
     </style>
-
 </resources>

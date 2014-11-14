@@ -25,11 +25,16 @@ import com.google.samples.apps.topeka.R;
 import com.google.samples.apps.topeka.model.Category;
 import com.google.samples.apps.topeka.model.quiz.SelectItemQuiz;
 
+import java.util.ArrayList;
+
 public class SelectItemQuizView extends AbsQuizView<SelectItemQuiz>
         implements AdapterView.OnItemClickListener {
 
+    private boolean[] mAnswers;
+
     public SelectItemQuizView(Context context, Category category, SelectItemQuiz quiz) {
         super(context, category, quiz);
+        mAnswers = new boolean[quiz.getOptions().length];
     }
 
     @Override
@@ -43,7 +48,37 @@ public class SelectItemQuizView extends AbsQuizView<SelectItemQuiz>
     }
 
     @Override
+    protected boolean isAnswerCorrect() {
+        return getQuiz().isAnswerCorrect(getCheckedAnswers());
+    }
+
+    @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        answerQuiz();
+        allowAnswer();
+        toggleAnswerFor(position);
+    }
+
+    private void toggleAnswerFor(int answerId) {
+        mAnswers[answerId] = !mAnswers[answerId];
+    }
+
+    private int[] getCheckedAnswers() {
+        ArrayList<Integer> answers = new ArrayList<Integer>();
+        for (int i = 0; i < mAnswers.length; i++) {
+            if (mAnswers[i]) {
+                answers.add(i);
+            }
+        }
+        if (!answers.isEmpty()) {
+            //manual int extraction to avoid boxing issues
+            final int answersSize = answers.size();
+            int[] answersArray = new int[answersSize];
+            for (int i = 0; i < answersSize; i++) {
+                answersArray[i] = answers.get(i);
+            }
+            return answersArray;
+        }
+
+        return null;
     }
 }

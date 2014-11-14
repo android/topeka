@@ -34,6 +34,4 @@ public class ScorecardView extends ListView {
         }
         setAdapter(new ArrayAdapter<String>(context, android.R.layout.simple_list_item_1, answers));
     }
-
-
 }
