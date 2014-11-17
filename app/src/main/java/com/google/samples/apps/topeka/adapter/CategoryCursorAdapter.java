@@ -22,38 +22,36 @@ import android.database.Cursor;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CursorAdapter;
+import android.widget.TextView;
+
 import com.google.samples.apps.topeka.model.Category;
+import com.google.samples.apps.topeka.model.Theme;
 import com.google.samples.apps.topeka.persistence.CategoryCursor;
 import com.google.samples.apps.topeka.persistence.TopekaDatabaseHelper;
 import com.google.samples.apps.topeka.widget.CategoryLayout;
 
+/**
+ * An adapter backed by a {@link CategoryCursor} that allows display of {@link Category} data.
+ */
 public class CategoryCursorAdapter extends CursorAdapter {
 
     public static final String ICON_CATEGORY = "icon_category_";
-    public static final String THEME = "theme_";
-    public static final String COLOR = "color";
-    public static final String BACKGROUND = "_background";
-    public static final String PRIMARY = "_primary";
-    public static final String FOREGROUND = "_foreground";
     public static final String DRAWABLE = "drawable";
     private final Resources mResources;
     private final String mPackageName;
 
     public CategoryCursorAdapter(Activity activity) {
-        super(activity,TopekaDatabaseHelper.getCategoryCursor(activity), true);
+        super(activity, TopekaDatabaseHelper.getCategoryCursor(activity), true);
         mResources = activity.getResources();
         mPackageName = activity.getPackageName();
     }
 
-    private static void adjustStyles(Resources resources, String themeName, String packageName,
-            CategoryLayout categoryLayout) {
-        //TODO: 11/11/14 don't use resource lookup
-        categoryLayout.setBackgroundResource(resources.getIdentifier(
-                THEME + themeName + BACKGROUND, COLOR, packageName));
-        categoryLayout.getName().setBackgroundResource(resources.getIdentifier(
-                THEME + themeName + PRIMARY, COLOR, packageName));
-        categoryLayout.getName().setTextColor(resources.getColor(resources.getIdentifier(
-                THEME + themeName + FOREGROUND, COLOR, packageName)));
+    private static void adjustStyles(Theme theme, CategoryLayout categoryLayout) {
+        categoryLayout.setBackgroundResource(theme.getWindowBackgroundColor());
+        Resources resources = categoryLayout.getResources();
+        TextView name = categoryLayout.getName();
+        name.setBackgroundResource(theme.getPrimaryColor());
+        name.setTextColor(resources.getColor(theme.getTextPrimaryColor()));
     }
 
     @Override
@@ -70,7 +68,7 @@ public class CategoryCursorAdapter extends CursorAdapter {
             categoryLayout.setImageResource(mResources.getIdentifier(
                     ICON_CATEGORY + category.getId(), DRAWABLE, mPackageName));
             categoryLayout.setText(category.getName());
-            adjustStyles(mResources, category.getTheme().name(), mPackageName, categoryLayout);
+            adjustStyles(category.getTheme(), categoryLayout);
         }
     }
 

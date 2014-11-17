@@ -94,9 +94,9 @@ public class QuizActivity extends FragmentActivity implements View.OnClickListen
         setContentView(R.layout.activity_quiz);
         //TODO: 11/3/14 find a better way to do this, which doesn't include resource lookup.
         ImageView icon = (ImageView) findViewById(R.id.icon);
-        icon.setImageResource(getResources().getIdentifier(IMAGE_CATEGORY + categoryId, DRAWABLE,
-                getApplicationContext().getPackageName()));
-
+        int resId = getResources().getIdentifier(IMAGE_CATEGORY + categoryId, DRAWABLE,
+                getApplicationContext().getPackageName());
+        icon.setImageResource(resId);
         ImageView btnStartQuiz = (ImageView) findViewById(R.id.btn_start_quiz);
         btnStartQuiz.setOnClickListener(this);
     }
