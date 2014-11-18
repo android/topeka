@@ -18,6 +18,8 @@ package com.google.samples.apps.topeka.model.quiz;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.Arrays;
+
 //TODO: 11/13/14 maybe not use an OptionsQuiz as parent for this.
 public final class FourQuarterQuiz extends OptionsQuiz<String> {
 
@@ -56,7 +58,43 @@ public final class FourQuarterQuiz extends OptionsQuiz<String> {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        super.writeToParcel(dest, flags);
         String[] options = getOptions();
         dest.writeStringArray(options);
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof FourQuarterQuiz)) {
+            return false;
+        }
+
+        FourQuarterQuiz quiz = (FourQuarterQuiz) o;
+        final int[] answer = getAnswer();
+        final String question = getQuestion();
+        if (answer != null ? !Arrays.equals(answer, quiz.getAnswer()) : quiz.getAnswer() != null) {
+            return false;
+        }
+        if (!question.equals(quiz.getQuestion())) {
+            return false;
+        }
+
+        if (!Arrays.equals(getOptions(), quiz.getOptions())) {
+            return false;
+        }
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = super.hashCode();
+        result = 31 * result + Arrays.hashCode(getOptions());
+        result = 31 * result + Arrays.hashCode(getAnswer());
+        return result;
+    }
+
 }

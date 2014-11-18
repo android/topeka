@@ -24,6 +24,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
 
+import java.lang.reflect.Array;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
@@ -36,32 +37,7 @@ import java.lang.reflect.InvocationTargetException;
 public abstract class Quiz<A> implements Parcelable {
 
     private static final String TAG = "Quiz";
-    public static final Creator<Quiz> CREATOR = new Creator<Quiz>() {
-        @Override
-        public Quiz createFromParcel(Parcel in) {
-            int ordinal = in.readInt();
-            QuizType type = QuizType.values()[ordinal];
-            try {
-                Constructor<? extends Quiz> constructor = type.getType().getConstructor(
-                        Parcel.class);
-                return constructor.newInstance(in);
-            } catch (InstantiationException e) {
-                Log.e(TAG, "createFromParcel ", e);
-            } catch (IllegalAccessException e) {
-                Log.e(TAG, "createFromParcel ", e);
-            } catch (InvocationTargetException e) {
-                Log.e(TAG, "createFromParcel ", e);
-            } catch (NoSuchMethodException e) {
-                Log.e(TAG, "createFromParcel ", e);
-            }
-            throw new UnsupportedOperationException("Could not create Quiz");
-        }
 
-        @Override
-        public Quiz[] newArray(int size) {
-            return new Quiz[size];
-        }
-    };
     @SerializedName(JsonAttributes.QUESTION)
     private final String mQuestion;
     @SerializedName(JsonAttributes.ANSWER)
@@ -98,6 +74,33 @@ public abstract class Quiz<A> implements Parcelable {
         return mAnswer.equals(answer);
     }
 
+    public static final Creator<Quiz> CREATOR = new Creator<Quiz>() {
+        @Override
+        public Quiz createFromParcel(Parcel in) {
+            int ordinal = in.readInt();
+            QuizType type = QuizType.values()[ordinal];
+            try {
+                Constructor<? extends Quiz> constructor = type.getType()
+                        .getConstructor(Parcel.class);
+                return constructor.newInstance(in);
+            } catch (InstantiationException e) {
+                Log.e(TAG, "createFromParcel ", e);
+            } catch (IllegalAccessException e) {
+                Log.e(TAG, "createFromParcel ", e);
+            } catch (InvocationTargetException e) {
+                Log.e(TAG, "createFromParcel ", e);
+            } catch (NoSuchMethodException e) {
+                Log.e(TAG, "createFromParcel ", e);
+            }
+            throw new UnsupportedOperationException("Could not create Quiz");
+        }
+
+        @Override
+        public Quiz[] newArray(int size) {
+            return new Quiz[size];
+        }
+    };
+
     @Override
     public int describeContents() {
         return 0;
@@ -109,4 +112,34 @@ public abstract class Quiz<A> implements Parcelable {
         dest.writeString(mQuestion);
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Quiz)) {
+            return false;
+        }
+
+        Quiz quiz = (Quiz) o;
+
+        if (mAnswer != null ? !mAnswer.equals(quiz.mAnswer) : quiz.mAnswer != null) {
+            return false;
+        }
+        if (!mQuestion.equals(quiz.mQuestion)) {
+            return false;
+        }
+        if (!mQuizType.equals(quiz.mQuizType)) {
+            return false;
+        }
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = mQuestion.hashCode();
+        result = 31 * result + (mAnswer != null ? mAnswer.hashCode() : 0);
+        return result;
+    }
 }

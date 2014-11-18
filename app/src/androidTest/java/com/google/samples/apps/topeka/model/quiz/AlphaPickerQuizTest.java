@@ -15,29 +15,26 @@
  */
 package com.google.samples.apps.topeka.model.quiz;
 
-import android.os.Parcel;
+import android.test.suitebuilder.annotation.SmallTest;
 
-import com.google.samples.apps.topeka.helper.ParcelableHelper;
+@SmallTest
+public class AlphaPickerQuizTest extends AbsQuizTestCase<AlphaPickerQuiz> {
 
-public final class TrueFalseQuiz extends Quiz<Boolean> {
+    private static final String ANSWER = "answer";
 
-    public TrueFalseQuiz(String question, Boolean answer) {
-        super(question, answer);
-    }
-
-    public TrueFalseQuiz(Parcel in) {
-        super(in);
-        setAnswer(ParcelableHelper.readBoolean(in));
+    @Override
+    public void testGetAnswer() {
+        assertEquals(ANSWER, getQuiz().getAnswer());
     }
 
     @Override
-    public QuizType getType() {
-        return QuizType.TRUE_FALSE;
+    public AlphaPickerQuiz getQuiz() {
+        return new AlphaPickerQuiz(QUESTION, ANSWER);
     }
 
     @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        super.writeToParcel(dest, flags);
-        ParcelableHelper.writeBoolean(dest, getAnswer());
+    public QuizType getExpectedQuizType() {
+        return QuizType.ALPHA_PICKER;
     }
+
 }

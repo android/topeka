@@ -44,7 +44,7 @@ import com.google.samples.apps.topeka.widget.FloatingActionButton;
  * in order to allow solution of a quiz.
  * </p>
  * <p>
- * Also {@link AbsQuizView#setAnswered(boolean)} needs to be called with
+ * Also {@link AbsQuizView#allowAnswer(boolean)} needs to be called with
  * <code>true</code> in order to mark the quiz solved.
  * </p>
  * @param <Q> The type of {@link com.google.samples.apps.topeka.model.quiz.Quiz} you want to

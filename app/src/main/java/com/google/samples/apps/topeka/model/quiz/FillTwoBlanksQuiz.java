@@ -17,6 +17,8 @@ package com.google.samples.apps.topeka.model.quiz;
 
 import android.os.Parcel;
 
+import java.util.Arrays;
+
 public final class FillTwoBlanksQuiz extends Quiz<String[]> {
 
     public FillTwoBlanksQuiz(String question, String[] answer) {
@@ -39,4 +41,34 @@ public final class FillTwoBlanksQuiz extends Quiz<String[]> {
         super.writeToParcel(dest, flags);
         dest.writeStringArray(getAnswer());
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof FillTwoBlanksQuiz)) {
+            return false;
+        }
+
+        FillTwoBlanksQuiz quiz = (FillTwoBlanksQuiz) o;
+        final String[] answer = getAnswer();
+        final String question = getQuestion();
+        if (answer != null ? !Arrays.equals(answer, quiz.getAnswer()) : quiz.getAnswer() != null) {
+            return false;
+        }
+        if (!question.equals(quiz.getQuestion())) {
+            return false;
+        }
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = super.hashCode();
+        result = 31 * result + Arrays.hashCode(getAnswer());
+        return result;
+    }
+
 }

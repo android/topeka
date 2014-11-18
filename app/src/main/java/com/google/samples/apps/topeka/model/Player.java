@@ -73,4 +73,36 @@ public class Player implements Parcelable {
         dest.writeString(mLastInitial);
         dest.writeInt(mAvatar.ordinal());
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        Player player = (Player) o;
+
+        if (mAvatar != player.mAvatar) {
+            return false;
+        }
+        if (!mFirstName.equals(player.mFirstName)) {
+            return false;
+        }
+        if (!mLastInitial.equals(player.mLastInitial)) {
+            return false;
+        }
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = mFirstName.hashCode();
+        result = 31 * result + mLastInitial.hashCode();
+        result = 31 * result + mAvatar.hashCode();
+        return result;
+    }
 }

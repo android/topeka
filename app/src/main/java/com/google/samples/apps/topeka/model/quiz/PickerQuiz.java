@@ -41,6 +41,7 @@ public final class PickerQuiz extends Quiz<Integer> {
 
     public PickerQuiz(Parcel in) {
         super(in);
+        setAnswer(in.readInt());
         mMin = in.readInt();
         mMax = in.readInt();
         mStep = in.readInt();
@@ -66,8 +67,45 @@ public final class PickerQuiz extends Quiz<Integer> {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         super.writeToParcel(dest, flags);
+        dest.writeInt(getAnswer());
         dest.writeInt(mMin);
         dest.writeInt(mMax);
         dest.writeInt(mStep);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        if (!super.equals(o)) {
+            return false;
+        }
+
+        PickerQuiz that = (PickerQuiz) o;
+
+        if (mMax != that.mMax) {
+            return false;
+        }
+        if (mMin != that.mMin) {
+            return false;
+        }
+        if (mStep != that.mStep) {
+            return false;
+        }
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = super.hashCode();
+        result = 31 * result + mMin;
+        result = 31 * result + mMax;
+        result = 31 * result + mStep;
+        return result;
     }
 }

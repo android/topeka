@@ -21,6 +21,8 @@ import android.os.Parcel;
 import com.google.gson.annotations.SerializedName;
 import com.google.samples.apps.topeka.model.JsonAttributes;
 
+import java.util.Arrays;
+
 public abstract class OptionsQuiz<T> extends Quiz<int[]> {
 
     @SerializedName(JsonAttributes.OPTIONS)
@@ -54,5 +56,33 @@ public abstract class OptionsQuiz<T> extends Quiz<int[]> {
     public void writeToParcel(Parcel dest, int flags) {
         super.writeToParcel(dest, flags);
         dest.writeIntArray(getAnswer());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof OptionsQuiz)) {
+            return false;
+        }
+
+        OptionsQuiz that = (OptionsQuiz) o;
+
+        if (!Arrays.equals(getAnswer(), ((int[]) that.getAnswer()))) {
+            return false;
+        }
+        if (!Arrays.equals(mOptions, that.mOptions)) {
+            return false;
+        }
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = super.hashCode();
+        result = 31 * result + Arrays.hashCode(mOptions);
+        return result;
     }
 }

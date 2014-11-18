@@ -124,7 +124,7 @@ public class Category implements Parcelable {
                 "mName='" + mName + '\'' +
                 ", mId='" + mId + '\'' +
                 ", mTheme=" + mTheme +
-                ", mQuizzes=" + mQuizzes +
+                ", mQuizzes=" + mQuizzes.toString() +
                 ", mScores=" + Arrays.toString(mScores) +
                 '}';
     }
@@ -153,5 +153,41 @@ public class Category implements Parcelable {
         dest.writeInt(mTheme.ordinal());
         dest.writeTypedList(getQuizzes());
         dest.writeIntArray(mScores);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        Category category = (Category) o;
+
+        if (!mId.equals(category.mId)) {
+            return false;
+        }
+        if (!mName.equals(category.mName)) {
+            return false;
+        }
+        if (!mQuizzes.equals(category.mQuizzes)) {
+            return false;
+        }
+        if (mTheme != category.mTheme) {
+            return false;
+        }
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = mName.hashCode();
+        result = 31 * result + mId.hashCode();
+        result = 31 * result + mTheme.hashCode();
+        result = 31 * result + mQuizzes.hashCode();
+        return result;
     }
 }

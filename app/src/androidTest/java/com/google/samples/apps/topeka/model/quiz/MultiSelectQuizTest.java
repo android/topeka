@@ -15,29 +15,24 @@
  */
 package com.google.samples.apps.topeka.model.quiz;
 
-import android.os.Parcel;
+import android.test.suitebuilder.annotation.SmallTest;
 
-import com.google.samples.apps.topeka.helper.ParcelableHelper;
+@SmallTest
+public class MultiSelectQuizTest extends AbsQuizTestCase<MultiSelectQuiz> {
 
-public final class TrueFalseQuiz extends Quiz<Boolean> {
 
-    public TrueFalseQuiz(String question, Boolean answer) {
-        super(question, answer);
-    }
-
-    public TrueFalseQuiz(Parcel in) {
-        super(in);
-        setAnswer(ParcelableHelper.readBoolean(in));
+    @Override
+    public void testGetAnswer() {
+        assertEquals(INT_ARRAY, getQuiz().getAnswer());
     }
 
     @Override
-    public QuizType getType() {
-        return QuizType.TRUE_FALSE;
+    public MultiSelectQuiz getQuiz() {
+        return new MultiSelectQuiz(QUESTION, INT_ARRAY, STRING_ARRAY);
     }
 
     @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        super.writeToParcel(dest, flags);
-        ParcelableHelper.writeBoolean(dest, getAnswer());
+    public QuizType getExpectedQuizType() {
+        return QuizType.MULTI_SELECT;
     }
 }
