@@ -35,6 +35,7 @@ import com.google.samples.apps.topeka.persistence.TopekaDatabaseHelper;
 public class QuizFragment extends Fragment {
 
     private Category mCategory;
+    private ViewPager mViewPager;
 
     public static QuizFragment newInstance(String categoryId) {
         if (categoryId == null) {
@@ -62,9 +63,22 @@ public class QuizFragment extends Fragment {
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        ViewPager viewPager = ViewHelper.getView(view, R.id.quiz_pager);
-        viewPager.setBackgroundResource(mCategory.getTheme().getWindowBackgroundColor());
-        viewPager.setAdapter(new QuizPagerAdapter(getActivity(), mCategory));
+        mViewPager = ViewHelper.getView(view, R.id.quiz_pager);
+        mViewPager.setBackgroundResource(mCategory.getTheme().getWindowBackgroundColor());
+        mViewPager.setAdapter(new QuizPagerAdapter(getActivity(), mCategory));
         super.onViewCreated(view, savedInstanceState);
+    }
+
+    public void setPage(int page) {
+        mViewPager.setCurrentItem(page, false);
+    }
+
+    public boolean nextPage() {
+        int nextItem = mViewPager.getCurrentItem() + 1;
+        if (nextItem < mViewPager.getAdapter().getCount()) {
+            mViewPager.setCurrentItem(nextItem, true);
+            return true;
+        }
+        return false;
     }
 }

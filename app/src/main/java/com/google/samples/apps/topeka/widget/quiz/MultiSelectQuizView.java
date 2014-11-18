@@ -16,7 +16,6 @@
 package com.google.samples.apps.topeka.widget.quiz;
 
 import android.content.Context;
-import android.util.SparseBooleanArray;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -51,7 +50,7 @@ public class MultiSelectQuizView extends AbsQuizView<MultiSelectQuiz>
             checkBox.setTextAppearance(getContext(),
                     android.R.style.TextAppearance_Material_Subhead);
             checkBox.setText(option);
-            setMinHeight(checkBox);
+            setMinHeightForTouchTarget(checkBox);
             layout.addView(checkBox, mOptionsParams);
         }
 

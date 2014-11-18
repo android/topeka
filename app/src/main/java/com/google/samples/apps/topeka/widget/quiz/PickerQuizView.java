@@ -16,6 +16,7 @@
 package com.google.samples.apps.topeka.widget.quiz;
 
 import android.content.Context;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
@@ -26,6 +27,9 @@ import com.google.samples.apps.topeka.model.quiz.PickerQuiz;
 
 public class PickerQuizView extends AbsQuizView<PickerQuiz>
         implements SeekBar.OnSeekBarChangeListener {
+
+    private static final LinearLayout.LayoutParams LAYOUT_PARAMS =
+            new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
 
     private TextView mCurrentSelection;
     private SeekBar mSeekBar;
@@ -43,10 +47,9 @@ public class PickerQuizView extends AbsQuizView<PickerQuiz>
         LinearLayout layout = new LinearLayout(getContext());
         layout.setOrientation(LinearLayout.VERTICAL);
         initCurrentSelection();
-        layout.addView(mCurrentSelection,
-                new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, 0, 2));
+        layout.addView(mCurrentSelection, LAYOUT_PARAMS);
         initSeekBar();
-        layout.addView(mSeekBar, new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, 0, 1));
+        layout.addView(mSeekBar, LAYOUT_PARAMS);
         setCurrentSelectionText(mMin);
         return layout;
     }
@@ -60,7 +63,7 @@ public class PickerQuizView extends AbsQuizView<PickerQuiz>
     private void initSeekBar() {
         int viewMax = getSeekBarMax();
         mSeekBar = new SeekBar(getContext());
-        setMinHeight(mSeekBar);
+        setMinHeightForTouchTarget(mSeekBar);
         mSeekBar.setMax(viewMax);
         mSeekBar.setOnSeekBarChangeListener(this);
     }
@@ -75,6 +78,9 @@ public class PickerQuizView extends AbsQuizView<PickerQuiz>
         }
     }
 
+    /**
+     * Calculates the actual max value of the SeekBar
+     */
     private int getSeekBarMax() {
         final int absMin = Math.abs(getQuiz().getMin());
         final int absMax = Math.abs(getQuiz().getMax());

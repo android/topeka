@@ -18,7 +18,10 @@ package com.google.samples.apps.topeka.widget.quiz;
 import android.content.Context;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.Gravity;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
 import com.google.samples.apps.topeka.R;
@@ -40,8 +43,11 @@ public abstract class TextInputQuizView<Q extends Quiz> extends AbsQuizView<Q> i
     protected final EditText getEditText() {
         EditText editText = new EditText(getContext());
         editText.setTextAppearance(getContext(), android.R.style.TextAppearance_Material);
-        setMinHeight(editText);
+        setMinHeightForTouchTarget(editText);
+        editText.setGravity(Gravity.BOTTOM);
         editText.addTextChangedListener(this);
+        editText.setSingleLine(true);
+        editText.setImeOptions(EditorInfo.IME_ACTION_DONE);
         return editText;
     }
 
@@ -58,5 +64,17 @@ public abstract class TextInputQuizView<Q extends Quiz> extends AbsQuizView<Q> i
     @Override
     public void afterTextChanged(Editable s) {
         /* no-op */
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.submitAnswer:
+                InputMethodManager inputMethodManager = (InputMethodManager) getContext()
+                        .getSystemService(Context.INPUT_METHOD_SERVICE);
+                inputMethodManager.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                break;
+        }
+        super.onClick(v);
     }
 }

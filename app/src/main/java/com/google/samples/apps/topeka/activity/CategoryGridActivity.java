@@ -56,13 +56,12 @@ public class CategoryGridActivity extends FragmentActivity {
     }
 
     private void setUpToolbar(Player player, Toolbar toolbar) {
-        toolbar.setTitle(getDisplayName(player));
         ImageView avatarView = (ImageView) findViewById(R.id.avatar);
         avatarView.setClipToOutline(true);
         avatarView.setOutlineProvider(new ToolbarIconOutlineProvider());
         avatarView.setImageResource(player.getAvatar().getDrawableId());
         TextView name = (TextView) findViewById(R.id.name);
-        name.setText(player.getFirstName() + " " + player.getLastInitial());
+        name.setText(getDisplayName(player));
         setActionBar(toolbar);
     }
 

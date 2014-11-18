@@ -15,16 +15,22 @@
  */
 package com.google.samples.apps.topeka.widget.quiz;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
 import android.content.res.ColorStateList;
+import android.support.annotation.DimenRes;
 import android.support.v7.widget.CardView;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewPropertyAnimator;
+import android.view.animation.AccelerateInterpolator;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.samples.apps.topeka.R;
+import com.google.samples.apps.topeka.activity.QuizActivity;
 import com.google.samples.apps.topeka.model.Category;
 import com.google.samples.apps.topeka.model.Theme;
 import com.google.samples.apps.topeka.model.quiz.Quiz;
@@ -47,34 +53,41 @@ import com.google.samples.apps.topeka.widget.FloatingActionButton;
 public abstract class AbsQuizView<Q extends Quiz> extends CardView implements
         View.OnClickListener {
 
-    private final TextView mQuestionView;
+    private final Category mCategory;
+    private TextView mQuestionView;
     private FloatingActionButton mSubmitAnswer;
     private Q mQuiz;
     private boolean mAnswered;
+    private int mDefaultPadding;
 
     public AbsQuizView(Context context, Category category, Q quiz) {
         super(context);
         mQuiz = quiz;
+        mDefaultPadding = getResources().getDimensionPixelSize(R.dimen.padding_default);
+        mCategory = category;
+        mSubmitAnswer = getSubmitButton(context);
+
         LinearLayout container = new LinearLayout(context);
         container.setOrientation(LinearLayout.VERTICAL);
-        mQuestionView = new TextView(context);
-        mQuestionView
-                .setTextAppearance(getContext(), android.R.style.TextAppearance_Material_Subhead);
-        setMinHeight(mQuestionView);
-        setupQuestionView(category);
 
+        setupQuestionView(mCategory);
+
+        //modify the quiz content view
         View quizContentView = getQuizContentView();
         setDefaultPadding(quizContentView);
+        setMinHeightInternal(quizContentView, R.dimen.min_height_question);
 
+        //add them to the container
         LayoutParams layoutParams = new LayoutParams(LayoutParams.MATCH_PARENT,
                 LayoutParams.WRAP_CONTENT);
         container.addView(mQuestionView, layoutParams);
         container.addView(quizContentView, layoutParams);
         addView(container, layoutParams);
-        mSubmitAnswer = getSubmitButton(context);
+        //create and attach submit button
+
         final int fabSize = getResources().getDimensionPixelSize(R.dimen.fab_size);
-        addView(mSubmitAnswer, new LayoutParams(fabSize,
-                fabSize, Gravity.END));
+        addView(mSubmitAnswer,
+                new LayoutParams(fabSize, fabSize, Gravity.END | Gravity.CENTER_VERTICAL));
     }
 
     private FloatingActionButton getSubmitButton(Context context) {
@@ -82,22 +95,30 @@ public abstract class AbsQuizView<Q extends Quiz> extends CardView implements
             mSubmitAnswer = new DoneFab(context);
             mSubmitAnswer.setId(R.id.submitAnswer);
             mSubmitAnswer.setVisibility(GONE);
+            //Set QuizActivity to handle clicks on answer submission.
+            if (context instanceof QuizActivity) {
+                mSubmitAnswer.setOnClickListener(this);
+            }
         }
         return mSubmitAnswer;
     }
 
     private void setupQuestionView(Category category) {
-        mQuestionView.setText(getQuiz().getQuestion());
+        mQuestionView = new TextView(getContext());
+        int textColor = getResources().getColor(category.getTheme().getTextPrimaryColor());
+        int backgroundColor = getResources().getColor(category.getTheme().getPrimaryColor());
         mQuestionView
                 .setTextAppearance(getContext(), android.R.style.TextAppearance_Material_Subhead);
-        mQuestionView.setTextColor(category.getTheme().getTextPrimaryColor());
-        int backgroundColor = getResources().getColor(category.getTheme().getPrimaryColor());
         mQuestionView.setBackgroundColor(backgroundColor);
+        mQuestionView.setTextColor(textColor);
+        mQuestionView.setGravity(Gravity.CENTER_VERTICAL);
+        setDefaultPadding(mQuestionView);
+        setMinHeightInternal(mQuestionView, R.dimen.min_height_question);
+        mQuestionView.setText(getQuiz().getQuestion());
     }
 
     private void setDefaultPadding(View view) {
-        final int padding = getResources().getDimensionPixelSize(R.dimen.padding_default);
-        view.setPadding(padding, padding, padding, padding);
+        view.setPadding(mDefaultPadding, mDefaultPadding, mDefaultPadding, mDefaultPadding);
     }
 
     /**
@@ -121,13 +142,11 @@ public abstract class AbsQuizView<Q extends Quiz> extends CardView implements
      *
      * @param answered <code>true</code> if an answer was selected, else <code>false</code>.
      */
-    protected void setAnswered(boolean answered) {
-        if (answered) {
-            mSubmitAnswer.setVisibility(View.VISIBLE);
-        } else {
-            mSubmitAnswer.setVisibility(View.GONE);
+    protected void setAnswered(final boolean answered) {
+        if (null != mSubmitAnswer) {
+            mSubmitAnswer.setVisibility(answered ? View.VISIBLE : View.GONE);
+            mAnswered = answered;
         }
-        mAnswered = answered;
     }
 
     /**
@@ -145,13 +164,20 @@ public abstract class AbsQuizView<Q extends Quiz> extends CardView implements
         switch (v.getId()) {
             case R.id.submitAnswer: {
                 //TODO: 11/3/14 handle
+                if (getContext() instanceof QuizActivity) {
+                    ((QuizActivity) getContext()).onClick(v);
+                }
+                //perform answering in mCategory
                 break;
             }
         }
     }
 
-    protected void setMinHeight(View view) {
-        view.setMinimumHeight(
-                getResources().getDimensionPixelSize(R.dimen.min_height_touch_target));
+    protected void setMinHeightForTouchTarget(View view) {
+        setMinHeightInternal(view, R.dimen.min_height_touch_target);
+    }
+
+    private void setMinHeightInternal(View view, @DimenRes int resId) {
+        view.setMinimumHeight(getResources().getDimensionPixelSize(resId));
     }
 }
