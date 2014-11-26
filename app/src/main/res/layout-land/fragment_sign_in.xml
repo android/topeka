@@ -18,27 +18,39 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <include layout="@layout/sign_in_fab_check" />
+    <ProgressBar
+        android:id="@+id/empty"
+        android:layout_width="@dimen/min_height_touch_target"
+        android:layout_height="@dimen/min_height_touch_target"
+        android:progressTint="@color/topeka_accent"
+        android:layout_gravity="center" />
 
-    <LinearLayout
-        android:orientation="horizontal"
+    <FrameLayout
+        android:id="@+id/content"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:baselineAligned="false">
+        android:layout_height="match_parent">
 
-        <include
-            layout="@layout/sign_in_username"
-            android:layout_width="0dp"
+        <include layout="@layout/sign_in_fab_check" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1" />
+            android:layout_gravity="center"
+            android:baselineAligned="false">
 
-        <include
-            layout="@layout/sign_in_avatars"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1" />
+            <include
+                layout="@layout/sign_in_username"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
 
-    </LinearLayout>
+            <include
+                layout="@layout/sign_in_avatars"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+
+        </LinearLayout>
+    </FrameLayout>
 </FrameLayout>
-

@@ -22,21 +22,20 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
+import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toolbar;
 
 import com.google.samples.apps.topeka.R;
 import com.google.samples.apps.topeka.fragment.CategoryGridFragment;
+import com.google.samples.apps.topeka.helper.ActivityHelper;
 import com.google.samples.apps.topeka.model.Player;
 import com.google.samples.apps.topeka.persistence.TopekaDatabaseHelper;
 import com.google.samples.apps.topeka.widget.outlineprovider.ToolbarIconOutlineProvider;
 
-public class CategoryGridActivity extends FragmentActivity {
+public class CategoryGridActivity extends FragmentActivity implements View.OnClickListener {
 
-    private static final String TAG = "MainActivity";
     private static final String EXTRA_PLAYER = "player";
-    private Toolbar mToolbar;
 
     public static void start(Context context, Player player, ActivityOptions options) {
         Intent starter = new Intent(context, CategoryGridActivity.class);
@@ -44,12 +43,18 @@ public class CategoryGridActivity extends FragmentActivity {
         context.startActivity(starter, options.toBundle());
     }
 
+    public static void start(Context context, Player player) {
+        Intent starter = new Intent(context, CategoryGridActivity.class);
+        starter.putExtra(EXTRA_PLAYER, player);
+        context.startActivity(starter);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_quiz_selection);
         Player player = getIntent().getParcelableExtra(EXTRA_PLAYER);
-        mToolbar = (Toolbar) findViewById(R.id.toolbar_player);
         setUpToolbar(player);
         if (savedInstanceState == null) {
             attachCategoryGridFragment();
@@ -71,9 +76,31 @@ public class CategoryGridActivity extends FragmentActivity {
         avatarView.setClipToOutline(true);
         avatarView.setOutlineProvider(new ToolbarIconOutlineProvider());
         avatarView.setImageResource(player.getAvatar().getDrawableId());
+        avatarView.setOnClickListener(this);
+
         TextView name = (TextView) findViewById(R.id.name);
         name.setText(getDisplayName(player));
     }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.avatar:
+                ActivityOptions activityOptions = ActivityOptions
+                        .makeSceneTransitionAnimation(this, v,
+                                getString(R.string.transition_to_sign_in));
+                SignInActivity.start(this, true, activityOptions);
+                // TODO: 11/28/14 find a clean solution to finish after the transition
+                ActivityHelper.finishDelayed(this);
+                break;
+            default:
+                throw new UnsupportedOperationException(
+                        "The onClick method has not been implemented for " + getResources()
+                                .getResourceEntryName(v.getId()));
+        }
+    }
+
+
 
     private String getDisplayName(Player player) {
         return getString(R.string.player_display_name, player.getFirstName(),

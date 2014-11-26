@@ -16,6 +16,9 @@
 
 package com.google.samples.apps.topeka.activity;
 
+import android.app.ActivityOptions;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 
@@ -24,11 +27,29 @@ import com.google.samples.apps.topeka.fragment.SignInFragment;
 
 public class SignInActivity extends FragmentActivity {
 
+    private static final String EXTRA_EDIT = "EDIT";
+
+    public static void start(Context context, Boolean edit, ActivityOptions options) {
+        Intent starter = new Intent(context, SignInActivity.class);
+        starter.putExtra(EXTRA_EDIT, edit);
+        context.startActivity(starter, options.toBundle());
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
+        final boolean edit = isInEditMode();
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.sign_in_container, new SignInFragment()).commit();
+                .replace(R.id.sign_in_container, SignInFragment.newInstance(edit)).commit();
+    }
+
+    private boolean isInEditMode() {
+        final Intent intent = getIntent();
+        boolean edit = false;
+        if (null != intent) {
+            edit = intent.getBooleanExtra(EXTRA_EDIT, false);
+        }
+        return edit;
     }
 }

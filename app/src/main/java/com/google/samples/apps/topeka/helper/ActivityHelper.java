@@ -16,11 +16,16 @@
 package com.google.samples.apps.topeka.helper;
 
 import android.app.Activity;
+import android.os.Handler;
+import android.os.Looper;
 
 /**
  * Collection of shared methods for use in activities.
  */
 public class ActivityHelper {
+
+    private static final int FINISH_DELAY = 500; // milliseconds
+    private final static Handler HANDLER = new Handler(Looper.getMainLooper());
 
     private ActivityHelper() {
         //no instance
@@ -33,4 +38,18 @@ public class ActivityHelper {
         }
     }
 
+    /**
+     * Finishes an {@link Activity} after a short time instead of immediately.
+     *
+     * @param activity The activity to finish.
+     */
+    public static void finishDelayed(final Activity activity) {
+        Runnable finisher = new Runnable() {
+            @Override
+            public void run() {
+                activity.finish();
+            }
+        };
+        HANDLER.postDelayed(finisher, FINISH_DELAY);
+    }
 }

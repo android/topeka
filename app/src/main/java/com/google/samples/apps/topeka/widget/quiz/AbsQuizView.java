@@ -15,24 +15,17 @@
  */
 package com.google.samples.apps.topeka.widget.quiz;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
-import android.content.res.ColorStateList;
 import android.support.annotation.DimenRes;
 import android.support.v7.widget.CardView;
 import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.ViewPropertyAnimator;
-import android.view.animation.AccelerateInterpolator;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.samples.apps.topeka.R;
 import com.google.samples.apps.topeka.activity.QuizActivity;
 import com.google.samples.apps.topeka.model.Category;
-import com.google.samples.apps.topeka.model.Theme;
 import com.google.samples.apps.topeka.model.quiz.Quiz;
 import com.google.samples.apps.topeka.widget.DoneFab;
 import com.google.samples.apps.topeka.widget.FloatingActionButton;
@@ -47,8 +40,9 @@ import com.google.samples.apps.topeka.widget.FloatingActionButton;
  * Also {@link AbsQuizView#allowAnswer(boolean)} needs to be called with
  * <code>true</code> in order to mark the quiz solved.
  * </p>
+ *
  * @param <Q> The type of {@link com.google.samples.apps.topeka.model.quiz.Quiz} you want to
- *            display.
+ * display.
  */
 public abstract class AbsQuizView<Q extends Quiz> extends CardView implements
         View.OnClickListener {
@@ -132,7 +126,8 @@ public abstract class AbsQuizView<Q extends Quiz> extends CardView implements
     /**
      * Implementations must make sure that the answer provided is evaluated and correctly rated.
      *
-     * @return <code>true</code> if the question has been correctly answered, else <code>false</code>.
+     * @return <code>true</code> if the question has been correctly answered, else
+     * <code>false</code>.
      */
     protected abstract boolean isAnswerCorrect();
 
@@ -149,8 +144,8 @@ public abstract class AbsQuizView<Q extends Quiz> extends CardView implements
      *
      * @param answered <code>true</code> if an answer was selected, else <code>false</code>.
      */
- protected void allowAnswer(final boolean answered) {
-         if (null != mSubmitAnswer) {
+    protected void allowAnswer(final boolean answered) {
+        if (null != mSubmitAnswer) {
             mSubmitAnswer.setVisibility(answered ? View.VISIBLE : View.GONE);
             mAnswered = answered;
         }

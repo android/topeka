@@ -20,6 +20,7 @@
         <!-- Customize your theme here. -->
         <item name="android:colorPrimary">@color/topeka_primary</item>
         <item name="android:colorPrimaryDark">@color/topeka_primary_dark</item>
+        <item name="android:colorAccent">@color/topeka_accent</item>
         <item name="android:textColorPrimary">@android:color/black</item>
         <item name="android:textColorPrimaryInverse">@android:color/white</item>
         <!-- Enable transitions between activities -->

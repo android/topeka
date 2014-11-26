@@ -20,6 +20,7 @@
     <color name="topeka_primary">#00bad2</color>
     <color name="topeka_primary_dark">#008c9e</color>
     <color name="topeka_blank">#424242</color>
+    <color name="topeka_accent">#FF1990</color>
 
     <color name="font_bright">#fff</color>
     <color name="font_dark">#616161</color>

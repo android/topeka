@@ -15,6 +15,6 @@
   limitations under the License.
 -->
 <ripple xmlns:android="http://schemas.android.com/apk/res/android"
-    android:color="@color/topeka_primary">
+    android:color="?android:colorAccent">
     <item android:drawable="@android:color/white" />
 </ripple>

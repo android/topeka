@@ -24,7 +24,7 @@ public class AnswerHelper {
         //no instance
     }
 
-    public static CharSequence getAnswer(String[] answers) {
+    public static String getAnswer(String[] answers) {
         StringBuilder readableAnswer = new StringBuilder();
         //Iterate over all answers
         for (int i = 0; i < answers.length; i++) {
@@ -35,10 +35,10 @@ public class AnswerHelper {
                 readableAnswer.append("\n");
             }
         }
-        return readableAnswer;
+        return readableAnswer.toString();
     }
 
-    public static CharSequence getAnswer(int[] answers, String[] options) {
+    public static String getAnswer(int[] answers, String[] options) {
         String[] readableAnswers = new String[answers.length];
         for (int i = 0; i < answers.length; i++) {
             final String humanReadableAnswer = options[answers[i]];
