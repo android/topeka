@@ -18,6 +18,8 @@ package com.google.samples.apps.topeka.model.quiz;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.google.samples.apps.topeka.helper.AnswerHelper;
+
 import java.util.Arrays;
 
 //TODO: 11/13/14 maybe not use an OptionsQuiz as parent for this.
@@ -49,6 +51,11 @@ public final class FourQuarterQuiz extends OptionsQuiz<String> {
     @Override
     public QuizType getType() {
         return QuizType.FOUR_QUARTER;
+    }
+
+    @Override
+    public String getStringAnswer() {
+        return AnswerHelper.getAnswer(getAnswer(), getOptions());
     }
 
     @Override

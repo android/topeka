@@ -17,6 +17,8 @@ package com.google.samples.apps.topeka.model.quiz;
 
 import android.os.Parcel;
 
+import com.google.samples.apps.topeka.helper.AnswerHelper;
+
 import java.util.Arrays;
 
 public final class FillTwoBlanksQuiz extends Quiz<String[]> {
@@ -34,6 +36,11 @@ public final class FillTwoBlanksQuiz extends Quiz<String[]> {
     @Override
     public QuizType getType() {
         return QuizType.FILL_TWO_BLANKS;
+    }
+
+    @Override
+    public String getStringAnswer() {
+        return AnswerHelper.getAnswer(getAnswer());
     }
 
     @Override

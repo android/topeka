@@ -42,7 +42,7 @@ public class ToggleTranslateQuizView extends AbsQuizView<ToggleTranslateQuiz> {
         }
         LinearLayout layout = new LinearLayout(getContext());
         layout.setOrientation(LinearLayout.VERTICAL);
-        String[][] options = getQuiz().getOptions();
+        String[] options = getQuiz().getReadableOptions();
         for (int i = 0; i < options.length; i++) {
             layout.addView(getOptionsView(options[i], i), mOptionsParams);
         }
@@ -54,12 +54,9 @@ public class ToggleTranslateQuizView extends AbsQuizView<ToggleTranslateQuiz> {
         return getQuiz().isAnswerCorrect(getCheckedAnswers());
     }
 
-    private Button getOptionsView(String[] options, int optionId) {
-        if (null == options || options.length != 2) {
-            throw new IllegalArgumentException("The options provided were invalid: " + options);
-        }
+    private Button getOptionsView(String option, int optionId) {
         Button button = new Button(getContext());
-        button.setText(options[0] + " <> " + options[1]);
+        button.setText(option);
         button.setOnClickListener(this);
         button.setTag(optionId);
         return button;

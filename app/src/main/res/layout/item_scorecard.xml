@@ -14,18 +14,23 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:padding="@dimen/padding_default">
 
-    <com.google.samples.apps.topeka.widget.ScorecardView
-        android:id="@+id/scorecard"
+    <TextView
+        android:id="@+id/quiz"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone" />
+        android:paddingBottom="@dimen/padding_default" />
 
-    <com.google.samples.apps.topeka.widget.NoTouchViewPager
-        android:id="@+id/quiz_pager"
+    <TextView
+        android:id="@+id/answer"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-</FrameLayout>
+        android:layout_height="match_parent"
+        android:textStyle="bold"
+        android:paddingBottom="@dimen/padding_default" />
+
+</LinearLayout>

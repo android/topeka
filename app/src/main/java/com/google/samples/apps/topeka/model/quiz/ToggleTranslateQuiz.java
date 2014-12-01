@@ -17,9 +17,13 @@ package com.google.samples.apps.topeka.model.quiz;
 
 import android.os.Parcel;
 
+import com.google.samples.apps.topeka.helper.AnswerHelper;
+
 import java.util.Arrays;
 
 public final class ToggleTranslateQuiz extends OptionsQuiz<String[]> {
+
+    private String[] mReadableOptions;
 
     public ToggleTranslateQuiz(String question, int[] answer, String[][] options) {
         super(question, answer, options);
@@ -37,23 +41,47 @@ public final class ToggleTranslateQuiz extends OptionsQuiz<String[]> {
     }
 
     @Override
+    public String getStringAnswer() {
+        return AnswerHelper.getAnswer(getAnswer(), getReadableOptions());
+    }
+
+    public String[] getReadableOptions() {
+        //lazily initialize
+        if (null == mReadableOptions) {
+            final String[][] options = getOptions();
+            mReadableOptions = new String[options.length];
+            //iterate over the options and create readable pairs
+            for (int i = 0; i < options.length; i++) {
+                mReadableOptions[i] = createReadablePair(options[i]);
+            }
+        }
+        return mReadableOptions;
+    }
+
+    private String createReadablePair(String[] option) {
+        // results in "Part one <> Part two"
+        return option[0] + " <> " + option[1];
+    }
+
+    @Override
     public void writeToParcel(Parcel dest, int flags) {
         super.writeToParcel(dest, flags);
         dest.writeIntArray(getAnswer());
         dest.writeSerializable(getOptions());
     }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof OptionsQuiz)) {
+        if (!(o instanceof ToggleTranslateQuiz)) {
             return false;
         }
 
         ToggleTranslateQuiz that = (ToggleTranslateQuiz) o;
 
-        if (!Arrays.equals(getAnswer(), ((int[]) that.getAnswer()))) {
+        if (!Arrays.equals(getAnswer(), that.getAnswer())) {
             return false;
         }
 

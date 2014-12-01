@@ -18,6 +18,8 @@ package com.google.samples.apps.topeka.model.quiz;
 
 import android.os.Parcel;
 
+import com.google.samples.apps.topeka.helper.AnswerHelper;
+
 public final class MultiSelectQuiz extends OptionsQuiz<String> {
 
     public MultiSelectQuiz(String question, int[] answer, String[] options) {
@@ -33,6 +35,11 @@ public final class MultiSelectQuiz extends OptionsQuiz<String> {
     @Override
     public QuizType getType() {
         return QuizType.MULTI_SELECT;
+    }
+
+    @Override
+    public String getStringAnswer() {
+        return AnswerHelper.getAnswer(getAnswer(), getOptions());
     }
 
     @Override

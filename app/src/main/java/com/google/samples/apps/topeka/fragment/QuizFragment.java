@@ -28,6 +28,7 @@ import com.google.samples.apps.topeka.adapter.QuizPagerAdapter;
 import com.google.samples.apps.topeka.helper.ViewHelper;
 import com.google.samples.apps.topeka.model.Category;
 import com.google.samples.apps.topeka.persistence.TopekaDatabaseHelper;
+import com.google.samples.apps.topeka.widget.ScorecardView;
 
 /**
  * Encapsulates Quiz solving and displays it to the user.
@@ -86,5 +87,12 @@ public class QuizFragment extends Fragment {
             return true;
         }
         return false;
+    }
+
+    public void showSummary() {
+        final ScorecardView scorecardView = ViewHelper.getView(getView(), R.id.scorecard);
+        scorecardView.setCategory(mCategory);
+        scorecardView.setVisibility(View.VISIBLE);
+        mViewPager.setVisibility(View.GONE);
     }
 }

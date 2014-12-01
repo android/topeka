@@ -17,6 +17,8 @@ package com.google.samples.apps.topeka.model.quiz;
 
 import android.os.Parcel;
 
+import com.google.samples.apps.topeka.helper.AnswerHelper;
+
 public final class SelectItemQuiz extends OptionsQuiz<String> {
 
     public SelectItemQuiz(String question, int[] answer, String[] options) {
@@ -32,6 +34,11 @@ public final class SelectItemQuiz extends OptionsQuiz<String> {
     @Override
     public QuizType getType() {
         return QuizType.SINGLE_SELECT;
+    }
+
+    @Override
+    public String getStringAnswer() {
+        return AnswerHelper.getAnswer(getAnswer(), getOptions());
     }
 
     @Override

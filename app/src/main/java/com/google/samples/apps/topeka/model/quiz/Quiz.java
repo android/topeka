@@ -56,7 +56,15 @@ public abstract class Quiz<A> implements Parcelable {
         mQuizType = getType().getJsonName();
     }
 
+    /**
+     * @return The {@link QuizType} that represents this quiz.
+     */
     public abstract QuizType getType();
+
+    /**
+     * Implementations need to return a human readable version of the given answer.
+     */
+    public abstract String getStringAnswer();
 
     public String getQuestion() {
         return mQuestion;
@@ -141,5 +149,10 @@ public abstract class Quiz<A> implements Parcelable {
         int result = mQuestion.hashCode();
         result = 31 * result + (mAnswer != null ? mAnswer.hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return getType() + ": \"" + getQuestion() +"\"";
     }
 }

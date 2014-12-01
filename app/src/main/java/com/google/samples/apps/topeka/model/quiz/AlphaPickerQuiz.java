@@ -33,6 +33,10 @@ public final class AlphaPickerQuiz extends Quiz<String> {
         return QuizType.ALPHA_PICKER;
     }
 
+    @Override
+    public String getStringAnswer() {
+        return getAnswer();
+    }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {

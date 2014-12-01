@@ -17,6 +17,7 @@ package com.google.samples.apps.topeka.widget.quiz;
 
 import android.content.Context;
 import android.text.Editable;
+import android.text.InputType;
 import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.View;
@@ -48,6 +49,7 @@ public abstract class TextInputQuizView<Q extends Quiz> extends AbsQuizView<Q> i
         editText.addTextChangedListener(this);
         editText.setSingleLine(true);
         editText.setImeOptions(EditorInfo.IME_ACTION_DONE);
+        editText.setInputType(editText.getInputType() | InputType.TYPE_TEXT_FLAG_CAP_WORDS);
         return editText;
     }
 

@@ -39,6 +39,7 @@ import com.google.samples.apps.topeka.helper.ActivityHelper;
 import com.google.samples.apps.topeka.model.Category;
 import com.google.samples.apps.topeka.model.Theme;
 import com.google.samples.apps.topeka.persistence.TopekaDatabaseHelper;
+import com.google.samples.apps.topeka.widget.ScorecardView;
 
 import static com.google.samples.apps.topeka.adapter.CategoryCursorAdapter.DRAWABLE;
 
@@ -85,7 +86,8 @@ public class QuizActivity extends FragmentActivity implements View.OnClickListen
             case R.id.submitAnswer:
                 if (!mQuizFragment.nextPage()) {
                     //TODO: 11/12/14 create summary page, then finish
-                    finish();
+                    mQuizFragment.showSummary();
+//                    finish();
                 }
                 break;
             default:
@@ -137,7 +139,7 @@ public class QuizActivity extends FragmentActivity implements View.OnClickListen
         int colorBackground = getColor(theme.getWindowBackgroundColor());
         int colorPrimary = getColor(theme.getPrimaryColor());
         setBackgroundColor(R.id.quiz_container, colorBackground);
-        setBackgroundColor(R.id.toolbar_quiz, colorPrimary);
+        setBackgroundColor(R.id.toolbar_activity_quiz, colorPrimary);
     }
 
     private void setBackgroundColor(@IdRes int viewResId, int colorBackground) {
@@ -145,7 +147,7 @@ public class QuizActivity extends FragmentActivity implements View.OnClickListen
     }
 
     private void initToolbar(Category category) {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_quiz);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_activity_quiz);
         toolbar.setTitle(category.getName());
     }
 

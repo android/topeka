@@ -31,6 +31,11 @@ public final class TrueFalseQuiz extends Quiz<Boolean> {
     }
 
     @Override
+    public String getStringAnswer() {
+        return getAnswer().toString();
+    }
+
+    @Override
     public QuizType getType() {
         return QuizType.TRUE_FALSE;
     }

@@ -65,6 +65,11 @@ public final class PickerQuiz extends Quiz<Integer> {
     }
 
     @Override
+    public String getStringAnswer() {
+        return getAnswer().toString();
+    }
+
+    @Override
     public void writeToParcel(Parcel dest, int flags) {
         super.writeToParcel(dest, flags);
         dest.writeInt(getAnswer());

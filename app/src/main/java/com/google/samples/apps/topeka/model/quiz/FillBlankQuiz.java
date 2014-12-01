@@ -42,6 +42,11 @@ public final class FillBlankQuiz extends Quiz<String> {
         mEnd = in.readString();
     }
 
+    @Override
+    public String getStringAnswer() {
+        return getAnswer();
+    }
+
     public String getStart() {
         return mStart;
     }
@@ -54,7 +59,6 @@ public final class FillBlankQuiz extends Quiz<String> {
     public QuizType getType() {
         return QuizType.FILL_BLANK;
     }
-
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {

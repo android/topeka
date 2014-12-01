@@ -21,6 +21,7 @@ import com.google.samples.apps.topeka.model.quiz.Quiz;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -86,6 +87,7 @@ public class Category implements Parcelable {
      */
     public void setScore(Quiz which, boolean solved) {
         int index = mQuizzes.indexOf(which);
+        Log.d(TAG, "Setting score for " + which + " with index " + index);
         if (-1 == index) {
             return;
         }
