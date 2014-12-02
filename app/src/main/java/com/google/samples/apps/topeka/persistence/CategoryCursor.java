@@ -59,6 +59,15 @@ public class CategoryCursor extends CursorWrapper {
     }
 
     /**
+     * Checks whether a category has already been solved.
+     *
+     * @return <code>true</code> if it has been solved, else <code>false</code>.
+     */
+    public boolean isSolved() {
+        return getCategory().isSolved();
+    }
+
+    /**
      * @return Quizzes stored in the current category.
      */
     public List<Quiz> getQuizzes() {

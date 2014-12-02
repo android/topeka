@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<!--
+  ~ Copyright 2014 Google Inc.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~      http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:showIn="@layout/fragment_sign_in">
+
+    <Toolbar
+        android:id="@+id/toolbar_sign_in"
+        android:layout_width="match_parent"
+        android:layout_height="?android:attr/actionBarSize"
+        android:titleTextAppearance="@style/AppTheme.TextAppearance.Title" />
+
+    <EditText
+        android:id="@+id/first_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="?android:attr/actionBarSize"
+        android:padding="@dimen/padding_default"
+        android:textSize="@dimen/size_edit_text"
+        android:hint="@string/first_name"
+        android:inputType="textCapWords"
+        android:imeOptions="actionNext" />
+
+    <EditText
+        android:id="@+id/last_initial"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="?android:attr/actionBarSize"
+        android:padding="@dimen/padding_default"
+        android:textSize="@dimen/size_edit_text"
+        android:maxLength="1"
+        android:hint="@string/last_initial"
+        android:inputType="textCapWords"
+        android:imeOptions="actionDone" />
+</LinearLayout>

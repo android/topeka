@@ -37,6 +37,8 @@ public class QuizFragment extends Fragment {
     private Category mCategory;
     private ViewPager mViewPager;
 
+    private static final String EXTRA_CURRENT_ITEM = "currentItem";
+
     public static QuizFragment newInstance(String categoryId) {
         if (categoryId == null) {
             throw new IllegalArgumentException("The category can not be null");
@@ -56,6 +58,12 @@ public class QuizFragment extends Fragment {
     }
 
     @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putInt(EXTRA_CURRENT_ITEM, mViewPager.getCurrentItem());
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
             @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_quiz, container, false);
@@ -66,6 +74,10 @@ public class QuizFragment extends Fragment {
         mViewPager = ViewHelper.getView(view, R.id.quiz_pager);
         mViewPager.setBackgroundResource(mCategory.getTheme().getWindowBackgroundColor());
         mViewPager.setAdapter(new QuizPagerAdapter(getActivity(), mCategory));
+        if (null != savedInstanceState) {
+            final int currentItem = savedInstanceState.getInt(EXTRA_CURRENT_ITEM);
+            mViewPager.setCurrentItem(currentItem);
+        }
         super.onViewCreated(view, savedInstanceState);
     }
 
@@ -75,16 +87,13 @@ public class QuizFragment extends Fragment {
         super.onStop();
     }
 
-    public void setPage(int page) {
-        mViewPager.setCurrentItem(page, false);
-    }
-
     public boolean nextPage() {
         int nextItem = mViewPager.getCurrentItem() + 1;
         if (nextItem < mViewPager.getAdapter().getCount()) {
             mViewPager.setCurrentItem(nextItem, true);
             return true;
         }
+        mCategory.setSolved(true);
         return false;
     }
 }

@@ -16,6 +16,8 @@
 package com.google.samples.apps.topeka.widget;
 
 import android.content.Context;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.DrawableRes;
 import android.util.AttributeSet;
 import android.widget.ImageView;
@@ -70,6 +72,14 @@ public class CategoryLayout extends LinearLayout {
 
     public TextView getName() {
         return mName;
+    }
+
+    public void setNameBackgroundResource(@DrawableRes int resid) {
+        mName.setBackgroundResource(resid);
+    }
+
+    public void setNameTextColor(int color) {
+        mName.setTextColor(color);
     }
 
     public void setImageResource(@DrawableRes int resId) {

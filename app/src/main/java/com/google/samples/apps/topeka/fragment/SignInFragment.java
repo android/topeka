@@ -18,7 +18,6 @@ package com.google.samples.apps.topeka.fragment;
 
 import android.app.Activity;
 import android.app.ActivityOptions;
-import android.graphics.Point;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -42,17 +41,20 @@ import com.google.samples.apps.topeka.model.Player;
  * Enables selection of an {@link Avatar} and user name.
  */
 public class SignInFragment extends Fragment implements View.OnClickListener,
-        AdapterView.OnItemClickListener {
+        AdapterView.OnItemClickListener, View.OnLayoutChangeListener {
 
     private Player mPlayer;
     private EditText mFirstName;
     private EditText mLastName;
     private Avatar mSelectedAvatar = Avatar.ONE;
+    private GridView mGridView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
             @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_sign_in, container, false);
+        final View contentView = inflater.inflate(R.layout.fragment_sign_in, container, false);
+        contentView.addOnLayoutChangeListener(this);
+        return contentView;
     }
 
     @Override
@@ -68,14 +70,14 @@ public class SignInFragment extends Fragment implements View.OnClickListener,
         mFirstName = ViewHelper.getView(view, R.id.first_name);
         mLastName = ViewHelper.getView(view, R.id.last_initial);
         ViewHelper.getView(view, R.id.check).setOnClickListener(this);
-        setUpGridView(view);
     }
 
-    private void setUpGridView(View view) {
-        GridView gridView = ViewHelper.getView(view, R.id.avatars);
-        gridView.setAdapter(new AvatarAdapter(getActivity()));
-        gridView.setOnItemClickListener(this);
-        gridView.setNumColumns(calculateSpanCount());
+    private void setUpGridView(View container) {
+        mGridView = ViewHelper.getView(container, R.id.avatars);
+        mGridView.setAdapter(new AvatarAdapter(getActivity()));
+        mGridView.setOnItemClickListener(this);
+        final int numColumns = calculateSpanCount();
+        mGridView.setNumColumns(numColumns);
     }
 
     @Override
@@ -113,18 +115,24 @@ public class SignInFragment extends Fragment implements View.OnClickListener,
 
     /**
      * Calculates spans for avatars dynamically.
+     *
      * @return The recommended amount of columns.
      */
     private int calculateSpanCount() {
         int avatarSize = getResources().getDimensionPixelSize(R.dimen.avatar_size);
         int defaultPadding = getResources().getDimensionPixelSize(R.dimen.padding_default);
-        Point windowSize = new Point();
-        getActivity().getWindowManager().getDefaultDisplay().getSize(windowSize);
-        return windowSize.x / (avatarSize + defaultPadding * 2);
+        return mGridView.getWidth() / (avatarSize + defaultPadding * 2);
     }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         mSelectedAvatar = Avatar.values()[position];
+    }
+
+    @Override
+    public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft,
+            int oldTop, int oldRight, int oldBottom) {
+        setUpGridView(getView());
+        mGridView.removeOnLayoutChangeListener(this);
     }
 }

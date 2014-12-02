@@ -19,11 +19,13 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
 import android.database.Cursor;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CursorAdapter;
 import android.widget.TextView;
 
+import com.google.samples.apps.topeka.R;
 import com.google.samples.apps.topeka.model.Category;
 import com.google.samples.apps.topeka.model.Theme;
 import com.google.samples.apps.topeka.persistence.CategoryCursor;
@@ -35,6 +37,7 @@ import com.google.samples.apps.topeka.widget.CategoryLayout;
  */
 public class CategoryCursorAdapter extends CursorAdapter {
 
+    private static final String TAG = "CategoryCursorAdapter";
     public static final String ICON_CATEGORY = "icon_category_";
     public static final String DRAWABLE = "drawable";
     private final Resources mResources;
@@ -46,12 +49,11 @@ public class CategoryCursorAdapter extends CursorAdapter {
         mPackageName = activity.getPackageName();
     }
 
-    private static void adjustStyles(Theme theme, CategoryLayout categoryLayout) {
+    private static void adjustStyles(Theme theme, CategoryLayout categoryLayout,
+            Resources resources) {
         categoryLayout.setBackgroundResource(theme.getWindowBackgroundColor());
-        Resources resources = categoryLayout.getResources();
-        TextView name = categoryLayout.getName();
-        name.setBackgroundResource(theme.getPrimaryColor());
-        name.setTextColor(resources.getColor(theme.getTextPrimaryColor()));
+        categoryLayout.setNameBackgroundResource(theme.getPrimaryColor());
+        categoryLayout.setNameTextColor(resources.getColor(theme.getTextPrimaryColor()));
     }
 
     @Override
@@ -63,13 +65,36 @@ public class CategoryCursorAdapter extends CursorAdapter {
     public void bindView(View view, Context context, Cursor cursor) {
         Category category = getCategoryOrThrow(cursor);
         if (view instanceof CategoryLayout) {
-            //TODO: 11/11/14 don't use resource lookup
             CategoryLayout categoryLayout = (CategoryLayout) view;
-            categoryLayout.setImageResource(mResources.getIdentifier(
-                    ICON_CATEGORY + category.getId(), DRAWABLE, mPackageName));
+            final int categoryImageResource;
+            final boolean solved = category.isSolved();
+            if (solved) {
+                categoryImageResource = R.drawable.ic_done;
+            } else {
+                //TODO: 11/11/14 don't use resource lookup
+                categoryImageResource = mResources
+                        .getIdentifier(ICON_CATEGORY + category.getId(), DRAWABLE, mPackageName);
+            }
+            categoryLayout.setImageResource(categoryImageResource);
             categoryLayout.setText(category.getName());
-            adjustStyles(category.getTheme(), categoryLayout);
+            adjustStyles(category.getTheme(), categoryLayout, mResources);
         }
+    }
+
+    @Override
+    public boolean areAllItemsEnabled() {
+        return false;
+    }
+
+    @Override
+    public boolean isEnabled(int position) {
+        // only enable unsolved categories.
+        final Object item = getItem(position);
+        if (item instanceof CategoryCursor) {
+            final CategoryCursor categoryCursor = (CategoryCursor) item;
+            return !categoryCursor.isSolved();
+        }
+        return true;
     }
 
     private Category getCategoryOrThrow(Cursor cursor) {
