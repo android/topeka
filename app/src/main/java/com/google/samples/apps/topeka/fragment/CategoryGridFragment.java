@@ -28,6 +28,7 @@ import android.app.ActivityOptions;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Pair;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -65,16 +66,26 @@ public class CategoryGridFragment extends Fragment implements AdapterView.OnItem
         Activity activity = getActivity();
         //TODO: finalize the animations
         if (view instanceof CategoryLayout) {
-            CategoryLayout categoryLayout = (CategoryLayout) view;
-            Pair[] participants = getTransitionParticipants(activity, categoryLayout);
-            ActivityOptions sceneTransitionAnimation = ActivityOptions
-                    .makeSceneTransitionAnimation(activity, participants);
-            CategoryCursor item = (CategoryCursor) mAdapter.getItem(position);
-            activity.startActivity(QuizActivity.getStartIntent(activity, item.getCategory()),
-                    sceneTransitionAnimation.toBundle());
+            startActivityIfNotSolvedYet(activity, (CategoryLayout) view,
+                    (CategoryCursor) mAdapter.getItem(position));
         } else {
             throw new UnsupportedOperationException("Only CategoryLayout is supported");
         }
+    }
+
+    private void startActivityIfNotSolvedYet(Activity activity, CategoryLayout categoryLayout,
+            CategoryCursor categoryCursor) {
+        //do nothing if the category has been solved before.
+        if (categoryCursor.isSolved()) {
+            // TODO: 12/1/14 skip the quizzes, go to scorecard view
+            return;
+        }
+        //set the transition participants, start the quiz activity
+        Pair[] participants = getTransitionParticipants(activity, categoryLayout);
+        ActivityOptions sceneTransitionAnimation = ActivityOptions
+                .makeSceneTransitionAnimation(activity, participants);
+        activity.startActivity(QuizActivity.getStartIntent(activity, categoryCursor.getCategory()),
+                sceneTransitionAnimation.toBundle());
     }
 
     private Pair[] getTransitionParticipants(Activity activity, CategoryLayout categoryLayout) {

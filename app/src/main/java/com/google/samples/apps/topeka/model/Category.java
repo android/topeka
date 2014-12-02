@@ -17,6 +17,7 @@
 package com.google.samples.apps.topeka.model;
 
 import com.google.gson.annotations.SerializedName;
+import com.google.samples.apps.topeka.helper.ParcelableHelper;
 import com.google.samples.apps.topeka.model.quiz.Quiz;
 
 import android.os.Parcel;
@@ -44,6 +45,8 @@ public class Category implements Parcelable {
     private final List<Quiz> mQuizzes;
     @SerializedName(JsonAttributes.SCORES)
     private final int[] mScores;
+    @SerializedName(JsonAttributes.SOLVED)
+    private boolean mSolved;
 
     public Category(String name, String id, Theme theme, List<Quiz> quizzes) {
         mName = name;
@@ -51,6 +54,7 @@ public class Category implements Parcelable {
         mTheme = theme;
         mQuizzes = quizzes;
         mScores = new int[quizzes.size()];
+        mSolved = false;
     }
 
 
@@ -61,6 +65,7 @@ public class Category implements Parcelable {
         mQuizzes = new ArrayList<Quiz>();
         in.readTypedList(mQuizzes, Quiz.CREATOR);
         mScores = in.createIntArray();
+        mSolved = ParcelableHelper.readBoolean(in);
     }
 
     public String getName() {
@@ -83,15 +88,15 @@ public class Category implements Parcelable {
      * Updates a score for a provided quiz within this category.
      *
      * @param which The quiz to rate.
-     * @param solved <code>true</code> if the quiz was solved else <code>false</code>.
+     * @param correctlySolved <code>true</code> if the quiz was solved else <code>false</code>.
      */
-    public void setScore(Quiz which, boolean solved) {
+    public void setScore(Quiz which, boolean correctlySolved) {
         int index = mQuizzes.indexOf(which);
         Log.d(TAG, "Setting score for " + which + " with index " + index);
         if (-1 == index) {
             return;
         }
-        mScores[index] = solved ? SCORE : NO_SCORE;
+        mScores[index] = correctlySolved ? SCORE : NO_SCORE;
     }
 
     /**
@@ -119,6 +124,14 @@ public class Category implements Parcelable {
         return categoryScore;
     }
 
+    public boolean isSolved() {
+        return mSolved;
+    }
+
+
+    public void setSolved(boolean solved) {
+        this.mSolved = solved;
+    }
 
     @Override
     public String toString() {
@@ -126,8 +139,9 @@ public class Category implements Parcelable {
                 "mName='" + mName + '\'' +
                 ", mId='" + mId + '\'' +
                 ", mTheme=" + mTheme +
-                ", mQuizzes=" + mQuizzes.toString() +
+                ", mQuizzes=" + mQuizzes +
                 ", mScores=" + Arrays.toString(mScores) +
+                ", mSolved=" + mSolved +
                 '}';
     }
 
@@ -155,6 +169,7 @@ public class Category implements Parcelable {
         dest.writeInt(mTheme.ordinal());
         dest.writeTypedList(getQuizzes());
         dest.writeIntArray(mScores);
+        ParcelableHelper.writeBoolean(dest, mSolved);
     }
 
     @Override
@@ -180,6 +195,9 @@ public class Category implements Parcelable {
         if (mTheme != category.mTheme) {
             return false;
         }
+        if (mSolved != category.mSolved) {
+            return false;
+        }
 
         return true;
     }
@@ -190,6 +208,7 @@ public class Category implements Parcelable {
         result = 31 * result + mId.hashCode();
         result = 31 * result + mTheme.hashCode();
         result = 31 * result + mQuizzes.hashCode();
+        result = 31 * result + (mSolved ? 1 : 0);
         return result;
     }
 }
