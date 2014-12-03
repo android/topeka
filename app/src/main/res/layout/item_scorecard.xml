@@ -15,22 +15,40 @@
   ~ limitations under the License.
   -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="@dimen/padding_default">
+    android:paddingStart="@dimen/keyline_vertical"
+    android:paddingEnd="@dimen/keyline_vertical"
+    android:background="@android:color/white">
 
-    <TextView
-        android:id="@+id/quiz"
-        android:layout_width="match_parent"
+    <ImageView
+        android:id="@+id/solved_state"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:paddingBottom="@dimen/padding_default" />
+        android:contentDescription="@null"
+        android:src="@drawable/ic_done"
+        android:paddingEnd="@dimen/keyline_vertical"
+        tools:ignore="RtlSymmetry" />
 
-    <TextView
-        android:id="@+id/answer"
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:textStyle="bold"
-        android:paddingBottom="@dimen/padding_default" />
+        android:layout_height="match_parent">
 
+        <TextView
+            android:id="@+id/quiz"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/padding_default" />
+
+        <TextView
+            android:id="@+id/answer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/padding_default"
+            android:textStyle="bold"
+            android:paddingBottom="@dimen/padding_default" />
+    </LinearLayout>
 </LinearLayout>

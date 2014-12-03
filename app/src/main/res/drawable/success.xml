@@ -1,6 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-
 <!--
   ~ Copyright 2014 Google Inc.
   ~
@@ -16,11 +14,6 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
-    <com.google.samples.apps.topeka.widget.DoneFab
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/check"
-        android:layout_height="@dimen/fab_size"
-        android:layout_width="@dimen/fab_size"
-        android:layout_marginEnd="@dimen/padding_fab"
-        android:layout_marginTop="@dimen/padding_default"
-        android:layout_gravity="top|end" />
+<bitmap xmlns:android="http://schemas.android.com/apk/res/android"
+    android:src="@drawable/ic_done"
+    android:tint="@color/theme_green_primary" />

@@ -39,7 +39,6 @@ import com.google.samples.apps.topeka.helper.ActivityHelper;
 import com.google.samples.apps.topeka.model.Category;
 import com.google.samples.apps.topeka.model.Theme;
 import com.google.samples.apps.topeka.persistence.TopekaDatabaseHelper;
-import com.google.samples.apps.topeka.widget.ScorecardView;
 
 import static com.google.samples.apps.topeka.adapter.CategoryCursorAdapter.DRAWABLE;
 

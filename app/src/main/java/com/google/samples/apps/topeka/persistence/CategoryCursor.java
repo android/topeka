@@ -24,8 +24,6 @@ import com.google.samples.apps.topeka.model.Category;
 import com.google.samples.apps.topeka.model.QuizAdapter;
 import com.google.samples.apps.topeka.model.quiz.Quiz;
 
-import java.util.List;
-
 /**
  * Wraps a {@link android.database.Cursor} to provide access to categories, ids and quizzes more
  * easily.
@@ -54,6 +52,7 @@ public class CategoryCursor extends CursorWrapper {
      * @return Category stored at the current location of the cursor.
      */
     public Category getCategory() {
+        // TODO fix yank by improving loading mechanism
         int columnIndex = getColumnIndex(CategoryTable.COLUMN_DATA);
         return getQuizGson().fromJson(getString(columnIndex), Category.class);
     }
@@ -65,13 +64,6 @@ public class CategoryCursor extends CursorWrapper {
      */
     public boolean isSolved() {
         return getCategory().isSolved();
-    }
-
-    /**
-     * @return Quizzes stored in the current category.
-     */
-    public List<Quiz> getQuizzes() {
-        return getCategory().getQuizzes();
     }
 
     private Gson getQuizGson() {

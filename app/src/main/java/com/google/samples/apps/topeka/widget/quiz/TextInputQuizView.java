@@ -17,20 +17,20 @@ package com.google.samples.apps.topeka.widget.quiz;
 
 import android.content.Context;
 import android.text.Editable;
-import android.text.InputType;
 import android.text.TextWatcher;
-import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.google.samples.apps.topeka.R;
 import com.google.samples.apps.topeka.model.Category;
 import com.google.samples.apps.topeka.model.quiz.Quiz;
 
 public abstract class TextInputQuizView<Q extends Quiz> extends AbsQuizView<Q> implements
-        TextWatcher {
+        TextWatcher, TextView.OnEditorActionListener {
 
     public TextInputQuizView(Context context, Category category, Q quiz) {
         super(context, category, quiz);
@@ -42,14 +42,9 @@ public abstract class TextInputQuizView<Q extends Quiz> extends AbsQuizView<Q> i
     }
 
     protected final EditText getEditText() {
-        EditText editText = new EditText(getContext());
-        editText.setTextAppearance(getContext(), android.R.style.TextAppearance_Material);
-        setMinHeightForTouchTarget(editText);
-        editText.setGravity(Gravity.BOTTOM);
+        EditText editText = inflateChildView(R.layout.quiz_edit_text);
         editText.addTextChangedListener(this);
-        editText.setSingleLine(true);
-        editText.setImeOptions(EditorInfo.IME_ACTION_DONE);
-        editText.setInputType(editText.getInputType() | InputType.TYPE_TEXT_FLAG_CAP_WORDS);
+        editText.setOnEditorActionListener(this);
         return editText;
     }
 
@@ -72,11 +67,35 @@ public abstract class TextInputQuizView<Q extends Quiz> extends AbsQuizView<Q> i
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.submitAnswer:
-                InputMethodManager inputMethodManager = (InputMethodManager) getContext()
-                        .getSystemService(Context.INPUT_METHOD_SERVICE);
-                inputMethodManager.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                hideKeyboard(v);
                 break;
         }
         super.onClick(v);
+    }
+
+    protected void showKeyboard(View view) {
+        InputMethodManager inputMethodManager = getInputMethodManager();
+        inputMethodManager.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT);
+    }
+
+    protected void hideKeyboard(View v) {
+        InputMethodManager inputMethodManager = getInputMethodManager();
+        inputMethodManager.hideSoftInputFromWindow(v.getWindowToken(), 0);
+    }
+
+    private InputMethodManager getInputMethodManager() {
+        return (InputMethodManager) getContext()
+                .getSystemService(Context.INPUT_METHOD_SERVICE);
+    }
+
+    @Override
+    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+        // submit the answer and hide the keyboard once the action done has been tapped
+        if (actionId == EditorInfo.IME_ACTION_DONE) {
+            submitAnswer();
+            hideKeyboard(v);
+            return true;
+        }
+        return false;
     }
 }

@@ -21,6 +21,8 @@ import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import com.google.samples.apps.topeka.R;
+import com.google.samples.apps.topeka.helper.ViewHelper;
 import com.google.samples.apps.topeka.model.Category;
 import com.google.samples.apps.topeka.model.quiz.AlphaPickerQuiz;
 
@@ -30,9 +32,6 @@ public class AlphaPickerQuizView extends AbsQuizView<AlphaPickerQuiz> implements
     private static final CharSequence[] ALPHABET = new CharSequence[]
             {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q",
                     "R", "S", "T", "U", "V", "W", "X", "Y", "Z"};
-    private static final LinearLayout.LayoutParams LAYOUT_PARAMS =
-            new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
-
     private TextView mCurrentSelection;
 
     public AlphaPickerQuizView(Context context, Category category, AlphaPickerQuiz quiz) {
@@ -41,18 +40,12 @@ public class AlphaPickerQuizView extends AbsQuizView<AlphaPickerQuiz> implements
 
     @Override
     protected View getQuizContentView() {
-        LinearLayout layout = new LinearLayout(getContext());
-        layout.setOrientation(LinearLayout.VERTICAL);
-        mCurrentSelection = new TextView(getContext());
-        mCurrentSelection
-                .setTextAppearance(getContext(), android.R.style.TextAppearance_Material_Title);
-        layout.addView(mCurrentSelection, LAYOUT_PARAMS);
+        LinearLayout layout = inflateChildView(R.layout.quiz_layout_picker);
+        mCurrentSelection = ViewHelper.getView(layout, R.id.seekbar_progress);
         mCurrentSelection.setText(ALPHABET[0]);
-        SeekBar seekBar = new SeekBar(getContext());
+        SeekBar seekBar = ViewHelper.getView(layout, R.id.seekbar);
         seekBar.setMax(ALPHABET.length);
         seekBar.setOnSeekBarChangeListener(this);
-        setMinHeightForTouchTarget(seekBar);
-        layout.addView(seekBar, LAYOUT_PARAMS);
         return layout;
     }
 

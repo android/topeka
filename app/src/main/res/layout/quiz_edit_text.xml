@@ -1,6 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-
 <!--
   ~ Copyright 2014 Google Inc.
   ~
@@ -16,11 +14,13 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
-    <com.google.samples.apps.topeka.widget.DoneFab
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/check"
-        android:layout_height="@dimen/fab_size"
-        android:layout_width="@dimen/fab_size"
-        android:layout_marginEnd="@dimen/padding_fab"
-        android:layout_marginTop="@dimen/padding_default"
-        android:layout_gravity="top|end" />
+<EditText xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/quiz_edit_text"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:minHeight="@dimen/min_height_touch_target"
+    android:imeOptions="actionDone"
+    android:inputType="textCapWords"
+    android:gravity="bottom"
+    android:layout_marginBottom="@dimen/padding_default"
+    android:singleLine="true" />

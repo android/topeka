@@ -19,66 +19,77 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
 import android.database.Cursor;
-import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CursorAdapter;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.samples.apps.topeka.R;
+import com.google.samples.apps.topeka.helper.ViewHelper;
 import com.google.samples.apps.topeka.model.Category;
 import com.google.samples.apps.topeka.model.Theme;
 import com.google.samples.apps.topeka.persistence.CategoryCursor;
 import com.google.samples.apps.topeka.persistence.TopekaDatabaseHelper;
-import com.google.samples.apps.topeka.widget.CategoryLayout;
 
 /**
  * An adapter backed by a {@link CategoryCursor} that allows display of {@link Category} data.
  */
 public class CategoryCursorAdapter extends CursorAdapter {
 
-    private static final String TAG = "CategoryCursorAdapter";
-    public static final String ICON_CATEGORY = "icon_category_";
     public static final String DRAWABLE = "drawable";
+    private static final String ICON_CATEGORY = "icon_category_";
+    private static final String TAG = "CategoryCursorAdapter";
     private final Resources mResources;
     private final String mPackageName;
+    private final LayoutInflater mLayoutInflater;
 
     public CategoryCursorAdapter(Activity activity) {
         super(activity, TopekaDatabaseHelper.getCategoryCursor(activity), true);
         mResources = activity.getResources();
         mPackageName = activity.getPackageName();
-    }
-
-    private static void adjustStyles(Theme theme, CategoryLayout categoryLayout,
-            Resources resources) {
-        categoryLayout.setBackgroundResource(theme.getWindowBackgroundColor());
-        categoryLayout.setNameBackgroundResource(theme.getPrimaryColor());
-        categoryLayout.setNameTextColor(resources.getColor(theme.getTextPrimaryColor()));
+        mLayoutInflater = LayoutInflater.from(activity.getApplicationContext());
     }
 
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
-        return new CategoryLayout(context);
+        return mLayoutInflater.inflate(R.layout.layout_category, parent, false);
     }
 
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
         Category category = getCategoryOrThrow(cursor);
-        if (view instanceof CategoryLayout) {
-            CategoryLayout categoryLayout = (CategoryLayout) view;
-            final int categoryImageResource;
-            final boolean solved = category.isSolved();
-            if (solved) {
-                categoryImageResource = R.drawable.ic_done;
-            } else {
-                //TODO: 11/11/14 don't use resource lookup
-                categoryImageResource = mResources
-                        .getIdentifier(ICON_CATEGORY + category.getId(), DRAWABLE, mPackageName);
-            }
-            categoryLayout.setImageResource(categoryImageResource);
-            categoryLayout.setText(category.getName());
-            adjustStyles(category.getTheme(), categoryLayout, mResources);
+        Theme theme = category.getTheme();
+
+        LinearLayout layout = (LinearLayout) view;
+        final int categoryIcon = getCategoryIcon(category);
+        ImageView icon = ViewHelper.getView(layout, R.id.category_icon);
+        icon.setImageResource(categoryIcon);
+        icon.setBackgroundResource(theme.getWindowBackgroundColor());
+
+        TextView title = ViewHelper.getView(layout, R.id.category_title);
+        title.setText(category.getName());
+        title.setTextColor(getColor(theme.getTextPrimaryColor()));
+        title.setBackgroundResource(theme.getPrimaryColor());
+    }
+
+    private int getCategoryIcon(Category category) {
+        final int categoryImageResource;
+        final boolean solved = category.isSolved();
+        if (solved) {
+            categoryImageResource = R.drawable.ic_done;
+        } else {
+            //TODO: 11/11/14 don't use resource lookup
+            categoryImageResource = mResources
+                    .getIdentifier(ICON_CATEGORY + category.getId(), DRAWABLE, mPackageName);
         }
+        return categoryImageResource;
+    }
+
+    private int getColor(int textPrimaryColor) {
+        return mResources.getColor(textPrimaryColor);
     }
 
     @Override

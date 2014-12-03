@@ -22,13 +22,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
-import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.samples.apps.topeka.R;
 import com.google.samples.apps.topeka.fragment.CategoryGridFragment;
-import com.google.samples.apps.topeka.helper.ActivityHelper;
 import com.google.samples.apps.topeka.model.Player;
 import com.google.samples.apps.topeka.persistence.TopekaDatabaseHelper;
 import com.google.samples.apps.topeka.widget.outlineprovider.ToolbarIconOutlineProvider;
@@ -90,8 +88,7 @@ public class CategoryGridActivity extends FragmentActivity implements View.OnCli
                         .makeSceneTransitionAnimation(this, v,
                                 getString(R.string.transition_to_sign_in));
                 SignInActivity.start(this, true, activityOptions);
-                // TODO: 11/28/14 find a clean solution to finish after the transition
-                ActivityHelper.finishDelayed(this);
+                supportFinishAfterTransition();
                 break;
             default:
                 throw new UnsupportedOperationException(

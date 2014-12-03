@@ -21,14 +21,13 @@ import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import com.google.samples.apps.topeka.R;
+import com.google.samples.apps.topeka.helper.ViewHelper;
 import com.google.samples.apps.topeka.model.Category;
 import com.google.samples.apps.topeka.model.quiz.PickerQuiz;
 
 public final class PickerQuizView extends AbsQuizView<PickerQuiz>
         implements SeekBar.OnSeekBarChangeListener {
-
-    private static final LinearLayout.LayoutParams LAYOUT_PARAMS =
-            new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
 
     private TextView mCurrentSelection;
     private SeekBar mSeekBar;
@@ -44,33 +43,18 @@ public final class PickerQuizView extends AbsQuizView<PickerQuiz>
     protected View getQuizContentView() {
         initStep();
         mMin = getQuiz().getMin();
-        LinearLayout layout = new LinearLayout(getContext());
-        layout.setOrientation(LinearLayout.VERTICAL);
-        initCurrentSelection();
-        layout.addView(mCurrentSelection, LAYOUT_PARAMS);
-        initSeekBar();
-        layout.addView(mSeekBar, LAYOUT_PARAMS);
-        setCurrentSelectionText(mMin);
+        LinearLayout layout = inflateChildView(R.layout.quiz_layout_picker);
+        mCurrentSelection = ViewHelper.getView(layout, R.id.seekbar_progress);
+        mCurrentSelection.setText(String.valueOf(mMin));
+        mSeekBar = ViewHelper.getView(layout, R.id.seekbar);
+        mSeekBar.setMax(getSeekBarMax());
+        mSeekBar.setOnSeekBarChangeListener(this);
         return layout;
     }
 
     @Override
     protected boolean isAnswerCorrect() {
         return getQuiz().isAnswerCorrect(mProgress);
-    }
-
-    private void initCurrentSelection() {
-        mCurrentSelection = new TextView(getContext());
-        mCurrentSelection
-                .setTextAppearance(getContext(), android.R.style.TextAppearance_Material_Title);
-    }
-
-    private void initSeekBar() {
-        int viewMax = getSeekBarMax();
-        mSeekBar = new SeekBar(getContext());
-        setMinHeightForTouchTarget(mSeekBar);
-        mSeekBar.setMax(viewMax);
-        mSeekBar.setOnSeekBarChangeListener(this);
     }
 
     private void initStep() {

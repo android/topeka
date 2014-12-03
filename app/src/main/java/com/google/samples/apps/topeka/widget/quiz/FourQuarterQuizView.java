@@ -17,6 +17,7 @@ package com.google.samples.apps.topeka.widget.quiz;
 
 import android.content.Context;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.GridView;
@@ -38,6 +39,7 @@ public class FourQuarterQuizView extends AbsQuizView<FourQuarterQuiz>
     protected View getQuizContentView() {
         GridView layout = new GridView(getContext());
         layout.setNumColumns(2);
+        layout.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
         layout.setAdapter(
                 new ArrayAdapter<String>(getContext(), R.layout.item_answer,
                         getQuiz().getOptions()));

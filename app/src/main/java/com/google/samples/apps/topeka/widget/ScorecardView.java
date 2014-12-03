@@ -16,11 +16,13 @@
 package com.google.samples.apps.topeka.widget;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -106,14 +108,16 @@ public class ScorecardView extends ListView {
 
         private class ViewHolder {
 
-            final LinearLayout mScorecardItem;
             final TextView mAnswerView;
             final TextView mQuizView;
+            final ImageView mSolvedState;
 
             public ViewHolder(LinearLayout scorecardItem) {
-                mScorecardItem = scorecardItem;
+                scorecardItem.setBackgroundColor(
+                        getResources().getColor(mCategory.getTheme().getPrimaryColor()));
                 mQuizView = ViewHelper.getView(scorecardItem, R.id.quiz);
                 mAnswerView = ViewHelper.getView(scorecardItem, R.id.answer);
+                mSolvedState = ViewHelper.getView(scorecardItem, R.id.solved_state);
             }
 
         }

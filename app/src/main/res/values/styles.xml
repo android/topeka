@@ -29,10 +29,29 @@
         <item name="android:titleTextAppearance">@style/AppTheme.TextAppearance.Title</item>
         <item name="android:navigationBarColor">@color/topeka_primary</item>
         <item name="android:statusBarColor">@color/topeka_primary</item>
+        <item name="android:radioButtonStyle">@style/AppTheme.CompoundButton.Radio</item>
+    </style>
+
+    <style name="AppTheme.CompoundButton" parent="@android:style/Widget.Material.Button.Borderless">
+    </style>
+
+    <style name="AppTheme.CompoundButton.Radio" parent="AppTheme.CompoundButton">
+        <item name="android:background">@drawable/selector_checkable</item>
+    </style>
+
+    <style name="AppTheme.CompoundButton.True" parent="AppTheme.CompoundButton">
+        <item name="android:background">@drawable/selector_true</item>
+    </style>
+
+    <style name="AppTheme.CompoundButton.False" parent="AppTheme.CompoundButton">
+        <item name="android:background">@drawable/selector_false</item>
+    </style>
+
+    <style name="AppTheme.CompoundButton.ToggleTranslate" parent="AppTheme.CompoundButton">
+        <item name="android:background">@drawable/selector_checkable</item>
     </style>
 
     <style name="AppTheme.TextAppearance">
-
     </style>
 
     <style name="AppTheme.TextAppearance.Title" parent="android:TextAppearance.Material.Title">

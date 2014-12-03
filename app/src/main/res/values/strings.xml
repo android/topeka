@@ -29,4 +29,5 @@
     <string name="quiz_of_quizzes">%1$s / %2$s</string>
     <string name="btn_true">True</string>
     <string name="btn_false">False</string>
+    <string name="category">Category</string>
 </resources>

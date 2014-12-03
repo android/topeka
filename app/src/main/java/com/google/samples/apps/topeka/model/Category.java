@@ -99,6 +99,10 @@ public class Category implements Parcelable {
         mScores[index] = correctlySolved ? SCORE : NO_SCORE;
     }
 
+    public boolean isSolvedCorrectly(Quiz quiz) {
+        return getScore(quiz) == SCORE;
+    }
+
     /**
      * Gets the score for a single quiz.
      *

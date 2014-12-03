@@ -53,16 +53,21 @@ public class PreferencesHelper {
      * Retrieves a {@link com.google.samples.apps.topeka.model.Player} from preferences.
      *
      * @param context The Context which to obtain the SharedPreferences from.
-     *
      * @return A previously saved player or <code>null</code> if none was saved previously.
      */
     public static Player getPlayer(Context context) {
         SharedPreferences preferences = getSharedPreferences(context);
         final String firstName = preferences.getString(PREFERENCE_FIRST_NAME, null);
         final String lastInitial = preferences.getString(PREFERENCE_LAST_INITIAL, null);
-        final Avatar avatar = Avatar.valueOf(preferences.getString(PREFERENCE_AVATAR, null));
+        final String avatarPreference = preferences.getString(PREFERENCE_AVATAR, null);
+        final Avatar avatar;
+        if (null != avatarPreference) {
+            avatar = Avatar.valueOf(avatarPreference);
+        } else {
+            avatar = null;
+        }
 
-        if (null == firstName && null  == lastInitial && null == avatar) {
+        if (null == firstName && null == lastInitial && null == avatar) {
             return null;
         }
         return new Player(firstName, lastInitial, avatar);

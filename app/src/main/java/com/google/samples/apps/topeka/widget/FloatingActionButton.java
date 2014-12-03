@@ -45,7 +45,7 @@ public class FloatingActionButton extends ImageView {
         setFocusable(true);
         setClickable(true);
         Resources resources = getResources();
-        final int fabPadding = resources.getDimensionPixelSize(R.dimen.padding_fab);
+        final int fabPadding = resources.getDimensionPixelSize(R.dimen.inset_fab);
         setPadding(fabPadding, fabPadding, fabPadding, fabPadding);
         setOutlineProvider(new FabOutlineProvider());
         setClipToOutline(true);

@@ -22,6 +22,7 @@ import android.graphics.Point;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -126,13 +127,12 @@ public class SignInFragment extends Fragment implements View.OnClickListener,
     }
 
     private void performSignInWithTransition(View v) {
-        Activity activity = getActivity();
-            ActivityOptions activityOptions = ActivityOptions
-                    .makeSceneTransitionAnimation(activity, v,
-                            activity.getString(R.string.transition_avatar));
-            CategoryGridActivity.start(activity, mPlayer, activityOptions);
-        // TODO: 11/28/14 find a clean solution to finish after the transition
-        ActivityHelper.finishDelayed(activity);
+        FragmentActivity activity = getActivity();
+        ActivityOptions activityOptions = ActivityOptions
+                .makeSceneTransitionAnimation(activity, v,
+                        activity.getString(R.string.transition_avatar));
+        CategoryGridActivity.start(activity, mPlayer, activityOptions);
+        activity.supportFinishAfterTransition();
     }
 
     private void initContents() {

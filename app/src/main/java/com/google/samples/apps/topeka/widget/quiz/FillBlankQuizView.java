@@ -16,11 +16,13 @@
 package com.google.samples.apps.topeka.widget.quiz;
 
 import android.content.Context;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
+import com.google.samples.apps.topeka.R;
+import com.google.samples.apps.topeka.helper.ViewHelper;
 import com.google.samples.apps.topeka.model.Category;
 import com.google.samples.apps.topeka.model.quiz.FillBlankQuiz;
 
@@ -34,10 +36,37 @@ public class FillBlankQuizView extends TextInputQuizView<FillBlankQuiz> {
 
     @Override
     protected View getQuizContentView() {
+        String start = getQuiz().getStart();
+        String end = getQuiz().getEnd();
+        if (null != start || null != end) {
+            return getStartEndView(start, end);
+        }
         if (null == mAnswerView) {
             mAnswerView = getEditText();
         }
         return mAnswerView;
+    }
+
+    private View getStartEndView(String start, String end) {
+        LinearLayout container = inflateChildView(R.layout.quiz_fill_blank_with_surroundings);
+        mAnswerView = ViewHelper.getView(container, R.id.quiz_edit_text);
+        mAnswerView.addTextChangedListener(this);
+        mAnswerView.setOnEditorActionListener(this);
+        TextView startView = ViewHelper.getView(container, R.id.start);
+        setExistingContentOrHide(startView, start);
+
+        TextView endView = ViewHelper.getView(container, R.id.end);
+        setExistingContentOrHide(endView, end);
+
+        return container;
+    }
+
+    private void setExistingContentOrHide(TextView view, String content) {
+        if (null == content) {
+            view.setVisibility(View.GONE);
+        } else {
+            view.setText(content);
+        }
     }
 
     @Override

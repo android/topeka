@@ -17,9 +17,12 @@ package com.google.samples.apps.topeka.widget.quiz;
 
 import android.content.Context;
 import android.support.annotation.DimenRes;
+import android.support.annotation.LayoutRes;
 import android.support.v7.widget.CardView;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -53,6 +56,7 @@ public abstract class AbsQuizView<Q extends Quiz> extends CardView implements
     private TextView mQuestionView;
     private FloatingActionButton mSubmitAnswer;
     private boolean mAnswered;
+    private final LayoutInflater mLayoutInflater;
 
     public AbsQuizView(Context context, Category category, Q quiz) {
         super(context);
@@ -60,6 +64,7 @@ public abstract class AbsQuizView<Q extends Quiz> extends CardView implements
         mDefaultPadding = getResources().getDimensionPixelSize(R.dimen.padding_default);
         mCategory = category;
         mSubmitAnswer = getSubmitButton(context);
+        mLayoutInflater = LayoutInflater.from(context);
 
         LinearLayout container = new LinearLayout(context);
         container.setOrientation(LinearLayout.VERTICAL);
@@ -77,11 +82,15 @@ public abstract class AbsQuizView<Q extends Quiz> extends CardView implements
         container.addView(mQuestionView, layoutParams);
         container.addView(quizContentView, layoutParams);
         addView(container, layoutParams);
-        //create and attach submit button
 
+        //create and attach submit floating action button
         final int fabSize = getResources().getDimensionPixelSize(R.dimen.fab_size);
-        addView(mSubmitAnswer,
-                new LayoutParams(fabSize, fabSize, Gravity.END | Gravity.CENTER_VERTICAL));
+        final LayoutParams fabLayoutParams = new LayoutParams(fabSize, fabSize,
+                Gravity.END | Gravity.BOTTOM);
+        final int fabPadding = getResources().getDimensionPixelSize(R.dimen.padding_fab);
+        fabLayoutParams.setMargins(0, 0, 0, fabPadding);
+        fabLayoutParams.setMarginEnd(fabPadding);
+        addView(mSubmitAnswer, fabLayoutParams);
     }
 
     private FloatingActionButton getSubmitButton(Context context) {
@@ -113,6 +122,21 @@ public abstract class AbsQuizView<Q extends Quiz> extends CardView implements
 
     private void setDefaultPadding(View view) {
         view.setPadding(mDefaultPadding, mDefaultPadding, mDefaultPadding, mDefaultPadding);
+    }
+
+    protected LayoutInflater getLayoutInflater() {
+        return mLayoutInflater;
+    }
+
+    /**
+     * Inflates a child view from layout with this view as parent.
+     *
+     * @param resId The layout resource id of the child view to inflate.
+     * @param <T> The type of view to inflate.
+     * @return The inflated view.
+     */
+    protected <T extends View> T inflateChildView(@LayoutRes int resId) {
+        return (T) getLayoutInflater().inflate(resId, this, false);
     }
 
     /**
@@ -165,13 +189,24 @@ public abstract class AbsQuizView<Q extends Quiz> extends CardView implements
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.submitAnswer: {
-                if (getContext() instanceof QuizActivity) {
-                    ((QuizActivity) getContext()).onClick(v);
-                }
-                mCategory.setScore(getQuiz(), isAnswerCorrect());
+                submitAnswer(v);
                 break;
             }
         }
+    }
+
+    private void submitAnswer(View v) {
+        if (getContext() instanceof QuizActivity) {
+            ((QuizActivity) getContext()).onClick(v);
+        }
+        mCategory.setScore(getQuiz(), isAnswerCorrect());
+    }
+
+    /**
+     * Allows children to submit an answer via code.
+     */
+    protected void submitAnswer() {
+        submitAnswer(findViewById(R.id.submitAnswer));
     }
 
     protected void setMinHeightForTouchTarget(View view) {

@@ -26,27 +26,29 @@ import com.google.samples.apps.topeka.model.quiz.FillTwoBlanksQuiz;
 
 public class FillTwoBlanksQuizView extends TextInputQuizView<FillTwoBlanksQuiz> {
 
-    private final EditText mAnswerOne;
-    private final EditText mAnswerTwo;
+    private static final LinearLayout.LayoutParams CHILD_LAYOUT_PARAMS
+            = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, 0, 1);
+    private EditText mAnswerOne;
+    private EditText mAnswerTwo;
 
     public FillTwoBlanksQuizView(Context context, Category category, FillTwoBlanksQuiz quiz) {
         super(context, category, quiz);
-        mAnswerOne = getEditText();
-        mAnswerOne.setImeOptions(EditorInfo.IME_ACTION_NEXT);
-        mAnswerTwo = getEditText();
     }
 
     @Override
     protected View getQuizContentView() {
         LinearLayout layout = new LinearLayout(getContext());
         layout.setOrientation(LinearLayout.VERTICAL);
+        mAnswerOne = getEditText();
+        mAnswerOne.setImeOptions(EditorInfo.IME_ACTION_NEXT);
+        mAnswerTwo = getEditText();
         addEditText(layout, mAnswerOne);
         addEditText(layout, mAnswerTwo);
         return layout;
     }
 
     private void addEditText(LinearLayout layout, EditText editText) {
-        layout.addView(editText, new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, 0, 1));
+        layout.addView(editText, CHILD_LAYOUT_PARAMS);
     }
 
     @Override

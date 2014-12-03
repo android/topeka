@@ -21,19 +21,18 @@ import com.google.samples.apps.topeka.activity.QuizActivity;
 import com.google.samples.apps.topeka.adapter.CategoryCursorAdapter;
 import com.google.samples.apps.topeka.helper.ViewHelper;
 import com.google.samples.apps.topeka.persistence.CategoryCursor;
-import com.google.samples.apps.topeka.widget.CategoryLayout;
 
 import android.app.Activity;
 import android.app.ActivityOptions;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Pair;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.ImageView;
 
 public class CategoryGridFragment extends Fragment implements AdapterView.OnItemClickListener {
 
@@ -65,15 +64,12 @@ public class CategoryGridFragment extends Fragment implements AdapterView.OnItem
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Activity activity = getActivity();
         //TODO: finalize the animations
-        if (view instanceof CategoryLayout) {
-            startActivityIfNotSolvedYet(activity, (CategoryLayout) view,
+        ImageView iconView = ViewHelper.getView(view, R.id.category_icon);
+            startActivityIfNotSolvedYet(activity, iconView,
                     (CategoryCursor) mAdapter.getItem(position));
-        } else {
-            throw new UnsupportedOperationException("Only CategoryLayout is supported");
-        }
     }
 
-    private void startActivityIfNotSolvedYet(Activity activity, CategoryLayout categoryLayout,
+    private void startActivityIfNotSolvedYet(Activity activity, ImageView iconView,
             CategoryCursor categoryCursor) {
         //do nothing if the category has been solved before.
         if (categoryCursor.isSolved()) {
@@ -81,17 +77,16 @@ public class CategoryGridFragment extends Fragment implements AdapterView.OnItem
             return;
         }
         //set the transition participants, start the quiz activity
-        Pair[] participants = getTransitionParticipants(activity, categoryLayout);
+        Pair[] participants = getTransitionParticipants(activity, iconView);
         ActivityOptions sceneTransitionAnimation = ActivityOptions
                 .makeSceneTransitionAnimation(activity, participants);
         activity.startActivity(QuizActivity.getStartIntent(activity, categoryCursor.getCategory()),
                 sceneTransitionAnimation.toBundle());
     }
 
-    private Pair[] getTransitionParticipants(Activity activity, CategoryLayout categoryLayout) {
+    private Pair[] getTransitionParticipants(Activity activity, ImageView iconView) {
         Pair[] participants = new Pair[2];
-        participants[0] = new Pair<View, String>(categoryLayout.getIcon(),
-                activity.getString(R.string.transition_background));
+        participants[0] = new Pair<View, String>(iconView, activity.getString(R.string.transition_background));
         View toolbar = getActivity().findViewById(R.id.toolbar_player);
         if (null != toolbar) {
             participants[1] = new Pair<View, String>(

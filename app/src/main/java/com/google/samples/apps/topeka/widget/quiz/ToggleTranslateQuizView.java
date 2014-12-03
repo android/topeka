@@ -27,7 +27,8 @@ import java.util.ArrayList;
 
 public class ToggleTranslateQuizView extends AbsQuizView<ToggleTranslateQuiz> {
 
-    private LayoutParams mOptionsParams;
+    private static final LayoutParams OPTIONS_PARAMS = new LayoutParams(LayoutParams.MATCH_PARENT,
+            LayoutParams.WRAP_CONTENT);
     private boolean[] mAnswers;
 
     public ToggleTranslateQuizView(Context context, Category category, ToggleTranslateQuiz quiz) {
@@ -37,14 +38,11 @@ public class ToggleTranslateQuizView extends AbsQuizView<ToggleTranslateQuiz> {
 
     @Override
     protected View getQuizContentView() {
-        if (null == mOptionsParams) {
-            mOptionsParams = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
-        }
         LinearLayout layout = new LinearLayout(getContext());
         layout.setOrientation(LinearLayout.VERTICAL);
         String[] options = getQuiz().getReadableOptions();
         for (int i = 0; i < options.length; i++) {
-            layout.addView(getOptionsView(options[i], i), mOptionsParams);
+            layout.addView(getOptionsView(options[i], i), OPTIONS_PARAMS);
         }
         return layout;
     }

@@ -19,7 +19,8 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="avatar_size">64dp</dimen>
-    <dimen name="padding_fab">12dp</dimen>
+    <dimen name="inset_fab">12dp</dimen>
+    <dimen name="padding_fab">16dp</dimen>
     <dimen name="padding_icon">56dp</dimen>
     <dimen name="padding_grid">4dp</dimen>
     <dimen name="padding_category_icon">24dp</dimen>
@@ -27,6 +28,7 @@
     <dimen name="padding_default">4dp</dimen>
     <dimen name="padding_avatar">8dp</dimen>
     <dimen name="padding_card_name">16dp</dimen>
+    <dimen name="keyline_vertical">16dp</dimen>
     <dimen name="fab_size">56dp</dimen>
     <dimen name="elevation_default">2dp</dimen>
     <dimen name="elevation_fab">8dp</dimen>
