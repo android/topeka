@@ -22,7 +22,6 @@ import android.support.v7.widget.CardView;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -52,38 +51,76 @@ public abstract class AbsQuizView<Q extends Quiz> extends CardView implements
 
     private final Category mCategory;
     private final Q mQuiz;
-    private final int mDefaultPadding;
+    private final int mKeylineVertical;
+    private final int mKeylineHorizontal;
     private TextView mQuestionView;
     private FloatingActionButton mSubmitAnswer;
     private boolean mAnswered;
     private final LayoutInflater mLayoutInflater;
+    protected final int mMinHeightTouchTarget;
 
+    /**
+     * Enables creation of views for quizzes.
+     *
+     * @param context The context for this view.
+     * @param category The {@link Category} this view is running in.
+     * @param quiz The actual {@link Quiz} that is going to be displayed.
+     */
     public AbsQuizView(Context context, Category category, Q quiz) {
         super(context);
         mQuiz = quiz;
-        mDefaultPadding = getResources().getDimensionPixelSize(R.dimen.padding_default);
+        mKeylineVertical = getResources().getDimensionPixelSize(R.dimen.activity_vertical_margin);
+        mKeylineHorizontal = getResources()
+                .getDimensionPixelSize(R.dimen.activity_horizontal_margin);
         mCategory = category;
         mSubmitAnswer = getSubmitButton(context);
         mLayoutInflater = LayoutInflater.from(context);
+        mMinHeightTouchTarget = getResources()
+                .getDimensionPixelSize(R.dimen.min_height_touch_target);
 
+        setupQuestionView();
+        LinearLayout container = createContainerLayout(context);
+        View quizContentView = getInitializedContentView();
+        addContentView(container, quizContentView);
+        addFloatingActionButton();
+    }
+
+    private void setupQuestionView() {
+        mQuestionView = new TextView(getContext());
+        int textColor = getResources().getColor(mCategory.getTheme().getTextPrimaryColor());
+        int backgroundColor = getResources().getColor(mCategory.getTheme().getPrimaryColor());
+        mQuestionView.setTextAppearance(getContext(),
+                android.R.style.TextAppearance_Material_Subhead);
+        mQuestionView.setBackgroundColor(backgroundColor);
+        mQuestionView.setTextColor(textColor);
+        mQuestionView.setGravity(Gravity.CENTER_VERTICAL);
+        setDefaultPadding(mQuestionView);
+        setMinHeightInternal(mQuestionView, R.dimen.min_height_question);
+        mQuestionView.setText(getQuiz().getQuestion());
+    }
+
+    private LinearLayout createContainerLayout(Context context) {
         LinearLayout container = new LinearLayout(context);
         container.setOrientation(LinearLayout.VERTICAL);
+        return container;
+    }
 
-        setupQuestionView(mCategory);
-
-        //modify the quiz content view
+    private View getInitializedContentView() {
         View quizContentView = getQuizContentView();
         setDefaultPadding(quizContentView);
         setMinHeightInternal(quizContentView, R.dimen.min_height_question);
+        return quizContentView;
+    }
 
-        //add them to the container
+    private void addContentView(LinearLayout container, View quizContentView) {
         LayoutParams layoutParams = new LayoutParams(LayoutParams.MATCH_PARENT,
                 LayoutParams.WRAP_CONTENT);
         container.addView(mQuestionView, layoutParams);
         container.addView(quizContentView, layoutParams);
         addView(container, layoutParams);
+    }
 
-        //create and attach submit floating action button
+    private void addFloatingActionButton() {
         final int fabSize = getResources().getDimensionPixelSize(R.dimen.fab_size);
         final LayoutParams fabLayoutParams = new LayoutParams(fabSize, fabSize,
                 Gravity.END | Gravity.BOTTOM);
@@ -106,22 +143,8 @@ public abstract class AbsQuizView<Q extends Quiz> extends CardView implements
         return mSubmitAnswer;
     }
 
-    private void setupQuestionView(Category category) {
-        mQuestionView = new TextView(getContext());
-        int textColor = getResources().getColor(category.getTheme().getTextPrimaryColor());
-        int backgroundColor = getResources().getColor(category.getTheme().getPrimaryColor());
-        mQuestionView
-                .setTextAppearance(getContext(), android.R.style.TextAppearance_Material_Subhead);
-        mQuestionView.setBackgroundColor(backgroundColor);
-        mQuestionView.setTextColor(textColor);
-        mQuestionView.setGravity(Gravity.CENTER_VERTICAL);
-        setDefaultPadding(mQuestionView);
-        setMinHeightInternal(mQuestionView, R.dimen.min_height_question);
-        mQuestionView.setText(getQuiz().getQuestion());
-    }
-
     private void setDefaultPadding(View view) {
-        view.setPadding(mDefaultPadding, mDefaultPadding, mDefaultPadding, mDefaultPadding);
+        view.setPadding(mKeylineVertical, mKeylineHorizontal, mKeylineVertical, mKeylineHorizontal);
     }
 
     protected LayoutInflater getLayoutInflater() {
@@ -195,13 +218,6 @@ public abstract class AbsQuizView<Q extends Quiz> extends CardView implements
         }
     }
 
-    private void submitAnswer(View v) {
-        if (getContext() instanceof QuizActivity) {
-            ((QuizActivity) getContext()).onClick(v);
-        }
-        mCategory.setScore(getQuiz(), isAnswerCorrect());
-    }
-
     /**
      * Allows children to submit an answer via code.
      */
@@ -209,6 +225,20 @@ public abstract class AbsQuizView<Q extends Quiz> extends CardView implements
         submitAnswer(findViewById(R.id.submitAnswer));
     }
 
+    private void submitAnswer(View v) {
+        // TODO: 12/15/14 re-architect the way callbacks are being used here.
+        if (getContext() instanceof QuizActivity) {
+            ((QuizActivity) getContext()).onClick(v);
+        }
+        mCategory.setScore(getQuiz(), isAnswerCorrect());
+    }
+
+    /**
+     * Convenience method to set the min height for a {@link View} that should act as a touch
+     * target.
+     *
+     * @param view The target view.
+     */
     protected void setMinHeightForTouchTarget(View view) {
         setMinHeightInternal(view, R.dimen.min_height_touch_target);
     }

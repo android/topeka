@@ -73,14 +73,24 @@ public abstract class TextInputQuizView<Q extends Quiz> extends AbsQuizView<Q> i
         super.onClick(v);
     }
 
+    /**
+     * Convenience method to show the keyboard.
+     *
+     * @param view A view in the hierarchy.
+     */
     protected void showKeyboard(View view) {
         InputMethodManager inputMethodManager = getInputMethodManager();
         inputMethodManager.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT);
     }
 
-    protected void hideKeyboard(View v) {
+    /**
+     * Convenience method to hide the keyboard.
+     *
+     * @param view A view in the hierarchy.
+     */
+    protected void hideKeyboard(View view) {
         InputMethodManager inputMethodManager = getInputMethodManager();
-        inputMethodManager.hideSoftInputFromWindow(v.getWindowToken(), 0);
+        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
     private InputMethodManager getInputMethodManager() {

@@ -16,21 +16,22 @@
 package com.google.samples.apps.topeka.widget.quiz;
 
 import android.content.Context;
+import android.util.SparseBooleanArray;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.google.samples.apps.topeka.R;
+import com.google.samples.apps.topeka.helper.AnswerHelper;
 import com.google.samples.apps.topeka.model.Category;
 import com.google.samples.apps.topeka.model.quiz.SelectItemQuiz;
-
-import java.util.ArrayList;
+import com.google.samples.apps.topeka.widget.quiz.adapter.OptionsQuizAdapter;
 
 public class SelectItemQuizView extends AbsQuizView<SelectItemQuiz>
         implements AdapterView.OnItemClickListener {
 
     private boolean[] mAnswers;
+    private ListView mQuizContentView;
 
     public SelectItemQuizView(Context context, Category category, SelectItemQuiz quiz) {
         super(context, category, quiz);
@@ -39,17 +40,18 @@ public class SelectItemQuizView extends AbsQuizView<SelectItemQuiz>
 
     @Override
     protected View getQuizContentView() {
-        ListView layout = new ListView(getContext());
-        layout.setAdapter(
-                new ArrayAdapter<String>(getContext(), R.layout.item_answer,
-                        getQuiz().getOptions()));
-        layout.setOnItemClickListener(this);
-        return layout;
+        mQuizContentView = new ListView(getContext());
+        mQuizContentView.setAdapter(
+                new OptionsQuizAdapter(getQuiz().getOptions(), R.layout.item_answer));
+        mQuizContentView.setOnItemClickListener(this);
+        return mQuizContentView;
     }
 
     @Override
     protected boolean isAnswerCorrect() {
-        return getQuiz().isAnswerCorrect(getCheckedAnswers());
+        final SparseBooleanArray checkedItemPositions = mQuizContentView.getCheckedItemPositions();
+        final int[] answer = getQuiz().getAnswer();
+        return AnswerHelper.isAnswerCorrect(checkedItemPositions, answer);
     }
 
     @Override
@@ -60,25 +62,5 @@ public class SelectItemQuizView extends AbsQuizView<SelectItemQuiz>
 
     private void toggleAnswerFor(int answerId) {
         mAnswers[answerId] = !mAnswers[answerId];
-    }
-
-    private int[] getCheckedAnswers() {
-        ArrayList<Integer> answers = new ArrayList<Integer>();
-        for (int i = 0; i < mAnswers.length; i++) {
-            if (mAnswers[i]) {
-                answers.add(i);
-            }
-        }
-        if (!answers.isEmpty()) {
-            //manual int extraction to avoid boxing issues
-            final int answersSize = answers.size();
-            int[] answersArray = new int[answersSize];
-            for (int i = 0; i < answersSize; i++) {
-                answersArray[i] = answers.get(i);
-            }
-            return answersArray;
-        }
-
-        return null;
     }
 }

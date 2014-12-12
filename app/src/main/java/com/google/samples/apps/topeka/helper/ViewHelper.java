@@ -16,7 +16,10 @@
 package com.google.samples.apps.topeka.helper;
 
 import android.support.annotation.IdRes;
+import android.support.annotation.LayoutRes;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
 /**
  * Shared methods for views.
@@ -34,5 +37,15 @@ public class ViewHelper {
     public static <T extends View> T getView(View parentView, @IdRes int resId) {
         View view = parentView.findViewById(resId);
         return (T) view;
+    }
+
+    /**
+     * Inflates a layout resource with a given parent and does <b>not attach it</b> to the parent.
+     *
+     * @return The newly inflated view.
+     */
+    public static <T extends View> T inflate(ViewGroup parentView, @LayoutRes int resId) {
+        final LayoutInflater layoutInflater = LayoutInflater.from(parentView.getContext());
+        return (T) layoutInflater.inflate(resId, parentView, false);
     }
 }

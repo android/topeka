@@ -19,7 +19,7 @@
     <item>
         <selector>
             <item android:state_checked="false">
-                <color android:color="@android:color/white" />
+                <color android:color="?android:attr/colorButtonNormal" />
             </item>
             <item android:state_checked="true">
                 <color android:color="@color/theme_green_primary" />

@@ -16,19 +16,23 @@
 package com.google.samples.apps.topeka.widget.quiz;
 
 import android.content.Context;
+import android.util.Log;
+import android.util.SparseBooleanArray;
 import android.view.View;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.LinearLayout;
-import android.widget.ScrollView;
+import android.widget.AbsListView;
+import android.widget.AdapterView;
+import android.widget.ListView;
 
+import com.google.samples.apps.topeka.R;
+import com.google.samples.apps.topeka.helper.AnswerHelper;
 import com.google.samples.apps.topeka.model.Category;
 import com.google.samples.apps.topeka.model.quiz.MultiSelectQuiz;
+import com.google.samples.apps.topeka.widget.quiz.adapter.OptionsQuizAdapter;
 
 public class MultiSelectQuizView extends AbsQuizView<MultiSelectQuiz>
-        implements CompoundButton.OnCheckedChangeListener {
+        implements AdapterView.OnItemClickListener {
 
-    private LayoutParams mOptionsParams;
+    private ListView mListView;
 
     public MultiSelectQuizView(Context context, Category category, MultiSelectQuiz quiz) {
         super(context, category, quiz);
@@ -36,35 +40,26 @@ public class MultiSelectQuizView extends AbsQuizView<MultiSelectQuiz>
 
     @Override
     protected View getQuizContentView() {
-        if (null == mOptionsParams) {
-            mOptionsParams = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
-        }
-        ScrollView scrollView = new ScrollView(getContext());
-        LinearLayout layout = new LinearLayout(getContext());
-        layout.setOrientation(LinearLayout.VERTICAL);
-
-        String[] options = getQuiz().getOptions();
-        for (String option : options) {
-            CheckBox checkBox = new CheckBox(getContext());
-            checkBox.setOnCheckedChangeListener(this);
-            checkBox.setTextAppearance(getContext(),
-                    android.R.style.TextAppearance_Material_Subhead);
-            checkBox.setText(option);
-            setMinHeightForTouchTarget(checkBox);
-            layout.addView(checkBox, mOptionsParams);
-        }
-
-        scrollView.addView(layout, mOptionsParams);
-        return scrollView;
+        mListView = new ListView(getContext());
+        mListView.setAdapter(
+                new OptionsQuizAdapter(getQuiz().getOptions(), R.layout.item_answer_multi));
+        mListView.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
+        mListView.setItemsCanFocus(false);
+        mListView.setOnItemClickListener(this);
+        return mListView;
     }
 
     @Override
     protected boolean isAnswerCorrect() {
-        return false;
+        final SparseBooleanArray checkedItemPositions = mListView.getCheckedItemPositions();
+        final int[] answer = getQuiz().getAnswer();
+        return AnswerHelper.isAnswerCorrect(checkedItemPositions, answer);
     }
 
     @Override
-    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        // TODO check way to respond to CheckBox clicks within ListView
+        Log.d("Foobar", "clicked pos: " + position);
         allowAnswer();
     }
 }

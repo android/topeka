@@ -23,6 +23,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,7 +33,6 @@ import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.Toolbar;
 
-import com.google.samples.apps.topeka.helper.ActivityHelper;
 import com.google.samples.apps.topeka.helper.PreferencesHelper;
 import com.google.samples.apps.topeka.R;
 import com.google.samples.apps.topeka.activity.CategoryGridActivity;
@@ -39,12 +40,13 @@ import com.google.samples.apps.topeka.adapter.AvatarAdapter;
 import com.google.samples.apps.topeka.helper.ViewHelper;
 import com.google.samples.apps.topeka.model.Avatar;
 import com.google.samples.apps.topeka.model.Player;
+import com.google.samples.apps.topeka.widget.DoneFab;
 
 /**
  * Enables selection of an {@link Avatar} and user name.
  */
 public class SignInFragment extends Fragment implements View.OnClickListener,
-        AdapterView.OnItemClickListener, View.OnLayoutChangeListener {
+        AdapterView.OnItemClickListener, View.OnLayoutChangeListener, TextWatcher {
 
     private static final String ARG_EDIT = "EDIT";
     private Player mPlayer;
@@ -52,6 +54,7 @@ public class SignInFragment extends Fragment implements View.OnClickListener,
     private EditText mLastName;
     private Avatar mSelectedAvatar = Avatar.ONE;
     private GridView mGridView;
+    private DoneFab mDoneFab;
     private boolean edit;
 
     public static SignInFragment newInstance(boolean edit) {
@@ -101,8 +104,11 @@ public class SignInFragment extends Fragment implements View.OnClickListener,
         ViewHelper.<Toolbar>getView(view, R.id.toolbar_choose_avatar)
                 .setTitle(R.string.choose_avatar);
         mFirstName = ViewHelper.getView(view, R.id.first_name);
+        mFirstName.addTextChangedListener(this);
         mLastName = ViewHelper.getView(view, R.id.last_initial);
-        ViewHelper.getView(view, R.id.check).setOnClickListener(this);
+        mLastName.addTextChangedListener(this);
+        mDoneFab = ViewHelper.getView(view, R.id.check);
+        mDoneFab.setOnClickListener(this);
     }
 
     private void setUpGridView(View container) {
@@ -178,5 +184,26 @@ public class SignInFragment extends Fragment implements View.OnClickListener,
             int oldTop, int oldRight, int oldBottom) {
         v.removeOnLayoutChangeListener(this);
         setUpGridView(getView());
+    }
+
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        /* no-op */
+    }
+
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+        // showing the floating action button if text is entered
+        // TODO: 12/15/14 make sure that both edittexts have input before showing the fab 
+        if (count > 0) {
+            mDoneFab.setVisibility(View.VISIBLE);
+        } else {
+            mDoneFab.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    public void afterTextChanged(Editable s) {
+        /* no-op */
     }
 }

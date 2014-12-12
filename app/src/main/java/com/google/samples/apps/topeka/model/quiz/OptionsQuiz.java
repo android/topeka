@@ -23,6 +23,11 @@ import com.google.samples.apps.topeka.model.JsonAttributes;
 
 import java.util.Arrays;
 
+/**
+ * Base class holding details for quizzes with several potential answers.
+ *
+ * @param <T> The options that can result in an answer.
+ */
 public abstract class OptionsQuiz<T> extends Quiz<int[]> {
 
     @SerializedName(JsonAttributes.OPTIONS)

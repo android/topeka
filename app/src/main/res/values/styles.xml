@@ -47,10 +47,6 @@
         <item name="android:background">@drawable/selector_false</item>
     </style>
 
-    <style name="AppTheme.CompoundButton.ToggleTranslate" parent="AppTheme.CompoundButton">
-        <item name="android:background">@drawable/selector_checkable</item>
-    </style>
-
     <style name="AppTheme.TextAppearance">
     </style>
 

@@ -16,11 +16,11 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
-    <com.google.samples.apps.topeka.widget.DoneFab
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/check"
-        android:layout_height="@dimen/fab_size"
-        android:layout_width="@dimen/fab_size"
-        android:layout_marginEnd="@dimen/padding_fab"
-        android:layout_marginTop="@dimen/padding_default"
-        android:layout_gravity="top|end" />
+<com.google.samples.apps.topeka.widget.DoneFab
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/check"
+    android:layout_height="@dimen/fab_size"
+    android:layout_width="@dimen/fab_size"
+    android:layout_marginEnd="@dimen/activity_vertical_margin"
+    android:layout_marginBottom="@dimen/activity_horizontal_margin"
+    android:layout_gravity="bottom|end" />

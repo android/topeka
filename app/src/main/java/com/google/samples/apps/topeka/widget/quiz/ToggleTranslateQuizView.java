@@ -16,20 +16,23 @@
 package com.google.samples.apps.topeka.widget.quiz;
 
 import android.content.Context;
+import android.util.SparseBooleanArray;
 import android.view.View;
-import android.widget.Button;
-import android.widget.LinearLayout;
+import android.widget.AdapterView;
+import android.widget.CompoundButton;
+import android.widget.ListView;
 
+import com.google.samples.apps.topeka.R;
+import com.google.samples.apps.topeka.helper.AnswerHelper;
 import com.google.samples.apps.topeka.model.Category;
 import com.google.samples.apps.topeka.model.quiz.ToggleTranslateQuiz;
+import com.google.samples.apps.topeka.widget.quiz.adapter.OptionsQuizAdapter;
 
-import java.util.ArrayList;
+public class ToggleTranslateQuizView extends AbsQuizView<ToggleTranslateQuiz>
+        implements AdapterView.OnItemClickListener {
 
-public class ToggleTranslateQuizView extends AbsQuizView<ToggleTranslateQuiz> {
-
-    private static final LayoutParams OPTIONS_PARAMS = new LayoutParams(LayoutParams.MATCH_PARENT,
-            LayoutParams.WRAP_CONTENT);
     private boolean[] mAnswers;
+    private ListView mListView;
 
     public ToggleTranslateQuizView(Context context, Category category, ToggleTranslateQuiz quiz) {
         super(context, category, quiz);
@@ -38,60 +41,30 @@ public class ToggleTranslateQuizView extends AbsQuizView<ToggleTranslateQuiz> {
 
     @Override
     protected View getQuizContentView() {
-        LinearLayout layout = new LinearLayout(getContext());
-        layout.setOrientation(LinearLayout.VERTICAL);
-        String[] options = getQuiz().getReadableOptions();
-        for (int i = 0; i < options.length; i++) {
-            layout.addView(getOptionsView(options[i], i), OPTIONS_PARAMS);
-        }
-        return layout;
+        mListView = new ListView(getContext());
+        mListView.setDivider(null);
+        mListView.setAdapter(
+                new OptionsQuizAdapter(getQuiz().getReadableOptions(), R.layout.item_answer));
+        mListView.setOnItemClickListener(this);
+        return mListView;
     }
 
     @Override
     protected boolean isAnswerCorrect() {
-        return getQuiz().isAnswerCorrect(getCheckedAnswers());
+        final SparseBooleanArray checkedItemPositions = mListView.getCheckedItemPositions();
+        final int[] answer = getQuiz().getAnswer();
+        return AnswerHelper.isAnswerCorrect(checkedItemPositions, answer);
     }
-
-    private Button getOptionsView(String option, int optionId) {
-        Button button = new Button(getContext());
-        button.setText(option);
-        button.setOnClickListener(this);
-        button.setTag(optionId);
-        return button;
-    }
-
     @Override
-    public void onClick(View v) {
-        super.onClick(v);
-        Object tag = v.getTag();
-        if (null != tag) {
-            Integer answerId = (Integer) tag;
-            toggleAnswerFor(answerId);
-            allowAnswer();
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        toggleAnswerFor(position);
+        if (view instanceof CompoundButton) {
+            ((CompoundButton) view).toggle();
         }
+        allowAnswer();
     }
 
     private void toggleAnswerFor(int answerId) {
         mAnswers[answerId] = !mAnswers[answerId];
-    }
-
-    private int[] getCheckedAnswers() {
-        ArrayList<Integer> answers = new ArrayList<Integer>();
-        for (int i = 0; i < mAnswers.length; i++) {
-            if (mAnswers[i]) {
-                answers.add(i);
-            }
-        }
-        if (!answers.isEmpty()) {
-            //manual int extraction to avoid boxing issues
-            final int answersSize = answers.size();
-            int[] answersArray = new int[answersSize];
-            for (int i = 0; i < answersSize; i++) {
-                answersArray[i] = answers.get(i);
-            }
-            return answersArray;
-        }
-
-        return null;
     }
 }

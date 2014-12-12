@@ -15,15 +15,28 @@
  */
 package com.google.samples.apps.topeka.helper;
 
+import android.util.Log;
+import android.util.SparseBooleanArray;
+
 /**
  * Collection of methods to convert answers to human readable forms.
  */
 public class AnswerHelper {
 
+    private static final String TAG = "AnswerHelper";
+    static final String SEPARATOR = System.getProperty("line.separator");
+
     private AnswerHelper() {
         //no instance
     }
 
+
+    /**
+     * Converts an array of answers to a readable answer.
+     *
+     * @param answers The answers to display.
+     * @return The readable answer.
+     */
     public static String getAnswer(String[] answers) {
         StringBuilder readableAnswer = new StringBuilder();
         //Iterate over all answers
@@ -32,12 +45,19 @@ public class AnswerHelper {
             readableAnswer.append(answer);
             //Don't add a separator for the last answer
             if (i < answers.length - 1) {
-                readableAnswer.append("\n");
+                readableAnswer.append(SEPARATOR);
             }
         }
         return readableAnswer.toString();
     }
 
+    /**
+     * Converts an array of answers with options to a readable answer.
+     *
+     * @param answers The actual answers
+     * @param options The options to display.
+     * @return The readable answer.
+     */
     public static String getAnswer(int[] answers, String[] options) {
         String[] readableAnswers = new String[answers.length];
         for (int i = 0; i < answers.length; i++) {
@@ -46,4 +66,25 @@ public class AnswerHelper {
         }
         return getAnswer(readableAnswers);
     }
+
+    /**
+     * Checks whether a provided answer is correct.
+     *
+     * @param checkedItems The items that were selected.
+     * @param answerIds The actual correct answer ids.
+     * @return <code>true</code> if correct else <code>false</code>.
+     */
+    public static boolean isAnswerCorrect(SparseBooleanArray checkedItems, int[] answerIds) {
+        if (null == checkedItems || null == answerIds) {
+            Log.i(TAG, "isAnswerCorrect got a null parameter input.");
+            return false;
+        }
+        for (int answer : answerIds) {
+            if (0 > checkedItems.indexOfKey(answer)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
 }

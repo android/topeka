@@ -52,7 +52,7 @@ public class CategoryCursor extends CursorWrapper {
      * @return Category stored at the current location of the cursor.
      */
     public Category getCategory() {
-        // TODO fix yank by improving loading mechanism
+        // TODO fix jank by improving loading mechanism
         int columnIndex = getColumnIndex(CategoryTable.COLUMN_DATA);
         return getQuizGson().fromJson(getString(columnIndex), Category.class);
     }
