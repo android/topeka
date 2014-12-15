@@ -32,7 +32,11 @@ public class SignInActivity extends FragmentActivity {
     public static void start(Context context, Boolean edit, ActivityOptions options) {
         Intent starter = new Intent(context, SignInActivity.class);
         starter.putExtra(EXTRA_EDIT, edit);
-        context.startActivity(starter, options.toBundle());
+        if (null == options) {
+            context.startActivity(starter);
+        } else {
+            context.startActivity(starter, options.toBundle());
+        }
     }
 
     @Override

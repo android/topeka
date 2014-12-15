@@ -67,34 +67,43 @@ public class QuizActivity extends FragmentActivity implements View.OnClickListen
     public void onClick(final View v) {
         switch (v.getId()) {
             case R.id.btn_start_quiz:
-                mQuizFragment = QuizFragment.newInstance(mCategoryId);
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.quiz_fragment_container, mQuizFragment)
-                        .commit();
-
-                v.animate().scaleX(0f).scaleY(0f).alpha(0f)
-                        .setInterpolator(new AnticipateInterpolator())
-                        .setListener(new AnimatorListenerAdapter() {
-                            @Override
-                            public void onAnimationEnd(Animator animation) {
-                                v.setVisibility(View.GONE);
-                                super.onAnimationEnd(animation);
-                            }
-                        });
-                mToolbar.setElevation(0);
+                startQuizFromClickOn(v);
                 break;
 
             case R.id.submitAnswer:
-                if (!mQuizFragment.nextPage()) {
-                    //TODO: 11/12/14 create summary page, then finish
-                    mQuizFragment.showSummary();
-//                    finish();
-                }
+                submitAnswer();
                 break;
             default:
                 throw new UnsupportedOperationException(
                         "OnClick has not been implemented for " + getResources().getResourceName(
                                 v.getId()));
+        }
+    }
+
+    private void startQuizFromClickOn(final View view) {
+        mQuizFragment = QuizFragment.newInstance(mCategoryId);
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.quiz_fragment_container, mQuizFragment)
+                .setTransition(FragmentTransaction.TRANSIT_NONE)
+                .commit();
+
+        view.animate().scaleX(0).scaleY(0).alpha(0)
+                .setInterpolator(new AnticipateInterpolator())
+                .setListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        view.setVisibility(View.GONE);
+                        super.onAnimationEnd(animation);
+                    }
+                });
+        mToolbar.setElevation(0);
+    }
+
+    private void submitAnswer() {
+        if (!mQuizFragment.nextPage()) {
+            //TODO: 11/12/14 create summary page, then finish
+            mQuizFragment.showSummary();
+//                    finish();
         }
     }
 

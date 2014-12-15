@@ -139,6 +139,16 @@ public class TopekaDatabaseHelper extends SQLiteOpenHelper {
         return categoryCursor.getCategory();
     }
 
+    /**
+     * Resets the contents of Topeka's database to it's initial state.
+     * @param context The context this is running in.
+     */
+    public static void reset(Context context) {
+        SQLiteDatabase writeableDatabase = getWriteableDatabase(context);
+        writeableDatabase.delete(CategoryTable.NAME, null, null);
+        getInstance(context).preFillDatabase(writeableDatabase);
+    }
+
     private static SQLiteDatabase getReadableDatabase(Context context) {
         return getInstance(context).getReadableDatabase();
     }

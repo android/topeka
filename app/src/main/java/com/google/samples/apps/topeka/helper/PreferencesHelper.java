@@ -73,6 +73,18 @@ public class PreferencesHelper {
         return new Player(firstName, lastInitial, avatar);
     }
 
+    /**
+     * Signs out a player by removing all it's data.
+     * @param context The Context which to obtain the SharedPreferences from.
+     */
+    public static void signOut(Context context) {
+        SharedPreferences.Editor editor = getEditor(context);
+        editor.remove(PREFERENCE_FIRST_NAME);
+        editor.remove(PREFERENCE_LAST_INITIAL);
+        editor.remove(PREFERENCE_AVATAR);
+        editor.apply();
+    }
+
     private static SharedPreferences.Editor getEditor(Context context) {
         SharedPreferences preferences = getSharedPreferences(context);
         return preferences.edit();

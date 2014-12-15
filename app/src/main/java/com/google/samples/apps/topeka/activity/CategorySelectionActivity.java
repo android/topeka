@@ -21,28 +21,31 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toolbar;
 
 import com.google.samples.apps.topeka.R;
 import com.google.samples.apps.topeka.fragment.CategoryGridFragment;
+import com.google.samples.apps.topeka.helper.PreferencesHelper;
 import com.google.samples.apps.topeka.model.Player;
 import com.google.samples.apps.topeka.persistence.TopekaDatabaseHelper;
-import com.google.samples.apps.topeka.widget.outlineprovider.ToolbarIconOutlineProvider;
 
-public class CategoryGridActivity extends FragmentActivity implements View.OnClickListener {
+public class CategorySelectionActivity extends FragmentActivity {
 
     private static final String EXTRA_PLAYER = "player";
 
     public static void start(Context context, Player player, ActivityOptions options) {
-        Intent starter = new Intent(context, CategoryGridActivity.class);
+        Intent starter = new Intent(context, CategorySelectionActivity.class);
         starter.putExtra(EXTRA_PLAYER, player);
         context.startActivity(starter, options.toBundle());
     }
 
     public static void start(Context context, Player player) {
-        Intent starter = new Intent(context, CategoryGridActivity.class);
+        Intent starter = new Intent(context, CategorySelectionActivity.class);
         starter.putExtra(EXTRA_PLAYER, player);
         context.startActivity(starter);
     }
@@ -51,7 +54,7 @@ public class CategoryGridActivity extends FragmentActivity implements View.OnCli
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_quiz_selection);
+        setContentView(R.layout.activity_category_selection);
         Player player = getIntent().getParcelableExtra(EXTRA_PLAYER);
         setUpToolbar(player);
         if (savedInstanceState == null) {
@@ -70,31 +73,33 @@ public class CategoryGridActivity extends FragmentActivity implements View.OnCli
     }
 
     private void setUpToolbar(Player player) {
-        ImageView avatarView = (ImageView) findViewById(R.id.avatar);
-        avatarView.setClipToOutline(true);
-        avatarView.setOutlineProvider(new ToolbarIconOutlineProvider());
-        avatarView.setImageResource(player.getAvatar().getDrawableId());
-        avatarView.setOnClickListener(this);
-
-        TextView name = (TextView) findViewById(R.id.name);
-        name.setText(getDisplayName(player));
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_player);
+        setActionBar(toolbar);
+        setTitle(getDisplayName(player));
     }
 
     @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.avatar:
-                ActivityOptions activityOptions = ActivityOptions
-                        .makeSceneTransitionAnimation(this, v,
-                                getString(R.string.transition_to_sign_in));
-                SignInActivity.start(this, true, activityOptions);
-                supportFinishAfterTransition();
-                break;
-            default:
-                throw new UnsupportedOperationException(
-                        "The onClick method has not been implemented for " + getResources()
-                                .getResourceEntryName(v.getId()));
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_category, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.sign_out: {
+                signOut();
+                return true;
+            }
         }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void signOut() {
+        PreferencesHelper.signOut(this);
+        TopekaDatabaseHelper.reset(this);
+        SignInActivity.start(this, false, null);
+        supportFinishAfterTransition();
     }
 
     private String getDisplayName(Player player) {

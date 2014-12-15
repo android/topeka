@@ -18,7 +18,6 @@ package com.google.samples.apps.topeka.fragment;
 
 import android.app.Activity;
 import android.app.ActivityOptions;
-import android.graphics.Point;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -33,9 +32,9 @@ import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.Toolbar;
 
+import com.google.samples.apps.topeka.activity.CategorySelectionActivity;
 import com.google.samples.apps.topeka.helper.PreferencesHelper;
 import com.google.samples.apps.topeka.R;
-import com.google.samples.apps.topeka.activity.CategoryGridActivity;
 import com.google.samples.apps.topeka.adapter.AvatarAdapter;
 import com.google.samples.apps.topeka.helper.ViewHelper;
 import com.google.samples.apps.topeka.model.Avatar;
@@ -51,7 +50,7 @@ public class SignInFragment extends Fragment implements View.OnClickListener,
     private static final String ARG_EDIT = "EDIT";
     private Player mPlayer;
     private EditText mFirstName;
-    private EditText mLastName;
+    private EditText mLastInitial;
     private Avatar mSelectedAvatar = Avatar.ONE;
     private GridView mGridView;
     private DoneFab mDoneFab;
@@ -84,7 +83,7 @@ public class SignInFragment extends Fragment implements View.OnClickListener,
             initContentViews(view);
             initContents();
         } else {
-            CategoryGridActivity.start(getActivity(), mPlayer);
+            CategorySelectionActivity.start(getActivity(), mPlayer);
             getActivity().finish();
         }
         super.onViewCreated(view, savedInstanceState);
@@ -105,8 +104,8 @@ public class SignInFragment extends Fragment implements View.OnClickListener,
                 .setTitle(R.string.choose_avatar);
         mFirstName = ViewHelper.getView(view, R.id.first_name);
         mFirstName.addTextChangedListener(this);
-        mLastName = ViewHelper.getView(view, R.id.last_initial);
-        mLastName.addTextChangedListener(this);
+        mLastInitial = ViewHelper.getView(view, R.id.last_initial);
+        mLastInitial.addTextChangedListener(this);
         mDoneFab = ViewHelper.getView(view, R.id.check);
         mDoneFab.setOnClickListener(this);
     }
@@ -137,7 +136,7 @@ public class SignInFragment extends Fragment implements View.OnClickListener,
         ActivityOptions activityOptions = ActivityOptions
                 .makeSceneTransitionAnimation(activity, v,
                         activity.getString(R.string.transition_avatar));
-        CategoryGridActivity.start(activity, mPlayer, activityOptions);
+        CategorySelectionActivity.start(activity, mPlayer, activityOptions);
         activity.supportFinishAfterTransition();
     }
 
@@ -145,7 +144,7 @@ public class SignInFragment extends Fragment implements View.OnClickListener,
         assurePlayerInit();
         if (null != mPlayer) {
             mFirstName.setText(mPlayer.getFirstName());
-            mLastName.setText(mPlayer.getLastInitial());
+            mLastInitial.setText(mPlayer.getLastInitial());
             mSelectedAvatar = mPlayer.getAvatar();
             //TODO: 10/28/14 keep avatar selected on GridView
         }
@@ -158,7 +157,7 @@ public class SignInFragment extends Fragment implements View.OnClickListener,
     }
 
     private void savePlayer(Activity activity) {
-        mPlayer = new Player(mFirstName.getText().toString(), mLastName.getText().toString(),
+        mPlayer = new Player(mFirstName.getText().toString(), mLastInitial.getText().toString(),
                 mSelectedAvatar);
         PreferencesHelper.writeToPreferences(activity, mPlayer);
     }

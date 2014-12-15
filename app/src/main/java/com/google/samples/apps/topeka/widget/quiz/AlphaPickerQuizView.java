@@ -29,22 +29,22 @@ import com.google.samples.apps.topeka.model.quiz.AlphaPickerQuiz;
 public class AlphaPickerQuizView extends AbsQuizView<AlphaPickerQuiz> implements
         SeekBar.OnSeekBarChangeListener {
 
-    private static final CharSequence[] ALPHABET = new CharSequence[]
-            {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q",
-                    "R", "S", "T", "U", "V", "W", "X", "Y", "Z"};
     private TextView mCurrentSelection;
+
+    private final String[] mAlphabet;
 
     public AlphaPickerQuizView(Context context, Category category, AlphaPickerQuiz quiz) {
         super(context, category, quiz);
+        mAlphabet = getResources().getStringArray(R.array.alphabet);
     }
 
     @Override
     protected View getQuizContentView() {
         LinearLayout layout = inflateChildView(R.layout.quiz_layout_picker);
         mCurrentSelection = ViewHelper.getView(layout, R.id.seekbar_progress);
-        mCurrentSelection.setText(ALPHABET[0]);
+        mCurrentSelection.setText(mAlphabet[0]);
         SeekBar seekBar = ViewHelper.getView(layout, R.id.seekbar);
-        seekBar.setMax(ALPHABET.length);
+        seekBar.setMax(mAlphabet.length);
         seekBar.setOnSeekBarChangeListener(this);
         return layout;
     }
@@ -56,7 +56,7 @@ public class AlphaPickerQuizView extends AbsQuizView<AlphaPickerQuiz> implements
 
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-        mCurrentSelection.setText(ALPHABET[progress]);
+        mCurrentSelection.setText(mAlphabet[progress]);
         allowAnswer();
     }
 

@@ -72,24 +72,12 @@ public class CategoryGridFragment extends Fragment implements AdapterView.OnItem
     private void startQuizActivityWithTransition(Activity activity, ImageView iconView,
             CategoryCursor categoryCursor) {
         // Creates pair of transition participants.
-        Pair[] participants = getTransitionParticipants(activity, iconView);
+        Pair participants = new Pair<View, String>(iconView,
+                activity.getString(R.string.transition_background));
         ActivityOptions sceneTransitionAnimation = ActivityOptions
                 .makeSceneTransitionAnimation(activity, participants);
         // Starts the activity with the participants, animating from one to the other.
         activity.startActivity(QuizActivity.getStartIntent(activity, categoryCursor.getCategory()),
                 sceneTransitionAnimation.toBundle());
-    }
-
-    private Pair[] getTransitionParticipants(Activity activity, ImageView iconView) {
-        Pair[] participants = new Pair[2];
-        participants[0] = new Pair<View, String>(iconView,
-                activity.getString(R.string.transition_background));
-        View toolbar = getActivity().findViewById(R.id.toolbar_player);
-        if (null != toolbar) {
-            participants[1] = new Pair<View, String>(
-                    toolbar.findViewById(R.id.avatar),
-                    activity.getString(R.string.transition_avatar));
-        }
-        return participants;
     }
 }

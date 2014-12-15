@@ -30,4 +30,5 @@
     <string name="btn_true">True</string>
     <string name="btn_false">False</string>
     <string name="category">Category</string>
+    <string name="sign_out">Sign out</string>
 </resources>

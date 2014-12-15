@@ -35,11 +35,11 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".activity.CategoryGridActivity" />
+        <activity android:name=".activity.CategorySelectionActivity" />
 
         <activity
             android:name=".activity.QuizActivity"
-            android:parentActivityName=".activity.CategoryGridActivity"
+            android:parentActivityName=".activity.CategorySelectionActivity"
             android:windowSoftInputMode="adjustPan" />
 
     </application>
