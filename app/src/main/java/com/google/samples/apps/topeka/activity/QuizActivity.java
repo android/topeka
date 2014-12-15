@@ -29,7 +29,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.View;
-import android.view.animation.AccelerateInterpolator;
+import android.view.animation.AnticipateInterpolator;
 import android.widget.ImageView;
 import android.widget.Toolbar;
 
@@ -48,6 +48,7 @@ public class QuizActivity extends FragmentActivity implements View.OnClickListen
     private static final String IMAGE_CATEGORY = "image_category_";
     private String mCategoryId;
     private QuizFragment mQuizFragment;
+    Toolbar mToolbar;
 
     public static Intent getStartIntent(Context context, Category category) {
         Intent starter = new Intent(context, QuizActivity.class);
@@ -69,10 +70,10 @@ public class QuizActivity extends FragmentActivity implements View.OnClickListen
                 mQuizFragment = QuizFragment.newInstance(mCategoryId);
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.quiz_fragment_container, mQuizFragment)
-                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                         .commit();
 
-                v.animate().alphaBy(-1f).setInterpolator(new AccelerateInterpolator(1f))
+                v.animate().scaleX(0f).scaleY(0f).alpha(0f)
+                        .setInterpolator(new AnticipateInterpolator())
                         .setListener(new AnimatorListenerAdapter() {
                             @Override
                             public void onAnimationEnd(Animator animation) {
@@ -80,6 +81,7 @@ public class QuizActivity extends FragmentActivity implements View.OnClickListen
                                 super.onAnimationEnd(animation);
                             }
                         });
+                mToolbar.setElevation(0);
                 break;
 
             case R.id.submitAnswer:
@@ -146,8 +148,8 @@ public class QuizActivity extends FragmentActivity implements View.OnClickListen
     }
 
     private void initToolbar(Category category) {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_activity_quiz);
-        toolbar.setTitle(category.getName());
+        mToolbar = (Toolbar) findViewById(R.id.toolbar_activity_quiz);
+        mToolbar.setTitle(category.getName());
     }
 
     private int getColor(int colorId) {

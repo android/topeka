@@ -24,7 +24,6 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
 
-import java.lang.reflect.Array;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
@@ -44,16 +43,24 @@ public abstract class Quiz<A> implements Parcelable {
     private A mAnswer;
     @SerializedName(JsonAttributes.TYPE)
     private final String mQuizType;
+    /**
+     * Flag indicating whether this quiz has already been solved.
+     * It does not give information whether the solution was correct or not.
+     */
+    @SerializedName(JsonAttributes.SOLVED)
+    private boolean mSolved;
 
     protected Quiz(String question, A answer) {
         mQuestion = question;
         mAnswer = answer;
         mQuizType = getType().getJsonName();
+        mSolved = false;
     }
 
     protected Quiz(Parcel in) {
         mQuestion = in.readString();
         mQuizType = getType().getJsonName();
+        mSolved = ParcelableHelper.readBoolean(in);
     }
 
     /**
@@ -80,6 +87,14 @@ public abstract class Quiz<A> implements Parcelable {
 
     public boolean isAnswerCorrect(A answer) {
         return mAnswer.equals(answer);
+    }
+
+    public boolean isSolved() {
+        return mSolved;
+    }
+
+    public void setSolved(boolean solved) {
+        mSolved = solved;
     }
 
     public static final Creator<Quiz> CREATOR = new Creator<Quiz>() {
@@ -118,6 +133,7 @@ public abstract class Quiz<A> implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         ParcelableHelper.writeEnumValue(dest, getType());
         dest.writeString(mQuestion);
+        ParcelableHelper.writeBoolean(dest, mSolved);
     }
 
     @Override
@@ -131,7 +147,10 @@ public abstract class Quiz<A> implements Parcelable {
 
         Quiz quiz = (Quiz) o;
 
-        if (mAnswer != null ? !mAnswer.equals(quiz.mAnswer) : quiz.mAnswer != null) {
+        if (mSolved != quiz.mSolved) {
+            return false;
+        }
+        if (!mAnswer.equals(quiz.mAnswer)) {
             return false;
         }
         if (!mQuestion.equals(quiz.mQuestion)) {
@@ -147,7 +166,9 @@ public abstract class Quiz<A> implements Parcelable {
     @Override
     public int hashCode() {
         int result = mQuestion.hashCode();
-        result = 31 * result + (mAnswer != null ? mAnswer.hashCode() : 0);
+        result = 31 * result + mAnswer.hashCode();
+        result = 31 * result + mQuizType.hashCode();
+        result = 31 * result + (mSolved ? 1 : 0);
         return result;
     }
 

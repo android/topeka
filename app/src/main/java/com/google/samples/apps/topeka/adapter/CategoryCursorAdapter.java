@@ -97,17 +97,6 @@ public class CategoryCursorAdapter extends CursorAdapter {
         return false;
     }
 
-    @Override
-    public boolean isEnabled(int position) {
-        // only enable unsolved categories.
-        final Object item = getItem(position);
-        if (item instanceof CategoryCursor) {
-            final CategoryCursor categoryCursor = (CategoryCursor) item;
-            return !categoryCursor.isSolved();
-        }
-        return true;
-    }
-
     private Category getCategoryOrThrow(Cursor cursor) {
         final CategoryCursor categoryCursor = getCategoryCursorOrThrow(cursor);
         return categoryCursor.getCategory();

@@ -23,7 +23,6 @@ import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.google.samples.apps.topeka.R;
 import com.google.samples.apps.topeka.helper.AnswerHelper;
 import com.google.samples.apps.topeka.model.Category;
 import com.google.samples.apps.topeka.model.quiz.MultiSelectQuiz;
@@ -31,6 +30,8 @@ import com.google.samples.apps.topeka.widget.quiz.adapter.OptionsQuizAdapter;
 
 public class MultiSelectQuizView extends AbsQuizView<MultiSelectQuiz>
         implements AdapterView.OnItemClickListener {
+
+    private static final String TAG = "MultiSelectQuizView";
 
     private ListView mListView;
 
@@ -42,7 +43,8 @@ public class MultiSelectQuizView extends AbsQuizView<MultiSelectQuiz>
     protected View getQuizContentView() {
         mListView = new ListView(getContext());
         mListView.setAdapter(
-                new OptionsQuizAdapter(getQuiz().getOptions(), R.layout.item_answer_multi));
+                new OptionsQuizAdapter(getQuiz().getOptions(),
+                        android.R.layout.simple_list_item_multiple_choice));
         mListView.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
         mListView.setItemsCanFocus(false);
         mListView.setOnItemClickListener(this);
@@ -59,7 +61,7 @@ public class MultiSelectQuizView extends AbsQuizView<MultiSelectQuiz>
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         // TODO check way to respond to CheckBox clicks within ListView
-        Log.d("Foobar", "clicked pos: " + position);
+        Log.d(TAG, "clicked pos: " + position);
         allowAnswer();
     }
 }

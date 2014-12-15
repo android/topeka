@@ -31,7 +31,6 @@ import java.util.List;
 public class Category implements Parcelable {
 
     public static final String TAG = "Category";
-
     private static final int SCORE = 8;
     private static final int NO_SCORE = 0;
 
@@ -135,6 +134,20 @@ public class Category implements Parcelable {
 
     public void setSolved(boolean solved) {
         this.mSolved = solved;
+    }
+
+    /**
+     * Checks which quiz is the first unsolved within this category.
+     *
+     * @return The position of the first unsolved quiz.
+     */
+    public int getFirstUnsolvedQuizPosition() {
+        for (int i = 0; i < mQuizzes.size(); i++) {
+            if (!mQuizzes.get(i).isSolved()) {
+                return i;
+            }
+        }
+        return mQuizzes.size();
     }
 
     @Override

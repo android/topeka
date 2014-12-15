@@ -113,7 +113,7 @@ public class TopekaDatabaseHelper extends SQLiteOpenHelper {
         return score;
     }
 
-    public static void updateScoreFor(Context context, Category category) {
+    public static void updateCategory(Context context, Category category) {
         SQLiteDatabase writableDatabase = getWriteableDatabase(context);
         ContentValues contentValues = new ContentValues();
         contentValues.put(CategoryTable.COLUMN_DATA, new Gson().toJson(category));

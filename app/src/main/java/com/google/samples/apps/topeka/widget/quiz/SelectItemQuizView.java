@@ -18,6 +18,7 @@ package com.google.samples.apps.topeka.widget.quiz;
 import android.content.Context;
 import android.util.SparseBooleanArray;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
@@ -31,7 +32,7 @@ public class SelectItemQuizView extends AbsQuizView<SelectItemQuiz>
         implements AdapterView.OnItemClickListener {
 
     private boolean[] mAnswers;
-    private ListView mQuizContentView;
+    private ListView mListView;
 
     public SelectItemQuizView(Context context, Category category, SelectItemQuiz quiz) {
         super(context, category, quiz);
@@ -40,16 +41,17 @@ public class SelectItemQuizView extends AbsQuizView<SelectItemQuiz>
 
     @Override
     protected View getQuizContentView() {
-        mQuizContentView = new ListView(getContext());
-        mQuizContentView.setAdapter(
+        mListView = new ListView(getContext());
+        mListView.setAdapter(
                 new OptionsQuizAdapter(getQuiz().getOptions(), R.layout.item_answer));
-        mQuizContentView.setOnItemClickListener(this);
-        return mQuizContentView;
+        mListView.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
+        mListView.setOnItemClickListener(this);
+        return mListView;
     }
 
     @Override
     protected boolean isAnswerCorrect() {
-        final SparseBooleanArray checkedItemPositions = mQuizContentView.getCheckedItemPositions();
+        final SparseBooleanArray checkedItemPositions = mListView.getCheckedItemPositions();
         final int[] answer = getQuiz().getAnswer();
         return AnswerHelper.isAnswerCorrect(checkedItemPositions, answer);
     }

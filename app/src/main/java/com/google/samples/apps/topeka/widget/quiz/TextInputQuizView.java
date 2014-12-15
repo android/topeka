@@ -17,6 +17,7 @@ package com.google.samples.apps.topeka.widget.quiz;
 
 import android.content.Context;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
@@ -101,6 +102,7 @@ public abstract class TextInputQuizView<Q extends Quiz> extends AbsQuizView<Q> i
     @Override
     public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
         // submit the answer and hide the keyboard once the action done has been tapped
+        allowAnswer(!TextUtils.isEmpty(v.getText()));
         if (actionId == EditorInfo.IME_ACTION_DONE) {
             submitAnswer();
             hideKeyboard(v);

@@ -73,10 +73,17 @@ public class QuizFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         mViewPager = ViewHelper.getView(view, R.id.quiz_pager);
-        mViewPager.setBackgroundResource(mCategory.getTheme().getWindowBackgroundColor());
-        mViewPager.setAdapter(new QuizPagerAdapter(getActivity(), mCategory));
-        if (null != savedInstanceState) {
-            final int currentItem = savedInstanceState.getInt(EXTRA_CURRENT_ITEM);
+        if (mCategory.isSolved()) {
+            showSummary();
+        } else {
+            mViewPager.setBackgroundResource(mCategory.getTheme().getWindowBackgroundColor());
+            mViewPager.setAdapter(new QuizPagerAdapter(getActivity(), mCategory));
+            final int currentItem;
+            if (null != savedInstanceState) {
+                 currentItem = savedInstanceState.getInt(EXTRA_CURRENT_ITEM);
+            } else {
+                currentItem = mCategory.getFirstUnsolvedQuizPosition();
+            }
             mViewPager.setCurrentItem(currentItem);
         }
         super.onViewCreated(view, savedInstanceState);
@@ -84,11 +91,14 @@ public class QuizFragment extends Fragment {
 
     @Override
     public void onStop() {
-        TopekaDatabaseHelper.updateScoreFor(getActivity(), mCategory);
+        TopekaDatabaseHelper.updateCategory(getActivity(), mCategory);
         super.onStop();
     }
 
     public boolean nextPage() {
+        if (null == mViewPager) {
+            return false;
+        }
         int nextItem = mViewPager.getCurrentItem() + 1;
         if (nextItem < mViewPager.getAdapter().getCount()) {
             mViewPager.setCurrentItem(nextItem, true);

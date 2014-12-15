@@ -18,24 +18,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:paddingStart="@dimen/keyline_vertical"
-    android:paddingEnd="@dimen/keyline_vertical"
-    android:background="@android:color/white">
+    android:paddingEnd="@dimen/keyline_vertical">
 
     <ImageView
         android:id="@+id/solved_state"
-        android:layout_width="wrap_content"
+        android:layout_width="@dimen/min_height_touch_target"
         android:layout_height="match_parent"
         android:contentDescription="@null"
-        android:src="@drawable/ic_done"
-        android:paddingEnd="@dimen/keyline_vertical"
-        tools:ignore="RtlSymmetry" />
+        android:src="@drawable/ic_done" />
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:paddingStart="@dimen/keyline_vertical"
+        tools:ignore="RtlSymmetry">
 
         <TextView
             android:id="@+id/quiz"

@@ -97,8 +97,6 @@ public class CategoryGridActivity extends FragmentActivity implements View.OnCli
         }
     }
 
-
-
     private String getDisplayName(Player player) {
         return getString(R.string.player_display_name, player.getFirstName(),
                 player.getLastInitial());

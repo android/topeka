@@ -18,6 +18,7 @@ package com.google.samples.apps.topeka.widget.quiz;
 import android.content.Context;
 import android.util.SparseBooleanArray;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.CompoundButton;
 import android.widget.ListView;
@@ -45,6 +46,7 @@ public class ToggleTranslateQuizView extends AbsQuizView<ToggleTranslateQuiz>
         mListView.setDivider(null);
         mListView.setAdapter(
                 new OptionsQuizAdapter(getQuiz().getReadableOptions(), R.layout.item_answer));
+        mListView.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
         mListView.setOnItemClickListener(this);
         return mListView;
     }

@@ -53,6 +53,11 @@ public abstract class OptionsQuiz<T> extends Quiz<int[]> {
     }
 
     @Override
+    public boolean isAnswerCorrect(int[] answer) {
+        return Arrays.equals(getAnswer(), answer);
+    }
+
+    @Override
     public int describeContents() {
         return 0;
     }

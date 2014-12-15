@@ -77,15 +77,17 @@ public abstract class AbsQuizView<Q extends Quiz> extends CardView implements
         mLayoutInflater = LayoutInflater.from(context);
         mMinHeightTouchTarget = getResources()
                 .getDimensionPixelSize(R.dimen.min_height_touch_target);
-
-        setupQuestionView();
+        setUpQuestionView();
         LinearLayout container = createContainerLayout(context);
         View quizContentView = getInitializedContentView();
         addContentView(container, quizContentView);
         addFloatingActionButton();
     }
 
-    private void setupQuestionView() {
+    /**
+     * Sets the behaviour for all question views.
+     */
+    private void setUpQuestionView() {
         mQuestionView = new TextView(getContext());
         int textColor = getResources().getColor(mCategory.getTheme().getTextPrimaryColor());
         int backgroundColor = getResources().getColor(mCategory.getTheme().getPrimaryColor());
@@ -94,6 +96,7 @@ public abstract class AbsQuizView<Q extends Quiz> extends CardView implements
         mQuestionView.setBackgroundColor(backgroundColor);
         mQuestionView.setTextColor(textColor);
         mQuestionView.setGravity(Gravity.CENTER_VERTICAL);
+        mQuestionView.setElevation(getResources().getDimensionPixelSize(R.dimen.elevation_header));
         setDefaultPadding(mQuestionView);
         setMinHeightInternal(mQuestionView, R.dimen.min_height_question);
         mQuestionView.setText(getQuiz().getQuestion());
@@ -230,6 +233,7 @@ public abstract class AbsQuizView<Q extends Quiz> extends CardView implements
         if (getContext() instanceof QuizActivity) {
             ((QuizActivity) getContext()).onClick(v);
         }
+        mQuiz.setSolved(true);
         mCategory.setScore(getQuiz(), isAnswerCorrect());
     }
 

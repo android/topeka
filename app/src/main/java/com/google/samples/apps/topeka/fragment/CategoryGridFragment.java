@@ -65,28 +65,25 @@ public class CategoryGridFragment extends Fragment implements AdapterView.OnItem
         Activity activity = getActivity();
         //TODO: finalize the animations
         ImageView iconView = ViewHelper.getView(view, R.id.category_icon);
-            startActivityIfNotSolvedYet(activity, iconView,
-                    (CategoryCursor) mAdapter.getItem(position));
+        startQuizActivityWithTransition(activity, iconView,
+                (CategoryCursor) mAdapter.getItem(position));
     }
 
-    private void startActivityIfNotSolvedYet(Activity activity, ImageView iconView,
+    private void startQuizActivityWithTransition(Activity activity, ImageView iconView,
             CategoryCursor categoryCursor) {
-        //do nothing if the category has been solved before.
-        if (categoryCursor.isSolved()) {
-            // TODO: 12/1/14 skip the quizzes, go to scorecard view
-            return;
-        }
-        //set the transition participants, start the quiz activity
+        // Creates pair of transition participants.
         Pair[] participants = getTransitionParticipants(activity, iconView);
         ActivityOptions sceneTransitionAnimation = ActivityOptions
                 .makeSceneTransitionAnimation(activity, participants);
+        // Starts the activity with the participants, animating from one to the other.
         activity.startActivity(QuizActivity.getStartIntent(activity, categoryCursor.getCategory()),
                 sceneTransitionAnimation.toBundle());
     }
 
     private Pair[] getTransitionParticipants(Activity activity, ImageView iconView) {
         Pair[] participants = new Pair[2];
-        participants[0] = new Pair<View, String>(iconView, activity.getString(R.string.transition_background));
+        participants[0] = new Pair<View, String>(iconView,
+                activity.getString(R.string.transition_background));
         View toolbar = getActivity().findViewById(R.id.toolbar_player);
         if (null != toolbar) {
             participants[1] = new Pair<View, String>(
