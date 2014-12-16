@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.google.samples.apps.topeka.widget.quiz.adapter;
+package com.google.samples.apps.topeka.adapter;
 
 import android.support.annotation.LayoutRes;
 import android.view.LayoutInflater;

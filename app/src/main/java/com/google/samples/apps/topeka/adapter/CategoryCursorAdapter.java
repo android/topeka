@@ -19,6 +19,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
 import android.database.Cursor;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.LayerDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -64,9 +66,8 @@ public class CategoryCursorAdapter extends CursorAdapter {
         Theme theme = category.getTheme();
 
         LinearLayout layout = (LinearLayout) view;
-        final int categoryIcon = getCategoryIcon(category);
         ImageView icon = ViewHelper.getView(layout, R.id.category_icon);
-        icon.setImageResource(categoryIcon);
+        setCategoryIcon(category, icon);
         icon.setBackgroundResource(theme.getWindowBackgroundColor());
 
         TextView title = ViewHelper.getView(layout, R.id.category_title);
@@ -75,17 +76,22 @@ public class CategoryCursorAdapter extends CursorAdapter {
         title.setBackgroundResource(theme.getPrimaryColor());
     }
 
-    private int getCategoryIcon(Category category) {
-        final int categoryImageResource;
+    private void setCategoryIcon(Category category, ImageView icon) {
+        //TODO: 11/11/14 don't use resource lookup
+        final int categoryImageResource = mResources.getIdentifier(
+                ICON_CATEGORY + category.getId(), DRAWABLE, mPackageName);
         final boolean solved = category.isSolved();
+
         if (solved) {
-            categoryImageResource = R.drawable.ic_done;
+            Drawable[] layers = new Drawable[] {
+                    mResources.getDrawable(categoryImageResource),
+                    mResources.getDrawable(R.drawable.ic_done)};
+            LayerDrawable layerDrawable = new LayerDrawable(layers);
+            icon.setImageDrawable(layerDrawable);
+            layerDrawable.setTint(R.color.topeka_accent);
         } else {
-            //TODO: 11/11/14 don't use resource lookup
-            categoryImageResource = mResources
-                    .getIdentifier(ICON_CATEGORY + category.getId(), DRAWABLE, mPackageName);
+            icon.setImageResource(categoryImageResource);
         }
-        return categoryImageResource;
     }
 
     private int getColor(int textPrimaryColor) {

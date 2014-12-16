@@ -14,7 +14,7 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 -->
-<selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:drawable="@drawable/fab_background_pressed" android:state_pressed="true"/>
-    <item android:drawable="@drawable/fab_background_normal"/>
-</selector>
+<ripple xmlns:android="http://schemas.android.com/apk/res/android"
+    android:color="?android:colorAccent">
+    <item android:drawable="@android:color/white" />
+</ripple>

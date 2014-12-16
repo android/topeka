@@ -23,7 +23,7 @@ import android.widget.GridView;
 import com.google.samples.apps.topeka.R;
 import com.google.samples.apps.topeka.model.Category;
 import com.google.samples.apps.topeka.model.quiz.FourQuarterQuiz;
-import com.google.samples.apps.topeka.widget.quiz.adapter.OptionsQuizAdapter;
+import com.google.samples.apps.topeka.adapter.OptionsQuizAdapter;
 
 public class FourQuarterQuizView extends AbsQuizView<FourQuarterQuiz>
         implements AdapterView.OnItemClickListener {

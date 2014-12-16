@@ -56,6 +56,10 @@ public class SignInFragment extends Fragment implements View.OnClickListener,
     private DoneFab mDoneFab;
     private boolean edit;
 
+    private static final String KEY_FIRST_NAME = "firstName";
+    private static final String KEY_LAST_INITIAL = "lastInitial";
+    private static final String KEY_AVATAR_ID = "avatarId";
+
     public static SignInFragment newInstance(boolean edit) {
         Bundle args = new Bundle();
         args.putBoolean(ARG_EDIT, edit);
@@ -70,6 +74,13 @@ public class SignInFragment extends Fragment implements View.OnClickListener,
         final View contentView = inflater.inflate(R.layout.fragment_sign_in, container, false);
         contentView.addOnLayoutChangeListener(this);
         return contentView;
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putString(KEY_FIRST_NAME, mFirstName.getText().toString());
+        outState.putString(KEY_LAST_INITIAL, mLastInitial.getText().toString());
+        outState.putInt(KEY_AVATAR_ID, mGridView.getSelectedItemPosition());
     }
 
     @Override

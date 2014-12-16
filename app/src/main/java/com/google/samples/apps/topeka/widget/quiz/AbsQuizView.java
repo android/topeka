@@ -15,6 +15,8 @@
  */
 package com.google.samples.apps.topeka.widget.quiz;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
 import android.support.annotation.DimenRes;
 import android.support.annotation.LayoutRes;
@@ -22,6 +24,7 @@ import android.support.v7.widget.CardView;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.animation.AnticipateInterpolator;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -138,6 +141,8 @@ public abstract class AbsQuizView<Q extends Quiz> extends CardView implements
             mSubmitAnswer = new DoneFab(context);
             mSubmitAnswer.setId(R.id.submitAnswer);
             mSubmitAnswer.setVisibility(GONE);
+            mSubmitAnswer.setScaleY(0);
+            mSubmitAnswer.setScaleX(0);
             //Set QuizActivity to handle clicks on answer submission.
             if (context instanceof QuizActivity) {
                 mSubmitAnswer.setOnClickListener(this);
@@ -196,7 +201,12 @@ public abstract class AbsQuizView<Q extends Quiz> extends CardView implements
      */
     protected void allowAnswer(final boolean answered) {
         if (null != mSubmitAnswer) {
-            mSubmitAnswer.setVisibility(answered ? View.VISIBLE : View.GONE);
+            final float targetScale = answered ? 1f : 0f;
+            if (answered) {
+                mSubmitAnswer.setVisibility(View.VISIBLE);
+            }
+            mSubmitAnswer.animate().scaleX(targetScale).scaleY(targetScale)
+                    .setInterpolator(new AnticipateInterpolator());
             mAnswered = answered;
         }
     }

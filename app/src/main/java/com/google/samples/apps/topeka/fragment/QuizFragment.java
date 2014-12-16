@@ -22,13 +22,14 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 
 import com.google.samples.apps.topeka.R;
 import com.google.samples.apps.topeka.adapter.QuizPagerAdapter;
+import com.google.samples.apps.topeka.adapter.ScoreAdapter;
 import com.google.samples.apps.topeka.helper.ViewHelper;
 import com.google.samples.apps.topeka.model.Category;
 import com.google.samples.apps.topeka.persistence.TopekaDatabaseHelper;
-import com.google.samples.apps.topeka.widget.ScorecardView;
 
 /**
  * Encapsulates Quiz solving and displays it to the user.
@@ -109,8 +110,8 @@ public class QuizFragment extends Fragment {
     }
 
     public void showSummary() {
-        final ScorecardView scorecardView = ViewHelper.getView(getView(), R.id.scorecard);
-        scorecardView.setCategory(mCategory);
+        final ListView scorecardView = ViewHelper.getView(getView(), R.id.scorecard);
+        scorecardView.setAdapter(new ScoreAdapter(mCategory));
         scorecardView.setVisibility(View.VISIBLE);
         mViewPager.setVisibility(View.GONE);
     }

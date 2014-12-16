@@ -26,7 +26,7 @@ import android.widget.ListView;
 import com.google.samples.apps.topeka.helper.AnswerHelper;
 import com.google.samples.apps.topeka.model.Category;
 import com.google.samples.apps.topeka.model.quiz.MultiSelectQuiz;
-import com.google.samples.apps.topeka.widget.quiz.adapter.OptionsQuizAdapter;
+import com.google.samples.apps.topeka.adapter.OptionsQuizAdapter;
 
 public class MultiSelectQuizView extends AbsQuizView<MultiSelectQuiz>
         implements AdapterView.OnItemClickListener {
