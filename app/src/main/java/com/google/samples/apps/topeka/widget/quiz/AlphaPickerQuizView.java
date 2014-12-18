@@ -22,7 +22,6 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.google.samples.apps.topeka.R;
-import com.google.samples.apps.topeka.helper.ViewHelper;
 import com.google.samples.apps.topeka.model.Category;
 import com.google.samples.apps.topeka.model.quiz.AlphaPickerQuiz;
 
@@ -39,11 +38,12 @@ public class AlphaPickerQuizView extends AbsQuizView<AlphaPickerQuiz> implements
     }
 
     @Override
-    protected View getQuizContentView() {
-        LinearLayout layout = inflateChildView(R.layout.quiz_layout_picker);
-        mCurrentSelection = ViewHelper.getView(layout, R.id.seekbar_progress);
+    protected View createQuizContentView() {
+        LinearLayout layout = (LinearLayout) getLayoutInflater().inflate(
+                R.layout.quiz_layout_picker, this, false);
+        mCurrentSelection = (TextView) layout.findViewById(R.id.seekbar_progress);
         mCurrentSelection.setText(mAlphabet[0]);
-        SeekBar seekBar = ViewHelper.getView(layout, R.id.seekbar);
+        SeekBar seekBar = (SeekBar) layout.findViewById(R.id.seekbar);
         seekBar.setMax(mAlphabet.length);
         seekBar.setOnSeekBarChangeListener(this);
         return layout;

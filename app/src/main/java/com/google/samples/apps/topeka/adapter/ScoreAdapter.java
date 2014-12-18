@@ -25,7 +25,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.samples.apps.topeka.R;
-import com.google.samples.apps.topeka.helper.ViewHelper;
 import com.google.samples.apps.topeka.model.Category;
 import com.google.samples.apps.topeka.model.quiz.Quiz;
 
@@ -108,9 +107,9 @@ public class ScoreAdapter extends BaseAdapter {
         public ViewHolder(LinearLayout scorecardItem) {
             scorecardItem.setBackgroundColor(scorecardItem.getResources().getColor(
                     mCategory.getTheme().getWindowBackgroundColor()));
-            mQuizView = ViewHelper.getView(scorecardItem, R.id.quiz);
-            mAnswerView = ViewHelper.getView(scorecardItem, R.id.answer);
-            mSolvedState = ViewHelper.getView(scorecardItem, R.id.solved_state);
+            mQuizView = (TextView) scorecardItem.findViewById(R.id.quiz);
+            mAnswerView = (TextView) scorecardItem.findViewById(R.id.answer);
+            mSolvedState = (ImageView) scorecardItem.findViewById(R.id.solved_state);
         }
 
     }

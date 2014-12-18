@@ -15,12 +15,10 @@
  */
 package com.google.samples.apps.topeka.widget.quiz;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
 import android.support.annotation.DimenRes;
-import android.support.annotation.LayoutRes;
 import android.support.v7.widget.CardView;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,7 +36,7 @@ import com.google.samples.apps.topeka.widget.FloatingActionButton;
 /**
  * This is the base class for displaying a {@link com.google.samples.apps.topeka.model.quiz.Quiz}.
  * <p>
- * Subclasses need to implement {@link AbsQuizView#getQuizContentView()}
+ * Subclasses need to implement {@link AbsQuizView#createQuizContentView()}
  * in order to allow solution of a quiz.
  * </p>
  * <p>
@@ -91,18 +89,20 @@ public abstract class AbsQuizView<Q extends Quiz> extends CardView implements
      * Sets the behaviour for all question views.
      */
     private void setUpQuestionView() {
-        mQuestionView = new TextView(getContext());
-        int textColor = getResources().getColor(mCategory.getTheme().getTextPrimaryColor());
-        int backgroundColor = getResources().getColor(mCategory.getTheme().getPrimaryColor());
-        mQuestionView.setTextAppearance(getContext(),
-                android.R.style.TextAppearance_Material_Subhead);
-        mQuestionView.setBackgroundColor(backgroundColor);
-        mQuestionView.setTextColor(textColor);
-        mQuestionView.setGravity(Gravity.CENTER_VERTICAL);
-        mQuestionView.setElevation(getResources().getDimensionPixelSize(R.dimen.elevation_header));
-        setDefaultPadding(mQuestionView);
-        setMinHeightInternal(mQuestionView, R.dimen.min_height_question);
+        mQuestionView = (TextView) mLayoutInflater.inflate(R.layout.question, this, false);
         mQuestionView.setText(getQuiz().getQuestion());
+    }
+
+
+    /**
+     * Gets the resourceId from the ccode android.R.attr.colorPrimary attribute and
+     * @param context The context holding the current theme.
+     * @return The resourceId of the color found.
+     */
+    private int getPrimaryColorResId(Context context) {
+        TypedValue color = new TypedValue();
+        context.getTheme().resolveAttribute(android.R.attr.colorPrimary, color, true);
+        return color.resourceId;
     }
 
     private LinearLayout createContainerLayout(Context context) {
@@ -112,7 +112,7 @@ public abstract class AbsQuizView<Q extends Quiz> extends CardView implements
     }
 
     private View getInitializedContentView() {
-        View quizContentView = getQuizContentView();
+        View quizContentView = createQuizContentView();
         setDefaultPadding(quizContentView);
         setMinHeightInternal(quizContentView, R.dimen.min_height_question);
         return quizContentView;
@@ -160,23 +160,12 @@ public abstract class AbsQuizView<Q extends Quiz> extends CardView implements
     }
 
     /**
-     * Inflates a child view from layout with this view as parent.
-     *
-     * @param resId The layout resource id of the child view to inflate.
-     * @param <T> The type of view to inflate.
-     * @return The inflated view.
-     */
-    protected <T extends View> T inflateChildView(@LayoutRes int resId) {
-        return (T) getLayoutInflater().inflate(resId, this, false);
-    }
-
-    /**
      * Implementations should create the content view for the type of
      * {@link com.google.samples.apps.topeka.model.quiz.Quiz} they want to display.
      *
      * @return the created view to solve the quiz.
      */
-    protected abstract View getQuizContentView();
+    protected abstract View createQuizContentView();
 
     /**
      * Implementations must make sure that the answer provided is evaluated and correctly rated.

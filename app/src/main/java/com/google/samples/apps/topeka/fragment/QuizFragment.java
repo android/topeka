@@ -27,7 +27,6 @@ import android.widget.ListView;
 import com.google.samples.apps.topeka.R;
 import com.google.samples.apps.topeka.adapter.QuizPagerAdapter;
 import com.google.samples.apps.topeka.adapter.ScoreAdapter;
-import com.google.samples.apps.topeka.helper.ViewHelper;
 import com.google.samples.apps.topeka.model.Category;
 import com.google.samples.apps.topeka.persistence.TopekaDatabaseHelper;
 
@@ -73,7 +72,7 @@ public class QuizFragment extends Fragment {
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        mViewPager = ViewHelper.getView(view, R.id.quiz_pager);
+        mViewPager = (ViewPager) view.findViewById(R.id.quiz_pager);
         if (mCategory.isSolved()) {
             showSummary();
         } else {
@@ -110,7 +109,7 @@ public class QuizFragment extends Fragment {
     }
 
     public void showSummary() {
-        final ListView scorecardView = ViewHelper.getView(getView(), R.id.scorecard);
+        final ListView scorecardView = (ListView) getView().findViewById(R.id.scorecard);
         scorecardView.setAdapter(new ScoreAdapter(mCategory));
         scorecardView.setVisibility(View.VISIBLE);
         mViewPager.setVisibility(View.GONE);

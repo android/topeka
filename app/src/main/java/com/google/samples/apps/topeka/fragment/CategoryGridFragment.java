@@ -19,7 +19,6 @@ package com.google.samples.apps.topeka.fragment;
 import com.google.samples.apps.topeka.R;
 import com.google.samples.apps.topeka.activity.QuizActivity;
 import com.google.samples.apps.topeka.adapter.CategoryCursorAdapter;
-import com.google.samples.apps.topeka.helper.ViewHelper;
 import com.google.samples.apps.topeka.persistence.CategoryCursor;
 
 import android.app.Activity;
@@ -50,7 +49,7 @@ public class CategoryGridFragment extends Fragment implements AdapterView.OnItem
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
-        setUpQuizGrid(ViewHelper.<GridView>getView(view, R.id.categories));
+        setUpQuizGrid((GridView) view.findViewById(R.id.categories));
         super.onViewCreated(view, savedInstanceState);
     }
 
@@ -64,7 +63,7 @@ public class CategoryGridFragment extends Fragment implements AdapterView.OnItem
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Activity activity = getActivity();
         //TODO: finalize the animations
-        ImageView iconView = ViewHelper.getView(view, R.id.category_icon);
+        ImageView iconView = (ImageView) view.findViewById(R.id.category_icon);
         startQuizActivityWithTransition(activity, iconView,
                 (CategoryCursor) mAdapter.getItem(position));
     }

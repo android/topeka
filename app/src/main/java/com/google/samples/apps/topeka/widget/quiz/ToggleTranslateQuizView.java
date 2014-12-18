@@ -41,7 +41,7 @@ public class ToggleTranslateQuizView extends AbsQuizView<ToggleTranslateQuiz>
     }
 
     @Override
-    protected View getQuizContentView() {
+    protected View createQuizContentView() {
         mListView = new ListView(getContext());
         mListView.setDivider(null);
         mListView.setAdapter(

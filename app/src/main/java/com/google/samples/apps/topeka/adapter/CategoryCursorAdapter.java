@@ -30,7 +30,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.samples.apps.topeka.R;
-import com.google.samples.apps.topeka.helper.ViewHelper;
 import com.google.samples.apps.topeka.model.Category;
 import com.google.samples.apps.topeka.model.Theme;
 import com.google.samples.apps.topeka.persistence.CategoryCursor;
@@ -66,11 +65,11 @@ public class CategoryCursorAdapter extends CursorAdapter {
         Theme theme = category.getTheme();
 
         LinearLayout layout = (LinearLayout) view;
-        ImageView icon = ViewHelper.getView(layout, R.id.category_icon);
+        ImageView icon = (ImageView) layout.findViewById(R.id.category_icon);
         setCategoryIcon(category, icon);
         icon.setBackgroundResource(theme.getWindowBackgroundColor());
 
-        TextView title = ViewHelper.getView(layout, R.id.category_title);
+        TextView title = (TextView) layout.findViewById(R.id.category_title);
         title.setText(category.getName());
         title.setTextColor(getColor(theme.getTextPrimaryColor()));
         title.setBackgroundResource(theme.getPrimaryColor());

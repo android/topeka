@@ -40,7 +40,7 @@ public class SelectItemQuizView extends AbsQuizView<SelectItemQuiz>
     }
 
     @Override
-    protected View getQuizContentView() {
+    protected View createQuizContentView() {
         mListView = new ListView(getContext());
         mListView.setAdapter(
                 new OptionsQuizAdapter(getQuiz().getOptions(), R.layout.item_answer));

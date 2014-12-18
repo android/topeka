@@ -26,7 +26,7 @@
         android:id="@+id/toolbar_sign_in"
         android:layout_width="match_parent"
         android:layout_height="?android:attr/actionBarSize"
-        android:titleTextAppearance="@style/AppTheme.TextAppearance.Title" />
+        android:titleTextAppearance="@style/Topeka.TextAppearance.Title" />
 
     <EditText
         android:id="@+id/first_name"

@@ -37,13 +37,10 @@ public abstract class TextInputQuizView<Q extends Quiz> extends AbsQuizView<Q> i
         super(context, category, quiz);
     }
 
-    @Override
-    protected View getQuizContentView() {
-        return getEditText();
-    }
 
-    protected final EditText getEditText() {
-        EditText editText = inflateChildView(R.layout.quiz_edit_text);
+    protected final EditText createEditText() {
+        EditText editText = (EditText) getLayoutInflater().inflate(
+                R.layout.quiz_edit_text, this, false);
         editText.addTextChangedListener(this);
         editText.setOnEditorActionListener(this);
         return editText;

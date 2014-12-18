@@ -24,11 +24,11 @@
         android:id="@+id/toolbar_player"
         android:layout_width="match_parent"
         android:layout_height="?android:attr/actionBarSize"
-        android:titleTextAppearance="@style/AppTheme.TextAppearance.Title"
+        android:titleTextAppearance="@style/Topeka.TextAppearance.Title"
         android:elevation="@dimen/elevation_header">
         <TextView
             android:id="@+id/score"
-            style="@style/AppTheme.TextAppearance.Title"
+            style="@style/Topeka.TextAppearance.Title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingStart="@dimen/padding_default"

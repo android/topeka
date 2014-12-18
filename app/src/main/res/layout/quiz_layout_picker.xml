@@ -23,7 +23,7 @@
         android:id="@+id/seekbar_progress"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAppearance="@style/AppTheme.TextAppearance.Title" />
+        android:textAppearance="@style/Topeka.TextAppearance.Title" />
 
     <SeekBar
         android:id="@+id/seekbar"

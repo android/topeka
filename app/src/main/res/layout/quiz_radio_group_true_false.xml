@@ -26,7 +26,7 @@
         android:layout_weight="1"
         android:layout_marginEnd="@dimen/padding_default"
         android:text="@string/btn_true"
-        style="@style/AppTheme.CompoundButton.True" />
+        style="@style/Topeka.CompoundButton.True" />
 
     <RadioButton
         android:id="@+id/answerFalse"
@@ -35,5 +35,5 @@
         android:layout_weight="1"
         android:layout_marginStart="@dimen/padding_default"
         android:text="@string/btn_false"
-        style="@style/AppTheme.CompoundButton.False" />
+        style="@style/Topeka.CompoundButton.False" />
 </RadioGroup>

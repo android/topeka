@@ -36,7 +36,6 @@ import com.google.samples.apps.topeka.activity.CategorySelectionActivity;
 import com.google.samples.apps.topeka.helper.PreferencesHelper;
 import com.google.samples.apps.topeka.R;
 import com.google.samples.apps.topeka.adapter.AvatarAdapter;
-import com.google.samples.apps.topeka.helper.ViewHelper;
 import com.google.samples.apps.topeka.model.Avatar;
 import com.google.samples.apps.topeka.model.Player;
 import com.google.samples.apps.topeka.widget.DoneFab;
@@ -110,19 +109,19 @@ public class SignInFragment extends Fragment implements View.OnClickListener,
     }
 
     private void initContentViews(View view) {
-        ViewHelper.<Toolbar>getView(view, R.id.toolbar_sign_in).setTitle(R.string.sign_in);
-        ViewHelper.<Toolbar>getView(view, R.id.toolbar_choose_avatar)
+        ((Toolbar) view.findViewById(R.id.toolbar_sign_in)).setTitle(R.string.sign_in);
+        ((Toolbar) view.findViewById(R.id.toolbar_choose_avatar))
                 .setTitle(R.string.choose_avatar);
-        mFirstName = ViewHelper.getView(view, R.id.first_name);
+        mFirstName = (EditText) view.findViewById(R.id.first_name);
         mFirstName.addTextChangedListener(this);
-        mLastInitial = ViewHelper.getView(view, R.id.last_initial);
+        mLastInitial = (EditText) view.findViewById(R.id.last_initial);
         mLastInitial.addTextChangedListener(this);
-        mDoneFab = ViewHelper.getView(view, R.id.check);
+        mDoneFab = (DoneFab) view.findViewById(R.id.check);
         mDoneFab.setOnClickListener(this);
     }
 
     private void setUpGridView(View container) {
-        mGridView = ViewHelper.getView(container, R.id.avatars);
+        mGridView = (GridView) container.findViewById(R.id.avatars);
         mGridView.setAdapter(new AvatarAdapter(getActivity()));
         mGridView.setOnItemClickListener(this);
         mGridView.setNumColumns(calculateSpanCount());

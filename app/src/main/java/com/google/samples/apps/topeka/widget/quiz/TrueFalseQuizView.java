@@ -41,8 +41,9 @@ public class TrueFalseQuizView extends AbsQuizView<TrueFalseQuiz> {
     }
 
     @Override
-    protected View getQuizContentView() {
-        final ViewGroup container = inflateChildView(R.layout.quiz_radio_group_true_false);
+    protected View createQuizContentView() {
+        final ViewGroup container = (ViewGroup) getLayoutInflater().inflate(
+                R.layout.quiz_radio_group_true_false, this, false);
         container.findViewById(R.id.answerTrue).setOnClickListener(this);
         container.findViewById(R.id.answerFalse).setOnClickListener(this);
         return container;

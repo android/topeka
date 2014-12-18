@@ -36,12 +36,12 @@ public class FillTwoBlanksQuizView extends TextInputQuizView<FillTwoBlanksQuiz> 
     }
 
     @Override
-    protected View getQuizContentView() {
+    protected View createQuizContentView() {
         LinearLayout layout = new LinearLayout(getContext());
         layout.setOrientation(LinearLayout.VERTICAL);
-        mAnswerOne = getEditText();
+        mAnswerOne = createEditText();
         mAnswerOne.setImeOptions(EditorInfo.IME_ACTION_NEXT);
-        mAnswerTwo = getEditText();
+        mAnswerTwo = createEditText();
         addEditText(layout, mAnswerOne);
         addEditText(layout, mAnswerTwo);
         return layout;

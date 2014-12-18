@@ -15,46 +15,88 @@
   limitations under the License.
   -->
 <resources>
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="@android:style/Theme.Material.Light.NoActionBar">
-        <!-- Customize your theme here. -->
+    <style name="Topeka" parent="@android:style/Theme.Material.Light.NoActionBar">
         <item name="android:colorPrimary">@color/topeka_primary</item>
         <item name="android:colorPrimaryDark">@color/topeka_primary_dark</item>
         <item name="android:colorAccent">@color/topeka_accent</item>
         <item name="android:textColorPrimary">@android:color/black</item>
-        <item name="android:textColorPrimaryInverse">@android:color/white</item>
-        <!-- Enable transitions between activities -->
+        <item name="android:textColorPrimaryInverse">@color/text_light</item>
+        <item name="android:navigationBarColor">@color/topeka_primary_dark</item>
+        <item name="android:statusBarColor">@color/topeka_primary_dark</item>
+        <item name="android:textColor">@color/text_dark</item>
+        <item name="android:radioButtonStyle">@style/Topeka.CompoundButton.Radio</item>
         <item name="android:windowContentTransitions">true</item>
-        <!-- Custom transitions for activity transitions -->
-        <item name="android:titleTextAppearance">@style/AppTheme.TextAppearance.Title</item>
-        <item name="android:navigationBarColor">@color/topeka_primary</item>
-        <item name="android:statusBarColor">@color/topeka_primary</item>
-        <item name="android:radioButtonStyle">@style/AppTheme.CompoundButton.Radio</item>
+        <item name="android:titleTextAppearance">@style/Topeka.TextAppearance.Title</item>
     </style>
 
-    <style name="AppTheme.CompoundButton" parent="@android:style/Widget.Material.Button.Borderless">
+    <style name="Topeka.Blue" parent="Topeka">
+        <item name="android:colorPrimary">@color/theme_blue_primary</item>
+        <item name="android:colorPrimaryDark">@color/theme_blue_primary</item>
+        <item name="android:textColorPrimary">@color/theme_blue_text</item>
+        <item name="android:navigationBarColor">@color/theme_blue_primary_dark</item>
+        <item name="android:statusBarColor">@color/theme_blue_primary_dark</item>
+        <item name="android:windowBackground">@color/theme_blue_background</item>
     </style>
 
-    <style name="AppTheme.CompoundButton.Radio" parent="AppTheme.CompoundButton">
+    <style name="Topeka.Green" parent="Topeka">
+        <item name="android:colorPrimary">@color/theme_green_primary</item>
+        <item name="android:colorPrimaryDark">@color/theme_green_primary</item>
+        <item name="android:textColorPrimary">@color/theme_green_text</item>
+        <item name="android:navigationBarColor">@color/theme_green_primary_dark</item>
+        <item name="android:statusBarColor">@color/theme_green_primary_dark</item>
+        <item name="android:windowBackground">@color/theme_green_background</item>
+    </style>
+
+    <style name="Topeka.Purple" parent="Topeka">
+        <item name="android:colorPrimary">@color/theme_purple_primary</item>
+        <item name="android:colorPrimaryDark">@color/theme_purple_primary</item>
+        <item name="android:textColorPrimary">@color/theme_purple_text</item>
+        <item name="android:navigationBarColor">@color/theme_purple_primary_dark</item>
+        <item name="android:statusBarColor">@color/theme_purple_primary_dark</item>
+        <item name="android:windowBackground">@color/theme_purple_background</item>
+    </style>
+
+    <style name="Topeka.Red" parent="Topeka">
+        <item name="android:colorPrimary">@color/theme_red_primary</item>
+        <item name="android:colorPrimaryDark">@color/theme_red_primary</item>
+        <item name="android:textColorPrimary">@color/theme_red_text</item>
+        <item name="android:navigationBarColor">@color/theme_red_primary_dark</item>
+        <item name="android:statusBarColor">@color/theme_red_primary_dark</item>
+        <item name="android:windowBackground">@color/theme_red_background</item>
+    </style>
+
+    <style name="Topeka.Yellow" parent="Topeka">
+        <item name="android:colorPrimary">@color/theme_yellow_primary</item>
+        <item name="android:colorPrimaryDark">@color/theme_yellow_primary</item>
+        <item name="android:textColorPrimary">@color/theme_yellow_text</item>
+        <item name="android:navigationBarColor">@color/theme_yellow_primary_dark</item>
+        <item name="android:statusBarColor">@color/theme_yellow_primary_dark</item>
+        <item name="android:windowBackground">@color/theme_yellow_background</item>
+    </style>
+
+    <style name="Topeka.CompoundButton" parent="@android:style/Widget.Material.Button.Borderless">
+    </style>
+
+    <style name="Topeka.CompoundButton.Radio" parent="Topeka.CompoundButton">
         <item name="android:background">@drawable/selector_checkable</item>
     </style>
 
-    <style name="AppTheme.CompoundButton.True" parent="AppTheme.CompoundButton">
+    <style name="Topeka.CompoundButton.True" parent="Topeka.CompoundButton">
         <item name="android:background">@drawable/selector_true</item>
     </style>
 
-    <style name="AppTheme.CompoundButton.False" parent="AppTheme.CompoundButton">
+    <style name="Topeka.CompoundButton.False" parent="Topeka.CompoundButton">
         <item name="android:background">@drawable/selector_false</item>
     </style>
 
-    <style name="AppTheme.TextAppearance">
+    <style name="Topeka.TextAppearance">
     </style>
 
-    <style name="AppTheme.TextAppearance.Title" parent="android:TextAppearance.Material.Title">
+    <style name="Topeka.TextAppearance.Title" parent="android:TextAppearance.Material.Title">
         <item name="android:textColor">@color/topeka_primary</item>
     </style>
 
-    <style name="AppTheme.TextAppearance.Subhead" parent="android:TextAppearance.Material.Subhead">
+    <style name="Topeka.TextAppearance.Subhead" parent="android:TextAppearance.Material.Subhead">
         <item name="android:textColor">@color/topeka_primary</item>
     </style>
 </resources>

@@ -40,7 +40,7 @@ public class MultiSelectQuizView extends AbsQuizView<MultiSelectQuiz>
     }
 
     @Override
-    protected View getQuizContentView() {
+    protected View createQuizContentView() {
         mListView = new ListView(getContext());
         mListView.setAdapter(
                 new OptionsQuizAdapter(getQuiz().getOptions(),
