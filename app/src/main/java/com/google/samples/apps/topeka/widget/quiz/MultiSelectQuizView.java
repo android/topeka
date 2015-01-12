@@ -15,6 +15,7 @@
  */
 package com.google.samples.apps.topeka.widget.quiz;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.Log;
 import android.util.SparseBooleanArray;
@@ -28,6 +29,7 @@ import com.google.samples.apps.topeka.model.Category;
 import com.google.samples.apps.topeka.model.quiz.MultiSelectQuiz;
 import com.google.samples.apps.topeka.adapter.OptionsQuizAdapter;
 
+@SuppressLint("ViewConstructor")
 public class MultiSelectQuizView extends AbsQuizView<MultiSelectQuiz>
         implements AdapterView.OnItemClickListener {
 

@@ -15,6 +15,7 @@
  */
 package com.google.samples.apps.topeka.widget.quiz;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.View;
 import android.widget.EditText;
@@ -25,6 +26,7 @@ import com.google.samples.apps.topeka.R;
 import com.google.samples.apps.topeka.model.Category;
 import com.google.samples.apps.topeka.model.quiz.FillBlankQuiz;
 
+@SuppressLint("ViewConstructor")
 public class FillBlankQuizView extends TextInputQuizView<FillBlankQuiz> {
 
     private EditText mAnswerView;

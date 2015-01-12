@@ -15,6 +15,7 @@
  */
 package com.google.samples.apps.topeka.widget.quiz;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -24,6 +25,7 @@ import android.widget.LinearLayout;
 import com.google.samples.apps.topeka.model.Category;
 import com.google.samples.apps.topeka.model.quiz.FillTwoBlanksQuiz;
 
+@SuppressLint("ViewConstructor")
 public class FillTwoBlanksQuizView extends TextInputQuizView<FillTwoBlanksQuiz> {
 
     private static final LinearLayout.LayoutParams CHILD_LAYOUT_PARAMS

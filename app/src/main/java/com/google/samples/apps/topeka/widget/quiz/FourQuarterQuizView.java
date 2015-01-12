@@ -15,6 +15,7 @@
  */
 package com.google.samples.apps.topeka.widget.quiz;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.View;
 import android.widget.AdapterView;
@@ -25,6 +26,7 @@ import com.google.samples.apps.topeka.model.Category;
 import com.google.samples.apps.topeka.model.quiz.FourQuarterQuiz;
 import com.google.samples.apps.topeka.adapter.OptionsQuizAdapter;
 
+@SuppressLint("ViewConstructor")
 public class FourQuarterQuizView extends AbsQuizView<FourQuarterQuiz>
         implements AdapterView.OnItemClickListener {
 

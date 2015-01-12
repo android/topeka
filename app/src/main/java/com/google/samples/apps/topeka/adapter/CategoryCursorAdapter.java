@@ -21,6 +21,7 @@ import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
+import android.support.annotation.ColorRes;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,7 +43,6 @@ public class CategoryCursorAdapter extends CursorAdapter {
 
     public static final String DRAWABLE = "drawable";
     private static final String ICON_CATEGORY = "icon_category_";
-    private static final String TAG = "CategoryCursorAdapter";
     private final Resources mResources;
     private final String mPackageName;
     private final LayoutInflater mLayoutInflater;
@@ -80,21 +80,70 @@ public class CategoryCursorAdapter extends CursorAdapter {
         final int categoryImageResource = mResources.getIdentifier(
                 ICON_CATEGORY + category.getId(), DRAWABLE, mPackageName);
         final boolean solved = category.isSolved();
-
         if (solved) {
-            Drawable[] layers = new Drawable[] {
-                    mResources.getDrawable(categoryImageResource),
-                    mResources.getDrawable(R.drawable.ic_done)};
-            LayerDrawable layerDrawable = new LayerDrawable(layers);
-            icon.setImageDrawable(layerDrawable);
-            layerDrawable.setTint(R.color.topeka_accent);
+            LayerDrawable solvedIcon = loadSolvedIcon(category, categoryImageResource);
+            icon.setImageDrawable(solvedIcon);
         } else {
             icon.setImageResource(categoryImageResource);
         }
     }
 
-    private int getColor(int textPrimaryColor) {
-        return mResources.getColor(textPrimaryColor);
+    /**
+     * Loads an icon that indicates that a category has already been solved.
+     *
+     * @param category The solved category to display.
+     * @param categoryImageResource The category's identifying image.
+     * @return The icon indicating that the category has been solved.
+     */
+    private LayerDrawable loadSolvedIcon(Category category, int categoryImageResource) {
+        final Drawable done = loadTintedDoneDrawable();
+        final Drawable categoryIcon = loadTintedCategoryDrawable(category, categoryImageResource);
+        Drawable[] layers = new Drawable[]{categoryIcon, done}; // ordering is back to front
+        return new LayerDrawable(layers);
+    }
+
+    /**
+     * Loads and tints a drawable.
+     *
+     * @param category The category providing the tint color
+     * @param categoryImageResource The image resource to tint
+     * @return The tinted resource
+     */
+    private Drawable loadTintedCategoryDrawable(Category category, int categoryImageResource) {
+        final Drawable categoryIcon = mResources.getDrawable(categoryImageResource);
+        tintDrawable(categoryIcon, category.getTheme().getPrimaryColor());
+        return categoryIcon;
+    }
+
+    /**
+     * Loads and tints a check mark.
+     *
+     * @return The tinted check mark
+     */
+    private Drawable loadTintedDoneDrawable() {
+        final Drawable done = mResources.getDrawable(R.drawable.ic_done);
+        tintDrawable(done, android.R.color.white);
+        return done;
+    }
+
+    /**
+     * Convenience method for drawable tinting.
+     *
+     * @param drawable The drawable to tint.
+     * @param colorRes The color resource id of the color used for tinting.
+     */
+    private void tintDrawable(Drawable drawable, @ColorRes int colorRes) {
+        drawable.setTint(getColor(colorRes));
+    }
+
+    /**
+     * Convenience method for color loading.
+     *
+     * @param colorRes The resource id of the color to load.
+     * @return The loaded color.
+     */
+    private int getColor(@ColorRes int colorRes) {
+        return mResources.getColor(colorRes);
     }
 
     @Override

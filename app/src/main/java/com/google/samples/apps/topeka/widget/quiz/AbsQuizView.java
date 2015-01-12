@@ -23,6 +23,8 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.AnticipateInterpolator;
+import android.view.animation.BounceInterpolator;
+import android.view.animation.Interpolator;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -191,11 +193,15 @@ public abstract class AbsQuizView<Q extends Quiz> extends CardView implements
     protected void allowAnswer(final boolean answered) {
         if (null != mSubmitAnswer) {
             final float targetScale = answered ? 1f : 0f;
+            final Interpolator interpolator;
             if (answered) {
                 mSubmitAnswer.setVisibility(View.VISIBLE);
+                interpolator = new BounceInterpolator();
+            } else {
+                interpolator = new AnticipateInterpolator();
             }
             mSubmitAnswer.animate().scaleX(targetScale).scaleY(targetScale)
-                    .setInterpolator(new AnticipateInterpolator());
+                    .setInterpolator(interpolator);
             mAnswered = answered;
         }
     }

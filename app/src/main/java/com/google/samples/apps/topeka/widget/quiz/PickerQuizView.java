@@ -15,6 +15,7 @@
  */
 package com.google.samples.apps.topeka.widget.quiz;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -25,6 +26,7 @@ import com.google.samples.apps.topeka.R;
 import com.google.samples.apps.topeka.model.Category;
 import com.google.samples.apps.topeka.model.quiz.PickerQuiz;
 
+@SuppressLint("ViewConstructor")
 public final class PickerQuizView extends AbsQuizView<PickerQuiz>
         implements SeekBar.OnSeekBarChangeListener {
 

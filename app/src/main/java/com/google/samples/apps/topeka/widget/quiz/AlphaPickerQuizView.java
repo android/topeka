@@ -15,6 +15,7 @@
  */
 package com.google.samples.apps.topeka.widget.quiz;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -25,16 +26,16 @@ import com.google.samples.apps.topeka.R;
 import com.google.samples.apps.topeka.model.Category;
 import com.google.samples.apps.topeka.model.quiz.AlphaPickerQuiz;
 
+@SuppressLint("ViewConstructor")
 public class AlphaPickerQuizView extends AbsQuizView<AlphaPickerQuiz> implements
         SeekBar.OnSeekBarChangeListener {
 
     private TextView mCurrentSelection;
 
-    private final String[] mAlphabet;
+    private String[] mAlphabet;
 
     public AlphaPickerQuizView(Context context, Category category, AlphaPickerQuiz quiz) {
         super(context, category, quiz);
-        mAlphabet = getResources().getStringArray(R.array.alphabet);
     }
 
     @Override
@@ -42,9 +43,9 @@ public class AlphaPickerQuizView extends AbsQuizView<AlphaPickerQuiz> implements
         LinearLayout layout = (LinearLayout) getLayoutInflater().inflate(
                 R.layout.quiz_layout_picker, this, false);
         mCurrentSelection = (TextView) layout.findViewById(R.id.seekbar_progress);
-        mCurrentSelection.setText(mAlphabet[0]);
+        mCurrentSelection.setText(getAlphabet()[0]);
         SeekBar seekBar = (SeekBar) layout.findViewById(R.id.seekbar);
-        seekBar.setMax(mAlphabet.length);
+        seekBar.setMax(getAlphabet().length);
         seekBar.setOnSeekBarChangeListener(this);
         return layout;
     }
@@ -56,7 +57,7 @@ public class AlphaPickerQuizView extends AbsQuizView<AlphaPickerQuiz> implements
 
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-        mCurrentSelection.setText(mAlphabet[progress]);
+        mCurrentSelection.setText(getAlphabet()[progress]);
         allowAnswer();
     }
 
@@ -68,5 +69,12 @@ public class AlphaPickerQuizView extends AbsQuizView<AlphaPickerQuiz> implements
     @Override
     public void onStopTrackingTouch(SeekBar seekBar) {
         /* no-op */
+    }
+
+    private String[] getAlphabet() {
+        if (null == mAlphabet) {
+            mAlphabet = getResources().getStringArray(R.array.alphabet);
+        }
+        return mAlphabet;
     }
 }

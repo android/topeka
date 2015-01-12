@@ -15,6 +15,7 @@
  */
 package com.google.samples.apps.topeka.widget.quiz;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.SparseBooleanArray;
 import android.view.View;
@@ -28,6 +29,7 @@ import com.google.samples.apps.topeka.model.Category;
 import com.google.samples.apps.topeka.model.quiz.SelectItemQuiz;
 import com.google.samples.apps.topeka.adapter.OptionsQuizAdapter;
 
+@SuppressLint("ViewConstructor")
 public class SelectItemQuizView extends AbsQuizView<SelectItemQuiz>
         implements AdapterView.OnItemClickListener {
 
