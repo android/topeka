@@ -21,8 +21,8 @@ import com.google.samples.apps.topeka.helper.ParcelableHelper;
 
 public final class TrueFalseQuiz extends Quiz<Boolean> {
 
-    public TrueFalseQuiz(String question, Boolean answer) {
-        super(question, answer);
+    public TrueFalseQuiz(String question, Boolean answer, boolean solved) {
+        super(question, answer, solved);
     }
 
     public TrueFalseQuiz(Parcel in) {

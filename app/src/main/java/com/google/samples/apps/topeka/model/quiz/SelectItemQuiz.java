@@ -21,8 +21,8 @@ import com.google.samples.apps.topeka.helper.AnswerHelper;
 
 public final class SelectItemQuiz extends OptionsQuiz<String> {
 
-    public SelectItemQuiz(String question, int[] answer, String[] options) {
-        super(question, answer, options);
+    public SelectItemQuiz(String question, int[] answer, String[] options, boolean solved) {
+        super(question, answer, options, solved);
     }
 
     public SelectItemQuiz(Parcel in) {

@@ -27,7 +27,7 @@ public class SelectItemQuizTest extends AbsQuizTestCase<SelectItemQuiz> {
 
     @Override
     public SelectItemQuiz getQuiz() {
-        return new SelectItemQuiz(QUESTION, INT_ARRAY, STRING_ARRAY);
+        return new SelectItemQuiz(QUESTION, INT_ARRAY, STRING_ARRAY, false);
     }
 
     @Override

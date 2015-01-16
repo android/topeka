@@ -32,8 +32,8 @@ public final class PickerQuiz extends Quiz<Integer> {
     @SerializedName(JsonAttributes.STEP)
     private final int mStep;
 
-    public PickerQuiz(String question, Integer answer, int min, int max, int step) {
-        super(question, answer);
+    public PickerQuiz(String question, Integer answer, int min, int max, int step, boolean solved) {
+        super(question, answer, solved);
         mMin = min;
         mMax = max;
         mStep = step;

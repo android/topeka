@@ -16,63 +16,85 @@
 package com.google.samples.apps.topeka.adapter;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.res.Resources;
-import android.database.Cursor;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
 import android.support.annotation.ColorRes;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CursorAdapter;
+import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.google.samples.apps.topeka.R;
 import com.google.samples.apps.topeka.model.Category;
 import com.google.samples.apps.topeka.model.Theme;
-import com.google.samples.apps.topeka.persistence.CategoryCursor;
 import com.google.samples.apps.topeka.persistence.TopekaDatabaseHelper;
 
+import java.util.List;
+
 /**
- * An adapter backed by a {@link CategoryCursor} that allows display of {@link Category} data.
+ * An adapter that allows display of {@link Category} data.
  */
-public class CategoryCursorAdapter extends CursorAdapter {
+public class CategoryAdapter extends BaseAdapter {
 
     public static final String DRAWABLE = "drawable";
     private static final String ICON_CATEGORY = "icon_category_";
     private final Resources mResources;
     private final String mPackageName;
     private final LayoutInflater mLayoutInflater;
+    private final List<Category> mCategories;
 
-    public CategoryCursorAdapter(Activity activity) {
-        super(activity, TopekaDatabaseHelper.getCategoryCursor(activity), true);
+    public CategoryAdapter(Activity activity) {
         mResources = activity.getResources();
         mPackageName = activity.getPackageName();
         mLayoutInflater = LayoutInflater.from(activity.getApplicationContext());
+        mCategories = TopekaDatabaseHelper.getCategories(activity);
     }
 
     @Override
-    public View newView(Context context, Cursor cursor, ViewGroup parent) {
-        return mLayoutInflater.inflate(R.layout.layout_category, parent, false);
-    }
-
-    @Override
-    public void bindView(View view, Context context, Cursor cursor) {
-        Category category = getCategoryOrThrow(cursor);
+    public View getView(int position, View convertView, ViewGroup parent) {
+        if (null == convertView) {
+            convertView = mLayoutInflater.inflate(R.layout.layout_category, parent, false);
+            convertView.setTag(new CategoryViewHolder((LinearLayout) convertView));
+        }
+        CategoryViewHolder holder = (CategoryViewHolder) convertView.getTag();
+        Category category = getItem(position);
         Theme theme = category.getTheme();
 
-        LinearLayout layout = (LinearLayout) view;
-        ImageView icon = (ImageView) layout.findViewById(R.id.category_icon);
-        setCategoryIcon(category, icon);
-        icon.setBackgroundResource(theme.getWindowBackgroundColor());
+        setCategoryIcon(category, holder.icon);
+        holder.icon.setBackgroundResource(theme.getWindowBackgroundColor());
 
-        TextView title = (TextView) layout.findViewById(R.id.category_title);
-        title.setText(category.getName());
-        title.setTextColor(getColor(theme.getTextPrimaryColor()));
-        title.setBackgroundResource(theme.getPrimaryColor());
+        holder.title.setText(category.getName());
+        holder.title.setTextColor(getColor(theme.getTextPrimaryColor()));
+        holder.title.setBackgroundResource(theme.getPrimaryColor());
+        return convertView;
+    }
+
+    @Override
+    public int getCount() {
+        return mCategories.size();
+    }
+
+    @Override
+    public Category getItem(int position) {
+        return mCategories.get(position);
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return mCategories.get(position).getId().hashCode();
+    }
+
+    @Override
+    public boolean hasStableIds() {
+        return true;
+    }
+
+    @Override
+    public boolean areAllItemsEnabled() {
+        return false;
     }
 
     private void setCategoryIcon(Category category, ImageView icon) {
@@ -144,24 +166,5 @@ public class CategoryCursorAdapter extends CursorAdapter {
      */
     private int getColor(@ColorRes int colorRes) {
         return mResources.getColor(colorRes);
-    }
-
-    @Override
-    public boolean areAllItemsEnabled() {
-        return false;
-    }
-
-    private Category getCategoryOrThrow(Cursor cursor) {
-        final CategoryCursor categoryCursor = getCategoryCursorOrThrow(cursor);
-        return categoryCursor.getCategory();
-    }
-
-    private CategoryCursor getCategoryCursorOrThrow(Cursor cursor) {
-        if (cursor instanceof CategoryCursor) {
-            return (CategoryCursor) cursor;
-        } else {
-            throw new UnsupportedOperationException(
-                    "This adapter only works with an CategoryCursor");
-        }
     }
 }

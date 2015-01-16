@@ -30,7 +30,7 @@ public class ToggleTranslateQuizTest extends AbsQuizTestCase<ToggleTranslateQuiz
     @Override
     public ToggleTranslateQuiz getQuiz() {
 
-        return new ToggleTranslateQuiz(QUESTION, INT_ARRAY, OPTIONS);
+        return new ToggleTranslateQuiz(QUESTION, INT_ARRAY, OPTIONS, false);
     }
 
     @Override

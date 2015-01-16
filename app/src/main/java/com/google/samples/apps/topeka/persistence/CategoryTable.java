@@ -18,20 +18,25 @@ package com.google.samples.apps.topeka.persistence;
 import android.provider.BaseColumns;
 
 /**
- * Structure for the category table.
+ * Structure of the category table.
  */
 public interface CategoryTable {
 
     static final String NAME = "category";
 
     static final String COLUMN_ID = BaseColumns._ID;
-    static final String COLUMN_DATA = "data";
+    static final String COLUMN_NAME = "name";
+    static final String COLUMN_THEME = "theme";
     static final String COLUMN_SCORES = "scores";
+    static final String COLUMN_SOLVED = "solved";
 
-    public static final String[] PROJECTION = new String[]{COLUMN_ID, COLUMN_DATA, COLUMN_SCORES};
+    public static final String[] PROJECTION = new String[]{COLUMN_ID, COLUMN_NAME,
+            COLUMN_THEME, COLUMN_SOLVED, COLUMN_SCORES};
 
-    static final String CREATE = "CREATE TABLE " + NAME + "("
+    static final String CREATE = "CREATE TABLE " + NAME + " ("
             + COLUMN_ID + " TEXT PRIMARY KEY, "
-            + COLUMN_DATA + " TEXT NOT NULL, "
+            + COLUMN_NAME + " TEXT NOT NULL, "
+            + COLUMN_THEME + " TEXT NOT NULL, "
+            + COLUMN_SOLVED + " TEXT NOT NULL, "
             + COLUMN_SCORES + " TEXT);";
 }

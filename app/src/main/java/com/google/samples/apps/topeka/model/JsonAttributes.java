@@ -34,7 +34,7 @@ public interface JsonAttributes {
     public static final String SCORES = "scores";
     public static final String SOLVED = "solved";
 
-    public interface QuizName {
+    public interface QuizType {
 
         public static final String ALPHA_PICKER = "alpha-picker";
         public static final String FILL_BLANK = "fill-blank";

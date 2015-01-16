@@ -41,21 +41,34 @@ public class Category implements Parcelable {
     @SerializedName(JsonAttributes.THEME)
     private final Theme mTheme;
     @SerializedName(JsonAttributes.QUIZZES)
-    private final List<Quiz> mQuizzes;
+    private List<Quiz> mQuizzes;
     @SerializedName(JsonAttributes.SCORES)
     private final int[] mScores;
     @SerializedName(JsonAttributes.SOLVED)
     private boolean mSolved;
 
-    public Category(String name, String id, Theme theme, List<Quiz> quizzes) {
+    public Category(String name, String id, Theme theme, List<Quiz> quizzes, boolean solved) {
         mName = name;
         mId = id;
         mTheme = theme;
         mQuizzes = quizzes;
         mScores = new int[quizzes.size()];
-        mSolved = false;
+        mSolved = solved;
     }
 
+    public Category(String name, String id, Theme theme, List<Quiz> quizzes, int[] scores,
+            boolean solved) {
+        mName = name;
+        mId = id;
+        mTheme = theme;
+        if (quizzes.size() == scores.length) {
+            mQuizzes = quizzes;
+            mScores = scores;
+        } else {
+            throw new IllegalArgumentException("Quizzes and scores must have the same length");
+        }
+        mSolved = solved;
+    }
 
     protected Category(Parcel in) {
         mName = in.readString();
@@ -125,6 +138,10 @@ public class Category implements Parcelable {
             categoryScore += quizScore;
         }
         return categoryScore;
+    }
+
+    public int[] getScores() {
+        return mScores;
     }
 
     public boolean isSolved() {

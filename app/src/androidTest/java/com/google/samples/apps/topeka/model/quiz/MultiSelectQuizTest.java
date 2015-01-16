@@ -28,7 +28,7 @@ public class MultiSelectQuizTest extends AbsQuizTestCase<MultiSelectQuiz> {
 
     @Override
     public MultiSelectQuiz getQuiz() {
-        return new MultiSelectQuiz(QUESTION, INT_ARRAY, STRING_ARRAY);
+        return new MultiSelectQuiz(QUESTION, INT_ARRAY, STRING_ARRAY, false);
     }
 
     @Override

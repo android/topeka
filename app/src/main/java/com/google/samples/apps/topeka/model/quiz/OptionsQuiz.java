@@ -33,8 +33,8 @@ public abstract class OptionsQuiz<T> extends Quiz<int[]> {
     @SerializedName(JsonAttributes.OPTIONS)
     private T[] mOptions;
 
-    public OptionsQuiz(String question, int[] answer, T[] options) {
-        super(question, answer);
+    public OptionsQuiz(String question, int[] answer, T[] options, boolean solved) {
+        super(question, answer, solved);
         mOptions = options;
     }
 

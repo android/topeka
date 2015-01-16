@@ -25,8 +25,8 @@ public final class ToggleTranslateQuiz extends OptionsQuiz<String[]> {
 
     private String[] mReadableOptions;
 
-    public ToggleTranslateQuiz(String question, int[] answer, String[][] options) {
-        super(question, answer, options);
+    public ToggleTranslateQuiz(String question, int[] answer, String[][] options, boolean solved) {
+        super(question, answer, options, solved);
     }
 
     public ToggleTranslateQuiz(Parcel in) {

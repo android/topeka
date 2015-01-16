@@ -19,8 +19,8 @@ import android.os.Parcel;
 
 public final class AlphaPickerQuiz extends Quiz<String> {
 
-    public AlphaPickerQuiz(String question, String answer) {
-        super(question, answer);
+    public AlphaPickerQuiz(String question, String answer, boolean solved) {
+        super(question, answer, solved);
     }
 
     public AlphaPickerQuiz(Parcel in) {

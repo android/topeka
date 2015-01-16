@@ -27,7 +27,7 @@ public class FourQuarterQuizTest extends AbsQuizTestCase<FourQuarterQuiz> {
 
     @Override
     public FourQuarterQuiz getQuiz() {
-        return new FourQuarterQuiz(QUESTION, INT_ARRAY, STRING_ARRAY);
+        return new FourQuarterQuiz(QUESTION, INT_ARRAY, STRING_ARRAY, false);
     }
 
     @Override

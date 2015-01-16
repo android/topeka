@@ -15,23 +15,23 @@
  */
 package com.google.samples.apps.topeka.model.quiz;
 
-import static com.google.samples.apps.topeka.model.JsonAttributes.QuizName;
+import com.google.samples.apps.topeka.model.JsonAttributes;
 
 /**
  * Available types of quizzes.
- * Maps {@link QuizName} to subclasses of {@link Quiz}.
+ * Maps {@link JsonAttributes.QuizType} to subclasses of {@link Quiz}.
  */
 public enum QuizType {
-    ALPHA_PICKER(QuizName.ALPHA_PICKER, AlphaPickerQuiz.class),
-    FILL_BLANK(QuizName.FILL_BLANK, FillBlankQuiz.class),
-    FILL_TWO_BLANKS(QuizName.FILL_TWO_BLANKS, FillTwoBlanksQuiz.class),
-    FOUR_QUARTER(QuizName.FOUR_QUARTER, FourQuarterQuiz.class),
-    MULTI_SELECT(QuizName.MULTI_SELECT, MultiSelectQuiz.class),
-    PICKER(QuizName.PICKER, PickerQuiz.class),
-    SINGLE_SELECT(QuizName.SINGLE_SELECT, SelectItemQuiz.class),
-    SINGLE_SELECT_ITEM(QuizName.SINGLE_SELECT_ITEM, SelectItemQuiz.class),
-    TOGGLE_TRANSLATE(QuizName.TOGGLE_TRANSLATE, ToggleTranslateQuiz.class),
-    TRUE_FALSE(QuizName.TRUE_FALSE, TrueFalseQuiz.class);
+    ALPHA_PICKER(JsonAttributes.QuizType.ALPHA_PICKER, AlphaPickerQuiz.class),
+    FILL_BLANK(JsonAttributes.QuizType.FILL_BLANK, FillBlankQuiz.class),
+    FILL_TWO_BLANKS(JsonAttributes.QuizType.FILL_TWO_BLANKS, FillTwoBlanksQuiz.class),
+    FOUR_QUARTER(JsonAttributes.QuizType.FOUR_QUARTER, FourQuarterQuiz.class),
+    MULTI_SELECT(JsonAttributes.QuizType.MULTI_SELECT, MultiSelectQuiz.class),
+    PICKER(JsonAttributes.QuizType.PICKER, PickerQuiz.class),
+    SINGLE_SELECT(JsonAttributes.QuizType.SINGLE_SELECT, SelectItemQuiz.class),
+    SINGLE_SELECT_ITEM(JsonAttributes.QuizType.SINGLE_SELECT_ITEM, SelectItemQuiz.class),
+    TOGGLE_TRANSLATE(JsonAttributes.QuizType.TOGGLE_TRANSLATE, ToggleTranslateQuiz.class),
+    TRUE_FALSE(JsonAttributes.QuizType.TRUE_FALSE, TrueFalseQuiz.class);
 
     private final String mJsonName;
     private final Class<? extends Quiz> mType;

@@ -33,7 +33,7 @@ import com.google.samples.apps.topeka.fragment.QuizFragment;
 import com.google.samples.apps.topeka.model.Category;
 import com.google.samples.apps.topeka.persistence.TopekaDatabaseHelper;
 
-import static com.google.samples.apps.topeka.adapter.CategoryCursorAdapter.DRAWABLE;
+import static com.google.samples.apps.topeka.adapter.CategoryAdapter.DRAWABLE;
 
 public class QuizActivity extends FragmentActivity implements View.OnClickListener {
 

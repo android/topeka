@@ -29,7 +29,7 @@ public class TrueFalseQuizTest extends AbsQuizTestCase<TrueFalseQuiz> {
 
     @Override
     public TrueFalseQuiz getQuiz() {
-        return new TrueFalseQuiz(QUESTION, ANSWER);
+        return new TrueFalseQuiz(QUESTION, ANSWER, false);
     }
 
     @Override

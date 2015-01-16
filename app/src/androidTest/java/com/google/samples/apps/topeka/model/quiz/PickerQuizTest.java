@@ -44,7 +44,7 @@ public class PickerQuizTest extends AbsQuizTestCase<PickerQuiz> {
 
     @Override
     public PickerQuiz getQuiz() {
-        return new PickerQuiz(QUESTION, ANSWER, MIN, MAX, STEP);
+        return new PickerQuiz(QUESTION, ANSWER, MIN, MAX, STEP, false);
     }
 
     @Override

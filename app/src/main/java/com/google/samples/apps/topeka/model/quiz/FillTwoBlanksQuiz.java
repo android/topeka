@@ -23,8 +23,8 @@ import java.util.Arrays;
 
 public final class FillTwoBlanksQuiz extends Quiz<String[]> {
 
-    public FillTwoBlanksQuiz(String question, String[] answer) {
-        super(question, answer);
+    public FillTwoBlanksQuiz(String question, String[] answer, boolean solved) {
+        super(question, answer, solved);
     }
 
     public FillTwoBlanksQuiz(Parcel in) {

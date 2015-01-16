@@ -29,7 +29,7 @@ public class AlphaPickerQuizTest extends AbsQuizTestCase<AlphaPickerQuiz> {
 
     @Override
     public AlphaPickerQuiz getQuiz() {
-        return new AlphaPickerQuiz(QUESTION, ANSWER);
+        return new AlphaPickerQuiz(QUESTION, ANSWER, false);
     }
 
     @Override

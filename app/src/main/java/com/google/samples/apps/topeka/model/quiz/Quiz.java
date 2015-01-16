@@ -50,11 +50,11 @@ public abstract class Quiz<A> implements Parcelable {
     @SerializedName(JsonAttributes.SOLVED)
     private boolean mSolved;
 
-    protected Quiz(String question, A answer) {
+    protected Quiz(String question, A answer, boolean solved) {
         mQuestion = question;
         mAnswer = answer;
         mQuizType = getType().getJsonName();
-        mSolved = false;
+        mSolved = solved;
     }
 
     protected Quiz(Parcel in) {

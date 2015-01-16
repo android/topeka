@@ -38,8 +38,8 @@ public final class FourQuarterQuiz extends OptionsQuiz<String> {
         }
     };
 
-    public FourQuarterQuiz(String question, int[] answer, String[] options) {
-        super(question, answer, options);
+    public FourQuarterQuiz(String question, int[] answer, String[] options, boolean solved) {
+        super(question, answer, options, solved);
     }
 
     public FourQuarterQuiz(Parcel in) {

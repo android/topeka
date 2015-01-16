@@ -38,7 +38,7 @@ public class FillBlankQuizTest extends AbsQuizTestCase<FillBlankQuiz> {
 
     @Override
     public FillBlankQuiz getQuiz() {
-        return new FillBlankQuiz(QUESTION, ANSWER, START, END);
+        return new FillBlankQuiz(QUESTION, ANSWER, START, END, false);
     }
 
     @Override

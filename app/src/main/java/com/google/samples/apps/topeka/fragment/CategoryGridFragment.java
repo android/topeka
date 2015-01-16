@@ -18,8 +18,8 @@ package com.google.samples.apps.topeka.fragment;
 
 import com.google.samples.apps.topeka.R;
 import com.google.samples.apps.topeka.activity.QuizActivity;
-import com.google.samples.apps.topeka.adapter.CategoryCursorAdapter;
-import com.google.samples.apps.topeka.persistence.CategoryCursor;
+import com.google.samples.apps.topeka.adapter.CategoryAdapter;
+import com.google.samples.apps.topeka.model.Category;
 
 import android.app.Activity;
 import android.app.ActivityOptions;
@@ -35,7 +35,7 @@ import android.widget.ImageView;
 
 public class CategoryGridFragment extends Fragment implements AdapterView.OnItemClickListener {
 
-    private CategoryCursorAdapter mAdapter;
+    private CategoryAdapter mAdapter;
 
     public static CategoryGridFragment newInstance() {
         return new CategoryGridFragment();
@@ -55,7 +55,7 @@ public class CategoryGridFragment extends Fragment implements AdapterView.OnItem
 
     private void setUpQuizGrid(GridView categoriesView) {
         categoriesView.setOnItemClickListener(this);
-        mAdapter = new CategoryCursorAdapter(getActivity());
+        mAdapter = new CategoryAdapter(getActivity());
         categoriesView.setAdapter(mAdapter);
     }
 
@@ -64,19 +64,18 @@ public class CategoryGridFragment extends Fragment implements AdapterView.OnItem
         Activity activity = getActivity();
         //TODO: finalize the animations
         ImageView iconView = (ImageView) view.findViewById(R.id.category_icon);
-        startQuizActivityWithTransition(activity, iconView,
-                (CategoryCursor) mAdapter.getItem(position));
+        startQuizActivityWithTransition(activity, iconView, mAdapter.getItem(position));
     }
 
     private void startQuizActivityWithTransition(Activity activity, ImageView iconView,
-            CategoryCursor categoryCursor) {
+            Category category) {
         // Creates pair of transition participants.
         Pair participants = new Pair<View, String>(iconView,
                 activity.getString(R.string.transition_background));
         ActivityOptions sceneTransitionAnimation = ActivityOptions
                 .makeSceneTransitionAnimation(activity, participants);
         // Starts the activity with the participants, animating from one to the other.
-        activity.startActivity(QuizActivity.getStartIntent(activity, categoryCursor.getCategory()),
+        activity.startActivity(QuizActivity.getStartIntent(activity, category),
                 sceneTransitionAnimation.toBundle());
     }
 }

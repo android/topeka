@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 Google Inc.
+ * Copyright 2015 Google Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,26 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.google.samples.apps.topeka.model.quiz;
+package com.google.samples.apps.topeka.adapter;
 
-import android.test.suitebuilder.annotation.SmallTest;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
-@SmallTest
-public class FillTwoBlanksQuizTest extends AbsQuizTestCase<FillTwoBlanksQuiz> {
+import com.google.samples.apps.topeka.R;
 
-    @Override
-    public void testGetAnswer() {
-        assertEquals(STRING_ARRAY, getQuiz().getAnswer());
+public class CategoryViewHolder {
+
+    protected TextView title;
+    protected ImageView icon;
+
+    public CategoryViewHolder(LinearLayout container) {
+        icon = (ImageView) container.findViewById(R.id.category_icon);
+        title = (TextView) container.findViewById(R.id.category_title);
     }
-
-    @Override
-    public FillTwoBlanksQuiz getQuiz() {
-        return new FillTwoBlanksQuiz(QUESTION, STRING_ARRAY, false);
-    }
-
-    @Override
-    public QuizType getExpectedQuizType() {
-        return QuizType.FILL_TWO_BLANKS;
-    }
-
 }

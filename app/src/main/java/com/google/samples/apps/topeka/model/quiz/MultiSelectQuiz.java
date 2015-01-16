@@ -22,8 +22,8 @@ import com.google.samples.apps.topeka.helper.AnswerHelper;
 
 public final class MultiSelectQuiz extends OptionsQuiz<String> {
 
-    public MultiSelectQuiz(String question, int[] answer, String[] options) {
-        super(question, answer, options);
+    public MultiSelectQuiz(String question, int[] answer, String[] options, boolean solved) {
+        super(question, answer, options, solved);
     }
 
     public MultiSelectQuiz(Parcel in) {

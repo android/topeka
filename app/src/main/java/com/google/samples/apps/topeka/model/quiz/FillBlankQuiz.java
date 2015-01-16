@@ -29,8 +29,8 @@ public final class FillBlankQuiz extends Quiz<String> {
     @SerializedName(JsonAttributes.END)
     private final String mEnd;
 
-    public FillBlankQuiz(String question, String answer, String start, String end) {
-        super(question, answer);
+    public FillBlankQuiz(String question, String answer, String start, String end, boolean solved) {
+        super(question, answer, solved);
         mStart = start;
         mEnd = end;
     }

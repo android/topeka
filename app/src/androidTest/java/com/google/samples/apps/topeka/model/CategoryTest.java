@@ -44,13 +44,13 @@ public class CategoryTest extends TestCase {
     }
 
     private static Category getCategoryUnderTest() {
-        return new Category(CATEGORY_NAME, CATEGORY_ID, CATEGORY_THEME, getQuizzes());
+        return new Category(CATEGORY_NAME, CATEGORY_ID, CATEGORY_THEME, getQuizzes(), false);
     }
 
     private static List<Quiz> getQuizzes() {
         List<Quiz> quizzes = new ArrayList<Quiz>();
-        quizzes.add(new TrueFalseQuiz("huh?", true));
-        quizzes.add(new FillBlankQuiz("so?", "yeah", "go", "stop"));
+        quizzes.add(new TrueFalseQuiz("huh?", true, false));
+        quizzes.add(new FillBlankQuiz("so?", "yeah", "go", "stop", false));
         return quizzes;
     }
 }
