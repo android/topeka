@@ -38,9 +38,12 @@ import static com.google.samples.apps.topeka.adapter.CategoryAdapter.DRAWABLE;
 public class QuizActivity extends FragmentActivity implements View.OnClickListener {
 
     private static final String IMAGE_CATEGORY = "image_category_";
+    private static final String STATE_IS_PLAYING = "isPlaying";
     private String mCategoryId;
     private QuizFragment mQuizFragment;
     Toolbar mToolbar;
+    private ImageView mStartQuiz;
+    private boolean mIsPlaying;
 
     public static Intent getStartIntent(Context context, Category category) {
         Intent starter = new Intent(context, QuizActivity.class);
@@ -51,8 +54,17 @@ public class QuizActivity extends FragmentActivity implements View.OnClickListen
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         mCategoryId = getIntent().getStringExtra(Category.TAG);
+        if (null != savedInstanceState) {
+            mIsPlaying = savedInstanceState.getBoolean(STATE_IS_PLAYING);
+        }
         populate(mCategoryId);
         super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putBoolean(STATE_IS_PLAYING, mStartQuiz.getVisibility() == View.GONE);
+        super.onSaveInstanceState(outState);
     }
 
     @Override
@@ -115,8 +127,9 @@ public class QuizActivity extends FragmentActivity implements View.OnClickListen
         int resId = getResources().getIdentifier(IMAGE_CATEGORY + categoryId, DRAWABLE,
                 getApplicationContext().getPackageName());
         icon.setImageResource(resId);
-        ImageView btnStartQuiz = (ImageView) findViewById(R.id.btn_start_quiz);
-        btnStartQuiz.setOnClickListener(this);
+        mStartQuiz = (ImageView) findViewById(R.id.btn_start_quiz);
+        mStartQuiz.setVisibility(mIsPlaying ? View.GONE : View.VISIBLE);
+        mStartQuiz.setOnClickListener(this);
     }
 
     private void initToolbar(Category category) {
