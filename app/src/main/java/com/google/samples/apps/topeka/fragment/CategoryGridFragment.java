@@ -35,7 +35,7 @@ import android.widget.ImageView;
 
 public class CategoryGridFragment extends Fragment implements AdapterView.OnItemClickListener {
 
-    private CategoryAdapter mAdapter;
+    private CategoryAdapter mCategoryAdapter;
 
     public static CategoryGridFragment newInstance() {
         return new CategoryGridFragment();
@@ -55,8 +55,8 @@ public class CategoryGridFragment extends Fragment implements AdapterView.OnItem
 
     private void setUpQuizGrid(GridView categoriesView) {
         categoriesView.setOnItemClickListener(this);
-        mAdapter = new CategoryAdapter(getActivity());
-        categoriesView.setAdapter(mAdapter);
+        mCategoryAdapter = new CategoryAdapter(getActivity());
+        categoriesView.setAdapter(mCategoryAdapter);
     }
 
     @Override
@@ -64,7 +64,7 @@ public class CategoryGridFragment extends Fragment implements AdapterView.OnItem
         Activity activity = getActivity();
         //TODO: finalize the animations
         ImageView iconView = (ImageView) view.findViewById(R.id.category_icon);
-        startQuizActivityWithTransition(activity, iconView, mAdapter.getItem(position));
+        startQuizActivityWithTransition(activity, iconView, mCategoryAdapter.getItem(position));
     }
 
     private void startQuizActivityWithTransition(Activity activity, ImageView iconView,

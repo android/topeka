@@ -15,7 +15,7 @@
   limitations under the License.
   -->
 <resources>
-    <dimen name="activity_horizontal_margin">64dp</dimen>
-    <dimen name="activity_vertical_margin">64dp</dimen>
+    <dimen name="keyline_horizontal">64dp</dimen>
+    <dimen name="keyline_vertical">64dp</dimen>
     <dimen name="toolbar_height">64dp</dimen>
 </resources>

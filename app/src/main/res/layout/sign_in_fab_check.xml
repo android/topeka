@@ -19,6 +19,6 @@
     android:id="@+id/check"
     android:layout_height="@dimen/fab_size"
     android:layout_width="@dimen/fab_size"
-    android:layout_marginEnd="@dimen/activity_vertical_margin"
-    android:layout_marginBottom="@dimen/activity_horizontal_margin"
+    android:layout_marginEnd="@dimen/keyline_vertical"
+    android:layout_marginBottom="@dimen/keyline_horizontal"
     android:layout_gravity="bottom|end" />

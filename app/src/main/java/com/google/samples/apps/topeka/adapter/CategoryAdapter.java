@@ -62,10 +62,8 @@ public class CategoryAdapter extends BaseAdapter {
         CategoryViewHolder holder = (CategoryViewHolder) convertView.getTag();
         Category category = getItem(position);
         Theme theme = category.getTheme();
-
         setCategoryIcon(category, holder.icon);
         holder.icon.setBackgroundResource(theme.getWindowBackgroundColor());
-
         holder.title.setText(category.getName());
         holder.title.setTextColor(getColor(theme.getTextPrimaryColor()));
         holder.title.setBackgroundResource(theme.getPrimaryColor());

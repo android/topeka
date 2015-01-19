@@ -72,9 +72,9 @@ public abstract class AbsQuizView<Q extends Quiz> extends CardView implements
     public AbsQuizView(Context context, Category category, Q quiz) {
         super(context);
         mQuiz = quiz;
-        mKeylineVertical = getResources().getDimensionPixelSize(R.dimen.activity_vertical_margin);
+        mKeylineVertical = getResources().getDimensionPixelSize(R.dimen.keyline_vertical);
         mKeylineHorizontal = getResources()
-                .getDimensionPixelSize(R.dimen.activity_horizontal_margin);
+                .getDimensionPixelSize(R.dimen.keyline_horizontal);
         mCategory = category;
         mSubmitAnswer = getSubmitButton(context);
         mLayoutInflater = LayoutInflater.from(context);
