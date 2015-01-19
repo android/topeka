@@ -15,6 +15,10 @@
  */
 package com.google.samples.apps.topeka.adapter;
 
+import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
+import android.support.annotation.ColorRes;
+import android.support.annotation.DrawableRes;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,6 +42,9 @@ public class ScoreAdapter extends BaseAdapter {
     private final Category mCategory;
     private final int count;
     private final List<Quiz> mQuizList;
+
+    private Drawable mSuccessIcon;
+    private Drawable mFailedIcon;
 
     public ScoreAdapter(Category category) {
         mCategory = category;
@@ -78,14 +85,43 @@ public class ScoreAdapter extends BaseAdapter {
     }
 
     private void setSolvedStateForQuiz(ImageView solvedState, int position) {
-        final int imageResource;
+        final Resources resources = solvedState.getResources();
+        final Drawable tintedImage;
         if (mCategory.isSolvedCorrectly(getItem(position))) {
-            // TODO: 12/15/14 set the tint correctly
-            imageResource = R.drawable.ic_done;
+            tintedImage = getSuccessIcon(resources);
         } else {
-            imageResource = R.drawable.ic_fail;
+            tintedImage = getFailedIcon(resources);
         }
-        solvedState.setImageResource(imageResource);
+        solvedState.setImageDrawable(tintedImage);
+    }
+
+    private Drawable getSuccessIcon(Resources resources) {
+        if (null == mSuccessIcon) {
+            mSuccessIcon = loadAndTint(resources, R.drawable.ic_done, R.color.theme_green_primary);
+        }
+        return mSuccessIcon;
+    }
+
+    private Drawable getFailedIcon(Resources resources) {
+        if (null == mFailedIcon) {
+            mFailedIcon = loadAndTint(resources, R.drawable.ic_fail, R.color.theme_red_primary);
+        }
+        return mFailedIcon;
+    }
+
+    /**
+     * Convenience method to aid tintint of vector drawables at runtime.
+     *
+     * @param resources The {@link Resources} for this app.
+     * @param drawableId The id of the drawable to load.
+     * @param tintColor The tint to apply.
+     * @return The tinted drawable.
+     */
+    private Drawable loadAndTint(Resources resources, @DrawableRes int drawableId,
+            @ColorRes int tintColor) {
+        Drawable imageDrawable = resources.getDrawable(drawableId);
+        imageDrawable.setTint(resources.getColor(tintColor));
+        return imageDrawable;
     }
 
     private View initConvertView(ViewGroup parent) {
@@ -100,6 +136,7 @@ public class ScoreAdapter extends BaseAdapter {
     }
 
     private class ViewHolder {
+
         final TextView mAnswerView;
         final TextView mQuizView;
         final ImageView mSolvedState;
