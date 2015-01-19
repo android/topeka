@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright 2014 Google Inc.
+  ~ Copyright 2015 Google Inc.
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -15,6 +15,15 @@
   ~ limitations under the License.
   -->
 <ripple xmlns:android="http://schemas.android.com/apk/res/android"
-    android:color="?android:colorAccent">
-    <item android:drawable="@android:color/white" />
+    android:color="?android:attr/colorAccent">
+    <item>
+        <selector>
+            <item android:state_pressed="true">
+                <color android:color="?android:attr/windowBackground" />
+            </item>
+            <item>
+                <color android:color="?android:attr/colorPrimary" />
+            </item>
+        </selector>
+    </item>
 </ripple>

@@ -254,7 +254,7 @@ public class TopekaDatabaseHelper extends SQLiteOpenHelper {
         final int min = cursor.getInt(6);
         final int max = cursor.getInt(7);
         final int step = cursor.getInt(8);
-        final boolean solved = getBooleanFromDatabase(cursor.getString(9));
+        final boolean solved = getBooleanFromDatabase(cursor.getString(11));
 
         switch (type) {
             case JsonAttributes.QuizType.ALPHA_PICKER: {
@@ -295,8 +295,8 @@ public class TopekaDatabaseHelper extends SQLiteOpenHelper {
 
     private static Quiz createFillBlankQuiz(Cursor cursor, String question, String answer,
             boolean solved) {
-        final String start = cursor.getString(8);
-        final String end = cursor.getString(9);
+        final String start = cursor.getString(9);
+        final String end = cursor.getString(10);
         return new FillBlankQuiz(question, answer, start, end, solved);
     }
 

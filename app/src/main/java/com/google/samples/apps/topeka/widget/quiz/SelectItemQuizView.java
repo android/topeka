@@ -44,6 +44,8 @@ public class SelectItemQuizView extends AbsQuizView<SelectItemQuiz>
     @Override
     protected View createQuizContentView() {
         mListView = new ListView(getContext());
+        mListView.setDivider(null);
+        mListView.setSelector(R.drawable.selector_button);
         mListView.setAdapter(
                 new OptionsQuizAdapter(getQuiz().getOptions(), R.layout.item_answer));
         mListView.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);

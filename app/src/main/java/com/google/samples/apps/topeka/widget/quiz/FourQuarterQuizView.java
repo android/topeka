@@ -39,6 +39,7 @@ public class FourQuarterQuizView extends AbsQuizView<FourQuarterQuiz>
     @Override
     protected View createQuizContentView() {
         GridView layout = new GridView(getContext());
+        layout.setSelector(R.drawable.selector_button);
         layout.setNumColumns(2);
         layout.setAdapter(new OptionsQuizAdapter(getQuiz().getOptions(), R.layout.item_answer));
         layout.setOnItemClickListener(this);
