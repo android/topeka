@@ -51,7 +51,7 @@ public class SignInFragment extends Fragment implements View.OnClickListener,
     private EditText mFirstName;
     private EditText mLastInitial;
     private Avatar mSelectedAvatar = Avatar.ONE;
-    private GridView mGridView;
+    private GridView mAvatarGrid;
     private DoneFab mDoneFab;
     private boolean edit;
 
@@ -79,7 +79,7 @@ public class SignInFragment extends Fragment implements View.OnClickListener,
     public void onSaveInstanceState(Bundle outState) {
         outState.putString(KEY_FIRST_NAME, mFirstName.getText().toString());
         outState.putString(KEY_LAST_INITIAL, mLastInitial.getText().toString());
-        outState.putInt(KEY_AVATAR_ID, mGridView.getSelectedItemPosition());
+        outState.putInt(KEY_AVATAR_ID, mAvatarGrid.getSelectedItemPosition());
     }
 
     @Override
@@ -101,17 +101,14 @@ public class SignInFragment extends Fragment implements View.OnClickListener,
 
     private void checkIsInEditMode() {
         final Bundle arguments = getArguments();
-        if (null != getArguments()) {
-            edit = arguments.getBoolean(ARG_EDIT, false);
-        } else {
+        if (null == arguments) {
             edit = false;
+        } else {
+            edit = arguments.getBoolean(ARG_EDIT, false);
         }
     }
 
     private void initContentViews(View view) {
-        ((Toolbar) view.findViewById(R.id.toolbar_sign_in)).setTitle(R.string.sign_in);
-        ((Toolbar) view.findViewById(R.id.toolbar_choose_avatar))
-                .setTitle(R.string.choose_avatar);
         mFirstName = (EditText) view.findViewById(R.id.first_name);
         mFirstName.addTextChangedListener(this);
         mLastInitial = (EditText) view.findViewById(R.id.last_initial);
@@ -121,10 +118,10 @@ public class SignInFragment extends Fragment implements View.OnClickListener,
     }
 
     private void setUpGridView(View container) {
-        mGridView = (GridView) container.findViewById(R.id.avatars);
-        mGridView.setAdapter(new AvatarAdapter(getActivity()));
-        mGridView.setOnItemClickListener(this);
-        mGridView.setNumColumns(calculateSpanCount());
+        mAvatarGrid = (GridView) container.findViewById(R.id.avatars);
+        mAvatarGrid.setAdapter(new AvatarAdapter(getActivity()));
+        mAvatarGrid.setOnItemClickListener(this);
+        mAvatarGrid.setNumColumns(calculateSpanCount());
     }
 
     @Override
@@ -179,8 +176,9 @@ public class SignInFragment extends Fragment implements View.OnClickListener,
      */
     private int calculateSpanCount() {
         int avatarSize = getResources().getDimensionPixelSize(R.dimen.avatar_size);
-        int defaultPadding = getResources().getDimensionPixelSize(R.dimen.padding_default);
-        return mGridView.getWidth() / (avatarSize + defaultPadding * 2);
+        int avatarPadding = getResources().getDimensionPixelSize(R.dimen.padding_avatar);
+        final int spanCount = mAvatarGrid.getWidth() / (avatarSize + avatarPadding);
+        return spanCount;
     }
 
     @Override

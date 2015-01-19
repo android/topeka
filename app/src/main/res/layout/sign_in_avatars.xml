@@ -26,14 +26,13 @@
         android:id="@+id/toolbar_choose_avatar"
         android:layout_width="match_parent"
         android:layout_height="?android:attr/actionBarSize"
+        android:title="@string/choose_avatar"
         android:titleTextAppearance="@style/Topeka.TextAppearance.Title" />
 
     <GridView
         android:id="@+id/avatars"
         android:layout_width="match_parent"
-        android:horizontalSpacing="@dimen/padding_default"
         android:layout_height="match_parent"
-        android:verticalSpacing="@dimen/padding_default"
         android:drawSelectorOnTop="true"
         android:cropToPadding="true"
         android:listSelector="@drawable/selector_avatar" />

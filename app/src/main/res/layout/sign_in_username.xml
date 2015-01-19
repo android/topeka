@@ -26,6 +26,7 @@
         android:id="@+id/toolbar_sign_in"
         android:layout_width="match_parent"
         android:layout_height="?android:attr/actionBarSize"
+        android:title="@string/sign_in"
         android:titleTextAppearance="@style/Topeka.TextAppearance.Title" />
 
     <EditText
@@ -33,7 +34,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:minHeight="?android:attr/actionBarSize"
-        android:padding="@dimen/padding_default"
+        android:paddingTop="@dimen/padding_default"
+        android:paddingBottom="@dimen/padding_default"
         android:textSize="@dimen/size_edit_text"
         android:hint="@string/first_name"
         android:inputType="textCapWords"
@@ -44,7 +46,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:minHeight="?android:attr/actionBarSize"
-        android:padding="@dimen/padding_default"
+        android:paddingTop="@dimen/padding_default"
+        android:paddingBottom="@dimen/padding_default"
         android:textSize="@dimen/size_edit_text"
         android:maxLength="1"
         android:hint="@string/last_initial"
