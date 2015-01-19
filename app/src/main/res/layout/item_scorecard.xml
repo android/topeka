@@ -24,7 +24,7 @@
 
     <ImageView
         android:id="@+id/solved_state"
-        android:layout_width="@dimen/min_height_touch_target"
+        android:layout_width="@dimen/score_mark_size"
         android:layout_height="match_parent"
         android:contentDescription="@null"
         android:src="@drawable/ic_done" />
@@ -33,7 +33,6 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingStart="@dimen/keyline_vertical"
         tools:ignore="RtlSymmetry">
 
         <TextView
