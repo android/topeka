@@ -40,6 +40,7 @@
     <dimen name="min_height_question">144dp</dimen>
     <dimen name="navigation_width">240dp</dimen>
     <dimen name="toolbar_height">56dp</dimen>
+    <dimen name="score_mark_size">56dp</dimen>
     <item type="integer" name="vector_icon_viewport">48</item>
     <item type="integer" name="vector_avatar_viewport">128</item>
 </resources>
