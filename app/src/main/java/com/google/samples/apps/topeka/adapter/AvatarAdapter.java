@@ -34,16 +34,16 @@ public class AvatarAdapter extends BaseAdapter {
 
     private static final Avatar[] mAvatars = Avatar.values();
 
-    private final Context mContext;
+    private final LayoutInflater mLayoutInflater;
 
     public AvatarAdapter(Context context) {
-        mContext = context;
+        mLayoutInflater = LayoutInflater.from(context);
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         if (null == convertView) {
-            convertView = LayoutInflater.from(mContext).inflate(R.layout.item_avatar, parent, false);
+            convertView = mLayoutInflater.inflate(R.layout.item_avatar, parent, false);
         }
         setAvatar((ImageView) convertView, mAvatars[position]);
         return convertView;
