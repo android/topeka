@@ -21,7 +21,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
     <com.google.samples.apps.topeka.widget.PlayFab
         android:id="@+id/btn_start_quiz"
         android:layout_width="@dimen/fab_size"

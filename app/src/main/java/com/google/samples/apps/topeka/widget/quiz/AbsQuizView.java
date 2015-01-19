@@ -25,6 +25,7 @@ import android.view.View;
 import android.view.animation.AnticipateInterpolator;
 import android.view.animation.BounceInterpolator;
 import android.view.animation.Interpolator;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -49,7 +50,7 @@ import com.google.samples.apps.topeka.widget.FloatingActionButton;
  * @param <Q> The type of {@link com.google.samples.apps.topeka.model.quiz.Quiz} you want to
  * display.
  */
-public abstract class AbsQuizView<Q extends Quiz> extends CardView implements
+public abstract class AbsQuizView<Q extends Quiz> extends FrameLayout implements
         View.OnClickListener {
 
     private final Category mCategory;
@@ -94,7 +95,6 @@ public abstract class AbsQuizView<Q extends Quiz> extends CardView implements
         mQuestionView = (TextView) mLayoutInflater.inflate(R.layout.question, this, false);
         mQuestionView.setText(getQuiz().getQuestion());
     }
-
 
     /**
      * Gets the resourceId from the ccode android.R.attr.colorPrimary attribute and

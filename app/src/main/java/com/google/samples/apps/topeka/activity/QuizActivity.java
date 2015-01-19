@@ -37,7 +37,6 @@ import static com.google.samples.apps.topeka.adapter.CategoryAdapter.DRAWABLE;
 
 public class QuizActivity extends FragmentActivity implements View.OnClickListener {
 
-    private static final String TAG = "QuizActivity";
     private static final String IMAGE_CATEGORY = "image_category_";
     private String mCategoryId;
     private QuizFragment mQuizFragment;

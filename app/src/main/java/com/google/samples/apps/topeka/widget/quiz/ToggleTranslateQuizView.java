@@ -46,6 +46,7 @@ public class ToggleTranslateQuizView extends AbsQuizView<ToggleTranslateQuiz>
     protected View createQuizContentView() {
         mListView = new ListView(getContext());
         mListView.setDivider(null);
+        mListView.setSelector(R.drawable.selector_button);
         mListView.setAdapter(
                 new OptionsQuizAdapter(getQuiz().getReadableOptions(), R.layout.item_answer));
         mListView.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
