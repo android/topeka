@@ -89,12 +89,6 @@ public class QuizFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
     }
 
-    @Override
-    public void onStop() {
-        TopekaDatabaseHelper.updateCategory(getActivity(), mCategory);
-        super.onStop();
-    }
-
     public boolean nextPage() {
         if (null == mViewPager) {
             return false;
@@ -105,6 +99,7 @@ public class QuizFragment extends Fragment {
             return true;
         }
         mCategory.setSolved(true);
+        TopekaDatabaseHelper.updateCategory(getActivity(), mCategory);
         return false;
     }
 
