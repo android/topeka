@@ -59,4 +59,7 @@
     <color name="category_icon_background">#ff9</color>
     <color name="category_name_background">#dd6</color>
 
+    <color name="button_true">#00e676</color>
+    <color name="button_false">#ff5252</color>
+
 </resources>
