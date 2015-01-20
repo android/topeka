@@ -16,9 +16,7 @@
 
 package com.google.samples.apps.topeka.model.quiz;
 
-import com.google.gson.annotations.SerializedName;
 import com.google.samples.apps.topeka.helper.ParcelableHelper;
-import com.google.samples.apps.topeka.model.JsonAttributes;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -37,17 +35,13 @@ public abstract class Quiz<A> implements Parcelable {
 
     private static final String TAG = "Quiz";
 
-    @SerializedName(JsonAttributes.QUESTION)
     private final String mQuestion;
-    @SerializedName(JsonAttributes.ANSWER)
     private A mAnswer;
-    @SerializedName(JsonAttributes.TYPE)
     private final String mQuizType;
     /**
      * Flag indicating whether this quiz has already been solved.
      * It does not give information whether the solution was correct or not.
      */
-    @SerializedName(JsonAttributes.SOLVED)
     private boolean mSolved;
 
     protected Quiz(String question, A answer, boolean solved) {
