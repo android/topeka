@@ -60,6 +60,12 @@ public class CategoryGridFragment extends Fragment implements AdapterView.OnItem
     }
 
     @Override
+    public void onResume() {
+        mCategoryAdapter.notifyDataSetChanged();
+        super.onResume();
+    }
+
+    @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Activity activity = getActivity();
         //TODO: finalize the animations
@@ -75,7 +81,7 @@ public class CategoryGridFragment extends Fragment implements AdapterView.OnItem
         ActivityOptions sceneTransitionAnimation = ActivityOptions
                 .makeSceneTransitionAnimation(activity, participants);
         // Starts the activity with the participants, animating from one to the other.
-        activity.startActivity(QuizActivity.getStartIntent(activity, category),
-                sceneTransitionAnimation.toBundle());
+        final Bundle transitionBundle = sceneTransitionAnimation.toBundle();
+        activity.startActivity(QuizActivity.getStartIntent(activity, category), transitionBundle);
     }
 }

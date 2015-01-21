@@ -82,22 +82,27 @@ public class TopekaDatabaseHelper extends SQLiteOpenHelper {
      * Gets all categories with their quizzes.
      *
      * @param context The context this is running in.
+     * @param fromDatabase <code>true</code> if a data refresh is needed, else <code>false</code>.
      * @return All categories stored in the database.
      */
-    public static List<Category> getCategories(Context context) {
-        if (null == mCategories) {
-
-            Cursor data = TopekaDatabaseHelper.getCategoryCursor(context);
-            mCategories = new ArrayList<Category>(data.getCount());
-            final SQLiteDatabase readableDatabase = TopekaDatabaseHelper
-                    .getReadableDatabase(context);
-            do {
-                final Category category = getCategory(data, readableDatabase);
-                mCategories.add(category);
-            } while (data.moveToNext());
+    public static List<Category> getCategories(Context context, boolean fromDatabase) {
+        if (null == mCategories || fromDatabase) {
+            mCategories = loadCategories(context);
         }
         return mCategories;
     }
+
+    private static List<Category> loadCategories(Context context) {
+        Cursor data = TopekaDatabaseHelper.getCategoryCursor(context);
+        List<Category> tmpCategories = new ArrayList<Category>(data.getCount());
+        final SQLiteDatabase readableDatabase = TopekaDatabaseHelper.getReadableDatabase(context);
+        do {
+            final Category category = getCategory(data, readableDatabase);
+            tmpCategories.add(category);
+        } while (data.moveToNext());
+        return tmpCategories;
+    }
+
 
     /**
      * Gets all categories wrapped in a {@link Cursor} positioned at it's first element.
@@ -164,7 +169,7 @@ public class TopekaDatabaseHelper extends SQLiteOpenHelper {
      * @return The score over all Categories.
      */
     public static int getScore(Context context) {
-        final List<Category> categories = getCategories(context);
+        final List<Category> categories = getCategories(context, false);
         int score = 0;
         for (Category cat : categories) {
             score += cat.getScore();
@@ -184,7 +189,6 @@ public class TopekaDatabaseHelper extends SQLiteOpenHelper {
         writableDatabase.update(CategoryTable.NAME, categoryValues, CategoryTable.COLUMN_ID + "=?",
                 new String[]{category.getId()});
         final List<Quiz> quizzes = category.getQuizzes();
-
         updateQuizzes(writableDatabase, quizzes);
     }
 
@@ -217,6 +221,7 @@ public class TopekaDatabaseHelper extends SQLiteOpenHelper {
     public static void reset(Context context) {
         SQLiteDatabase writableDatabase = getWritableDatabase(context);
         writableDatabase.delete(CategoryTable.NAME, null, null);
+        writableDatabase.delete(QuizTable.NAME, null, null);
         getInstance(context).preFillDatabase(writableDatabase);
     }
 

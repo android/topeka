@@ -44,13 +44,15 @@ public class CategoryAdapter extends BaseAdapter {
     private final Resources mResources;
     private final String mPackageName;
     private final LayoutInflater mLayoutInflater;
-    private final List<Category> mCategories;
+    private final Activity mActivity;
+    private List<Category> mCategories;
 
     public CategoryAdapter(Activity activity) {
         mResources = activity.getResources();
-        mPackageName = activity.getPackageName();
+        mActivity = activity;
+        mPackageName = mActivity.getPackageName();
         mLayoutInflater = LayoutInflater.from(activity.getApplicationContext());
-        mCategories = TopekaDatabaseHelper.getCategories(activity);
+        updateCategories(activity);
     }
 
     @Override
@@ -106,6 +108,16 @@ public class CategoryAdapter extends BaseAdapter {
         } else {
             icon.setImageResource(categoryImageResource);
         }
+    }
+
+    @Override
+    public void notifyDataSetChanged() {
+        super.notifyDataSetChanged();
+        updateCategories(mActivity);
+    }
+
+    private void updateCategories(Activity activity) {
+        mCategories = TopekaDatabaseHelper.getCategories(activity, true);
     }
 
     /**
