@@ -94,13 +94,23 @@ public class QuizFragment extends Fragment {
             return false;
         }
         int nextItem = mViewPager.getCurrentItem() + 1;
-        if (nextItem < mViewPager.getAdapter().getCount()) {
-            mViewPager.setCurrentItem(nextItem, true);
+        final int count = mViewPager.getAdapter().getCount();
+        if (nextItem < count) {
+            moveToNextItem(nextItem);
             return true;
         }
+        markCategorySolved();
+        return false;
+    }
+
+    private void moveToNextItem(int nextItem) {
+        mViewPager.setCurrentItem(nextItem, true);
+        TopekaDatabaseHelper.updateCategory(getActivity(), mCategory);
+    }
+
+    private void markCategorySolved() {
         mCategory.setSolved(true);
         TopekaDatabaseHelper.updateCategory(getActivity(), mCategory);
-        return false;
     }
 
     public void showSummary() {
