@@ -18,15 +18,9 @@ package com.google.samples.apps.topeka.model.quiz;
 
 import android.os.Parcel;
 
-import com.google.gson.annotations.SerializedName;
-import com.google.samples.apps.topeka.model.JsonAttributes;
-
 public final class FillBlankQuiz extends Quiz<String> {
 
-    @SerializedName(JsonAttributes.START)
     private final String mStart;
-
-    @SerializedName(JsonAttributes.END)
     private final String mEnd;
 
     public FillBlankQuiz(String question, String answer, String start, String end, boolean solved) {

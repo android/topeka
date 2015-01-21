@@ -16,7 +16,6 @@
 
 package com.google.samples.apps.topeka.model;
 
-import com.google.gson.annotations.SerializedName;
 import com.google.samples.apps.topeka.helper.ParcelableHelper;
 import com.google.samples.apps.topeka.model.quiz.Quiz;
 
@@ -34,17 +33,11 @@ public class Category implements Parcelable {
     private static final int SCORE = 8;
     private static final int NO_SCORE = 0;
 
-    @SerializedName(JsonAttributes.NAME)
     private final String mName;
-    @SerializedName(JsonAttributes.ID)
     private final String mId;
-    @SerializedName(JsonAttributes.THEME)
     private final Theme mTheme;
-    @SerializedName(JsonAttributes.QUIZZES)
     private List<Quiz> mQuizzes;
-    @SerializedName(JsonAttributes.SCORES)
     private final int[] mScores;
-    @SerializedName(JsonAttributes.SOLVED)
     private boolean mSolved;
 
     public Category(String name, String id, Theme theme, List<Quiz> quizzes, boolean solved) {

@@ -18,18 +18,10 @@ package com.google.samples.apps.topeka.model.quiz;
 
 import android.os.Parcel;
 
-import com.google.gson.annotations.SerializedName;
-import com.google.samples.apps.topeka.model.JsonAttributes;
-
 public final class PickerQuiz extends Quiz<Integer> {
 
-    @SerializedName(JsonAttributes.MIN)
     private final int mMin;
-
-    @SerializedName(JsonAttributes.MAX)
     private final int mMax;
-
-    @SerializedName(JsonAttributes.STEP)
     private final int mStep;
 
     public PickerQuiz(String question, Integer answer, int min, int max, int step, boolean solved) {

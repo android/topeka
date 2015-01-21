@@ -18,9 +18,6 @@ package com.google.samples.apps.topeka.model.quiz;
 
 import android.os.Parcel;
 
-import com.google.gson.annotations.SerializedName;
-import com.google.samples.apps.topeka.model.JsonAttributes;
-
 import java.util.Arrays;
 
 /**
@@ -30,7 +27,6 @@ import java.util.Arrays;
  */
 public abstract class OptionsQuiz<T> extends Quiz<int[]> {
 
-    @SerializedName(JsonAttributes.OPTIONS)
     private T[] mOptions;
 
     public OptionsQuiz(String question, int[] answer, T[] options, boolean solved) {
