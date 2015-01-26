@@ -48,6 +48,13 @@ public class FillBlankQuizView extends TextInputQuizView<FillBlankQuiz> {
         return mAnswerView;
     }
 
+    /**
+     * Creates and returns views that display the start and end of a question.
+     *
+     * @param start The content of the start view.
+     * @param end The content of the end view.
+     * @return The created views within an appropriate container.
+     */
     private View getStartEndView(String start, String end) {
         LinearLayout container = (LinearLayout) getLayoutInflater().inflate(
                 R.layout.quiz_fill_blank_with_surroundings, this, false);
@@ -63,6 +70,12 @@ public class FillBlankQuizView extends TextInputQuizView<FillBlankQuiz> {
         return container;
     }
 
+    /**
+     * Sets content to a {@link TextView}. If content is null, the view will not be displayed.
+     *
+     * @param view The view to hold the text.
+     * @param content The text to display.
+     */
     private void setExistingContentOrHide(TextView view, String content) {
         if (null == content) {
             view.setVisibility(View.GONE);

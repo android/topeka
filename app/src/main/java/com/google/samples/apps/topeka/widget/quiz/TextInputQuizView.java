@@ -16,6 +16,9 @@
 package com.google.samples.apps.topeka.widget.quiz;
 
 import android.content.Context;
+import android.os.Parcel;
+import android.os.Parcelable;
+import android.support.annotation.NonNull;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -36,7 +39,6 @@ public abstract class TextInputQuizView<Q extends Quiz> extends AbsQuizView<Q> i
     public TextInputQuizView(Context context, Category category, Q quiz) {
         super(context, category, quiz);
     }
-
 
     protected final EditText createEditText() {
         EditText editText = (EditText) getLayoutInflater().inflate(
@@ -69,16 +71,6 @@ public abstract class TextInputQuizView<Q extends Quiz> extends AbsQuizView<Q> i
                 break;
         }
         super.onClick(v);
-    }
-
-    /**
-     * Convenience method to show the keyboard.
-     *
-     * @param view A view in the hierarchy.
-     */
-    protected void showKeyboard(View view) {
-        InputMethodManager inputMethodManager = getInputMethodManager();
-        inputMethodManager.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT);
     }
 
     /**

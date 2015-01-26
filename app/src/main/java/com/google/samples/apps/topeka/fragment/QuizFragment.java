@@ -17,15 +17,15 @@ package com.google.samples.apps.topeka.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
+import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterViewFlipper;
 import android.widget.ListView;
 
 import com.google.samples.apps.topeka.R;
-import com.google.samples.apps.topeka.adapter.QuizPagerAdapter;
+import com.google.samples.apps.topeka.adapter.QuizAdapter;
 import com.google.samples.apps.topeka.adapter.ScoreAdapter;
 import com.google.samples.apps.topeka.model.Category;
 import com.google.samples.apps.topeka.persistence.TopekaDatabaseHelper;
@@ -36,9 +36,9 @@ import com.google.samples.apps.topeka.persistence.TopekaDatabaseHelper;
 public class QuizFragment extends Fragment {
 
     private Category mCategory;
-    private ViewPager mViewPager;
-
-    private static final String EXTRA_CURRENT_ITEM = "currentItem";
+    private AdapterViewFlipper mQuizView;
+    private ScoreAdapter mScoreAdapter;
+    private QuizAdapter mQuizAdapter;
 
     public static QuizFragment newInstance(String categoryId) {
         if (categoryId == null) {
@@ -59,12 +59,6 @@ public class QuizFragment extends Fragment {
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {
-        outState.putInt(EXTRA_CURRENT_ITEM, mViewPager.getCurrentItem());
-        super.onSaveInstanceState(outState);
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
             @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_quiz, container, false);
@@ -72,39 +66,48 @@ public class QuizFragment extends Fragment {
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        mViewPager = (ViewPager) view.findViewById(R.id.quiz_pager);
+        mQuizView = (AdapterViewFlipper) view.findViewById(R.id.quiz_pager);
+        // TODO: 1/27/15 finalize animations
+        mQuizView.setInAnimation(getActivity(), android.R.animator.fade_in);
+        mQuizView.setOutAnimation(getActivity(), android.R.animator.fade_out);
+        mQuizView.setSaveEnabled(true);
         if (mCategory.isSolved()) {
             showSummary();
         } else {
-            mViewPager.setBackgroundResource(mCategory.getTheme().getWindowBackgroundColor());
-            mViewPager.setAdapter(new QuizPagerAdapter(getActivity(), mCategory));
-            final int currentItem;
-            if (null != savedInstanceState) {
-                 currentItem = savedInstanceState.getInt(EXTRA_CURRENT_ITEM);
-            } else {
-                currentItem = mCategory.getFirstUnsolvedQuizPosition();
-            }
-            mViewPager.setCurrentItem(currentItem);
+            mQuizView.setBackgroundResource(mCategory.getTheme().getWindowBackgroundColor());
+            mQuizView.setAdapter(getQuizAdapter());
         }
         super.onViewCreated(view, savedInstanceState);
     }
 
+    private QuizAdapter getQuizAdapter() {
+        if (null == mQuizAdapter) {
+            mQuizAdapter = new QuizAdapter(getActivity(), mCategory);
+        }
+        return mQuizAdapter;
+    }
+
+    @Override
+    public void onViewStateRestored(Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+    }
+
     public boolean nextPage() {
-        if (null == mViewPager) {
+        if (null == mQuizView) {
             return false;
         }
-        int nextItem = mViewPager.getCurrentItem() + 1;
-        final int count = mViewPager.getAdapter().getCount();
+        int nextItem = mQuizView.getDisplayedChild() + 1;
+        final int count = mQuizView.getAdapter().getCount();
         if (nextItem < count) {
-            moveToNextItem(nextItem);
+            moveToNextItem();
             return true;
         }
         markCategorySolved();
         return false;
     }
 
-    private void moveToNextItem(int nextItem) {
-        mViewPager.setCurrentItem(nextItem, true);
+    private void moveToNextItem() {
+        mQuizView.showNext();
         TopekaDatabaseHelper.updateCategory(getActivity(), mCategory);
     }
 
@@ -115,8 +118,16 @@ public class QuizFragment extends Fragment {
 
     public void showSummary() {
         final ListView scorecardView = (ListView) getView().findViewById(R.id.scorecard);
-        scorecardView.setAdapter(new ScoreAdapter(mCategory));
+        mScoreAdapter = getScoreAdapter();
+        scorecardView.setAdapter(mScoreAdapter);
         scorecardView.setVisibility(View.VISIBLE);
-        mViewPager.setVisibility(View.GONE);
+        mQuizView.setVisibility(View.GONE);
+    }
+
+    private ScoreAdapter getScoreAdapter() {
+        if (null == mScoreAdapter) {
+            mScoreAdapter = new ScoreAdapter(mCategory);
+        }
+        return mScoreAdapter;
     }
 }

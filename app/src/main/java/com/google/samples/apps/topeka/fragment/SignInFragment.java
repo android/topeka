@@ -20,8 +20,7 @@ import android.app.Activity;
 import android.app.ActivityOptions;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
+import android.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -30,7 +29,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.GridView;
-import android.widget.Toolbar;
 
 import com.google.samples.apps.topeka.activity.CategorySelectionActivity;
 import com.google.samples.apps.topeka.helper.PreferencesHelper;
@@ -139,12 +137,12 @@ public class SignInFragment extends Fragment implements View.OnClickListener,
     }
 
     private void performSignInWithTransition(View v) {
-        FragmentActivity activity = getActivity();
+        Activity activity = getActivity();
         ActivityOptions activityOptions = ActivityOptions
                 .makeSceneTransitionAnimation(activity, v,
                         activity.getString(R.string.transition_avatar));
         CategorySelectionActivity.start(activity, mPlayer, activityOptions);
-        activity.supportFinishAfterTransition();
+        activity.finishAfterTransition();
     }
 
     private void initContents() {

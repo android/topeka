@@ -16,11 +16,11 @@
 
 package com.google.samples.apps.topeka.activity;
 
+import android.app.Activity;
 import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -33,7 +33,7 @@ import com.google.samples.apps.topeka.helper.PreferencesHelper;
 import com.google.samples.apps.topeka.model.Player;
 import com.google.samples.apps.topeka.persistence.TopekaDatabaseHelper;
 
-public class CategorySelectionActivity extends FragmentActivity {
+public class CategorySelectionActivity extends Activity {
 
     private static final String EXTRA_PLAYER = "player";
 
@@ -98,7 +98,7 @@ public class CategorySelectionActivity extends FragmentActivity {
         PreferencesHelper.signOut(this);
         TopekaDatabaseHelper.reset(this);
         SignInActivity.start(this, false, null);
-        supportFinishAfterTransition();
+        finishAfterTransition();
     }
 
     private String getDisplayName(Player player) {
@@ -107,7 +107,7 @@ public class CategorySelectionActivity extends FragmentActivity {
     }
 
     private void attachCategoryGridFragment() {
-        getSupportFragmentManager().beginTransaction()
+        getFragmentManager().beginTransaction()
                 .replace(R.id.quiz_container, CategoryGridFragment.newInstance())
                 .commit();
         setProgressBarVisibility(View.GONE);

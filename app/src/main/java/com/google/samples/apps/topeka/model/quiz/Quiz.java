@@ -91,6 +91,13 @@ public abstract class Quiz<A> implements Parcelable {
         mSolved = solved;
     }
 
+    /**
+     * @return The id of this quiz.
+     */
+    public int getId() {
+        return getQuestion().hashCode();
+    }
+
     public static final Creator<Quiz> CREATOR = new Creator<Quiz>() {
         @Override
         public Quiz createFromParcel(Parcel in) {

@@ -8,5 +8,4 @@
     android:minHeight="@dimen/min_height_question"
     android:padding="@dimen/keyline_vertical"
     android:background="?android:attr/colorPrimary"
-    android:textColor="?android:attr/textColorPrimary"
-    />
+    android:textColor="?android:attr/textColorPrimary" />

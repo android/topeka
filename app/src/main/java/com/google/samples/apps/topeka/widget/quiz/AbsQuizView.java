@@ -17,8 +17,6 @@ package com.google.samples.apps.topeka.widget.quiz;
 
 import android.content.Context;
 import android.support.annotation.DimenRes;
-import android.support.v7.widget.CardView;
-import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -81,6 +79,7 @@ public abstract class AbsQuizView<Q extends Quiz> extends FrameLayout implements
         mLayoutInflater = LayoutInflater.from(context);
         mMinHeightTouchTarget = getResources()
                 .getDimensionPixelSize(R.dimen.min_height_touch_target);
+        setId(quiz.getId());
         setUpQuestionView();
         LinearLayout container = createContainerLayout(context);
         View quizContentView = getInitializedContentView();
@@ -96,25 +95,17 @@ public abstract class AbsQuizView<Q extends Quiz> extends FrameLayout implements
         mQuestionView.setText(getQuiz().getQuestion());
     }
 
-    /**
-     * Gets the resourceId from the ccode android.R.attr.colorPrimary attribute and
-     * @param context The context holding the current theme.
-     * @return The resourceId of the color found.
-     */
-    private int getPrimaryColorResId(Context context) {
-        TypedValue color = new TypedValue();
-        context.getTheme().resolveAttribute(android.R.attr.colorPrimary, color, true);
-        return color.resourceId;
-    }
-
     private LinearLayout createContainerLayout(Context context) {
         LinearLayout container = new LinearLayout(context);
+        container.setId(R.id.absQuizViewContainer);
         container.setOrientation(LinearLayout.VERTICAL);
         return container;
     }
 
     private View getInitializedContentView() {
         View quizContentView = createQuizContentView();
+        quizContentView.setId(R.id.quiz_content);
+        quizContentView.setSaveEnabled(true);
         setDefaultPadding(quizContentView);
         setMinHeightInternal(quizContentView, R.dimen.min_height_question);
         return quizContentView;
@@ -240,16 +231,6 @@ public abstract class AbsQuizView<Q extends Quiz> extends FrameLayout implements
         }
         mQuiz.setSolved(true);
         mCategory.setScore(getQuiz(), isAnswerCorrect());
-    }
-
-    /**
-     * Convenience method to set the min height for a {@link View} that should act as a touch
-     * target.
-     *
-     * @param view The target view.
-     */
-    protected void setMinHeightForTouchTarget(View view) {
-        setMinHeightInternal(view, R.dimen.min_height_touch_target);
     }
 
     private void setMinHeightInternal(View view, @DimenRes int resId) {

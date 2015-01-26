@@ -18,10 +18,11 @@ package com.google.samples.apps.topeka.activity;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
+import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.view.animation.AnticipateInterpolator;
@@ -35,10 +36,11 @@ import com.google.samples.apps.topeka.persistence.TopekaDatabaseHelper;
 
 import static com.google.samples.apps.topeka.adapter.CategoryAdapter.DRAWABLE;
 
-public class QuizActivity extends FragmentActivity implements View.OnClickListener {
+public class QuizActivity extends Activity implements View.OnClickListener {
 
     private static final String IMAGE_CATEGORY = "image_category_";
     private static final String STATE_IS_PLAYING = "isPlaying";
+    private final String FRAGMENT_TAG = "Quiz";
     private String mCategoryId;
     private QuizFragment mQuizFragment;
     Toolbar mToolbar;
@@ -62,7 +64,16 @@ public class QuizActivity extends FragmentActivity implements View.OnClickListen
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {
+    protected void onResume() {
+        if (mIsPlaying) {
+            mQuizFragment = (QuizFragment) getFragmentManager().findFragmentByTag(
+                    FRAGMENT_TAG);
+        }
+        super.onResume();
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
         outState.putBoolean(STATE_IS_PLAYING, mStartQuiz.getVisibility() == View.GONE);
         super.onSaveInstanceState(outState);
     }
@@ -86,8 +97,8 @@ public class QuizActivity extends FragmentActivity implements View.OnClickListen
 
     private void startQuizFromClickOn(final View view) {
         mQuizFragment = QuizFragment.newInstance(mCategoryId);
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.quiz_fragment_container, mQuizFragment)
+        getFragmentManager().beginTransaction()
+                .replace(R.id.quiz_fragment_container, mQuizFragment, FRAGMENT_TAG)
                 .setTransition(FragmentTransaction.TRANSIT_NONE)
                 .commit();
 
@@ -100,6 +111,7 @@ public class QuizActivity extends FragmentActivity implements View.OnClickListen
                         super.onAnimationEnd(animation);
                     }
                 });
+        // the toolbar should not have more elevation than the content while playing
         mToolbar.setElevation(0);
     }
 
@@ -135,5 +147,9 @@ public class QuizActivity extends FragmentActivity implements View.OnClickListen
     private void initToolbar(Category category) {
         mToolbar = (Toolbar) findViewById(R.id.toolbar_activity_quiz);
         mToolbar.setTitle(category.getName());
+        if (mIsPlaying) {
+            // the toolbar should not have more elevation than the content while playing
+            mToolbar.setElevation(0);
+        }
     }
 }

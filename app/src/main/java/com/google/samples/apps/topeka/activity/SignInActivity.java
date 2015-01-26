@@ -16,16 +16,16 @@
 
 package com.google.samples.apps.topeka.activity;
 
+import android.app.Activity;
 import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 
 import com.google.samples.apps.topeka.R;
 import com.google.samples.apps.topeka.fragment.SignInFragment;
 
-public class SignInActivity extends FragmentActivity {
+public class SignInActivity extends Activity {
 
     private static final String EXTRA_EDIT = "EDIT";
 
@@ -44,7 +44,7 @@ public class SignInActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
         final boolean edit = isInEditMode();
-        getSupportFragmentManager().beginTransaction()
+        getFragmentManager().beginTransaction()
                 .replace(R.id.sign_in_container, SignInFragment.newInstance(edit)).commit();
     }
 
