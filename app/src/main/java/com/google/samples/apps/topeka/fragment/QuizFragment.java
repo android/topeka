@@ -70,7 +70,6 @@ public class QuizFragment extends Fragment {
         // TODO: 1/27/15 finalize animations
         mQuizView.setInAnimation(getActivity(), android.R.animator.fade_in);
         mQuizView.setOutAnimation(getActivity(), android.R.animator.fade_out);
-        mQuizView.setSaveEnabled(true);
         if (mCategory.isSolved()) {
             showSummary();
         } else {
