@@ -17,10 +17,12 @@ package com.google.samples.apps.topeka.widget.quiz;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.os.Bundle;
 import android.util.SparseBooleanArray;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 
 import com.google.samples.apps.topeka.R;
@@ -32,6 +34,8 @@ import com.google.samples.apps.topeka.adapter.OptionsQuizAdapter;
 @SuppressLint("ViewConstructor")
 public class SelectItemQuizView extends AbsQuizView<SelectItemQuiz>
         implements AdapterView.OnItemClickListener {
+
+    private static final String KEY_ANSWERS = "ANSWERS";
 
     private boolean[] mAnswers;
     private ListView mListView;
@@ -58,6 +62,23 @@ public class SelectItemQuizView extends AbsQuizView<SelectItemQuiz>
         final SparseBooleanArray checkedItemPositions = mListView.getCheckedItemPositions();
         final int[] answer = getQuiz().getAnswer();
         return AnswerHelper.isAnswerCorrect(checkedItemPositions, answer);
+    }
+
+    @Override
+    public Bundle getUserInput() {
+        Bundle bundle = new Bundle();
+        bundle.putBooleanArray(KEY_ANSWERS, mAnswers);
+        return bundle;
+    }
+
+    @Override
+    public void setUserInput(Bundle savedInput) {
+        // FIXME: 3/10/15 make sure the ui reflects the selected state
+        mAnswers = savedInput.getBooleanArray(KEY_ANSWERS);
+        final ListAdapter adapter = mListView.getAdapter();
+        for (int i = 0; i < mAnswers.length; i++) {
+            mListView.performItemClick(mListView.getChildAt(i), i, adapter.getItemId(i));
+        }
     }
 
     @Override

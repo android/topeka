@@ -17,6 +17,7 @@ package com.google.samples.apps.topeka.widget.quiz;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.os.Bundle;
 import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.View;
@@ -33,6 +34,7 @@ import com.google.samples.apps.topeka.adapter.OptionsQuizAdapter;
 public class MultiSelectQuizView extends AbsQuizView<MultiSelectQuiz>
         implements AdapterView.OnItemClickListener {
 
+    private static final String KEY_ANSWER = "ANSWER";
     private static final String TAG = "MultiSelectQuizView";
 
     private ListView mListView;
@@ -58,6 +60,38 @@ public class MultiSelectQuizView extends AbsQuizView<MultiSelectQuiz>
         final SparseBooleanArray checkedItemPositions = mListView.getCheckedItemPositions();
         final int[] answer = getQuiz().getAnswer();
         return AnswerHelper.isAnswerCorrect(checkedItemPositions, answer);
+    }
+
+    @Override
+    public Bundle getUserInput() {
+        Bundle bundle = new Bundle();
+        boolean[] bundleableAnswer = getBundleableAnswer();
+        bundle.putBooleanArray(KEY_ANSWER, bundleableAnswer);
+        return bundle;
+    }
+
+    private boolean[] getBundleableAnswer() {
+        SparseBooleanArray checkedItemPositions = mListView.getCheckedItemPositions();
+        final int answerSize = checkedItemPositions.size();
+        if (0 == answerSize) {
+            return null;
+        }
+        final int optionsSize = getQuiz().getOptions().length;
+        boolean[] bundleableAnswer = new boolean[optionsSize];
+        int key;
+        for (int i = 0; i < answerSize; i++) {
+            key = checkedItemPositions.keyAt(i);
+            bundleableAnswer[key] = checkedItemPositions.valueAt(i);
+        }
+        return bundleableAnswer;
+    }
+
+    @Override
+    public void setUserInput(Bundle savedInput) {
+        final boolean[] answers = savedInput.getBooleanArray(KEY_ANSWER);
+        for (int i = 0; i < answers.length; i++) {
+            mListView.setItemChecked(i, answers[i]);
+        }
     }
 
     @Override

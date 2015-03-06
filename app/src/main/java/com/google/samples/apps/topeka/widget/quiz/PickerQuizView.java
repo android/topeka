@@ -17,6 +17,7 @@ package com.google.samples.apps.topeka.widget.quiz;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
@@ -29,6 +30,8 @@ import com.google.samples.apps.topeka.model.quiz.PickerQuiz;
 @SuppressLint("ViewConstructor")
 public final class PickerQuizView extends AbsQuizView<PickerQuiz>
         implements SeekBar.OnSeekBarChangeListener {
+
+    private static final String KEY_ANSWER = "ANSWER";
 
     private TextView mCurrentSelection;
     private SeekBar mSeekBar;
@@ -67,6 +70,18 @@ public final class PickerQuizView extends AbsQuizView<PickerQuiz>
         } else {
             mStep = tmpStep;
         }
+    }
+
+    @Override
+    public Bundle getUserInput() {
+        Bundle bundle = new Bundle();
+        bundle.putInt(KEY_ANSWER, mProgress);
+        return bundle;
+    }
+
+    @Override
+    public void setUserInput(Bundle savedInput) {
+        mSeekBar.setProgress(savedInput.getInt(KEY_ANSWER) - mMin);
     }
 
     /**

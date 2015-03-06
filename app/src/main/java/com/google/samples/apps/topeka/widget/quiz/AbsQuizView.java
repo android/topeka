@@ -16,6 +16,7 @@
 package com.google.samples.apps.topeka.widget.quiz;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.annotation.DimenRes;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -167,6 +168,20 @@ public abstract class AbsQuizView<Q extends Quiz> extends FrameLayout implements
      * <code>false</code>.
      */
     protected abstract boolean isAnswerCorrect();
+
+    /**
+     * Save the user input to a bundle for orientation changes.
+     *
+     * @return The bundle containing the user's input.
+     */
+    public abstract Bundle getUserInput();
+
+    /**
+     * Restore the user's input.
+     *
+     * @param savedInput The input that the user made in a prior instance of this view.
+     */
+    public abstract void setUserInput(Bundle savedInput);
 
     public Q getQuiz() {
         return mQuiz;

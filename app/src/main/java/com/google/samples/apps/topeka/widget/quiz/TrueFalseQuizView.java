@@ -17,6 +17,7 @@ package com.google.samples.apps.topeka.widget.quiz;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +30,7 @@ import com.google.samples.apps.topeka.model.quiz.TrueFalseQuiz;
 @SuppressLint("ViewConstructor")
 public class TrueFalseQuizView extends AbsQuizView<TrueFalseQuiz> {
 
+    private static final String KEY_SELECTION = "SELECTION";
     private static final LinearLayout.LayoutParams LAYOUT_PARAMS =
             new LinearLayout.LayoutParams(0, LayoutParams.WRAP_CONTENT, 1);
 
@@ -37,6 +39,8 @@ public class TrueFalseQuizView extends AbsQuizView<TrueFalseQuiz> {
     }
 
     private boolean mAnswer;
+    private View mAnswerTrue;
+    private View mAnswerFalse;
 
     public TrueFalseQuizView(Context context, Category category, TrueFalseQuiz quiz) {
         super(context, category, quiz);
@@ -46,14 +50,34 @@ public class TrueFalseQuizView extends AbsQuizView<TrueFalseQuiz> {
     protected View createQuizContentView() {
         final ViewGroup container = (ViewGroup) getLayoutInflater().inflate(
                 R.layout.quiz_radio_group_true_false, this, false);
-        container.findViewById(R.id.answerTrue).setOnClickListener(this);
-        container.findViewById(R.id.answerFalse).setOnClickListener(this);
+        mAnswerTrue = container.findViewById(R.id.answerTrue);
+        mAnswerTrue.setOnClickListener(this);
+        mAnswerFalse = container.findViewById(R.id.answerFalse);
+        mAnswerFalse.setOnClickListener(this);
         return container;
     }
 
     @Override
     protected boolean isAnswerCorrect() {
         return getQuiz().isAnswerCorrect(mAnswer);
+    }
+
+    @Override
+    public Bundle getUserInput() {
+        Bundle bundle = new Bundle();
+        bundle.putBoolean(KEY_SELECTION, mAnswer);
+        return bundle;
+    }
+
+    @Override
+    public void setUserInput(Bundle savedInput) {
+        final boolean tmpAnswer = savedInput.getBoolean(KEY_SELECTION);
+        performSelection(tmpAnswer ? mAnswerTrue : mAnswerFalse);
+    }
+
+    private void performSelection(View selection) {
+        selection.performClick();
+        selection.setSelected(true);
     }
 
     @Override

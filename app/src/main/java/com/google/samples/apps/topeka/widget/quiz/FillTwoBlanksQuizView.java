@@ -17,6 +17,7 @@ package com.google.samples.apps.topeka.widget.quiz;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.os.Bundle;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
@@ -28,6 +29,8 @@ import com.google.samples.apps.topeka.model.quiz.FillTwoBlanksQuiz;
 @SuppressLint("ViewConstructor")
 public class FillTwoBlanksQuizView extends TextInputQuizView<FillTwoBlanksQuiz> {
 
+    private static final String KEY_ANSWER_ONE = "ANSWER_ONE";
+    private static final String KEY_ANSWER_TWO = "ANSWER_TWO";
     private static final LinearLayout.LayoutParams CHILD_LAYOUT_PARAMS
             = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, 0, 1);
     private EditText mAnswerOne;
@@ -47,6 +50,20 @@ public class FillTwoBlanksQuizView extends TextInputQuizView<FillTwoBlanksQuiz> 
         addEditText(layout, mAnswerOne);
         addEditText(layout, mAnswerTwo);
         return layout;
+    }
+
+    @Override
+    public Bundle getUserInput() {
+        Bundle bundle = new Bundle();
+        bundle.putString(KEY_ANSWER_ONE, mAnswerOne.getText().toString());
+        bundle.putString(KEY_ANSWER_TWO, mAnswerTwo.getText().toString());
+        return bundle;
+    }
+
+    @Override
+    public void setUserInput(Bundle savedInput) {
+        mAnswerOne.setText(savedInput.getString(KEY_ANSWER_ONE));
+        mAnswerTwo.setText(savedInput.getString(KEY_ANSWER_TWO));
     }
 
     private void addEditText(LinearLayout layout, EditText editText) {

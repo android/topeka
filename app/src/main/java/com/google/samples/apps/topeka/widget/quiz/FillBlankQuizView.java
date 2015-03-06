@@ -17,6 +17,7 @@ package com.google.samples.apps.topeka.widget.quiz;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -28,6 +29,8 @@ import com.google.samples.apps.topeka.model.quiz.FillBlankQuiz;
 
 @SuppressLint("ViewConstructor")
 public class FillBlankQuizView extends TextInputQuizView<FillBlankQuiz> {
+
+    private static final String KEY_ANSWER = "ANSWER";
 
     private EditText mAnswerView;
 
@@ -46,6 +49,18 @@ public class FillBlankQuizView extends TextInputQuizView<FillBlankQuiz> {
             mAnswerView = createEditText();
         }
         return mAnswerView;
+    }
+
+    @Override
+    public Bundle getUserInput() {
+        Bundle bundle = new Bundle();
+        bundle.putString(KEY_ANSWER, mAnswerView.getText().toString());
+        return bundle;
+    }
+
+    @Override
+    public void setUserInput(Bundle savedInput) {
+        mAnswerView.setText(savedInput.getString(KEY_ANSWER));
     }
 
     /**

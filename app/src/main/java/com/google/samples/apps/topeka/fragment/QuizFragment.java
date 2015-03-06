@@ -29,11 +29,14 @@ import com.google.samples.apps.topeka.adapter.QuizAdapter;
 import com.google.samples.apps.topeka.adapter.ScoreAdapter;
 import com.google.samples.apps.topeka.model.Category;
 import com.google.samples.apps.topeka.persistence.TopekaDatabaseHelper;
+import com.google.samples.apps.topeka.widget.quiz.AbsQuizView;
 
 /**
  * Encapsulates Quiz solving and displays it to the user.
  */
 public class QuizFragment extends Fragment {
+
+    private static final String KEY_USER_INPUT = "USER_INPUT";
 
     private Category mCategory;
     private AdapterViewFlipper mQuizView;
@@ -79,16 +82,45 @@ public class QuizFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        View currentView = mQuizView.getCurrentView();
+        if (currentView instanceof ViewGroup) {
+            ViewGroup currentViewGroup = (ViewGroup) currentView;
+            View currentChild = currentViewGroup.getChildAt(0);
+            if (currentChild instanceof AbsQuizView) {
+                outState.putBundle(KEY_USER_INPUT, ((AbsQuizView) currentChild).getUserInput());
+            }
+        }
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public void onViewStateRestored(Bundle savedInstanceState) {
+        restoreQuizState(savedInstanceState);
+        super.onViewStateRestored(savedInstanceState);
+    }
+
+    private void restoreQuizState(Bundle savedInstanceState) {
+        if (null == savedInstanceState) {
+            return;
+        }
+        View selectedView = mQuizView.getSelectedView();
+        if (selectedView instanceof ViewGroup) {
+            ViewGroup selectedViewGroup = (ViewGroup) selectedView;
+            View currentChild = selectedViewGroup.getChildAt(0);
+            if (currentChild instanceof AbsQuizView) {
+                ((AbsQuizView) currentChild).setUserInput(savedInstanceState.
+                        getBundle(KEY_USER_INPUT));
+            }
+        }
+    }
+
     private QuizAdapter getQuizAdapter() {
         if (null == mQuizAdapter) {
             mQuizAdapter = new QuizAdapter(getActivity(), mCategory);
         }
         return mQuizAdapter;
-    }
-
-    @Override
-    public void onViewStateRestored(Bundle savedInstanceState) {
-        super.onViewStateRestored(savedInstanceState);
     }
 
     public boolean nextPage() {

@@ -17,6 +17,7 @@ package com.google.samples.apps.topeka.widget.quiz;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
@@ -26,13 +27,19 @@ import com.google.samples.apps.topeka.R;
 import com.google.samples.apps.topeka.model.Category;
 import com.google.samples.apps.topeka.model.quiz.AlphaPickerQuiz;
 
+import java.util.Arrays;
+import java.util.List;
+
 @SuppressLint("ViewConstructor")
 public class AlphaPickerQuizView extends AbsQuizView<AlphaPickerQuiz> implements
         SeekBar.OnSeekBarChangeListener {
 
+    private static final String KEY_SELECTION = "SELECTION";
+
     private TextView mCurrentSelection;
 
-    private String[] mAlphabet;
+    private List<String> mAlphabet;
+    private SeekBar mSeekBar;
 
     public AlphaPickerQuizView(Context context, Category category, AlphaPickerQuiz quiz) {
         super(context, category, quiz);
@@ -43,10 +50,10 @@ public class AlphaPickerQuizView extends AbsQuizView<AlphaPickerQuiz> implements
         LinearLayout layout = (LinearLayout) getLayoutInflater().inflate(
                 R.layout.quiz_layout_picker, this, false);
         mCurrentSelection = (TextView) layout.findViewById(R.id.seekbar_progress);
-        mCurrentSelection.setText(getAlphabet()[0]);
-        SeekBar seekBar = (SeekBar) layout.findViewById(R.id.seekbar);
-        seekBar.setMax(getAlphabet().length);
-        seekBar.setOnSeekBarChangeListener(this);
+        mCurrentSelection.setText(getAlphabet().get(0));
+        mSeekBar = (SeekBar) layout.findViewById(R.id.seekbar);
+        mSeekBar.setMax(getAlphabet().size());
+        mSeekBar.setOnSeekBarChangeListener(this);
         return layout;
     }
 
@@ -56,8 +63,21 @@ public class AlphaPickerQuizView extends AbsQuizView<AlphaPickerQuiz> implements
     }
 
     @Override
+    public Bundle getUserInput() {
+        Bundle bundle = new Bundle();
+        bundle.putString(KEY_SELECTION, mCurrentSelection.getText().toString());
+        return bundle;
+    }
+
+    @Override
+    public void setUserInput(Bundle savedInput) {
+        String userInput = savedInput.getString(KEY_SELECTION, getAlphabet().get(0));
+        mSeekBar.setProgress(getAlphabet().indexOf(userInput));
+    }
+
+    @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-        mCurrentSelection.setText(getAlphabet()[progress]);
+        mCurrentSelection.setText(getAlphabet().get(progress));
         allowAnswer();
     }
 
@@ -71,9 +91,9 @@ public class AlphaPickerQuizView extends AbsQuizView<AlphaPickerQuiz> implements
         /* no-op */
     }
 
-    private String[] getAlphabet() {
+    private List<String> getAlphabet() {
         if (null == mAlphabet) {
-            mAlphabet = getResources().getStringArray(R.array.alphabet);
+            mAlphabet = Arrays.asList(getResources().getStringArray(R.array.alphabet));
         }
         return mAlphabet;
     }

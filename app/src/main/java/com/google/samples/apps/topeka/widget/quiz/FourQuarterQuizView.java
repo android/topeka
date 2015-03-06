@@ -17,6 +17,7 @@ package com.google.samples.apps.topeka.widget.quiz;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
@@ -30,7 +31,9 @@ import com.google.samples.apps.topeka.adapter.OptionsQuizAdapter;
 public class FourQuarterQuizView extends AbsQuizView<FourQuarterQuiz>
         implements AdapterView.OnItemClickListener {
 
+    private static final String KEY_ANSWER = "ANSWER";
     private int mAnswered = -1;
+    private GridView mAnswerView;
 
     public FourQuarterQuizView(Context context, Category category, FourQuarterQuiz quiz) {
         super(context, category, quiz);
@@ -38,12 +41,46 @@ public class FourQuarterQuizView extends AbsQuizView<FourQuarterQuiz>
 
     @Override
     protected View createQuizContentView() {
-        GridView layout = new GridView(getContext());
-        layout.setSelector(R.drawable.selector_button);
-        layout.setNumColumns(2);
-        layout.setAdapter(new OptionsQuizAdapter(getQuiz().getOptions(), R.layout.item_answer));
-        layout.setOnItemClickListener(this);
-        return layout;
+        mAnswerView = new GridView(getContext());
+        mAnswerView.setSelector(R.drawable.selector_button);
+        mAnswerView.setNumColumns(2);
+        mAnswerView.setAdapter(new OptionsQuizAdapter(getQuiz().getOptions(), R.layout.item_answer));
+        mAnswerView.setOnItemClickListener(this);
+        return mAnswerView;
+    }
+
+    @Override
+    public Bundle getUserInput() {
+        Bundle bundle = new Bundle();
+        bundle.putInt(KEY_ANSWER, mAnswered);
+        return bundle;
+    }
+
+    @Override
+    public void setUserInput(Bundle savedInput) {
+        mAnswered = savedInput.getInt(KEY_ANSWER);
+        // FIXME: 3/10/15 make sure the ui reflects the selected state
+        if (mAnswered != -1) {
+            if (isLaidOut()) {
+                setUpUserInput();
+            } else {
+                addOnLayoutChangeListener(new OnLayoutChangeListener() {
+                    @Override
+                    public void onLayoutChange(View v, int left, int top, int right, int bottom,
+                            int oldLeft, int oldTop, int oldRight, int oldBottom) {
+                        v.removeOnLayoutChangeListener(this);
+                        setUpUserInput();
+                    }
+                });
+            }
+        }
+    }
+
+    private void setUpUserInput() {
+        mAnswerView.performItemClick(mAnswerView.getChildAt(mAnswered), mAnswered,
+                mAnswerView.getAdapter().getItemId(mAnswered));
+        mAnswerView.getChildAt(mAnswered).setSelected(true);
+        mAnswerView.setSelection(mAnswered);
     }
 
     @Override
