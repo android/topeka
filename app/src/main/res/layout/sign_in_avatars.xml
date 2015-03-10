@@ -22,12 +22,13 @@
     android:orientation="vertical"
     tools:showIn="@layout/fragment_sign_in">
 
-    <Toolbar
+    <TextView
         android:id="@+id/toolbar_choose_avatar"
         android:layout_width="match_parent"
         android:layout_height="?android:attr/actionBarSize"
-        android:title="@string/choose_avatar"
-        android:titleTextAppearance="@style/Topeka.TextAppearance.Title" />
+        android:text="@string/choose_avatar"
+        style="@style/Topeka.TextAppearance.Title"
+        android:gravity="center_vertical" />
 
     <GridView
         android:id="@+id/avatars"

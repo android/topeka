@@ -13,25 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.google.samples.apps.topeka.widget;
+package com.google.samples.apps.topeka.widget.fab;
 
 import android.content.Context;
 import android.util.AttributeSet;
 
 import com.google.samples.apps.topeka.R;
 
-public class PlayFab extends FloatingActionButton {
+public class DoneFab extends FloatingActionButton {
 
-    public PlayFab(Context context) {
+    public DoneFab(Context context) {
         this(context, null);
     }
 
-    public PlayFab(Context context, AttributeSet attrs) {
+    public DoneFab(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public PlayFab(Context context, AttributeSet attrs, int defStyle) {
+    public DoneFab(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        setImageResource(R.drawable.ic_play);
+        setImageResource(R.drawable.ic_done);
     }
 }

@@ -32,8 +32,8 @@ import com.google.samples.apps.topeka.R;
 import com.google.samples.apps.topeka.activity.QuizActivity;
 import com.google.samples.apps.topeka.model.Category;
 import com.google.samples.apps.topeka.model.quiz.Quiz;
-import com.google.samples.apps.topeka.widget.DoneFab;
-import com.google.samples.apps.topeka.widget.FloatingActionButton;
+import com.google.samples.apps.topeka.widget.fab.DoneFab;
+import com.google.samples.apps.topeka.widget.fab.FloatingActionButton;
 
 /**
  * This is the base class for displaying a {@link com.google.samples.apps.topeka.model.quiz.Quiz}.
@@ -85,7 +85,16 @@ public abstract class AbsQuizView<Q extends Quiz> extends FrameLayout implements
         LinearLayout container = createContainerLayout(context);
         View quizContentView = getInitializedContentView();
         addContentView(container, quizContentView);
-        addFloatingActionButton();
+        addOnLayoutChangeListener(new OnLayoutChangeListener() {
+            @Override
+            public void onLayoutChange(View v, int left, int top, int right, int bottom,
+                    int oldLeft,
+                    int oldTop, int oldRight, int oldBottom) {
+                removeOnLayoutChangeListener(this);
+                addFloatingActionButton();
+            }
+        });
+
     }
 
     /**
@@ -122,10 +131,12 @@ public abstract class AbsQuizView<Q extends Quiz> extends FrameLayout implements
 
     private void addFloatingActionButton() {
         final int fabSize = getResources().getDimensionPixelSize(R.dimen.fab_size);
+        int bottomOfQuestionView = findViewById(R.id.question_view).getBottom();
         final LayoutParams fabLayoutParams = new LayoutParams(fabSize, fabSize,
-                Gravity.END | Gravity.BOTTOM);
+                Gravity.END | Gravity.TOP);
         final int fabPadding = getResources().getDimensionPixelSize(R.dimen.padding_fab);
-        fabLayoutParams.setMargins(0, 0, 0, fabPadding);
+        final int halfAFab = getResources().getDimensionPixelSize(R.dimen.fab_size) / 2;
+        fabLayoutParams.setMargins(0, bottomOfQuestionView - halfAFab, 0, fabPadding);
         fabLayoutParams.setMarginEnd(fabPadding);
         addView(mSubmitAnswer, fabLayoutParams);
     }

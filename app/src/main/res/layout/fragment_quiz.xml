@@ -29,5 +29,5 @@
         android:id="@+id/quiz_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:saveEnabled="true" />
+        android:background="@android:color/white" />
 </LinearLayout>

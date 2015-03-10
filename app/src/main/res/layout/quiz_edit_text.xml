@@ -22,5 +22,6 @@
     android:imeOptions="actionDone"
     android:inputType="textCapWords"
     android:gravity="bottom"
+    android:textColor="@color/text_dark"
     android:layout_marginBottom="@dimen/padding_default"
     android:singleLine="true" />

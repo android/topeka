@@ -21,7 +21,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.google.samples.apps.topeka.widget.PlayFab
+    <com.google.samples.apps.topeka.widget.fab.PlayFab
         android:id="@+id/btn_start_quiz"
         android:layout_width="@dimen/fab_size"
         android:layout_height="@dimen/fab_size"
@@ -39,9 +39,14 @@
             android:id="@+id/toolbar_activity_quiz"
             android:layout_width="match_parent"
             android:layout_height="?android:attr/actionBarSize"
+            android:navigationIcon="@drawable/ic_arrow_back"
+            android:navigationContentDescription="@string/up"
             android:elevation="@dimen/elevation_header"
             android:background="?android:colorPrimary"
-            android:layout_gravity="top" />
+            android:layout_gravity="top"
+            android:contentInsetStart="@dimen/keyline_72">
+            <!--an empty tag is required to get touch feedback on the navigation icon-->
+        </Toolbar>
 
         <FrameLayout
             android:layout_width="match_parent"

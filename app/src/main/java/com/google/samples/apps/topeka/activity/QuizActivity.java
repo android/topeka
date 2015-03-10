@@ -40,7 +40,8 @@ public class QuizActivity extends Activity implements View.OnClickListener {
 
     private static final String IMAGE_CATEGORY = "image_category_";
     private static final String STATE_IS_PLAYING = "isPlaying";
-    private final String FRAGMENT_TAG = "Quiz";
+    private static final int UNDEFINED = -1;
+    private static final String FRAGMENT_TAG = "Quiz";
     private String mCategoryId;
     private QuizFragment mQuizFragment;
     Toolbar mToolbar;
@@ -84,10 +85,14 @@ public class QuizActivity extends Activity implements View.OnClickListener {
             case R.id.btn_start_quiz:
                 startQuizFromClickOn(v);
                 break;
-
             case R.id.submitAnswer:
                 submitAnswer();
                 break;
+            case UNDEFINED:
+                if (v.getContentDescription().equals(getString(R.string.up))) {
+                    finishAfterTransition();
+                    break;
+                }
             default:
                 throw new UnsupportedOperationException(
                         "OnClick has not been implemented for " + getResources().getResourceName(
@@ -147,6 +152,7 @@ public class QuizActivity extends Activity implements View.OnClickListener {
     private void initToolbar(Category category) {
         mToolbar = (Toolbar) findViewById(R.id.toolbar_activity_quiz);
         mToolbar.setTitle(category.getName());
+        mToolbar.setNavigationOnClickListener(this);
         if (mIsPlaying) {
             // the toolbar should not have more elevation than the content while playing
             mToolbar.setElevation(0);

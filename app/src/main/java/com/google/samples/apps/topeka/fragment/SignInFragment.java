@@ -36,7 +36,7 @@ import com.google.samples.apps.topeka.R;
 import com.google.samples.apps.topeka.adapter.AvatarAdapter;
 import com.google.samples.apps.topeka.model.Avatar;
 import com.google.samples.apps.topeka.model.Player;
-import com.google.samples.apps.topeka.widget.DoneFab;
+import com.google.samples.apps.topeka.widget.fab.DoneFab;
 
 /**
  * Enables selection of an {@link Avatar} and user name.

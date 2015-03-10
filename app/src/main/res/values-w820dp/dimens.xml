@@ -18,4 +18,5 @@
     <dimen name="keyline_horizontal">64dp</dimen>
     <dimen name="keyline_vertical">64dp</dimen>
     <dimen name="toolbar_height">64dp</dimen>
+    <dimen name="inset_fab">24dp</dimen>
 </resources>

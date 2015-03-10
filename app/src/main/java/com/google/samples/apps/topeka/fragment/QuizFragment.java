@@ -76,7 +76,6 @@ public class QuizFragment extends Fragment {
         if (mCategory.isSolved()) {
             showSummary();
         } else {
-            mQuizView.setBackgroundResource(mCategory.getTheme().getWindowBackgroundColor());
             mQuizView.setAdapter(getQuizAdapter());
         }
         super.onViewCreated(view, savedInstanceState);

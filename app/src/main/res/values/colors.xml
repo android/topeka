@@ -15,7 +15,7 @@
   limitations under the License.
   -->
 <resources>
-    <color name="touch_effect">#99ffffff</color>
+    <color name="touch_effect">#9fff</color>
 
     <color name="topeka_primary">#00bad2</color>
     <color name="topeka_primary_dark">#008c9e</color>

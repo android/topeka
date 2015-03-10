@@ -19,14 +19,14 @@
     <dimen name="keyline_vertical">16dp</dimen>
     <dimen name="keyline_horizontal">16dp</dimen>
     <dimen name="avatar_size">56dp</dimen>
-    <dimen name="inset_fab">12dp</dimen>
+    <dimen name="inset_fab">16dp</dimen>
     <dimen name="padding_fab">16dp</dimen>
     <dimen name="padding_icon">56dp</dimen>
     <dimen name="padding_grid">4dp</dimen>
     <dimen name="padding_category_icon">24dp</dimen>
     <dimen name="padding_category">4dp</dimen>
     <dimen name="padding_default">4dp</dimen>
-    <dimen name="padding_avatar">8dp</dimen>
+    <dimen name="padding_avatar">16dp</dimen>
     <dimen name="padding_card_name">16dp</dimen>
     <dimen name="fab_size">56dp</dimen>
     <dimen name="elevation_default">2dp</dimen>
@@ -35,12 +35,10 @@
     <dimen name="size_edit_text">18sp</dimen>
     <dimen name="size_card_name">14sp</dimen>
     <dimen name="stroke_width_avatar">4dp</dimen>
-    <dimen name="vector_icon_size">48dp</dimen>
     <dimen name="min_height_touch_target">48dp</dimen>
     <dimen name="min_height_question">144dp</dimen>
     <dimen name="navigation_width">240dp</dimen>
     <dimen name="toolbar_height">56dp</dimen>
     <dimen name="score_mark_size">56dp</dimen>
-    <item type="integer" name="vector_icon_viewport">48</item>
-    <item type="integer" name="vector_avatar_viewport">128</item>
+    <dimen name="keyline_72">72dp</dimen>
 </resources>
