@@ -17,19 +17,21 @@ package com.google.samples.apps.topeka.model.quiz;
 
 import android.test.suitebuilder.annotation.SmallTest;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+
 @SmallTest
 public class ToggleTranslateQuizTest extends AbsQuizTestCase<ToggleTranslateQuiz> {
 
     private static final String[][] OPTIONS = new String[][]{STRING_ARRAY, STRING_ARRAY};
 
     @Override
-    public void testGetAnswer() {
-        assertEquals(INT_ARRAY, getQuiz().getAnswer());
+    public void quiz_answer_correctlyStored() {
+        assertThat(INT_ARRAY, is(getQuiz().getAnswer()));
     }
 
     @Override
     public ToggleTranslateQuiz getQuiz() {
-
         return new ToggleTranslateQuiz(QUESTION, INT_ARRAY, OPTIONS, false);
     }
 

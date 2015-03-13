@@ -17,6 +17,11 @@ package com.google.samples.apps.topeka.model.quiz;
 
 import android.test.suitebuilder.annotation.SmallTest;
 
+import org.junit.Test;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+
 @SmallTest
 public class PickerQuizTest extends AbsQuizTestCase<PickerQuiz> {
 
@@ -25,21 +30,24 @@ public class PickerQuizTest extends AbsQuizTestCase<PickerQuiz> {
     private static final int MAX = 1000;
     private static final int STEP = 10;
 
-    public void testGetMin() {
-        assertEquals(MIN, getQuiz().getMin());
+    @Test
+    public void min_correctlyStored() {
+        assertThat(MIN, is(getQuiz().getMin()));
     }
 
-    public void testGetMax() {
-        assertEquals(MAX, getQuiz().getMax());
+    @Test
+    public void max_correctlyStored() {
+        assertThat(MAX, is(getQuiz().getMax()));
     }
 
-    public void testGetStep() {
-        assertEquals(STEP, getQuiz().getStep());
+    @Test
+    public void step_correctlyStored() {
+        assertThat(STEP, is(getQuiz().getStep()));
     }
 
     @Override
-    public void testGetAnswer() {
-        assertEquals(ANSWER, getQuiz().getAnswer());
+    public void quiz_answer_correctlyStored() {
+        assertThat(ANSWER, is(getQuiz().getAnswer()));
     }
 
     @Override

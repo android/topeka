@@ -17,12 +17,15 @@ package com.google.samples.apps.topeka.model.quiz;
 
 import android.test.suitebuilder.annotation.SmallTest;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+
 @SmallTest
 public class FourQuarterQuizTest extends AbsQuizTestCase<FourQuarterQuiz> {
 
     @Override
-    public void testGetAnswer() {
-        assertEquals(INT_ARRAY, getQuiz().getAnswer());
+    public void quiz_answer_correctlyStored() {
+        assertThat(INT_ARRAY, is(getQuiz().getAnswer()));
     }
 
     @Override
@@ -34,5 +37,4 @@ public class FourQuarterQuizTest extends AbsQuizTestCase<FourQuarterQuiz> {
     public QuizType getExpectedQuizType() {
         return QuizType.FOUR_QUARTER;
     }
-
 }

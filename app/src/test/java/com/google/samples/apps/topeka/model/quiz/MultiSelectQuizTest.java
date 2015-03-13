@@ -17,13 +17,15 @@ package com.google.samples.apps.topeka.model.quiz;
 
 import android.test.suitebuilder.annotation.SmallTest;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+
 @SmallTest
 public class MultiSelectQuizTest extends AbsQuizTestCase<MultiSelectQuiz> {
 
-
     @Override
-    public void testGetAnswer() {
-        assertEquals(INT_ARRAY, getQuiz().getAnswer());
+    public void quiz_answer_correctlyStored() {
+        assertThat(INT_ARRAY, is(getQuiz().getAnswer()));
     }
 
     @Override

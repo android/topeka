@@ -17,6 +17,11 @@ package com.google.samples.apps.topeka.model.quiz;
 
 import android.test.suitebuilder.annotation.SmallTest;
 
+import org.junit.Test;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+
 @SmallTest
 public class FillBlankQuizTest extends AbsQuizTestCase<FillBlankQuiz> {
 
@@ -24,16 +29,19 @@ public class FillBlankQuizTest extends AbsQuizTestCase<FillBlankQuiz> {
     private static final String START = "start";
     private static final String END = "end";
 
-    public void testGetStart() throws Exception {
-        assertEquals(START, getQuiz().getStart());
+    @Test
+    public void start_correctlyStored() throws Exception {
+        assertThat(START, is(getQuiz().getStart()));
     }
 
-    public void testGetEnd() throws Exception {
-        assertEquals(END, getQuiz().getEnd());
+    @Test
+    public void end_correctlyStored() throws Exception {
+        assertThat(END, is(getQuiz().getEnd()));
     }
 
-    public void testGetAnswer() {
-        assertEquals(ANSWER, getQuiz().getAnswer());
+    @Override
+    public void quiz_answer_correctlyStored() {
+        assertThat(ANSWER, is(getQuiz().getAnswer()));
     }
 
     @Override

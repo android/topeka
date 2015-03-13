@@ -13,22 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.google.samples.apps.topeka.helper;
+package com.google.samples.apps.topeka.model.quiz;
 
-import android.os.Parcel;
-import android.test.suitebuilder.annotation.SmallTest;
+public class FourQuarterQuizTest extends AbsQuizTestCase<FourQuarterQuiz> {
 
-import junit.framework.TestCase;
-
-@SmallTest
-public class ParcelableHelperTest extends TestCase {
-
-    public void testWriteReadBoolean() throws Exception {
-        Parcel testParcel = Parcel.obtain();
-        final boolean testValue = true;
-        ParcelableHelper.writeBoolean(testParcel, testValue);
-        testParcel.setDataPosition(0);
-        final boolean resultValue = ParcelableHelper.readBoolean(testParcel);
-        assertEquals(testValue, resultValue);
+    @Override
+    public FourQuarterQuiz getQuiz() {
+        return new FourQuarterQuiz(QUESTION, INT_ARRAY, STRING_ARRAY, false);
     }
 }

@@ -13,28 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.google.samples.apps.topeka.model.quiz;
+package com.google.samples.apps.topeka.helper;
 
+import android.os.Parcel;
+import android.support.test.runner.AndroidJUnit4;
 import android.test.suitebuilder.annotation.SmallTest;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 @SmallTest
-public class FillTwoBlanksQuizTest extends AbsQuizTestCase<FillTwoBlanksQuiz> {
+@RunWith(AndroidJUnit4.class)
+public class ParcelableHelperTest {
 
-    @Override
-    public void quiz_answer_correctlyStored() {
-        assertThat(STRING_ARRAY, is(getQuiz().getAnswer()));
-    }
-
-    @Override
-    public FillTwoBlanksQuiz getQuiz() {
-        return new FillTwoBlanksQuiz(QUESTION, STRING_ARRAY, false);
-    }
-
-    @Override
-    public QuizType getExpectedQuizType() {
-        return QuizType.FILL_TWO_BLANKS;
+    @Test
+    public void writeReadBoolean() throws Exception {
+        Parcel testParcel = Parcel.obtain();
+        final boolean testValue = true;
+        ParcelableHelper.writeBoolean(testParcel, testValue);
+        testParcel.setDataPosition(0);
+        final boolean resultValue = ParcelableHelper.readBoolean(testParcel);
+        assertThat(testValue, is(resultValue));
     }
 }

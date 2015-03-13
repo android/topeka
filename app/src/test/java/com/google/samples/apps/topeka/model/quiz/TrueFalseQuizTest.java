@@ -17,14 +17,17 @@ package com.google.samples.apps.topeka.model.quiz;
 
 import android.test.suitebuilder.annotation.SmallTest;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+
 @SmallTest
 public class TrueFalseQuizTest extends AbsQuizTestCase<TrueFalseQuiz> {
 
     private static boolean ANSWER = true;
 
     @Override
-    public void testGetAnswer() {
-        assertEquals(ANSWER, (boolean) getQuiz().getAnswer());
+    public void quiz_answer_correctlyStored() {
+        assertThat(ANSWER, is(getQuiz().getAnswer()));
     }
 
     @Override

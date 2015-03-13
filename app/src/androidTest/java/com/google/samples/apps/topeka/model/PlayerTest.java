@@ -16,24 +16,31 @@
 package com.google.samples.apps.topeka.model;
 
 import android.os.Parcel;
-import android.test.suitebuilder.annotation.MediumTest;
+import android.support.test.runner.AndroidJUnit4;
+import android.test.suitebuilder.annotation.SmallTest;
 
-import junit.framework.TestCase;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
-@MediumTest
-public class PlayerTest extends TestCase {
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+
+@SmallTest
+@RunWith(AndroidJUnit4.class)
+public class PlayerTest {
 
     private static final Avatar AVATAR = Avatar.TWELVE;
     private static final String LAST_INITIAL = "a";
     private static final String FIRST_NAME = "first";
 
-    public void testWriteToParcel() throws Exception {
+    @Test
+    public void writeToParcel() throws Exception {
         Player initial = getPlayerUnderTest();
         Parcel dest = Parcel.obtain();
         initial.writeToParcel(dest, 0);
         dest.setDataPosition(0);
         Player unparcelled = new Player(dest);
-        assertEquals(initial, unparcelled);
+        assertThat(initial, is(unparcelled));
     }
 
     private static Player getPlayerUnderTest() {
