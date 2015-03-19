@@ -15,9 +15,9 @@
   limitations under the License.
   -->
 <resources>
-    <!-- Default screen margins, per the Android Design guidelines. -->
-    <dimen name="keyline_vertical">16dp</dimen>
-    <dimen name="keyline_horizontal">16dp</dimen>
+    <dimen name="keyline_8">8dp</dimen>
+    <dimen name="keyline_16">16dp</dimen>
+    <dimen name="keyline_72">72dp</dimen>
     <dimen name="avatar_size">56dp</dimen>
     <dimen name="inset_fab">16dp</dimen>
     <dimen name="padding_fab">16dp</dimen>
@@ -39,6 +39,5 @@
     <dimen name="min_height_question">144dp</dimen>
     <dimen name="navigation_width">240dp</dimen>
     <dimen name="toolbar_height">56dp</dimen>
-    <dimen name="score_mark_size">56dp</dimen>
-    <dimen name="keyline_72">72dp</dimen>
+    <dimen name="score_mark_size">24dp</dimen>
 </resources>

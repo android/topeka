@@ -18,4 +18,5 @@
     <item name="submitAnswer" type="id" />
     <item name="absQuizViewContainer" type="id"/>
     <item name="quiz_content" type="id"/>
+    <item name="quiz_done" type="id"/>
 </resources>

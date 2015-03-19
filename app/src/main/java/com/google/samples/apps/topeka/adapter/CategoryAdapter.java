@@ -142,7 +142,7 @@ public class CategoryAdapter extends BaseAdapter {
      * @return The tinted resource
      */
     private Drawable loadTintedCategoryDrawable(Category category, int categoryImageResource) {
-        final Drawable categoryIcon = mResources.getDrawable(categoryImageResource);
+        final Drawable categoryIcon = mActivity.getDrawable(categoryImageResource);
         tintDrawable(categoryIcon, category.getTheme().getPrimaryColor());
         return categoryIcon;
     }
@@ -153,7 +153,7 @@ public class CategoryAdapter extends BaseAdapter {
      * @return The tinted check mark
      */
     private Drawable loadTintedDoneDrawable() {
-        final Drawable done = mResources.getDrawable(R.drawable.ic_done);
+        final Drawable done = mActivity.getDrawable(R.drawable.ic_done);
         tintDrawable(done, android.R.color.white);
         return done;
     }

@@ -36,20 +36,34 @@ import com.google.samples.apps.topeka.widget.quiz.AbsQuizView;
  */
 public class QuizFragment extends Fragment {
 
-    private static final String KEY_USER_INPUT = "USER_INPUT";
+    /**
+     * Interface definition for a callback to be invoked when the quiz is started.
+     */
+    public interface SolvedStateListener {
+        /**
+         * This method will be invoked when the category has been solved.
+         */
+        void onCategorySolved();
+    }
 
+    private static final String KEY_USER_INPUT = "USER_INPUT";
     private Category mCategory;
     private AdapterViewFlipper mQuizView;
     private ScoreAdapter mScoreAdapter;
     private QuizAdapter mQuizAdapter;
+    private SolvedStateListener mSolvedStateListener;
 
-    public static QuizFragment newInstance(String categoryId) {
+    public static QuizFragment newInstance(String categoryId,
+            SolvedStateListener solvedStateListener) {
         if (categoryId == null) {
             throw new IllegalArgumentException("The category can not be null");
         }
         Bundle args = new Bundle();
         args.putString(Category.TAG, categoryId);
         QuizFragment fragment = new QuizFragment();
+        if (solvedStateListener != null) {
+            fragment.mSolvedStateListener = solvedStateListener;
+        }
         fragment.setArguments(args);
         return fragment;
     }
@@ -73,12 +87,18 @@ public class QuizFragment extends Fragment {
         // TODO: 1/27/15 finalize animations
         mQuizView.setInAnimation(getActivity(), android.R.animator.fade_in);
         mQuizView.setOutAnimation(getActivity(), android.R.animator.fade_out);
-        if (mCategory.isSolved()) {
+        decideOnViewToDisplay();
+        super.onViewCreated(view, savedInstanceState);
+    }
+
+    private void decideOnViewToDisplay() {
+        final boolean isSolved = mCategory.isSolved();
+        if (isSolved) {
             showSummary();
+            mSolvedStateListener.onCategorySolved();
         } else {
             mQuizView.setAdapter(getQuizAdapter());
         }
-        super.onViewCreated(view, savedInstanceState);
     }
 
     @Override
@@ -122,7 +142,11 @@ public class QuizFragment extends Fragment {
         return mQuizAdapter;
     }
 
-    public boolean nextPage() {
+    /**
+     * Displays the next page.
+     * @return <code>true</code> if there's another quiz to solve, else <code>false</code>.
+     */
+    public boolean showNextPage() {
         if (null == mQuizView) {
             return false;
         }

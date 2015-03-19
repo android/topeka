@@ -18,12 +18,12 @@ apply plugin: 'com.android.application'
 
 android {
     buildToolsVersion "21.1.2"
-    compileSdkVersion 21
+    compileSdkVersion 22
 
     defaultConfig {
         applicationId "com.google.samples.apps.topeka"
         minSdkVersion 21
-        targetSdkVersion 21
+        targetSdkVersion 22
         versionCode 1
         versionName "1.0"
     }

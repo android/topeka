@@ -17,8 +17,8 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingStart="@dimen/keyline_vertical"
-    android:paddingEnd="@dimen/keyline_vertical">
+    android:paddingStart="@dimen/keyline_16"
+    android:paddingEnd="@dimen/keyline_16">
 
     <ProgressBar
         android:id="@+id/empty"

@@ -14,39 +14,44 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:paddingStart="@dimen/keyline_vertical"
-    android:paddingEnd="@dimen/keyline_vertical">
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:paddingTop="@dimen/keyline_8"
+    android:paddingBottom="@dimen/keyline_8">
 
     <ImageView
         android:id="@+id/solved_state"
         android:layout_width="@dimen/score_mark_size"
-        android:layout_height="match_parent"
+        android:layout_height="@dimen/score_mark_size"
         android:contentDescription="@null"
-        android:src="@drawable/ic_done" />
+        android:src="@drawable/ic_done"
+        android:layout_marginStart="@dimen/keyline_16"
+        android:layout_marginEnd="@dimen/keyline_16"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"/>
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:ignore="RtlSymmetry">
+        android:layout_toEndOf="@id/solved_state">
 
         <TextView
             android:id="@+id/quiz"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="@dimen/padding_default" />
+            tools:text="What's the answer to this question?"
+            android:textAppearance="?android:attr/textAppearanceListItem"/>
 
         <TextView
             android:id="@+id/answer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="@dimen/padding_default"
-            android:textStyle="bold"
-            android:paddingBottom="@dimen/padding_default" />
+            tools:text="This is an answer.\nThis too."
+            android:textAppearance="?android:attr/textAppearanceListItemSecondary" />
     </LinearLayout>
-</LinearLayout>
+</RelativeLayout>

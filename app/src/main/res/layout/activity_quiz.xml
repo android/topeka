@@ -21,13 +21,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.google.samples.apps.topeka.widget.fab.PlayFab
-        android:id="@+id/btn_start_quiz"
+    <com.google.samples.apps.topeka.widget.fab.FloatingActionButton
+        android:id="@+id/fab_quiz"
         android:layout_width="@dimen/fab_size"
         android:layout_height="@dimen/fab_size"
         android:layout_gravity="bottom|end"
-        android:layout_marginEnd="@dimen/keyline_vertical"
-        android:layout_marginBottom="@dimen/keyline_horizontal"
+        android:layout_marginEnd="@dimen/keyline_16"
+        android:layout_marginBottom="@dimen/keyline_16"
         android:transitionName="@string/transition_avatar" />
 
     <LinearLayout
@@ -67,7 +67,8 @@
                 android:id="@+id/quiz_fragment_container"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_gravity="center" />
+                android:layout_gravity="center"
+                android:visibility="invisible"/>
         </FrameLayout>
     </LinearLayout>
 </FrameLayout>

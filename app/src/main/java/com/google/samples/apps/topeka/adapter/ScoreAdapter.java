@@ -15,7 +15,7 @@
  */
 package com.google.samples.apps.topeka.adapter;
 
-import android.content.res.Resources;
+import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.ColorRes;
 import android.support.annotation.DrawableRes;
@@ -25,7 +25,6 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.samples.apps.topeka.R;
@@ -73,7 +72,7 @@ public class ScoreAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         if (null == convertView) {
-            convertView = initConvertView(parent);
+            convertView = createView(parent);
         }
 
         final Quiz quiz = getItem(position);
@@ -85,26 +84,26 @@ public class ScoreAdapter extends BaseAdapter {
     }
 
     private void setSolvedStateForQuiz(ImageView solvedState, int position) {
-        final Resources resources = solvedState.getResources();
+        final Context context = solvedState.getContext();
         final Drawable tintedImage;
         if (mCategory.isSolvedCorrectly(getItem(position))) {
-            tintedImage = getSuccessIcon(resources);
+            tintedImage = getSuccessIcon(context);
         } else {
-            tintedImage = getFailedIcon(resources);
+            tintedImage = getFailedIcon(context);
         }
         solvedState.setImageDrawable(tintedImage);
     }
 
-    private Drawable getSuccessIcon(Resources resources) {
+    private Drawable getSuccessIcon(Context context) {
         if (null == mSuccessIcon) {
-            mSuccessIcon = loadAndTint(resources, R.drawable.ic_done, R.color.theme_green_primary);
+            mSuccessIcon = loadAndTint(context, R.drawable.ic_done, R.color.theme_green_primary);
         }
         return mSuccessIcon;
     }
 
-    private Drawable getFailedIcon(Resources resources) {
+    private Drawable getFailedIcon(Context context) {
         if (null == mFailedIcon) {
-            mFailedIcon = loadAndTint(resources, R.drawable.ic_fail, R.color.theme_red_primary);
+            mFailedIcon = loadAndTint(context, R.drawable.ic_fail, R.color.theme_red_primary);
         }
         return mFailedIcon;
     }
@@ -112,22 +111,26 @@ public class ScoreAdapter extends BaseAdapter {
     /**
      * Convenience method to aid tintint of vector drawables at runtime.
      *
-     * @param resources The {@link Resources} for this app.
+     * @param context The {@link Context} for this app.
      * @param drawableId The id of the drawable to load.
      * @param tintColor The tint to apply.
      * @return The tinted drawable.
      */
-    private Drawable loadAndTint(Resources resources, @DrawableRes int drawableId,
+    private Drawable loadAndTint(Context context, @DrawableRes int drawableId,
             @ColorRes int tintColor) {
-        Drawable imageDrawable = resources.getDrawable(drawableId);
-        imageDrawable.setTint(resources.getColor(tintColor));
+        Drawable imageDrawable = context.getDrawable(drawableId);
+        if (imageDrawable == null) {
+            throw new IllegalArgumentException("The drawable with id " + drawableId
+                    + " does not exist");
+        }
+        imageDrawable.setTint(context.getResources().getColor(tintColor));
         return imageDrawable;
     }
 
-    private View initConvertView(ViewGroup parent) {
+    private View createView(ViewGroup parent) {
         View convertView;
         final LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        LinearLayout scorecardItem = (LinearLayout) inflater.inflate(
+        ViewGroup scorecardItem = (ViewGroup) inflater.inflate(
                 R.layout.item_scorecard, parent, false);
         convertView = scorecardItem;
         ViewHolder holder = new ViewHolder(scorecardItem);
@@ -141,9 +144,7 @@ public class ScoreAdapter extends BaseAdapter {
         final TextView mQuizView;
         final ImageView mSolvedState;
 
-        public ViewHolder(LinearLayout scorecardItem) {
-            scorecardItem.setBackgroundColor(scorecardItem.getResources().getColor(
-                    mCategory.getTheme().getWindowBackgroundColor()));
+        public ViewHolder(ViewGroup scorecardItem) {
             mQuizView = (TextView) scorecardItem.findViewById(R.id.quiz);
             mAnswerView = (TextView) scorecardItem.findViewById(R.id.answer);
             mSolvedState = (ImageView) scorecardItem.findViewById(R.id.solved_state);

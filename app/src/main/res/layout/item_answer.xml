@@ -20,6 +20,4 @@
     android:layout_height="wrap_content"
     android:textAppearance="?android:attr/textAppearanceListItem"
     android:gravity="center"
-    android:paddingStart="?android:attr/listPreferredItemPaddingStart"
-    android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
     android:minHeight="@dimen/min_height_touch_target" />

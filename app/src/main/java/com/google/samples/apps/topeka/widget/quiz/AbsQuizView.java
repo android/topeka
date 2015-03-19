@@ -21,8 +21,7 @@ import android.support.annotation.DimenRes;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.animation.AnticipateInterpolator;
-import android.view.animation.BounceInterpolator;
+import android.view.animation.AnimationUtils;
 import android.view.animation.Interpolator;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
@@ -61,6 +60,7 @@ public abstract class AbsQuizView<Q extends Quiz> extends FrameLayout implements
     private boolean mAnswered;
     private final LayoutInflater mLayoutInflater;
     protected final int mMinHeightTouchTarget;
+    private final Interpolator mInterpolator;
 
     /**
      * Enables creation of views for quizzes.
@@ -72,14 +72,16 @@ public abstract class AbsQuizView<Q extends Quiz> extends FrameLayout implements
     public AbsQuizView(Context context, Category category, Q quiz) {
         super(context);
         mQuiz = quiz;
-        mKeylineVertical = getResources().getDimensionPixelSize(R.dimen.keyline_vertical);
-        mKeylineHorizontal = getResources()
-                .getDimensionPixelSize(R.dimen.keyline_horizontal);
         mCategory = category;
+        mKeylineVertical = getResources().getDimensionPixelSize(R.dimen.keyline_16);
+        mKeylineHorizontal = getResources()
+                .getDimensionPixelSize(R.dimen.keyline_16);
         mSubmitAnswer = getSubmitButton(context);
         mLayoutInflater = LayoutInflater.from(context);
         mMinHeightTouchTarget = getResources()
                 .getDimensionPixelSize(R.dimen.min_height_touch_target);
+        mInterpolator = AnimationUtils
+                .loadInterpolator(getContext(), android.R.interpolator.fast_out_slow_in);
         setId(quiz.getId());
         setUpQuestionView();
         LinearLayout container = createContainerLayout(context);
@@ -210,15 +212,11 @@ public abstract class AbsQuizView<Q extends Quiz> extends FrameLayout implements
     protected void allowAnswer(final boolean answered) {
         if (null != mSubmitAnswer) {
             final float targetScale = answered ? 1f : 0f;
-            final Interpolator interpolator;
             if (answered) {
                 mSubmitAnswer.setVisibility(View.VISIBLE);
-                interpolator = new BounceInterpolator();
-            } else {
-                interpolator = new AnticipateInterpolator();
             }
             mSubmitAnswer.animate().scaleX(targetScale).scaleY(targetScale)
-                    .setInterpolator(interpolator);
+                    .setInterpolator(mInterpolator);
             mAnswered = answered;
         }
     }

@@ -23,10 +23,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.app.FragmentTransaction;
+import android.transition.Transition;
 import android.view.View;
-import android.view.animation.AnticipateInterpolator;
-import android.view.animation.DecelerateInterpolator;
+import android.view.ViewAnimationUtils;
+import android.view.animation.AnimationUtils;
 import android.view.animation.Interpolator;
 import android.widget.ImageView;
 import android.widget.Toolbar;
@@ -35,6 +35,9 @@ import com.google.samples.apps.topeka.R;
 import com.google.samples.apps.topeka.fragment.QuizFragment;
 import com.google.samples.apps.topeka.model.Category;
 import com.google.samples.apps.topeka.persistence.TopekaDatabaseHelper;
+import com.google.samples.apps.topeka.widget.fab.FloatingActionButton;
+
+import java.util.concurrent.TimeUnit;
 
 import static com.google.samples.apps.topeka.adapter.CategoryAdapter.DRAWABLE;
 
@@ -44,12 +47,14 @@ public class QuizActivity extends Activity implements View.OnClickListener {
     private static final String STATE_IS_PLAYING = "isPlaying";
     private static final int UNDEFINED = -1;
     private static final String FRAGMENT_TAG = "Quiz";
-    private final Interpolator mBackgroundIconInterpolator = new DecelerateInterpolator();
+    private Interpolator mInterpolator;
     private String mCategoryId;
     private QuizFragment mQuizFragment;
     Toolbar mToolbar;
-    private ImageView mStartQuiz;
-    private boolean mIsPlaying;
+    private ImageView mQuizFab;
+    private boolean mSavedStateIsPlaying;
+    private ImageView mIcon;
+    private Animator mCircularReveal;
 
     public static Intent getStartIntent(Context context, Category category) {
         Intent starter = new Intent(context, QuizActivity.class);
@@ -60,8 +65,10 @@ public class QuizActivity extends Activity implements View.OnClickListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         mCategoryId = getIntent().getStringExtra(Category.TAG);
+        mInterpolator = AnimationUtils.loadInterpolator(this,
+                android.R.interpolator.fast_out_slow_in);
         if (null != savedInstanceState) {
-            mIsPlaying = savedInstanceState.getBoolean(STATE_IS_PLAYING);
+            mSavedStateIsPlaying = savedInstanceState.getBoolean(STATE_IS_PLAYING);
         }
         populate(mCategoryId);
         super.onCreate(savedInstanceState);
@@ -69,30 +76,36 @@ public class QuizActivity extends Activity implements View.OnClickListener {
 
     @Override
     protected void onResume() {
-        if (mIsPlaying) {
+        if (mSavedStateIsPlaying) {
             mQuizFragment = (QuizFragment) getFragmentManager().findFragmentByTag(
                     FRAGMENT_TAG);
+            findViewById(R.id.quiz_fragment_container).setVisibility(View.VISIBLE);
         }
         super.onResume();
     }
 
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
-        outState.putBoolean(STATE_IS_PLAYING, mStartQuiz.getVisibility() == View.GONE);
+        outState.putBoolean(STATE_IS_PLAYING, mQuizFab.getVisibility() == View.GONE);
         super.onSaveInstanceState(outState);
     }
 
     @Override
     public void onClick(final View v) {
         switch (v.getId()) {
-            case R.id.btn_start_quiz:
+            case R.id.fab_quiz:
                 startQuizFromClickOn(v);
                 break;
             case R.id.submitAnswer:
                 submitAnswer();
                 break;
+            case R.id.quiz_done:
+                finishAfterTransition();
+                break;
             case UNDEFINED:
-                if (v.getContentDescription().equals(getString(R.string.up))) {
+                final CharSequence contentDescription = v.getContentDescription();
+                if (contentDescription != null &&
+                        contentDescription.equals(getString(R.string.up))) {
                     onBackPressed();
                     break;
                 }
@@ -106,7 +119,7 @@ public class QuizActivity extends Activity implements View.OnClickListener {
     @Override
     public void onBackPressed() {
         findViewById(R.id.icon).animate().scaleX(0).scaleY(0).setStartDelay(0)
-                .setInterpolator(mBackgroundIconInterpolator).setListener(
+                .setInterpolator(mInterpolator).setListener(
                 new AnimatorListenerAdapter() {
                     @Override
                     public void onAnimationEnd(Animator animation) {
@@ -117,19 +130,71 @@ public class QuizActivity extends Activity implements View.OnClickListener {
     }
 
     private void startQuizFromClickOn(final View view) {
-        mQuizFragment = QuizFragment.newInstance(mCategoryId);
+        initQuizFragment();
         getFragmentManager().beginTransaction()
-                .replace(R.id.quiz_fragment_container, mQuizFragment, FRAGMENT_TAG)
-                .setTransition(FragmentTransaction.TRANSIT_NONE)
-                .commit();
+                .replace(R.id.quiz_fragment_container, mQuizFragment, FRAGMENT_TAG).commit();
+        final View fragmentContainer = findViewById(R.id.quiz_fragment_container);
+        int centerX = (view.getLeft() + view.getRight()) / 2;
+        int centerY = (view.getTop() + view.getBottom()) / 2;
+        int finalRadius = Math.max(fragmentContainer.getWidth(), fragmentContainer.getHeight());
+        mCircularReveal = ViewAnimationUtils.createCircularReveal(
+                fragmentContainer, centerX, centerY, 0, finalRadius);
+        fragmentContainer.setVisibility(View.VISIBLE);
+        view.setVisibility(View.GONE);
 
-        view.animate().scaleX(0).scaleY(0).alpha(0)
-                .setInterpolator(new AnticipateInterpolator())
-                .setListener(new AnimatorListenerAdapter() {
+        mCircularReveal.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                mIcon.setVisibility(View.GONE);
+                super.onAnimationEnd(animation);
+                mCircularReveal.removeListener(this);
+            }
+        });
+
+        mCircularReveal.start();
+
+        // the toolbar should not have more elevation than the content while playing
+        mToolbar.setElevation(0);
+    }
+
+    private void initQuizFragment() {
+        mQuizFragment = QuizFragment.newInstance(mCategoryId,
+                new QuizFragment.SolvedStateListener() {
                     @Override
-                    public void onAnimationEnd(Animator animation) {
-                        view.setVisibility(View.GONE);
-                        super.onAnimationEnd(animation);
+                    public void onCategorySolved() {
+                        mToolbar.setElevation(getResources().
+                                getDimensionPixelSize(R.dimen.elevation_header));
+                        displayDoneFab();
+                    }
+
+                    private void displayDoneFab() {
+                        /* We're re-using the already existing fab and give it some
+                         * new values. This has to run delayed due to the queued animation
+                         * to hide the fab initially.
+                         */
+                        if (null != mCircularReveal && mCircularReveal.isRunning()) {
+                            mCircularReveal.addListener(new AnimatorListenerAdapter() {
+                                @Override
+                                public void onAnimationEnd(Animator animation) {
+                                    showQuizFabWithDoneIcon();
+                                    super.onAnimationEnd(animation);
+                                    mCircularReveal.removeListener(this);
+                                }
+                            });
+                        } else {
+                            showQuizFabWithDoneIcon();
+                        }
+                    }
+
+                    private void showQuizFabWithDoneIcon() {
+                        mQuizFab.setImageResource(R.drawable.ic_done);
+                        mQuizFab.setId(R.id.quiz_done);
+                        mQuizFab.setVisibility(View.VISIBLE);
+                        mQuizFab.setScaleX(0);
+                        mQuizFab.setScaleY(0);
+                        mQuizFab.animate().scaleX(1).scaleY(1).
+                                setInterpolator(mInterpolator)
+                                .setListener(null);
                     }
                 });
         // the toolbar should not have more elevation than the content while playing
@@ -137,8 +202,9 @@ public class QuizActivity extends Activity implements View.OnClickListener {
     }
 
     private void submitAnswer() {
-        if (!mQuizFragment.nextPage()) {
+        if (!mQuizFragment.showNextPage()) {
             mQuizFragment.showSummary();
+            mToolbar.setElevation(getResources().getDimensionPixelSize(R.dimen.elevation_header));
         }
     }
 
@@ -156,24 +222,26 @@ public class QuizActivity extends Activity implements View.OnClickListener {
     private void initLayout(String categoryId) {
         setContentView(R.layout.activity_quiz);
         //TODO: 11/3/14 find a better way to do this, which doesn't include resource lookup.
-        ImageView icon = (ImageView) findViewById(R.id.icon);
+        mIcon = (ImageView) findViewById(R.id.icon);
         int resId = getResources().getIdentifier(IMAGE_CATEGORY + categoryId, DRAWABLE,
                 getApplicationContext().getPackageName());
-        icon.setScaleX(0);
-        icon.setScaleY(0);
-        icon.setImageResource(resId);
-        icon.animate().scaleX(1).scaleY(1).setInterpolator(mBackgroundIconInterpolator)
+        mIcon.setImageResource(resId);
+        mQuizFab = (FloatingActionButton) findViewById(R.id.fab_quiz);
+        mQuizFab.setImageResource(R.drawable.ic_play);
+        mQuizFab.setVisibility(mSavedStateIsPlaying ? View.GONE : View.VISIBLE);
+        mQuizFab.setOnClickListener(this);
+        mIcon.setScaleX(0);
+        mIcon.setScaleY(0);
+        mIcon.setImageResource(resId);
+        mIcon.animate().scaleX(1).scaleY(1).setInterpolator(mInterpolator)
                 .setStartDelay(300);
-        mStartQuiz = (ImageView) findViewById(R.id.btn_start_quiz);
-        mStartQuiz.setVisibility(mIsPlaying ? View.GONE : View.VISIBLE);
-        mStartQuiz.setOnClickListener(this);
     }
 
     private void initToolbar(Category category) {
         mToolbar = (Toolbar) findViewById(R.id.toolbar_activity_quiz);
         mToolbar.setTitle(category.getName());
         mToolbar.setNavigationOnClickListener(this);
-        if (mIsPlaying) {
+        if (mSavedStateIsPlaying) {
             // the toolbar should not have more elevation than the content while playing
             mToolbar.setElevation(0);
         }
