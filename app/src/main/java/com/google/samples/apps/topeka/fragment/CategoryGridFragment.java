@@ -31,7 +31,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.ImageView;
 
 public class CategoryGridFragment extends Fragment implements AdapterView.OnItemClickListener {
 
@@ -69,17 +68,17 @@ public class CategoryGridFragment extends Fragment implements AdapterView.OnItem
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Activity activity = getActivity();
         //TODO: finalize the animations
-        ImageView iconView = (ImageView) view.findViewById(R.id.category_icon);
-        startQuizActivityWithTransition(activity, iconView, mCategoryAdapter.getItem(position));
+        startQuizActivityWithTransition(activity, view.findViewById(R.id.category_title),
+                mCategoryAdapter.getItem(position));
     }
 
-    private void startQuizActivityWithTransition(Activity activity, ImageView iconView,
+    private void startQuizActivityWithTransition(Activity activity, View toolbar,
             Category category) {
         // Creates pair of transition participants.
-        Pair participants = new Pair<View, String>(iconView,
-                activity.getString(R.string.transition_background));
+        Pair participants = new Pair<>(toolbar, activity.getString(R.string.transition_toolbar));
         ActivityOptions sceneTransitionAnimation = ActivityOptions
                 .makeSceneTransitionAnimation(activity, participants);
+
         // Starts the activity with the participants, animating from one to the other.
         final Bundle transitionBundle = sceneTransitionAnimation.toBundle();
         activity.startActivity(QuizActivity.getStartIntent(activity, category), transitionBundle);

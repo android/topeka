@@ -44,21 +44,22 @@
             android:elevation="@dimen/elevation_header"
             android:background="?android:colorPrimary"
             android:layout_gravity="top"
-            android:contentInsetStart="@dimen/keyline_72">
+            android:contentInsetStart="@dimen/keyline_72"
+            android:transitionName="@string/transition_toolbar">
             <!--an empty tag is required to get touch feedback on the navigation icon-->
         </Toolbar>
 
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_gravity="center">
+            android:layout_gravity="center"
+            android:transitionName="@string/transition_background">
 
             <ImageView
                 android:id="@+id/icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:contentDescription="@null"
-                android:transitionName="@string/transition_background"
                 android:scaleType="center"
                 android:layout_gravity="center" />
 

@@ -58,7 +58,7 @@ public class CategoryAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         if (null == convertView) {
-            convertView = mLayoutInflater.inflate(R.layout.layout_category, parent, false);
+            convertView = mLayoutInflater.inflate(R.layout.item_category, parent, false);
             convertView.setTag(new CategoryViewHolder((LinearLayout) convertView));
         }
         CategoryViewHolder holder = (CategoryViewHolder) convertView.getTag();

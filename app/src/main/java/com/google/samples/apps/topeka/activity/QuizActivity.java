@@ -26,6 +26,8 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.view.animation.AnticipateInterpolator;
+import android.view.animation.DecelerateInterpolator;
+import android.view.animation.Interpolator;
 import android.widget.ImageView;
 import android.widget.Toolbar;
 
@@ -42,6 +44,7 @@ public class QuizActivity extends Activity implements View.OnClickListener {
     private static final String STATE_IS_PLAYING = "isPlaying";
     private static final int UNDEFINED = -1;
     private static final String FRAGMENT_TAG = "Quiz";
+    private final Interpolator mBackgroundIconInterpolator = new DecelerateInterpolator();
     private String mCategoryId;
     private QuizFragment mQuizFragment;
     Toolbar mToolbar;
@@ -90,7 +93,7 @@ public class QuizActivity extends Activity implements View.OnClickListener {
                 break;
             case UNDEFINED:
                 if (v.getContentDescription().equals(getString(R.string.up))) {
-                    finishAfterTransition();
+                    onBackPressed();
                     break;
                 }
             default:
@@ -98,6 +101,19 @@ public class QuizActivity extends Activity implements View.OnClickListener {
                         "OnClick has not been implemented for " + getResources().getResourceName(
                                 v.getId()));
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        findViewById(R.id.icon).animate().scaleX(0).scaleY(0).setStartDelay(0)
+                .setInterpolator(mBackgroundIconInterpolator).setListener(
+                new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        QuizActivity.super.onBackPressed();
+                        super.onAnimationEnd(animation);
+                    }
+                });
     }
 
     private void startQuizFromClickOn(final View view) {
@@ -143,7 +159,11 @@ public class QuizActivity extends Activity implements View.OnClickListener {
         ImageView icon = (ImageView) findViewById(R.id.icon);
         int resId = getResources().getIdentifier(IMAGE_CATEGORY + categoryId, DRAWABLE,
                 getApplicationContext().getPackageName());
+        icon.setScaleX(0);
+        icon.setScaleY(0);
         icon.setImageResource(resId);
+        icon.animate().scaleX(1).scaleY(1).setInterpolator(mBackgroundIconInterpolator)
+                .setStartDelay(300);
         mStartQuiz = (ImageView) findViewById(R.id.btn_start_quiz);
         mStartQuiz.setVisibility(mIsPlaying ? View.GONE : View.VISIBLE);
         mStartQuiz.setOnClickListener(this);
