@@ -24,6 +24,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toolbar;
 
@@ -32,8 +33,9 @@ import com.google.samples.apps.topeka.fragment.CategoryGridFragment;
 import com.google.samples.apps.topeka.helper.PreferencesHelper;
 import com.google.samples.apps.topeka.model.Player;
 import com.google.samples.apps.topeka.persistence.TopekaDatabaseHelper;
+import com.google.samples.apps.topeka.widget.outlineprovider.AvatarOutlineProvider;
 
-public class CategorySelectionActivity extends Activity {
+public class CategorySelectionActivity extends Activity implements View.OnClickListener {
 
     private static final String EXTRA_PLAYER = "player";
 
@@ -74,13 +76,30 @@ public class CategorySelectionActivity extends Activity {
     private void setUpToolbar(Player player) {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_player);
         setActionBar(toolbar);
-        setTitle(getDisplayName(player));
+        //noinspection ConstantConditions
+        getActionBar().setDisplayShowTitleEnabled(false);
+        final ImageView avatarView = (ImageView) toolbar.findViewById(R.id.avatar);
+        avatarView.setClipToOutline(true);
+        avatarView.setOutlineProvider(new AvatarOutlineProvider());
+        avatarView.setOnClickListener(this);
+        avatarView.setImageDrawable(getDrawable(player.getAvatar().getDrawableId()));
+        ((TextView) toolbar.findViewById(R.id.title)).setText(getDisplayName(player));
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_category, menu);
         return true;
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.avatar: {
+               signOut();
+            }
+        }
+
     }
 
     @Override

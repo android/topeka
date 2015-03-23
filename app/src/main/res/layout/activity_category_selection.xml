@@ -25,10 +25,25 @@
         android:layout_width="match_parent"
         android:layout_height="?android:attr/actionBarSize"
         style="@style/Topeka.TextAppearance.Title"
-        android:elevation="@dimen/elevation_header">
+        android:elevation="@dimen/elevation_header"
+        android:background="@color/topeka_primary">
+
+        <ImageView
+            android:id="@+id/avatar"
+            android:layout_width="@dimen/avatar_size"
+            android:layout_height="@dimen/avatar_size"
+            android:layout_marginEnd="@dimen/keyline_16"/>
+
+        <TextView
+            android:id="@+id/title"
+            style="@style/Topeka.TextAppearance.Title.Inverse"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|start" />
+
         <TextView
             android:id="@+id/score"
-            style="@style/Topeka.TextAppearance.Title"
+            style="@style/Topeka.TextAppearance.Title.Inverse"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingStart="@dimen/padding_default"
