@@ -21,14 +21,14 @@ import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterViewFlipper;
 import android.widget.ListView;
 
 import com.google.samples.apps.topeka.R;
-import com.google.samples.apps.topeka.adapter.QuizAdapter;
+import com.google.samples.apps.topeka.adapter.QuizPagerAdapter;
 import com.google.samples.apps.topeka.adapter.ScoreAdapter;
 import com.google.samples.apps.topeka.model.Category;
 import com.google.samples.apps.topeka.persistence.TopekaDatabaseHelper;
+import com.google.samples.apps.topeka.widget.NoTouchViewPager;
 import com.google.samples.apps.topeka.widget.quiz.AbsQuizView;
 
 /**
@@ -40,6 +40,7 @@ public class QuizFragment extends Fragment {
      * Interface definition for a callback to be invoked when the quiz is started.
      */
     public interface SolvedStateListener {
+
         /**
          * This method will be invoked when the category has been solved.
          */
@@ -48,9 +49,9 @@ public class QuizFragment extends Fragment {
 
     private static final String KEY_USER_INPUT = "USER_INPUT";
     private Category mCategory;
-    private AdapterViewFlipper mQuizView;
+    private NoTouchViewPager mQuizView;
     private ScoreAdapter mScoreAdapter;
-    private QuizAdapter mQuizAdapter;
+    private QuizPagerAdapter mQuizAdapter;
     private SolvedStateListener mSolvedStateListener;
 
     public static QuizFragment newInstance(String categoryId,
@@ -83,10 +84,8 @@ public class QuizFragment extends Fragment {
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        mQuizView = (AdapterViewFlipper) view.findViewById(R.id.quiz_pager);
+        mQuizView = (NoTouchViewPager) view.findViewById(R.id.quiz_pager);
         // TODO: 1/27/15 finalize animations
-        mQuizView.setInAnimation(getActivity(), android.R.animator.fade_in);
-        mQuizView.setOutAnimation(getActivity(), android.R.animator.fade_out);
         decideOnViewToDisplay();
         super.onViewCreated(view, savedInstanceState);
     }
@@ -98,18 +97,15 @@ public class QuizFragment extends Fragment {
             mSolvedStateListener.onCategorySolved();
         } else {
             mQuizView.setAdapter(getQuizAdapter());
+            mQuizView.setCurrentItem(mCategory.getFirstUnsolvedQuizPosition() + 1, false);
         }
     }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
-        View currentView = mQuizView.getCurrentView();
-        if (currentView instanceof ViewGroup) {
-            ViewGroup currentViewGroup = (ViewGroup) currentView;
-            View currentChild = currentViewGroup.getChildAt(0);
-            if (currentChild instanceof AbsQuizView) {
-                outState.putBundle(KEY_USER_INPUT, ((AbsQuizView) currentChild).getUserInput());
-            }
+        View currentView = mQuizView.getFocusedChild();
+        if (currentView instanceof AbsQuizView) {
+            outState.putBundle(KEY_USER_INPUT, ((AbsQuizView) currentView).getUserInput());
         }
         super.onSaveInstanceState(outState);
     }
@@ -120,48 +116,54 @@ public class QuizFragment extends Fragment {
         super.onViewStateRestored(savedInstanceState);
     }
 
-    private void restoreQuizState(Bundle savedInstanceState) {
+    private void restoreQuizState(final Bundle savedInstanceState) {
         if (null == savedInstanceState) {
             return;
         }
-        View selectedView = mQuizView.getSelectedView();
-        if (selectedView instanceof ViewGroup) {
-            ViewGroup selectedViewGroup = (ViewGroup) selectedView;
-            View currentChild = selectedViewGroup.getChildAt(0);
-            if (currentChild instanceof AbsQuizView) {
-                ((AbsQuizView) currentChild).setUserInput(savedInstanceState.
-                        getBundle(KEY_USER_INPUT));
+        mQuizView.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
+            @Override
+            public void onLayoutChange(View v, int left, int top, int right, int bottom,
+                    int oldLeft,
+                    int oldTop, int oldRight, int oldBottom) {
+                mQuizView.removeOnLayoutChangeListener(this);
+                View currentChild = mQuizView.getChildAt(0);
+                if (currentChild instanceof AbsQuizView) {
+                    ((AbsQuizView) currentChild).setUserInput(savedInstanceState.
+                            getBundle(KEY_USER_INPUT));
+                }
             }
-        }
+        });
+
     }
 
-    private QuizAdapter getQuizAdapter() {
+    private QuizPagerAdapter getQuizAdapter() {
         if (null == mQuizAdapter) {
-            mQuizAdapter = new QuizAdapter(getActivity(), mCategory);
+            mQuizAdapter = new QuizPagerAdapter(getActivity(), mCategory);
         }
         return mQuizAdapter;
     }
 
     /**
      * Displays the next page.
+     *
      * @return <code>true</code> if there's another quiz to solve, else <code>false</code>.
      */
     public boolean showNextPage() {
         if (null == mQuizView) {
             return false;
         }
-        int nextItem = mQuizView.getDisplayedChild() + 1;
+        int nextItem = mQuizView.getCurrentItem() + 1;
         final int count = mQuizView.getAdapter().getCount();
         if (nextItem < count) {
-            moveToNextItem();
+            moveToNextItem(nextItem);
             return true;
         }
         markCategorySolved();
         return false;
     }
 
-    private void moveToNextItem() {
-        mQuizView.showNext();
+    private void moveToNextItem(int nextItem) {
+        mQuizView.setCurrentItem(nextItem, true);
         TopekaDatabaseHelper.updateCategory(getActivity(), mCategory);
     }
 
