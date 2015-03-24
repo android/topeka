@@ -152,6 +152,9 @@ public class Category implements Parcelable {
      * @return The position of the first unsolved quiz.
      */
     public int getFirstUnsolvedQuizPosition() {
+        if (mQuizzes == null) {
+            return -1;
+        }
         for (int i = 0; i < mQuizzes.size(); i++) {
             if (!mQuizzes.get(i).isSolved()) {
                 return i;

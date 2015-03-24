@@ -15,9 +15,14 @@
  */
 package com.google.samples.apps.topeka.widget.quiz;
 
+import android.animation.ObjectAnimator;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.DimenRes;
+import android.util.IntProperty;
+import android.util.Property;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -62,6 +67,24 @@ public abstract class AbsQuizView<Q extends Quiz> extends FrameLayout implements
     protected final int mMinHeightTouchTarget;
     private final Interpolator mInterpolator;
 
+    public static final Property<FrameLayout, Integer> FOREGROUND_COLOR =
+            new IntProperty<FrameLayout>("foregroundColor") {
+
+                @Override
+                public void setValue(FrameLayout object, int value) {
+                    if (object.getForeground() instanceof ColorDrawable) {
+                        ((ColorDrawable) object.getForeground()).setColor(value);
+                    } else {
+                        object.setForeground(new ColorDrawable(value));
+                    }
+                }
+
+                @Override
+                public Integer get(FrameLayout object) {
+                    return ((ColorDrawable) object.getForeground()).getColor();
+                }
+            };
+
     /**
      * Enables creation of views for quizzes.
      *
@@ -96,7 +119,6 @@ public abstract class AbsQuizView<Q extends Quiz> extends FrameLayout implements
                 addFloatingActionButton();
             }
         });
-
     }
 
     /**
@@ -248,13 +270,102 @@ public abstract class AbsQuizView<Q extends Quiz> extends FrameLayout implements
         submitAnswer(findViewById(R.id.submitAnswer));
     }
 
-    private void submitAnswer(View v) {
+    private void submitAnswer(final View v) {
+        final boolean answerCorrect = isAnswerCorrect();
         // TODO: 12/15/14 re-architect the way callbacks are being used here.
-        if (getContext() instanceof QuizActivity) {
-            ((QuizActivity) getContext()).onClick(v);
-        }
+
         mQuiz.setSolved(true);
-        mCategory.setScore(getQuiz(), isAnswerCorrect());
+        performScoreAnimation(answerCorrect);
+    }
+
+    /**
+     * Animates the view nicely when the answer has been submitted.
+     *
+     * @param answerCorrect <code>true</code> if the answer was correct, else <code>false</code>.
+     */
+    private void performScoreAnimation(final boolean answerCorrect) {
+    /*
+     * 0ms Fade fab color to red/green (400ms fast_out_slow_in)
+     * 0ms Fade/morph fab icon to tick/cross (300ms fast_out_slow_in)
+     * 600ms scale x/y to 0f (200ms fast_in_linear_out)
+     * 750ms move/scale the question box to score card (500ms fast_in_slow_out)
+     * 750ms fade out the question (200ms fast_in_linear_out)
+     * 750ms fade out the answers (200ms fast_in_linear_out)
+     * TODO implement from here
+     * 1150ms fade in / translate up the points scored in the score box (200ms linear_in_slow_out)
+     * 1500ms move the score box out to the left (300ms fast_in_linear_out)
+     * 1500ms move in the new question (500ms fast_in_linear_out)
+     */
+
+        final Interpolator fastOutSlowInInterpolator = AnimationUtils
+                .loadInterpolator(getContext(), android.R.interpolator.fast_out_slow_in);
+        final Interpolator linearOutSlowInInterpolator = AnimationUtils
+                .loadInterpolator(getContext(), android.R.interpolator.linear_out_slow_in);
+
+        final int colorAnimationDuration = 400;
+        final int iconAnimationDuration = 300;
+        final int scaleAnimationDuration = 200;
+
+        // 0ms Fade fab color to red/green (400ms fast_out_slow_in)
+        final int backgroundColor = getResources().getColor(answerCorrect ?
+                R.color.button_true : R.color.button_false);
+        final int imageResId = answerCorrect ? R.drawable.ic_done : R.drawable.ic_fail;
+
+        final ObjectAnimator fabColorAnimator = ObjectAnimator
+                .ofArgb(mSubmitAnswer, "backgroundColor", Color.WHITE, backgroundColor);
+        fabColorAnimator.setDuration(colorAnimationDuration)
+                .setInterpolator(fastOutSlowInInterpolator);
+        fabColorAnimator.start();
+
+        // 0 ms Fade/morph fab icon to tick/cross (300ms fast_out_slow_in)
+        final ObjectAnimator iconAnimator = ObjectAnimator
+                .ofArgb(mSubmitAnswer, "imageResource", R.drawable.ic_done, imageResId);
+        iconAnimator.setDuration(iconAnimationDuration)
+                .setInterpolator(fastOutSlowInInterpolator);
+        iconAnimator.start();
+
+        // 600ms scale x/y to 0f (200ms fast_in_linear_out)
+        mSubmitAnswer.animate()
+                .setDuration(scaleAnimationDuration)
+                .setStartDelay(iconAnimationDuration * 2)
+                .scaleX(0f)
+                .scaleY(0f)
+                .setInterpolator(linearOutSlowInInterpolator);
+
+        final float widthHeightRatio = (float) getHeight() / (float) getWidth();
+
+        // 750ms move/scale the question box to score card (500ms fast_in_slow_out)
+        setElevation(getResources().getDimension(R.dimen.elevation_header));
+        animate().
+                setDuration(500)
+                .setStartDelay(750)
+                .scaleX(.5f)
+                .scaleY(.5f / widthHeightRatio)
+                .setInterpolator(linearOutSlowInInterpolator)
+                .withEndAction(new Runnable() {
+                    @Override
+                    public void run() {
+                        mCategory.setScore(getQuiz(), answerCorrect);
+                        if (getContext() instanceof QuizActivity) {
+                            ((QuizActivity) getContext()).proceed();
+                        }
+                    }
+        });
+
+        // 750ms fade out the question (200ms fast_in_linear_out)
+        // 750ms fade out the answers (200ms fast_in_linear_out)
+
+        final ObjectAnimator foregroundAnimator = ObjectAnimator
+                .ofArgb(this, FOREGROUND_COLOR, Color.WHITE, backgroundColor);
+        foregroundAnimator.setDuration(200)
+                .setInterpolator(linearOutSlowInInterpolator);
+        foregroundAnimator.setStartDelay(750);
+        foregroundAnimator.start();
+
+    /*
+     * 1150ms fade in / translate up the points scored in the score box (200ms linear_in_slow_out)
+     */
+
     }
 
     private void setMinHeightInternal(View view, @DimenRes int resId) {

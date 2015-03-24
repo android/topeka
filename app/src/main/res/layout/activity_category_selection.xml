@@ -32,7 +32,8 @@
             android:id="@+id/avatar"
             android:layout_width="@dimen/avatar_size"
             android:layout_height="@dimen/avatar_size"
-            android:layout_marginEnd="@dimen/keyline_16"/>
+            android:layout_marginEnd="@dimen/keyline_16"
+            android:transitionName="@string/transition_avatar"/>
 
         <TextView
             android:id="@+id/title"
@@ -48,7 +49,7 @@
             android:layout_height="wrap_content"
             android:paddingStart="@dimen/padding_default"
             android:paddingEnd="@dimen/padding_default"
-            android:layout_gravity="center" />
+            android:layout_gravity="center_vertical|end" />
     </android.widget.Toolbar>
 
     <FrameLayout

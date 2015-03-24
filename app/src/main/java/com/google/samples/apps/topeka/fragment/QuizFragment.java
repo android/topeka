@@ -21,14 +21,14 @@ import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterViewAnimator;
 import android.widget.ListView;
 
 import com.google.samples.apps.topeka.R;
-import com.google.samples.apps.topeka.adapter.QuizPagerAdapter;
+import com.google.samples.apps.topeka.adapter.QuizAdapter;
 import com.google.samples.apps.topeka.adapter.ScoreAdapter;
 import com.google.samples.apps.topeka.model.Category;
 import com.google.samples.apps.topeka.persistence.TopekaDatabaseHelper;
-import com.google.samples.apps.topeka.widget.NoTouchViewPager;
 import com.google.samples.apps.topeka.widget.quiz.AbsQuizView;
 
 /**
@@ -49,9 +49,9 @@ public class QuizFragment extends Fragment {
 
     private static final String KEY_USER_INPUT = "USER_INPUT";
     private Category mCategory;
-    private NoTouchViewPager mQuizView;
+    private AdapterViewAnimator mQuizView;
     private ScoreAdapter mScoreAdapter;
-    private QuizPagerAdapter mQuizAdapter;
+    private QuizAdapter mQuizAdapter;
     private SolvedStateListener mSolvedStateListener;
 
     public static QuizFragment newInstance(String categoryId,
@@ -84,9 +84,11 @@ public class QuizFragment extends Fragment {
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        mQuizView = (NoTouchViewPager) view.findViewById(R.id.quiz_pager);
+        mQuizView = (AdapterViewAnimator) view.findViewById(R.id.quiz_view);
         // TODO: 1/27/15 finalize animations
         decideOnViewToDisplay();
+        mQuizView.setInAnimation(getActivity(), R.animator.slide_in_bottom);
+        mQuizView.setOutAnimation(getActivity(), R.animator.slide_out_top);
         super.onViewCreated(view, savedInstanceState);
     }
 
@@ -97,7 +99,7 @@ public class QuizFragment extends Fragment {
             mSolvedStateListener.onCategorySolved();
         } else {
             mQuizView.setAdapter(getQuizAdapter());
-            mQuizView.setCurrentItem(mCategory.getFirstUnsolvedQuizPosition() + 1, false);
+            mQuizView.setSelection(mCategory.getFirstUnsolvedQuizPosition());
         }
     }
 
@@ -136,9 +138,9 @@ public class QuizFragment extends Fragment {
 
     }
 
-    private QuizPagerAdapter getQuizAdapter() {
+    private QuizAdapter getQuizAdapter() {
         if (null == mQuizAdapter) {
-            mQuizAdapter = new QuizPagerAdapter(getActivity(), mCategory);
+            mQuizAdapter = new QuizAdapter(getActivity(), mCategory);
         }
         return mQuizAdapter;
     }
@@ -152,19 +154,15 @@ public class QuizFragment extends Fragment {
         if (null == mQuizView) {
             return false;
         }
-        int nextItem = mQuizView.getCurrentItem() + 1;
+        int nextItem = mQuizView.getDisplayedChild() + 1;
         final int count = mQuizView.getAdapter().getCount();
         if (nextItem < count) {
-            moveToNextItem(nextItem);
+            mQuizView.showNext();
+            TopekaDatabaseHelper.updateCategory(getActivity(), mCategory);
             return true;
         }
         markCategorySolved();
         return false;
-    }
-
-    private void moveToNextItem(int nextItem) {
-        mQuizView.setCurrentItem(nextItem, true);
-        TopekaDatabaseHelper.updateCategory(getActivity(), mCategory);
     }
 
     private void markCategorySolved() {

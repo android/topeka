@@ -41,8 +41,7 @@ import com.google.samples.apps.topeka.widget.fab.DoneFab;
 /**
  * Enables selection of an {@link Avatar} and user name.
  */
-public class SignInFragment extends Fragment implements View.OnClickListener,
-        AdapterView.OnItemClickListener, View.OnLayoutChangeListener, TextWatcher {
+public class SignInFragment extends Fragment {
 
     private static final String ARG_EDIT = "EDIT";
     private Player mPlayer;
@@ -69,7 +68,15 @@ public class SignInFragment extends Fragment implements View.OnClickListener,
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
             @Nullable Bundle savedInstanceState) {
         final View contentView = inflater.inflate(R.layout.fragment_sign_in, container, false);
-        contentView.addOnLayoutChangeListener(this);
+        contentView.addOnLayoutChangeListener(new View.
+                OnLayoutChangeListener() {
+            @Override
+            public void onLayoutChange(View v, int left, int top, int right, int bottom,
+                    int oldLeft, int oldTop, int oldRight, int oldBottom) {
+                v.removeOnLayoutChangeListener(this);
+                setUpGridView(getView());
+            }
+        });
         return contentView;
     }
 
@@ -107,34 +114,63 @@ public class SignInFragment extends Fragment implements View.OnClickListener,
     }
 
     private void initContentViews(View view) {
+        TextWatcher textWatcher = new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        /* no-op */
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                // showing the floating action button if text is entered
+                // TODO: 12/15/14 make sure that both edittexts have input before showing the fab
+                if (count > 0) {
+                    mDoneFab.setVisibility(View.VISIBLE);
+                } else {
+                    mDoneFab.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+        /* no-op */
+            }
+        };
+
         mFirstName = (EditText) view.findViewById(R.id.first_name);
-        mFirstName.addTextChangedListener(this);
+        mFirstName.addTextChangedListener(textWatcher);
         mLastInitial = (EditText) view.findViewById(R.id.last_initial);
-        mLastInitial.addTextChangedListener(this);
+        mLastInitial.addTextChangedListener(textWatcher);
         mDoneFab = (DoneFab) view.findViewById(R.id.check);
-        mDoneFab.setOnClickListener(this);
+        mDoneFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switch (v.getId()) {
+                    case R.id.check:
+                        savePlayer(getActivity());
+                        performSignInWithTransition(v);
+                        break;
+                    default:
+                        throw new UnsupportedOperationException(
+                                "The onClick method has not been implemented for " + getResources()
+                                        .getResourceEntryName(v.getId()));
+                }
+            }
+        });
     }
 
     private void setUpGridView(View container) {
         mAvatarGrid = (GridView) container.findViewById(R.id.avatars);
         mAvatarGrid.setAdapter(new AvatarAdapter(getActivity()));
-        mAvatarGrid.setOnItemClickListener(this);
+        mAvatarGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                mSelectedAvatar = Avatar.values()[position];
+            }
+        });
         mAvatarGrid.setNumColumns(calculateSpanCount());
     }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.check:
-                savePlayer(getActivity());
-                performSignInWithTransition(v);
-                break;
-            default:
-                throw new UnsupportedOperationException(
-                        "The onClick method has not been implemented for " + getResources()
-                                .getResourceEntryName(v.getId()));
-        }
-    }
 
     private void performSignInWithTransition(View v) {
         Activity activity = getActivity();
@@ -175,40 +211,6 @@ public class SignInFragment extends Fragment implements View.OnClickListener,
     private int calculateSpanCount() {
         int avatarSize = getResources().getDimensionPixelSize(R.dimen.avatar_size);
         int avatarPadding = getResources().getDimensionPixelSize(R.dimen.padding_avatar);
-        final int spanCount = mAvatarGrid.getWidth() / (avatarSize + avatarPadding);
-        return spanCount;
-    }
-
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        mSelectedAvatar = Avatar.values()[position];
-    }
-
-    @Override
-    public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft,
-            int oldTop, int oldRight, int oldBottom) {
-        v.removeOnLayoutChangeListener(this);
-        setUpGridView(getView());
-    }
-
-    @Override
-    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-        /* no-op */
-    }
-
-    @Override
-    public void onTextChanged(CharSequence s, int start, int before, int count) {
-        // showing the floating action button if text is entered
-        // TODO: 12/15/14 make sure that both edittexts have input before showing the fab 
-        if (count > 0) {
-            mDoneFab.setVisibility(View.VISIBLE);
-        } else {
-            mDoneFab.setVisibility(View.GONE);
-        }
-    }
-
-    @Override
-    public void afterTextChanged(Editable s) {
-        /* no-op */
+        return mAvatarGrid.getWidth() / (avatarSize + avatarPadding);
     }
 }

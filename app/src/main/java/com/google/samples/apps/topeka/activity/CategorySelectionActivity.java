@@ -35,7 +35,7 @@ import com.google.samples.apps.topeka.model.Player;
 import com.google.samples.apps.topeka.persistence.TopekaDatabaseHelper;
 import com.google.samples.apps.topeka.widget.outlineprovider.AvatarOutlineProvider;
 
-public class CategorySelectionActivity extends Activity implements View.OnClickListener {
+public class CategorySelectionActivity extends Activity {
 
     private static final String EXTRA_PLAYER = "player";
 
@@ -70,7 +70,7 @@ public class CategorySelectionActivity extends Activity implements View.OnClickL
         super.onResume();
         TextView scoreView = (TextView) findViewById(R.id.score);
         final int score = TopekaDatabaseHelper.getScore(this);
-        scoreView.setText(String.valueOf(score));
+        scoreView.setText(getString(R.string.x_points, score));
     }
 
     private void setUpToolbar(Player player) {
@@ -81,7 +81,6 @@ public class CategorySelectionActivity extends Activity implements View.OnClickL
         final ImageView avatarView = (ImageView) toolbar.findViewById(R.id.avatar);
         avatarView.setClipToOutline(true);
         avatarView.setOutlineProvider(new AvatarOutlineProvider());
-        avatarView.setOnClickListener(this);
         avatarView.setImageDrawable(getDrawable(player.getAvatar().getDrawableId()));
         ((TextView) toolbar.findViewById(R.id.title)).setText(getDisplayName(player));
     }
@@ -90,16 +89,6 @@ public class CategorySelectionActivity extends Activity implements View.OnClickL
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_category, menu);
         return true;
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.avatar: {
-               signOut();
-            }
-        }
-
     }
 
     @Override

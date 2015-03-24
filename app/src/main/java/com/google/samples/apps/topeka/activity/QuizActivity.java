@@ -23,7 +23,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.transition.Transition;
 import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.animation.AnimationUtils;
@@ -37,11 +36,9 @@ import com.google.samples.apps.topeka.model.Category;
 import com.google.samples.apps.topeka.persistence.TopekaDatabaseHelper;
 import com.google.samples.apps.topeka.widget.fab.FloatingActionButton;
 
-import java.util.concurrent.TimeUnit;
-
 import static com.google.samples.apps.topeka.adapter.CategoryAdapter.DRAWABLE;
 
-public class QuizActivity extends Activity implements View.OnClickListener {
+public class QuizActivity extends Activity {
 
     private static final String IMAGE_CATEGORY = "image_category_";
     private static final String STATE_IS_PLAYING = "isPlaying";
@@ -55,6 +52,34 @@ public class QuizActivity extends Activity implements View.OnClickListener {
     private boolean mSavedStateIsPlaying;
     private ImageView mIcon;
     private Animator mCircularReveal;
+
+    private View.OnClickListener mOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(final View v) {
+            switch (v.getId()) {
+                case R.id.fab_quiz:
+                    startQuizFromClickOn(v);
+                    break;
+                case R.id.submitAnswer:
+                    submitAnswer();
+                    break;
+                case R.id.quiz_done:
+                    finishAfterTransition();
+                    break;
+                case UNDEFINED:
+                    final CharSequence contentDescription = v.getContentDescription();
+                    if (contentDescription != null && contentDescription.equals(
+                            getString(R.string.up))) {
+                        onBackPressed();
+                        break;
+                    }
+                default:
+                    throw new UnsupportedOperationException(
+                            "OnClick has not been implemented for " + getResources().
+                                    getResourceName(v.getId()));
+            }
+        }
+    };
 
     public static Intent getStartIntent(Context context, Category category) {
         Intent starter = new Intent(context, QuizActivity.class);
@@ -88,32 +113,6 @@ public class QuizActivity extends Activity implements View.OnClickListener {
     public void onSaveInstanceState(@NonNull Bundle outState) {
         outState.putBoolean(STATE_IS_PLAYING, mQuizFab.getVisibility() == View.GONE);
         super.onSaveInstanceState(outState);
-    }
-
-    @Override
-    public void onClick(final View v) {
-        switch (v.getId()) {
-            case R.id.fab_quiz:
-                startQuizFromClickOn(v);
-                break;
-            case R.id.submitAnswer:
-                submitAnswer();
-                break;
-            case R.id.quiz_done:
-                finishAfterTransition();
-                break;
-            case UNDEFINED:
-                final CharSequence contentDescription = v.getContentDescription();
-                if (contentDescription != null &&
-                        contentDescription.equals(getString(R.string.up))) {
-                    onBackPressed();
-                    break;
-                }
-            default:
-                throw new UnsupportedOperationException(
-                        "OnClick has not been implemented for " + getResources().getResourceName(
-                                v.getId()));
-        }
     }
 
     @Override
@@ -157,13 +156,16 @@ public class QuizActivity extends Activity implements View.OnClickListener {
         mToolbar.setElevation(0);
     }
 
+    public void elevateToolbar() {
+        mToolbar.setElevation(getResources().getDimension(R.dimen.elevation_header));
+    }
+
     private void initQuizFragment() {
         mQuizFragment = QuizFragment.newInstance(mCategoryId,
                 new QuizFragment.SolvedStateListener() {
                     @Override
                     public void onCategorySolved() {
-                        mToolbar.setElevation(getResources().
-                                getDimensionPixelSize(R.dimen.elevation_header));
+                        elevateToolbar();
                         displayDoneFab();
                     }
 
@@ -201,11 +203,20 @@ public class QuizActivity extends Activity implements View.OnClickListener {
         mToolbar.setElevation(0);
     }
 
+    /**
+     * Proceeds the quiz to it's next state.
+     */
+    public void proceed() {
+        submitAnswer();
+    }
+
     private void submitAnswer() {
+        elevateToolbar();
         if (!mQuizFragment.showNextPage()) {
             mQuizFragment.showSummary();
-            mToolbar.setElevation(getResources().getDimensionPixelSize(R.dimen.elevation_header));
+            return;
         }
+        mToolbar.setElevation(0);
     }
 
     private void populate(String categoryId) {
@@ -229,7 +240,7 @@ public class QuizActivity extends Activity implements View.OnClickListener {
         mQuizFab = (FloatingActionButton) findViewById(R.id.fab_quiz);
         mQuizFab.setImageResource(R.drawable.ic_play);
         mQuizFab.setVisibility(mSavedStateIsPlaying ? View.GONE : View.VISIBLE);
-        mQuizFab.setOnClickListener(this);
+        mQuizFab.setOnClickListener(mOnClickListener);
         mIcon.setScaleX(0);
         mIcon.setScaleY(0);
         mIcon.setImageResource(resId);
@@ -240,7 +251,7 @@ public class QuizActivity extends Activity implements View.OnClickListener {
     private void initToolbar(Category category) {
         mToolbar = (Toolbar) findViewById(R.id.toolbar_activity_quiz);
         mToolbar.setTitle(category.getName());
-        mToolbar.setNavigationOnClickListener(this);
+        mToolbar.setNavigationOnClickListener(mOnClickListener);
         if (mSavedStateIsPlaying) {
             // the toolbar should not have more elevation than the content while playing
             mToolbar.setElevation(0);

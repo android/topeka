@@ -32,7 +32,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
 
-public class CategoryGridFragment extends Fragment implements AdapterView.OnItemClickListener {
+public class CategoryGridFragment extends Fragment {
 
     private CategoryAdapter mCategoryAdapter;
 
@@ -53,7 +53,14 @@ public class CategoryGridFragment extends Fragment implements AdapterView.OnItem
     }
 
     private void setUpQuizGrid(GridView categoriesView) {
-        categoriesView.setOnItemClickListener(this);
+        categoriesView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Activity activity = getActivity();
+                startQuizActivityWithTransition(activity, view.findViewById(R.id.category_title),
+                        mCategoryAdapter.getItem(position));
+            }
+        });
         mCategoryAdapter = new CategoryAdapter(getActivity());
         categoriesView.setAdapter(mCategoryAdapter);
     }
@@ -62,14 +69,6 @@ public class CategoryGridFragment extends Fragment implements AdapterView.OnItem
     public void onResume() {
         mCategoryAdapter.notifyDataSetChanged();
         super.onResume();
-    }
-
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Activity activity = getActivity();
-        //TODO: finalize the animations
-        startQuizActivityWithTransition(activity, view.findViewById(R.id.category_title),
-                mCategoryAdapter.getItem(position));
     }
 
     private void startQuizActivityWithTransition(Activity activity, View toolbar,

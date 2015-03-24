@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright 2014 Google Inc.
+  ~ Copyright 2015 Google Inc.
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -14,20 +14,10 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
-
-    <ListView
-        android:id="@+id/scorecard"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone" />
-
-    <AdapterViewFlipper
-        android:id="@+id/quiz_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@android:color/white" />
-</LinearLayout>
+<objectAnimator xmlns:android="http://schemas.android.com/apk/res/android"
+    android:propertyName="y"
+    android:valueFrom="5000"
+    android:valueTo="0"
+    android:duration="600"
+    android:valueType="floatType"
+    android:interpolator="@android:interpolator/fast_out_linear_in" />
