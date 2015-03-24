@@ -60,6 +60,9 @@ public class FillBlankQuizView extends TextInputQuizView<FillBlankQuiz> {
 
     @Override
     public void setUserInput(Bundle savedInput) {
+        if (savedInput == null) {
+            return;
+        }
         mAnswerView.setText(savedInput.getString(KEY_ANSWER));
     }
 

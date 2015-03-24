@@ -71,6 +71,9 @@ public class TrueFalseQuizView extends AbsQuizView<TrueFalseQuiz> {
 
     @Override
     public void setUserInput(Bundle savedInput) {
+        if (savedInput == null) {
+            return;
+        }
         final boolean tmpAnswer = savedInput.getBoolean(KEY_SELECTION);
         performSelection(tmpAnswer ? mAnswerTrue : mAnswerFalse);
     }

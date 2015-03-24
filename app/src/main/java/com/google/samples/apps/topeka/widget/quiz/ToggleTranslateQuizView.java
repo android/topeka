@@ -74,6 +74,9 @@ public class ToggleTranslateQuizView extends AbsQuizView<ToggleTranslateQuiz>
 
     @Override
     public void setUserInput(Bundle savedInput) {
+        if (savedInput == null) {
+            return;
+        }
         mAnswers = savedInput.getBooleanArray(KEY_ANSWERS);
         // FIXME: 3/10/15 make sure the ui reflects the selected state
         ListAdapter adapter = mListView.getAdapter();

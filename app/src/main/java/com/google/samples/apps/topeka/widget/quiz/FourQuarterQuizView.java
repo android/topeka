@@ -58,6 +58,9 @@ public class FourQuarterQuizView extends AbsQuizView<FourQuarterQuiz>
 
     @Override
     public void setUserInput(Bundle savedInput) {
+        if (savedInput == null) {
+            return;
+        }
         mAnswered = savedInput.getInt(KEY_ANSWER);
         // FIXME: 3/10/15 make sure the ui reflects the selected state
         if (mAnswered != -1) {

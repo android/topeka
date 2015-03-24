@@ -88,6 +88,9 @@ public class MultiSelectQuizView extends AbsQuizView<MultiSelectQuiz>
 
     @Override
     public void setUserInput(Bundle savedInput) {
+        if (savedInput == null) {
+            return;
+        }
         final boolean[] answers = savedInput.getBooleanArray(KEY_ANSWER);
         for (int i = 0; i < answers.length; i++) {
             mListView.setItemChecked(i, answers[i]);

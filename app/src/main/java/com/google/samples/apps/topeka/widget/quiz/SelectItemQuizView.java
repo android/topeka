@@ -74,6 +74,9 @@ public class SelectItemQuizView extends AbsQuizView<SelectItemQuiz>
 
     @Override
     public void setUserInput(Bundle savedInput) {
+        if (savedInput == null) {
+            return;
+        }
         // FIXME: 3/10/15 make sure the ui reflects the selected state
         mAnswers = savedInput.getBooleanArray(KEY_ANSWERS);
         final ListAdapter adapter = mListView.getAdapter();

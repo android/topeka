@@ -71,6 +71,9 @@ public class AlphaPickerQuizView extends AbsQuizView<AlphaPickerQuiz> implements
 
     @Override
     public void setUserInput(Bundle savedInput) {
+        if (savedInput == null) {
+            return;
+        }
         String userInput = savedInput.getString(KEY_SELECTION, getAlphabet().get(0));
         mSeekBar.setProgress(getAlphabet().indexOf(userInput));
     }

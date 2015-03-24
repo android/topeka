@@ -62,6 +62,9 @@ public class FillTwoBlanksQuizView extends TextInputQuizView<FillTwoBlanksQuiz> 
 
     @Override
     public void setUserInput(Bundle savedInput) {
+        if (savedInput == null) {
+            return;
+        }
         mAnswerOne.setText(savedInput.getString(KEY_ANSWER_ONE));
         mAnswerTwo.setText(savedInput.getString(KEY_ANSWER_TWO));
     }
