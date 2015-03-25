@@ -15,21 +15,32 @@
  */
 package com.google.samples.apps.topeka.helper;
 
-import android.test.AndroidTestCase;
-import android.test.suitebuilder.annotation.MediumTest;
+import android.content.Context;
+import android.support.test.InstrumentationRegistry;
+import android.support.test.runner.AndroidJUnit4;
+import android.test.suitebuilder.annotation.SmallTest;
 
 import com.google.samples.apps.topeka.model.Avatar;
 import com.google.samples.apps.topeka.model.Player;
 
-@MediumTest
-public class PreferencesHelperTest extends AndroidTestCase {
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+
+@SmallTest
+@RunWith(AndroidJUnit4.class)
+public class PreferencesHelperTest {
 
     private static final Player TEST_PLAYER = new Player("Zaphod", "B", Avatar.FOUR);
 
-    public void testPreferenceCycle() throws Exception {
-        PreferencesHelper.writeToPreferences(getContext(), TEST_PLAYER);
-        final Player resultingPlayer = PreferencesHelper.getPlayer(getContext());
-        assertEquals(TEST_PLAYER, resultingPlayer);
+    @Test
+    public void performPreferenceCycle() throws Exception {
+        final Context context = InstrumentationRegistry.getTargetContext();
+        PreferencesHelper.writeToPreferences(context, TEST_PLAYER);
+        final Player resultingPlayer = PreferencesHelper.getPlayer(context);
+        assertThat(resultingPlayer, is(TEST_PLAYER));
     }
 
 }

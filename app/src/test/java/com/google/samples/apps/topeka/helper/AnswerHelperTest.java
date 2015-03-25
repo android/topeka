@@ -15,44 +15,57 @@
  */
 package com.google.samples.apps.topeka.helper;
 
-import android.util.SparseBooleanArray;
+import android.test.suitebuilder.annotation.SmallTest;
 
-import junit.framework.TestCase;
+import org.junit.Test;
 
-public class AnswerHelperTest extends TestCase {
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.MatcherAssert.assertThat;
 
-    private final String[] answers;
-    private final int[] options;
+@SmallTest
+public class AnswerHelperTest {
 
-    public AnswerHelperTest() {
-        options = new int[]{0, 1, 2};
-        answers = new String[]{"one", "two", "three"};
+    private static final String[] ANSWERS = new String[]{"one", "two", "three"};
+    private static final int[] OPTIONS = new int[]{0, 1, 2};
+
+    @Test
+    public void getAnswer_notNull() {
+        String answer = AnswerHelper.getAnswer(ANSWERS);
+        assertThat(answer, notNullValue());
     }
 
-    public void testGetAnswer() throws Exception {
-        String answer = AnswerHelper.getAnswer(answers);
-        assertNotNull(answer);
-        assertFalse(answer.endsWith(AnswerHelper.SEPARATOR));
-        for (String s : answers) {
-            assertTrue(answer.contains(s));
+    @Test
+    public void getAnswer_allContained() {
+        String answer = AnswerHelper.getAnswer(ANSWERS);
+        for (String s : ANSWERS) {
+            assertThat(answer.contains(s), is(true));
         }
     }
 
-    public void testGetAnswerWithOptions() throws Exception {
-        String answer = AnswerHelper.getAnswer(options, answers);
-        assertNotNull(answer);
-        assertFalse(answer.endsWith(AnswerHelper.SEPARATOR));
-        for (String s : answers) {
-            assertTrue(answer.contains(s));
+    @Test
+    public void getAnswer_multipleAnswers_dontEndWithSeparator() {
+        String answer = AnswerHelper.getAnswer(ANSWERS);
+        assertThat(answer.endsWith(AnswerHelper.SEPARATOR), is(false));
+    }
+
+    @Test
+    public void getAnswer_withOptions_allContained() {
+        String answer = AnswerHelper.getAnswer(OPTIONS, ANSWERS);
+        for (String s : ANSWERS) {
+            assertThat(answer.contains(s), is(true));
         }
     }
 
-    public void testIsAnswerCorrect() throws Exception {
-        SparseBooleanArray correctAnswer = new SparseBooleanArray();
-        correctAnswer.put(0, true);
-        correctAnswer.put(1, true);
-        correctAnswer.put(2, true);
-        assertFalse(AnswerHelper.isAnswerCorrect(correctAnswer, new int[]{2, 3}));
-        assertTrue(AnswerHelper.isAnswerCorrect(correctAnswer, options));
+    @Test
+    public void getAnswer_withOptions_dontEndWithSeparator() {
+        String answer = AnswerHelper.getAnswer(OPTIONS, ANSWERS);
+        assertThat(answer.endsWith(AnswerHelper.SEPARATOR), is(false));
+    }
+
+    @Test
+    public void getAnswer_withOptions_notNull() {
+        String answer = AnswerHelper.getAnswer(OPTIONS, ANSWERS);
+        assertThat(answer, notNullValue());
     }
 }

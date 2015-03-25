@@ -15,26 +15,16 @@
  */
 package com.google.samples.apps.topeka.model.quiz;
 
-import android.test.suitebuilder.annotation.SmallTest;
+public class PickerQuizTest extends AbsQuizTestCase<PickerQuiz> {
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-
-@SmallTest
-public class FillTwoBlanksQuizTest extends AbsQuizTestCase<FillTwoBlanksQuiz> {
-
-    @Override
-    public void quiz_answer_correctlyStored() {
-        assertThat(STRING_ARRAY, is(getQuiz().getAnswer()));
-    }
+    private static final Integer ANSWER = 100;
+    private static final int MIN = 1;
+    private static final int MAX = 1000;
+    private static final int STEP = 10;
 
     @Override
-    public FillTwoBlanksQuiz getQuiz() {
-        return new FillTwoBlanksQuiz(QUESTION, STRING_ARRAY, false);
+    public PickerQuiz getQuiz() {
+        return new PickerQuiz(QUESTION, ANSWER, MIN, MAX, STEP, false);
     }
 
-    @Override
-    public QuizType getExpectedQuizType() {
-        return QuizType.FILL_TWO_BLANKS;
-    }
 }

@@ -16,31 +16,38 @@
 package com.google.samples.apps.topeka.model;
 
 import android.os.Parcel;
-import android.test.suitebuilder.annotation.MediumTest;
+import android.support.test.runner.AndroidJUnit4;
+import android.test.suitebuilder.annotation.SmallTest;
 
 import com.google.samples.apps.topeka.model.quiz.FillBlankQuiz;
 import com.google.samples.apps.topeka.model.quiz.Quiz;
 import com.google.samples.apps.topeka.model.quiz.TrueFalseQuiz;
 
-import junit.framework.TestCase;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@MediumTest
-public class CategoryTest extends TestCase {
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+
+@SmallTest
+@RunWith(AndroidJUnit4.class)
+public class CategoryTest {
 
     private static final String CATEGORY_NAME = "test";
     private static final String CATEGORY_ID = "testId";
     private static final Theme CATEGORY_THEME = Theme.topeka;
 
-    public void testWriteToParcel() {
+    @Test
+    public void writeToParcel() {
         Category initialCategory = getCategoryUnderTest();
         Parcel dest = Parcel.obtain();
         initialCategory.writeToParcel(dest, 0);
         dest.setDataPosition(0);
         Category unparcelled = new Category(dest);
-        assertEquals(initialCategory, unparcelled);
+        assertThat(initialCategory, is(unparcelled));
     }
 
     private static Category getCategoryUnderTest() {

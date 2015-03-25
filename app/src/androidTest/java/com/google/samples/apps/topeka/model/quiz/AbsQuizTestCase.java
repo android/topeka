@@ -15,7 +15,13 @@
  */
 package com.google.samples.apps.topeka.model.quiz;
 
+import android.os.Parcel;
+import android.support.test.runner.AndroidJUnit4;
+import android.test.suitebuilder.annotation.SmallTest;
+
+import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -25,43 +31,34 @@ import static org.hamcrest.MatcherAssert.assertThat;
  *
  * @param <Q> The Quiz type under test.
  */
+@RunWith(AndroidJUnit4.class)
+@SmallTest
 public abstract class AbsQuizTestCase<Q extends Quiz> {
 
     protected static final String QUESTION = "Is this the real world? Is this just fantasy?";
     protected static final int[] INT_ARRAY = new int[]{0, 1, 2};
     protected static final String[] STRING_ARRAY = new String[]{"one", "two", "three", "four"};
 
-    @Test
-    public void getType_returnsExpectedType() throws Exception {
-        assertThat(getExpectedQuizType(), is(getQuiz().getType()));
+    private Q quizUnderTest;
+
+    @Before
+    public void setUp() throws Exception {
+        quizUnderTest = getQuiz();
     }
 
     @Test
-    public void getQuestion() throws Exception {
-        assertThat(QUESTION, is(getQuiz().getQuestion()));
+    public void writeToParcel() {
+        Parcel dest = Parcel.obtain();
+        quizUnderTest.writeToParcel(dest, 0);
+        dest.setDataPosition(0);
+        Quiz unparcelled = Quiz.CREATOR.createFromParcel(dest);
+        assertThat(quizUnderTest, is(unparcelled));
     }
-
-    /**
-     * Implementations need to check that the expected answer is equal
-     * to the one returned from the quiz.
-     *
-     */
-    @Test
-    public abstract void quiz_answer_correctlyStored();
 
     /**
      * Implementations need to return a newly instantiated {@link Quiz} here.
      *
-     * @return The instantiated {@link Quiz}.
+     * @return The newly instantiated {@link Quiz}.
      */
     public abstract Q getQuiz();
-
-    /**
-     * Implementations have to return the expected quiz type for the corresponding {@link Quiz}.
-     * This should <b>NOT</b> be obtained by calling getQuiz.getType()!
-     *
-     * @return The expected {@link QuizType}.
-     */
-    public abstract QuizType getExpectedQuizType();
-
 }
