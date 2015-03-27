@@ -52,8 +52,8 @@ public class ToggleTranslateQuizView extends AbsQuizView<ToggleTranslateQuiz>
         mListView.setDivider(null);
         mListView.setSelector(R.drawable.selector_button);
         mListView.setAdapter(new OptionsQuizAdapter(getQuiz().getReadableOptions(),
-                        R.layout.item_answer));
-        mListView.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
+                R.layout.item_answer));
+        mListView.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
         mListView.setOnItemClickListener(this);
         return mListView;
     }

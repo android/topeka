@@ -272,8 +272,6 @@ public abstract class AbsQuizView<Q extends Quiz> extends FrameLayout implements
 
     private void submitAnswer(final View v) {
         final boolean answerCorrect = isAnswerCorrect();
-        // TODO: 12/15/14 re-architect the way callbacks are being used here.
-
         mQuiz.setSolved(true);
         performScoreAnimation(answerCorrect);
     }
@@ -284,19 +282,6 @@ public abstract class AbsQuizView<Q extends Quiz> extends FrameLayout implements
      * @param answerCorrect <code>true</code> if the answer was correct, else <code>false</code>.
      */
     private void performScoreAnimation(final boolean answerCorrect) {
-    /*
-     * 0ms Fade fab color to red/green (400ms fast_out_slow_in)
-     * 0ms Fade/morph fab icon to tick/cross (300ms fast_out_slow_in)
-     * 600ms scale x/y to 0f (200ms fast_in_linear_out)
-     * 750ms move/scale the question box to score card (500ms fast_in_slow_out)
-     * 750ms fade out the question (200ms fast_in_linear_out)
-     * 750ms fade out the answers (200ms fast_in_linear_out)
-     * TODO implement from here
-     * 1150ms fade in / translate up the points scored in the score box (200ms linear_in_slow_out)
-     * 1500ms move the score box out to the left (300ms fast_in_linear_out)
-     * 1500ms move in the new question (500ms fast_in_linear_out)
-     */
-
         final Interpolator fastOutSlowInInterpolator = AnimationUtils
                 .loadInterpolator(getContext(), android.R.interpolator.fast_out_slow_in);
         final Interpolator linearOutSlowInInterpolator = AnimationUtils

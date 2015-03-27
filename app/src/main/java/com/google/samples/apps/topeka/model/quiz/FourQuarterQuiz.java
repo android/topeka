@@ -22,7 +22,6 @@ import com.google.samples.apps.topeka.helper.AnswerHelper;
 
 import java.util.Arrays;
 
-//TODO: 11/13/14 maybe not use an OptionsQuiz as parent for this.
 public final class FourQuarterQuiz extends OptionsQuiz<String> {
 
     public static final Parcelable.Creator<FourQuarterQuiz> CREATOR

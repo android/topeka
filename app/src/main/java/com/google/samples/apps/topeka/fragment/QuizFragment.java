@@ -85,7 +85,6 @@ public class QuizFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         mQuizView = (AdapterViewAnimator) view.findViewById(R.id.quiz_view);
-        // TODO: 1/27/15 finalize animations
         decideOnViewToDisplay();
         mQuizView.setInAnimation(getActivity(), R.animator.slide_in_bottom);
         mQuizView.setOutAnimation(getActivity(), R.animator.slide_out_top);
@@ -105,9 +104,12 @@ public class QuizFragment extends Fragment {
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
-        View currentView = mQuizView.getFocusedChild();
-        if (currentView instanceof AbsQuizView) {
-            outState.putBundle(KEY_USER_INPUT, ((AbsQuizView) currentView).getUserInput());
+        View focusedChild = mQuizView.getFocusedChild();
+        if (focusedChild instanceof ViewGroup) {
+            View currentView = ((ViewGroup) focusedChild).getChildAt(0);
+            if (currentView instanceof AbsQuizView) {
+                outState.putBundle(KEY_USER_INPUT, ((AbsQuizView) currentView).getUserInput());
+            }
         }
         super.onSaveInstanceState(outState);
     }
@@ -129,8 +131,10 @@ public class QuizFragment extends Fragment {
                     int oldTop, int oldRight, int oldBottom) {
                 mQuizView.removeOnLayoutChangeListener(this);
                 View currentChild = mQuizView.getChildAt(0);
-                if (currentChild instanceof AbsQuizView) {
-                    ((AbsQuizView) currentChild).setUserInput(savedInstanceState.
+                if (currentChild instanceof ViewGroup) {
+                    final View potentialQuizView = ((ViewGroup) currentChild).getChildAt(0);
+                    if (potentialQuizView instanceof AbsQuizView)
+                    ((AbsQuizView) potentialQuizView).setUserInput(savedInstanceState.
                             getBundle(KEY_USER_INPUT));
                 }
             }
