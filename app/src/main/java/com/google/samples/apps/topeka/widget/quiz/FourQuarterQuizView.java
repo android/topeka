@@ -44,7 +44,8 @@ public class FourQuarterQuizView extends AbsQuizView<FourQuarterQuiz>
         mAnswerView = new GridView(getContext());
         mAnswerView.setSelector(R.drawable.selector_button);
         mAnswerView.setNumColumns(2);
-        mAnswerView.setAdapter(new OptionsQuizAdapter(getQuiz().getOptions(), R.layout.item_answer));
+        mAnswerView.setAdapter(new OptionsQuizAdapter(getQuiz().getOptions(),
+                R.layout.item_answer));
         mAnswerView.setOnItemClickListener(this);
         return mAnswerView;
     }

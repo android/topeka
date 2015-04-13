@@ -91,6 +91,7 @@ public class ToggleTranslateQuizView extends AbsQuizView<ToggleTranslateQuiz>
         if (view instanceof CompoundButton) {
             ((CompoundButton) view).toggle();
         }
+
         allowAnswer();
     }
 

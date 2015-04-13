@@ -335,7 +335,7 @@ public abstract class AbsQuizView<Q extends Quiz> extends FrameLayout implements
                             ((QuizActivity) getContext()).proceed();
                         }
                     }
-        });
+                });
 
         // 750ms fade out the question (200ms fast_in_linear_out)
         // 750ms fade out the answers (200ms fast_in_linear_out)
