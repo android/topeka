@@ -63,7 +63,6 @@ public class FourQuarterQuizView extends AbsQuizView<FourQuarterQuiz>
             return;
         }
         mAnswered = savedInput.getInt(KEY_ANSWER);
-        // FIXME: 3/10/15 make sure the ui reflects the selected state
         if (mAnswered != -1) {
             if (isLaidOut()) {
                 setUpUserInput();

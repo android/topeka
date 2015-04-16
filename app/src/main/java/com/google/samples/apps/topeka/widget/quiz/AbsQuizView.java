@@ -26,6 +26,7 @@ import android.util.Property;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.view.animation.Interpolator;
 import android.widget.FrameLayout;
@@ -141,6 +142,9 @@ public abstract class AbsQuizView<Q extends Quiz> extends FrameLayout implements
         quizContentView.setId(R.id.quiz_content);
         quizContentView.setSaveEnabled(true);
         setDefaultPadding(quizContentView);
+        if (quizContentView instanceof ViewGroup) {
+            ((ViewGroup) quizContentView).setClipToPadding(false);
+        }
         setMinHeightInternal(quizContentView, R.dimen.min_height_question);
         return quizContentView;
     }

@@ -184,6 +184,11 @@ public class TopekaDatabaseHelper extends SQLiteOpenHelper {
      * @param category The category to update.
      */
     public static void updateCategory(Context context, Category category) {
+        if (mCategories != null && mCategories.contains(category)) {
+            final int location = mCategories.indexOf(category);
+            mCategories.remove(location);
+            mCategories.add(location, category);
+        }
         SQLiteDatabase writableDatabase = getWritableDatabase(context);
         ContentValues categoryValues = createContentValuesFor(category);
         writableDatabase.update(CategoryTable.NAME, categoryValues, CategoryTable.COLUMN_ID + "=?",
@@ -397,7 +402,6 @@ public class TopekaDatabaseHelper extends SQLiteOpenHelper {
         try {
             fillCategoriesAndQuizzes(db);
         } catch (IOException | JSONException e) {
-            //TODO: 10/23/14 we're probably not recoverable any more here. Provide option to reset.
             Log.e(TAG, "preFillDatabase", e);
         }
     }

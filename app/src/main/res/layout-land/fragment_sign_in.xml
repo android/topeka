@@ -32,7 +32,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <include layout="@layout/sign_in_fab_check" />
+        <include layout="@layout/sign_in_fab_check"
+            android:visibility="gone"/>
 
         <LinearLayout
             android:orientation="horizontal"

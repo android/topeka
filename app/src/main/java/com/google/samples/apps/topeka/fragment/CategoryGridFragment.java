@@ -73,8 +73,21 @@ public class CategoryGridFragment extends Fragment {
 
     private void startQuizActivityWithTransition(Activity activity, View toolbar,
             Category category) {
-        // Creates pair of transition participants.
-        Pair participants = new Pair<>(toolbar, activity.getString(R.string.transition_toolbar));
+
+        // Avoid system UI glitches as described here:
+        // https://plus.google.com/+AlexLockwood/posts/RPtwZ5nNebb
+        View decor = activity.getWindow().getDecorView();
+        View statusBar = decor.findViewById(android.R.id.statusBarBackground);
+        View navBar = decor.findViewById(android.R.id.navigationBarBackground);
+
+        // Create pair of transition participants.
+        Pair[] participants = new Pair[] {
+                new Pair<>(toolbar, activity.getString(R.string.transition_toolbar)),
+                new Pair<>(statusBar, statusBar.getTransitionName()),
+                new Pair<>(navBar, navBar.getTransitionName())
+        };
+
+        @SuppressWarnings("unchecked")
         ActivityOptions sceneTransitionAnimation = ActivityOptions
                 .makeSceneTransitionAnimation(activity, participants);
 

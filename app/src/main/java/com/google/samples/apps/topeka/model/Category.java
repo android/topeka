@@ -225,9 +225,6 @@ public class Category implements Parcelable {
         if (mTheme != category.mTheme) {
             return false;
         }
-        if (mSolved != category.mSolved) {
-            return false;
-        }
 
         return true;
     }
@@ -238,7 +235,6 @@ public class Category implements Parcelable {
         result = 31 * result + mId.hashCode();
         result = 31 * result + mTheme.hashCode();
         result = 31 * result + mQuizzes.hashCode();
-        result = 31 * result + (mSolved ? 1 : 0);
         return result;
     }
 }

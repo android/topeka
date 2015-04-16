@@ -98,7 +98,6 @@ public class CategoryAdapter extends BaseAdapter {
     }
 
     private void setCategoryIcon(Category category, ImageView icon) {
-        //TODO: 11/11/14 don't use resource lookup
         final int categoryImageResource = mResources.getIdentifier(
                 ICON_CATEGORY + category.getId(), DRAWABLE, mPackageName);
         final boolean solved = category.isSolved();

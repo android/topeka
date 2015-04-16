@@ -87,8 +87,13 @@ public abstract class TextInputQuizView<Q extends Quiz> extends AbsQuizView<Q> i
 
     @Override
     public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-        // submit the answer and hide the keyboard once the action done has been tapped
-        allowAnswer(!TextUtils.isEmpty(v.getText()));
+        /* submit the answer and hide the keyboard once the action done
+         * has been tapped if text has been entered.
+         */
+        if (TextUtils.isEmpty(v.getText())) {
+            return false;
+        }
+        allowAnswer();
         if (actionId == EditorInfo.IME_ACTION_DONE) {
             submitAnswer();
             hideKeyboard(v);

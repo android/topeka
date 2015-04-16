@@ -23,6 +23,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.animation.AnimationUtils;
@@ -40,6 +41,7 @@ import static com.google.samples.apps.topeka.adapter.CategoryAdapter.DRAWABLE;
 
 public class QuizActivity extends Activity {
 
+    private static final String TAG = "QuizActivity";
     private static final String IMAGE_CATEGORY = "image_category_";
     private static final String STATE_IS_PLAYING = "isPlaying";
     private static final int UNDEFINED = -1;
@@ -221,7 +223,7 @@ public class QuizActivity extends Activity {
 
     private void populate(String categoryId) {
         if (null == categoryId) {
-            //TODO: handle failing
+            Log.w(TAG, "Didn't find a category. Finishing");
             finish();
         }
         Category category = TopekaDatabaseHelper.getCategoryWith(this, categoryId);
@@ -232,7 +234,6 @@ public class QuizActivity extends Activity {
 
     private void initLayout(String categoryId) {
         setContentView(R.layout.activity_quiz);
-        //TODO: 11/3/14 find a better way to do this, which doesn't include resource lookup.
         mIcon = (ImageView) findViewById(R.id.icon);
         int resId = getResources().getIdentifier(IMAGE_CATEGORY + categoryId, DRAWABLE,
                 getApplicationContext().getPackageName());

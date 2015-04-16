@@ -123,7 +123,6 @@ public class SignInFragment extends Fragment {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 // showing the floating action button if text is entered
-                // TODO: 12/15/14 make sure that both edittexts have input before showing the fab
                 if (count > 0) {
                     mDoneFab.setVisibility(View.VISIBLE);
                 } else {
@@ -187,7 +186,6 @@ public class SignInFragment extends Fragment {
             mFirstName.setText(mPlayer.getFirstName());
             mLastInitial.setText(mPlayer.getLastInitial());
             mSelectedAvatar = mPlayer.getAvatar();
-            //TODO: 10/28/14 keep avatar selected on GridView
         }
     }
 

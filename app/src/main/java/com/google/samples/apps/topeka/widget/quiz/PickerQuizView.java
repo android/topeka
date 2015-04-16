@@ -19,7 +19,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -41,13 +41,14 @@ public final class PickerQuizView extends AbsQuizView<PickerQuiz>
 
     public PickerQuizView(Context context, Category category, PickerQuiz quiz) {
         super(context, category, quiz);
+        allowAnswer();
     }
 
     @Override
     protected View createQuizContentView() {
         initStep();
         mMin = getQuiz().getMin();
-        LinearLayout layout = (LinearLayout) getLayoutInflater().inflate(
+        ScrollView layout = (ScrollView) getLayoutInflater().inflate(
                 R.layout.quiz_layout_picker, this, false);
         mCurrentSelection = (TextView) layout.findViewById(R.id.seekbar_progress);
         mCurrentSelection.setText(String.valueOf(mMin));
@@ -81,6 +82,9 @@ public final class PickerQuizView extends AbsQuizView<PickerQuiz>
 
     @Override
     public void setUserInput(Bundle savedInput) {
+        if (null == savedInput) {
+            return;
+        }
         mSeekBar.setProgress(savedInput.getInt(KEY_ANSWER) - mMin);
     }
 
@@ -98,7 +102,6 @@ public final class PickerQuizView extends AbsQuizView<PickerQuiz>
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
         setCurrentSelectionText(mMin + progress);
-        allowAnswer();
     }
 
     private void setCurrentSelectionText(int progress) {

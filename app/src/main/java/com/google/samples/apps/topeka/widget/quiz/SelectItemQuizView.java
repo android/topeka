@@ -77,8 +77,10 @@ public class SelectItemQuizView extends AbsQuizView<SelectItemQuiz>
         if (savedInput == null) {
             return;
         }
-        // FIXME: 3/10/15 make sure the ui reflects the selected state
         mAnswers = savedInput.getBooleanArray(KEY_ANSWERS);
+        if (mAnswers == null) {
+            return;
+        }
         final ListAdapter adapter = mListView.getAdapter();
         for (int i = 0; i < mAnswers.length; i++) {
             mListView.performItemClick(mListView.getChildAt(i), i, adapter.getItemId(i));

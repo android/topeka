@@ -99,7 +99,6 @@ public class MultiSelectQuizView extends AbsQuizView<MultiSelectQuiz>
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        // TODO check way to respond to CheckBox clicks within ListView
         Log.d(TAG, "clicked pos: " + position);
         allowAnswer();
     }
