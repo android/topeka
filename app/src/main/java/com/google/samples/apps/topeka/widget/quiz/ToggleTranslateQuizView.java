@@ -78,6 +78,9 @@ public class ToggleTranslateQuizView extends AbsQuizView<ToggleTranslateQuiz>
             return;
         }
         mAnswers = savedInput.getBooleanArray(KEY_ANSWERS);
+        if (mAnswers == null) {
+            return;
+        }
         ListAdapter adapter = mListView.getAdapter();
         for (int i = 0; i < mAnswers.length; i++) {
             mListView.performItemClick(mListView.getChildAt(i), i, adapter.getItemId(i));

@@ -42,7 +42,7 @@ public class SelectItemQuizView extends AbsQuizView<SelectItemQuiz>
 
     public SelectItemQuizView(Context context, Category category, SelectItemQuiz quiz) {
         super(context, category, quiz);
-        mAnswers = new boolean[quiz.getOptions().length];
+        mAnswers = getAnswers();
     }
 
     @Override
@@ -94,6 +94,13 @@ public class SelectItemQuizView extends AbsQuizView<SelectItemQuiz>
     }
 
     private void toggleAnswerFor(int answerId) {
-        mAnswers[answerId] = !mAnswers[answerId];
+        getAnswers()[answerId] = !mAnswers[answerId];
+    }
+
+    private boolean[] getAnswers() {
+        if (null == mAnswers) {
+            mAnswers = new boolean[getQuiz().getOptions().length];
+        }
+        return mAnswers;
     }
 }

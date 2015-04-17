@@ -92,6 +92,9 @@ public class MultiSelectQuizView extends AbsQuizView<MultiSelectQuiz>
             return;
         }
         final boolean[] answers = savedInput.getBooleanArray(KEY_ANSWER);
+        if (null == answers) {
+            return;
+        }
         for (int i = 0; i < answers.length; i++) {
             mListView.setItemChecked(i, answers[i]);
         }

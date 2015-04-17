@@ -29,7 +29,7 @@ import android.widget.TextView;
 import android.widget.Toolbar;
 
 import com.google.samples.apps.topeka.R;
-import com.google.samples.apps.topeka.fragment.CategoryGridFragment;
+import com.google.samples.apps.topeka.fragment.CategorySelectionFragment;
 import com.google.samples.apps.topeka.helper.PreferencesHelper;
 import com.google.samples.apps.topeka.model.Player;
 import com.google.samples.apps.topeka.persistence.TopekaDatabaseHelper;
@@ -116,7 +116,7 @@ public class CategorySelectionActivity extends Activity {
 
     private void attachCategoryGridFragment() {
         getFragmentManager().beginTransaction()
-                .replace(R.id.quiz_container, CategoryGridFragment.newInstance())
+                .replace(R.id.quiz_container, CategorySelectionFragment.newInstance())
                 .commit();
         setProgressBarVisibility(View.GONE);
     }

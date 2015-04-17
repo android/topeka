@@ -32,12 +32,15 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
 
-public class CategoryGridFragment extends Fragment {
+import java.util.ArrayList;
+import java.util.List;
+
+public class CategorySelectionFragment extends Fragment {
 
     private CategoryAdapter mCategoryAdapter;
 
-    public static CategoryGridFragment newInstance() {
-        return new CategoryGridFragment();
+    public static CategorySelectionFragment newInstance() {
+        return new CategorySelectionFragment();
     }
 
     @Override
@@ -81,18 +84,24 @@ public class CategoryGridFragment extends Fragment {
         View navBar = decor.findViewById(android.R.id.navigationBarBackground);
 
         // Create pair of transition participants.
-        Pair[] participants = new Pair[] {
-                new Pair<>(toolbar, activity.getString(R.string.transition_toolbar)),
-                new Pair<>(statusBar, statusBar.getTransitionName()),
-                new Pair<>(navBar, navBar.getTransitionName())
-        };
-
+        List<Pair> participants = new ArrayList<>(3);
+        participants.add(new Pair<>(toolbar, activity.getString(R.string.transition_toolbar)));
+        addNonNullViewToTransitionParticipants(statusBar, participants);
+        addNonNullViewToTransitionParticipants(navBar, participants);
         @SuppressWarnings("unchecked")
         ActivityOptions sceneTransitionAnimation = ActivityOptions
-                .makeSceneTransitionAnimation(activity, participants);
+                .makeSceneTransitionAnimation(activity,
+                        participants.toArray(new Pair[participants.size()]));
 
         // Starts the activity with the participants, animating from one to the other.
         final Bundle transitionBundle = sceneTransitionAnimation.toBundle();
         activity.startActivity(QuizActivity.getStartIntent(activity, category), transitionBundle);
+    }
+
+    private void addNonNullViewToTransitionParticipants(View view, List<Pair> participants) {
+        if (view == null) {
+            return;
+        }
+        participants.add(new Pair<>(view, view.getTransitionName()));
     }
 }

@@ -95,7 +95,9 @@ public class QuizFragment extends Fragment {
         final boolean isSolved = mCategory.isSolved();
         if (isSolved) {
             showSummary();
-            mSolvedStateListener.onCategorySolved();
+            if (null != mSolvedStateListener) {
+                mSolvedStateListener.onCategorySolved();
+            }
         } else {
             mQuizView.setAdapter(getQuizAdapter());
             mQuizView.setSelection(mCategory.getFirstUnsolvedQuizPosition());
@@ -133,9 +135,10 @@ public class QuizFragment extends Fragment {
                 View currentChild = mQuizView.getChildAt(0);
                 if (currentChild instanceof ViewGroup) {
                     final View potentialQuizView = ((ViewGroup) currentChild).getChildAt(0);
-                    if (potentialQuizView instanceof AbsQuizView)
-                    ((AbsQuizView) potentialQuizView).setUserInput(savedInstanceState.
-                            getBundle(KEY_USER_INPUT));
+                    if (potentialQuizView instanceof AbsQuizView) {
+                        ((AbsQuizView) potentialQuizView).setUserInput(savedInstanceState.
+                                getBundle(KEY_USER_INPUT));
+                    }
                 }
             }
         });

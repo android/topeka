@@ -19,7 +19,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -47,7 +47,7 @@ public class AlphaPickerQuizView extends AbsQuizView<AlphaPickerQuiz> implements
 
     @Override
     protected View createQuizContentView() {
-        LinearLayout layout = (LinearLayout) getLayoutInflater().inflate(
+        ScrollView layout = (ScrollView) getLayoutInflater().inflate(
                 R.layout.quiz_layout_picker, this, false);
         mCurrentSelection = (TextView) layout.findViewById(R.id.seekbar_progress);
         mCurrentSelection.setText(getAlphabet().get(0));

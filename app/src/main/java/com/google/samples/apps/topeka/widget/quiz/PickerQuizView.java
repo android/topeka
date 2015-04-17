@@ -41,7 +41,6 @@ public final class PickerQuizView extends AbsQuizView<PickerQuiz>
 
     public PickerQuizView(Context context, Category category, PickerQuiz quiz) {
         super(context, category, quiz);
-        allowAnswer();
     }
 
     @Override
@@ -102,6 +101,7 @@ public final class PickerQuizView extends AbsQuizView<PickerQuiz>
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
         setCurrentSelectionText(mMin + progress);
+        allowAnswer();
     }
 
     private void setCurrentSelectionText(int progress) {
