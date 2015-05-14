@@ -22,7 +22,7 @@
                 <color android:color="@android:color/white" />
             </item>
             <item android:state_checked="true">
-                <color android:color="@color/button_false" />
+                <color android:color="@color/red" />
             </item>
         </selector>
     </item>

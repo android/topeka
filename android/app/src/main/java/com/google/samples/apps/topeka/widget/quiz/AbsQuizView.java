@@ -57,17 +57,7 @@ import com.google.samples.apps.topeka.widget.fab.FloatingActionButton;
 public abstract class AbsQuizView<Q extends Quiz> extends FrameLayout implements
         View.OnClickListener {
 
-    private final Category mCategory;
-    private final Q mQuiz;
-    private final int mKeylineVertical;
-    private final int mKeylineHorizontal;
-    private TextView mQuestionView;
-    private FloatingActionButton mSubmitAnswer;
-    private boolean mAnswered;
-    private final LayoutInflater mLayoutInflater;
-    protected final int mMinHeightTouchTarget;
-    private final Interpolator mInterpolator;
-
+    /** Property for animating the foreground color */
     public static final Property<FrameLayout, Integer> FOREGROUND_COLOR =
             new IntProperty<FrameLayout>("foregroundColor") {
 
@@ -86,6 +76,22 @@ public abstract class AbsQuizView<Q extends Quiz> extends FrameLayout implements
                 }
             };
 
+    protected final int mMinHeightTouchTarget;
+
+    private boolean mAnswered;
+    private final int mKeyline16;
+    private TextView mQuestionView;
+    private FloatingActionButton mSubmitAnswer;
+    private final LayoutInflater mLayoutInflater;
+    private final Category mCategory;
+    private final Q mQuiz;
+
+    private final Interpolator mFastOutSlowInInterpolator;
+    private final Interpolator mLinearOutSlowInInterpolator;
+    private final int mColorAnimationDuration;
+    private final int mIconAnimationDuration;
+    private final int mScaleAnimationDuration;
+
     /**
      * Enables creation of views for quizzes.
      *
@@ -97,15 +103,19 @@ public abstract class AbsQuizView<Q extends Quiz> extends FrameLayout implements
         super(context);
         mQuiz = quiz;
         mCategory = category;
-        mKeylineVertical = getResources().getDimensionPixelSize(R.dimen.keyline_16);
-        mKeylineHorizontal = getResources()
-                .getDimensionPixelSize(R.dimen.keyline_16);
+        mKeyline16 = getResources().getDimensionPixelSize(R.dimen.keyline_16);
         mSubmitAnswer = getSubmitButton(context);
         mLayoutInflater = LayoutInflater.from(context);
         mMinHeightTouchTarget = getResources()
                 .getDimensionPixelSize(R.dimen.min_height_touch_target);
-        mInterpolator = AnimationUtils
+        mFastOutSlowInInterpolator = AnimationUtils
                 .loadInterpolator(getContext(), android.R.interpolator.fast_out_slow_in);
+        mLinearOutSlowInInterpolator = AnimationUtils
+                .loadInterpolator(getContext(), android.R.interpolator.linear_out_slow_in);
+        mColorAnimationDuration = 400;
+        mIconAnimationDuration = 300;
+        mScaleAnimationDuration = 200;
+
         setId(quiz.getId());
         setUpQuestionView();
         LinearLayout container = createContainerLayout(context);
@@ -185,7 +195,7 @@ public abstract class AbsQuizView<Q extends Quiz> extends FrameLayout implements
     }
 
     private void setDefaultPadding(View view) {
-        view.setPadding(mKeylineVertical, mKeylineHorizontal, mKeylineVertical, mKeylineHorizontal);
+        view.setPadding(mKeyline16, mKeyline16, mKeyline16, mKeyline16);
     }
 
     protected LayoutInflater getLayoutInflater() {
@@ -242,7 +252,7 @@ public abstract class AbsQuizView<Q extends Quiz> extends FrameLayout implements
                 mSubmitAnswer.setVisibility(View.VISIBLE);
             }
             mSubmitAnswer.animate().scaleX(targetScale).scaleY(targetScale)
-                    .setInterpolator(mInterpolator);
+                    .setInterpolator(mFastOutSlowInInterpolator);
             mAnswered = answered;
         }
     }
@@ -286,51 +296,45 @@ public abstract class AbsQuizView<Q extends Quiz> extends FrameLayout implements
      * @param answerCorrect <code>true</code> if the answer was correct, else <code>false</code>.
      */
     private void performScoreAnimation(final boolean answerCorrect) {
-        final Interpolator fastOutSlowInInterpolator = AnimationUtils
-                .loadInterpolator(getContext(), android.R.interpolator.fast_out_slow_in);
-        final Interpolator linearOutSlowInInterpolator = AnimationUtils
-                .loadInterpolator(getContext(), android.R.interpolator.linear_out_slow_in);
 
-        final int colorAnimationDuration = 400;
-        final int iconAnimationDuration = 300;
-        final int scaleAnimationDuration = 200;
-
-        // 0ms Fade fab color to red/green (400ms fast_out_slow_in)
+        // Decide on the color and icon to use.
         final int backgroundColor = getResources().getColor(answerCorrect ?
-                R.color.button_true : R.color.button_false);
+                R.color.green : R.color.red);
         final int imageResId = answerCorrect ? R.drawable.ic_done : R.drawable.ic_fail;
 
+        // Set color, duration and interpolator for the color change. Then start the animation.
         final ObjectAnimator fabColorAnimator = ObjectAnimator
                 .ofArgb(mSubmitAnswer, "backgroundColor", Color.WHITE, backgroundColor);
-        fabColorAnimator.setDuration(colorAnimationDuration)
-                .setInterpolator(fastOutSlowInInterpolator);
+        fabColorAnimator.setDuration(mColorAnimationDuration)
+                .setInterpolator(mFastOutSlowInInterpolator);
         fabColorAnimator.start();
 
-        // 0 ms Fade/morph fab icon to tick/cross (300ms fast_out_slow_in)
+        // Set duration and interpolator for the icon change. Then start the animation.
         final ObjectAnimator iconAnimator = ObjectAnimator
                 .ofArgb(mSubmitAnswer, "imageResource", R.drawable.ic_done, imageResId);
-        iconAnimator.setDuration(iconAnimationDuration)
-                .setInterpolator(fastOutSlowInInterpolator);
+        iconAnimator.setDuration(mIconAnimationDuration)
+                .setInterpolator(mFastOutSlowInInterpolator);
         iconAnimator.start();
 
-        // 600ms scale x/y to 0f (200ms fast_in_linear_out)
+        // Hide the FAB.
         mSubmitAnswer.animate()
-                .setDuration(scaleAnimationDuration)
-                .setStartDelay(iconAnimationDuration * 2)
+                .setDuration(mScaleAnimationDuration)
+                .setStartDelay(mIconAnimationDuration * 2)
                 .scaleX(0f)
                 .scaleY(0f)
-                .setInterpolator(linearOutSlowInInterpolator);
+                .setInterpolator(mLinearOutSlowInInterpolator);
 
+        // Prepare for take off.
         final float widthHeightRatio = (float) getHeight() / (float) getWidth();
-
-        // 750ms move/scale the question box to score card (500ms fast_in_slow_out)
         setElevation(getResources().getDimension(R.dimen.elevation_header));
+
+        // Animate the current view off the screen.
         animate().
                 setDuration(500)
                 .setStartDelay(750)
                 .scaleX(.5f)
                 .scaleY(.5f / widthHeightRatio)
-                .setInterpolator(linearOutSlowInInterpolator)
+                .setInterpolator(mLinearOutSlowInInterpolator)
                 .withEndAction(new Runnable() {
                     @Override
                     public void run() {
@@ -341,19 +345,14 @@ public abstract class AbsQuizView<Q extends Quiz> extends FrameLayout implements
                     }
                 });
 
-        // 750ms fade out the question (200ms fast_in_linear_out)
-        // 750ms fade out the answers (200ms fast_in_linear_out)
-
+        // Animate the foreground color to match the background color.
+        // This overlays all content within the current view.
         final ObjectAnimator foregroundAnimator = ObjectAnimator
                 .ofArgb(this, FOREGROUND_COLOR, Color.WHITE, backgroundColor);
         foregroundAnimator.setDuration(200)
-                .setInterpolator(linearOutSlowInInterpolator);
+                .setInterpolator(mLinearOutSlowInInterpolator);
         foregroundAnimator.setStartDelay(750);
         foregroundAnimator.start();
-
-    /*
-     * 1150ms fade in / translate up the points scored in the score box (200ms linear_in_slow_out)
-     */
 
     }
 
