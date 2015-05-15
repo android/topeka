@@ -8,7 +8,7 @@ sources=("https://raw.githubusercontent.com/Polymer/topeka-elements/master/avata
 cd raw
 
 #for source in ${sources[@]};
-#do 
+#do
 #  wget $source raw
 #done
 

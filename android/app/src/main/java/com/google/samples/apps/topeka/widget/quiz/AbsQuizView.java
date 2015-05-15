@@ -173,8 +173,11 @@ public abstract class AbsQuizView<Q extends Quiz> extends FrameLayout implements
         final LayoutParams fabLayoutParams = new LayoutParams(fabSize, fabSize,
                 Gravity.END | Gravity.TOP);
         final int fabPadding = getResources().getDimensionPixelSize(R.dimen.padding_fab);
-        final int halfAFab = getResources().getDimensionPixelSize(R.dimen.fab_size) / 2;
-        fabLayoutParams.setMargins(0, bottomOfQuestionView - halfAFab, 0, fabPadding);
+        final int halfAFab = fabSize / 2;
+        fabLayoutParams.setMargins(0, // left
+                bottomOfQuestionView - halfAFab, //top
+                0, // right
+                fabPadding); // bottom
         fabLayoutParams.setMarginEnd(fabPadding);
         addView(mSubmitAnswer, fabLayoutParams);
     }
