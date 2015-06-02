@@ -21,11 +21,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 
 import com.google.samples.apps.topeka.R;
-import com.google.samples.apps.topeka.widget.outlineprovider.AvatarOutlineProvider;
 import com.google.samples.apps.topeka.model.Avatar;
+import com.google.samples.apps.topeka.widget.AvatarView;
 
 /**
  * Adapter to display {@link Avatar} icons.
@@ -45,13 +44,11 @@ public class AvatarAdapter extends BaseAdapter {
         if (null == convertView) {
             convertView = mLayoutInflater.inflate(R.layout.item_avatar, parent, false);
         }
-        setAvatar((ImageView) convertView, mAvatars[position]);
+        setAvatar((AvatarView) convertView, mAvatars[position]);
         return convertView;
     }
 
-    private void setAvatar(ImageView mIcon, Avatar avatar) {
-        mIcon.setClipToOutline(true);
-        mIcon.setOutlineProvider(new AvatarOutlineProvider());
+    private void setAvatar(AvatarView mIcon, Avatar avatar) {
         mIcon.setImageResource(avatar.getDrawableId());
         mIcon.setContentDescription(avatar.getNameForAccessibility());
     }

@@ -15,26 +15,38 @@
  */
 package com.google.samples.apps.topeka.fragment;
 
+import android.app.Fragment;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterViewAnimator;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.google.samples.apps.topeka.R;
 import com.google.samples.apps.topeka.adapter.QuizAdapter;
 import com.google.samples.apps.topeka.adapter.ScoreAdapter;
+import com.google.samples.apps.topeka.helper.PreferencesHelper;
 import com.google.samples.apps.topeka.model.Category;
+import com.google.samples.apps.topeka.model.Player;
+import com.google.samples.apps.topeka.model.Theme;
 import com.google.samples.apps.topeka.persistence.TopekaDatabaseHelper;
+import com.google.samples.apps.topeka.widget.AvatarView;
 import com.google.samples.apps.topeka.widget.quiz.AbsQuizView;
 
 /**
  * Encapsulates Quiz solving and displays it to the user.
  */
 public class QuizFragment extends Fragment {
+
+    private TextView mProgressText;
+    private int mQuizSize;
+    private ProgressBar mProgressBar;
 
     /**
      * Interface definition for a callback to be invoked when the quiz is started.
@@ -88,7 +100,38 @@ public class QuizFragment extends Fragment {
         decideOnViewToDisplay();
         mQuizView.setInAnimation(getActivity(), R.animator.slide_in_bottom);
         mQuizView.setOutAnimation(getActivity(), R.animator.slide_out_top);
+        final AvatarView avatar = (AvatarView) view.findViewById(R.id.avatar);
+        setAvatarDrawable(avatar);
+
+        initProgressToolbar(view);
         super.onViewCreated(view, savedInstanceState);
+    }
+
+    private void initProgressToolbar(View view) {
+        final Resources resources = getResources();
+        final int firstUnsolvedQuizPosition = mCategory.getFirstUnsolvedQuizPosition();
+        final Theme theme = mCategory.getTheme();
+        view.findViewById(R.id.progress_toolbar)
+                .setBackgroundColor(resources.getColor(theme.getPrimaryColor()));
+        mQuizSize = mCategory.getQuizzes().size();
+        mProgressText = (TextView) view.findViewById(R.id.progress_text);
+        mProgressText.setTextColor(resources.getColor(theme.getTextPrimaryColor()));
+        mProgressBar = ((ProgressBar) view.findViewById(R.id.progress));
+        mProgressBar.setMax(mQuizSize);
+        mProgressBar.getProgressDrawable().setTint(resources.getColor(theme.getAccentColorId()));
+
+        setProgress(firstUnsolvedQuizPosition);
+    }
+
+    private void setProgress(int currentQuizPosition) {
+        mProgressText
+                .setText(getString(R.string.quiz_of_quizzes, currentQuizPosition, mQuizSize));
+        mProgressBar.setProgress(currentQuizPosition);
+    }
+
+    private void setAvatarDrawable(ImageView avatarView) {
+        Player player = PreferencesHelper.getPlayer(getActivity());
+        avatarView.setImageResource(player.getAvatar().getDrawableId());
     }
 
     private void decideOnViewToDisplay() {
@@ -162,6 +205,7 @@ public class QuizFragment extends Fragment {
             return false;
         }
         int nextItem = mQuizView.getDisplayedChild() + 1;
+        setProgress(nextItem);
         final int count = mQuizView.getAdapter().getCount();
         if (nextItem < count) {
             mQuizView.showNext();

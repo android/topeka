@@ -28,7 +28,7 @@
         android:elevation="@dimen/elevation_header"
         android:background="@color/topeka_primary">
 
-        <ImageView
+        <com.google.samples.apps.topeka.widget.AvatarView
             android:id="@+id/avatar"
             android:layout_width="@dimen/avatar_size"
             android:layout_height="@dimen/avatar_size"

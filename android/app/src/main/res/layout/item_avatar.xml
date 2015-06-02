@@ -14,7 +14,8 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
-<ImageView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.samples.apps.topeka.widget.AvatarView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/avatar"
     android:layout_width="@dimen/avatar_size"
     android:layout_height="@dimen/avatar_size"

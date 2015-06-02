@@ -27,6 +27,7 @@
         <item name="android:windowContentTransitions">true</item>
         <item name="android:titleTextAppearance">@style/Topeka.TextAppearance.Title</item>
         <item name="android:buttonStyle">@style/Topeka.CompoundButton</item>
+        <item name="android:windowBackground">@color/light_grey</item>
     </style>
 
     <style name="Topeka.Blue" parent="Topeka">

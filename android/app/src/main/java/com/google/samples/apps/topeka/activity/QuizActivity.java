@@ -49,7 +49,7 @@ public class QuizActivity extends Activity {
     private Interpolator mInterpolator;
     private String mCategoryId;
     private QuizFragment mQuizFragment;
-    Toolbar mToolbar;
+    private Toolbar mToolbar;
     private ImageView mQuizFab;
     private boolean mSavedStateIsPlaying;
     private ImageView mIcon;

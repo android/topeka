@@ -22,7 +22,7 @@
     <color name="topeka_blank">#424242</color>
     <color name="topeka_accent">#3F51B5</color>
 
-    <color name="text_light">#fff</color>
+    <color name="text_light">@android:color/white</color>
     <color name="text_dark">#616161</color>
 
     <!-- theme colors -->
@@ -61,5 +61,6 @@
 
     <color name="green">#00e676</color>
     <color name="red">#ff5252</color>
+    <color name="light_grey">#f5f5f5</color>
 
 </resources>

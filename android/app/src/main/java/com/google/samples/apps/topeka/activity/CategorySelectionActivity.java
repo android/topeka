@@ -24,7 +24,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toolbar;
 
@@ -33,7 +32,7 @@ import com.google.samples.apps.topeka.fragment.CategorySelectionFragment;
 import com.google.samples.apps.topeka.helper.PreferencesHelper;
 import com.google.samples.apps.topeka.model.Player;
 import com.google.samples.apps.topeka.persistence.TopekaDatabaseHelper;
-import com.google.samples.apps.topeka.widget.outlineprovider.AvatarOutlineProvider;
+import com.google.samples.apps.topeka.widget.AvatarView;
 
 public class CategorySelectionActivity extends Activity {
 
@@ -78,9 +77,7 @@ public class CategorySelectionActivity extends Activity {
         setActionBar(toolbar);
         //noinspection ConstantConditions
         getActionBar().setDisplayShowTitleEnabled(false);
-        final ImageView avatarView = (ImageView) toolbar.findViewById(R.id.avatar);
-        avatarView.setClipToOutline(true);
-        avatarView.setOutlineProvider(new AvatarOutlineProvider());
+        final AvatarView avatarView = (AvatarView) toolbar.findViewById(R.id.avatar);
         avatarView.setImageDrawable(getDrawable(player.getAvatar().getDrawableId()));
         ((TextView) toolbar.findViewById(R.id.title)).setText(getDisplayName(player));
     }
