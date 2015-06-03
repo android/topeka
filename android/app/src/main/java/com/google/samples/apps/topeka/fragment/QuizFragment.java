@@ -102,7 +102,6 @@ public class QuizFragment extends Fragment {
         mQuizView.setOutAnimation(getActivity(), R.animator.slide_out_top);
         final AvatarView avatar = (AvatarView) view.findViewById(R.id.avatar);
         setAvatarDrawable(avatar);
-
         initProgressToolbar(view);
         super.onViewCreated(view, savedInstanceState);
     }

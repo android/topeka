@@ -15,19 +15,19 @@
   ~ limitations under the License.
   -->
 <FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/quiz_container"
-    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <com.google.samples.apps.topeka.widget.fab.FloatingActionButton
         android:id="@+id/fab_quiz"
         android:layout_width="@dimen/fab_size"
         android:layout_height="@dimen/fab_size"
         android:layout_gravity="bottom|end"
-        android:layout_marginEnd="@dimen/keyline_16"
         android:layout_marginBottom="@dimen/keyline_16"
+        android:layout_marginEnd="@dimen/keyline_16"
         android:transitionName="@string/transition_avatar" />
 
     <LinearLayout
@@ -39,12 +39,12 @@
             android:id="@+id/toolbar_activity_quiz"
             android:layout_width="match_parent"
             android:layout_height="?android:attr/actionBarSize"
-            android:navigationIcon="@drawable/ic_arrow_back"
-            android:navigationContentDescription="@string/up"
-            android:elevation="@dimen/elevation_header"
-            android:background="?android:colorPrimary"
             android:layout_gravity="top"
+            android:background="?android:colorPrimary"
             android:contentInsetStart="@dimen/keyline_72"
+            android:elevation="@dimen/elevation_header"
+            android:navigationContentDescription="@string/up"
+            android:navigationIcon="@drawable/ic_arrow_back"
             android:transitionName="@string/transition_toolbar">
             <!--an empty tag is required to get touch feedback on the navigation icon-->
         </Toolbar>
@@ -59,16 +59,18 @@
                 android:id="@+id/icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:padding="@dimen/keyline_16"
+                android:layout_margin="@dimen/keyline_16"
                 android:contentDescription="@null"
-                android:scaleType="center"
-                android:layout_gravity="center" />
+                android:scaleType="centerInside" />
 
             <FrameLayout
                 android:id="@+id/quiz_fragment_container"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
-                android:visibility="invisible"/>
+                android:visibility="invisible" />
         </FrameLayout>
     </LinearLayout>
 </FrameLayout>
