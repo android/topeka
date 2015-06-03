@@ -16,6 +16,8 @@
 
 package com.google.samples.apps.topeka.model;
 
+import android.support.annotation.DrawableRes;
+
 import com.google.samples.apps.topeka.R;
 
 /**
@@ -44,10 +46,11 @@ public enum Avatar {
 
     private final int mResId;
 
-    Avatar(final int resId) {
+    Avatar(@DrawableRes final int resId) {
         mResId = resId;
     }
 
+    @DrawableRes
     public int getDrawableId() {
         return mResId;
     }

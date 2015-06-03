@@ -38,6 +38,7 @@
         android:id="@+id/progress_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="?android:colorPrimary"
         android:elevation="@dimen/elevation_header">
 
         <LinearLayout
@@ -50,13 +51,14 @@
                 style="@android:style/Widget.Material.ProgressBar.Horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/keyline_16" />
+                android:layout_marginEnd="@dimen/keyline_16"
+                android:progressTint="?android:colorAccent" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:baselineAligned="false">
+                android:baselineAligned="false"
+                android:orientation="horizontal">
 
                 <com.google.samples.apps.topeka.widget.AvatarView
                     android:id="@+id/avatar"

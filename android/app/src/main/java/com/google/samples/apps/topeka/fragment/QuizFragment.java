@@ -16,9 +16,9 @@
 package com.google.samples.apps.topeka.fragment;
 
 import android.app.Fragment;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -91,7 +91,13 @@ public class QuizFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
             @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_quiz, container, false);
+        // Create a themed Context and custom LayoutInflater
+        // to get nicely themed views in this Fragment.
+        final Theme theme = mCategory.getTheme();
+        final ContextThemeWrapper context = new ContextThemeWrapper(getActivity(),
+                theme.getStyleId());
+        final LayoutInflater themedInflater = LayoutInflater.from(context);
+        return themedInflater.inflate(R.layout.fragment_quiz, container, false);
     }
 
     @Override
@@ -107,17 +113,11 @@ public class QuizFragment extends Fragment {
     }
 
     private void initProgressToolbar(View view) {
-        final Resources resources = getResources();
         final int firstUnsolvedQuizPosition = mCategory.getFirstUnsolvedQuizPosition();
-        final Theme theme = mCategory.getTheme();
-        view.findViewById(R.id.progress_toolbar)
-                .setBackgroundColor(resources.getColor(theme.getPrimaryColor()));
         mQuizSize = mCategory.getQuizzes().size();
         mProgressText = (TextView) view.findViewById(R.id.progress_text);
-        mProgressText.setTextColor(resources.getColor(theme.getTextPrimaryColor()));
         mProgressBar = ((ProgressBar) view.findViewById(R.id.progress));
         mProgressBar.setMax(mQuizSize);
-        mProgressBar.getProgressDrawable().setTint(resources.getColor(theme.getAccentColorId()));
 
         setProgress(firstUnsolvedQuizPosition);
     }

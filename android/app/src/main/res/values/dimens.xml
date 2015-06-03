@@ -23,7 +23,6 @@
     <dimen name="padding_fab">16dp</dimen>
     <dimen name="padding_icon">56dp</dimen>
     <dimen name="padding_grid">4dp</dimen>
-    <dimen name="padding_category_icon">24dp</dimen>
     <dimen name="padding_category">4dp</dimen>
     <dimen name="padding_default">4dp</dimen>
     <dimen name="padding_avatar">16dp</dimen>

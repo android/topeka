@@ -36,6 +36,7 @@
         <item name="android:textColorPrimary">@color/theme_blue_text</item>
         <item name="android:statusBarColor">@color/theme_blue_primary_dark</item>
         <item name="android:windowBackground">@color/theme_blue_background</item>
+        <item name="android:colorAccent">@color/theme_blue_accent</item>
     </style>
 
     <style name="Topeka.Green" parent="Topeka">
@@ -44,6 +45,7 @@
         <item name="android:textColorPrimary">@color/theme_green_text</item>
         <item name="android:statusBarColor">@color/theme_green_primary_dark</item>
         <item name="android:windowBackground">@color/theme_green_background</item>
+        <item name="android:colorAccent">@color/theme_green_accent</item>
     </style>
 
     <style name="Topeka.Purple" parent="Topeka">
@@ -52,6 +54,7 @@
         <item name="android:textColorPrimary">@color/theme_purple_text</item>
         <item name="android:statusBarColor">@color/theme_purple_primary_dark</item>
         <item name="android:windowBackground">@color/theme_purple_background</item>
+        <item name="android:colorAccent">@color/theme_purple_accent</item>
     </style>
 
     <style name="Topeka.Red" parent="Topeka">
@@ -60,6 +63,7 @@
         <item name="android:textColorPrimary">@color/theme_red_text</item>
         <item name="android:statusBarColor">@color/theme_red_primary_dark</item>
         <item name="android:windowBackground">@color/theme_red_background</item>
+        <item name="android:colorAccent">@color/theme_red_accent</item>
     </style>
 
     <style name="Topeka.Yellow" parent="Topeka">
@@ -68,6 +72,7 @@
         <item name="android:textColorPrimary">@color/theme_yellow_text</item>
         <item name="android:statusBarColor">@color/theme_yellow_primary_dark</item>
         <item name="android:windowBackground">@color/theme_yellow_background</item>
+        <item name="android:colorAccent">@color/theme_yellow_accent</item>
     </style>
 
     <style name="Topeka.CompoundButton" parent="@android:style/Widget.Material.Button.Borderless">

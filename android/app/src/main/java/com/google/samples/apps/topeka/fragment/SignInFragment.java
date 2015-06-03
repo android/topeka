@@ -169,6 +169,8 @@ public class SignInFragment extends Fragment {
             }
         });
         mAvatarGrid.setNumColumns(calculateSpanCount());
+        mAvatarGrid
+                .setVerticalSpacing(getResources().getDimensionPixelSize(R.dimen.padding_avatar));
     }
 
 
