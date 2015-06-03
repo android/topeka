@@ -18,33 +18,33 @@ package com.google.samples.apps.topeka.model;
 
 public interface JsonAttributes {
 
-    public static final String ANSWER = "answer";
-    public static final String END = "end";
-    public static final String ID = "id";
-    public static final String MAX = "max";
-    public static final String MIN = "min";
-    public static final String NAME = "name";
-    public static final String OPTIONS = "options";
-    public static final String QUESTION = "question";
-    public static final String QUIZZES = "quizzes";
-    public static final String START = "start";
-    public static final String STEP = "step";
-    public static final String THEME = "theme";
-    public static final String TYPE = "type";
-    public static final String SCORES = "scores";
-    public static final String SOLVED = "solved";
+    String ANSWER = "answer";
+    String END = "end";
+    String ID = "id";
+    String MAX = "max";
+    String MIN = "min";
+    String NAME = "name";
+    String OPTIONS = "options";
+    String QUESTION = "question";
+    String QUIZZES = "quizzes";
+    String START = "start";
+    String STEP = "step";
+    String THEME = "theme";
+    String TYPE = "type";
+    String SCORES = "scores";
+    String SOLVED = "solved";
 
-    public interface QuizType {
+    interface QuizType {
 
-        public static final String ALPHA_PICKER = "alpha-picker";
-        public static final String FILL_BLANK = "fill-blank";
-        public static final String FILL_TWO_BLANKS = "fill-two-blanks";
-        public static final String FOUR_QUARTER = "four-quarter";
-        public static final String MULTI_SELECT = "multi-select";
-        public static final String PICKER = "picker";
-        public static final String SINGLE_SELECT = "single-select";
-        public static final String SINGLE_SELECT_ITEM = "single-select-item";
-        public static final String TOGGLE_TRANSLATE = "toggle-translate";
-        public static final String TRUE_FALSE = "true-false";
+        String ALPHA_PICKER = "alpha-picker";
+        String FILL_BLANK = "fill-blank";
+        String FILL_TWO_BLANKS = "fill-two-blanks";
+        String FOUR_QUARTER = "four-quarter";
+        String MULTI_SELECT = "multi-select";
+        String PICKER = "picker";
+        String SINGLE_SELECT = "single-select";
+        String SINGLE_SELECT_ITEM = "single-select-item";
+        String TOGGLE_TRANSLATE = "toggle-translate";
+        String TRUE_FALSE = "true-false";
     }
 }

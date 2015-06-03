@@ -94,7 +94,7 @@ public class TopekaDatabaseHelper extends SQLiteOpenHelper {
 
     private static List<Category> loadCategories(Context context) {
         Cursor data = TopekaDatabaseHelper.getCategoryCursor(context);
-        List<Category> tmpCategories = new ArrayList<Category>(data.getCount());
+        List<Category> tmpCategories = new ArrayList<>(data.getCount());
         final SQLiteDatabase readableDatabase = TopekaDatabaseHelper.getReadableDatabase(context);
         do {
             final Category category = getCategory(data, readableDatabase);
@@ -238,7 +238,7 @@ public class TopekaDatabaseHelper extends SQLiteOpenHelper {
      * @return The found quizzes or an empty list if none were available.
      */
     private static List<Quiz> getQuizzes(final String categoryId, SQLiteDatabase database) {
-        final List<Quiz> quizzes = new ArrayList<Quiz>();
+        final List<Quiz> quizzes = new ArrayList<>();
         final Cursor cursor = database.query(QuizTable.NAME, QuizTable.PROJECTION,
                 QuizTable.FK_CATEGORY + " LIKE ?", new String[]{categoryId}, null, null, null);
         cursor.moveToFirst();

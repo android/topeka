@@ -74,6 +74,7 @@ public class Player implements Parcelable {
         dest.writeInt(mAvatar.ordinal());
     }
 
+    @SuppressWarnings("RedundantIfStatement")
     @Override
     public boolean equals(Object o) {
         if (this == o) {

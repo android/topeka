@@ -71,7 +71,7 @@ public class QuizAdapter extends BaseAdapter {
         for (int i = 0; i < mQuizzes.size(); i++) {
             tmpTypes.add(mQuizzes.get(i).getType().getJsonName());
         }
-        mQuizTypes = new ArrayList<String>(tmpTypes);
+        mQuizTypes = new ArrayList<>(tmpTypes);
         return mQuizTypes.size();
     }
 

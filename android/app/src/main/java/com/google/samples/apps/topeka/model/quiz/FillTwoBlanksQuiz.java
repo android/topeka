@@ -27,6 +27,7 @@ public final class FillTwoBlanksQuiz extends Quiz<String[]> {
         super(question, answer, solved);
     }
 
+    @SuppressWarnings("unused")
     public FillTwoBlanksQuiz(Parcel in) {
         super(in);
         String answer[] = in.createStringArray();

@@ -287,6 +287,8 @@ public abstract class AbsQuizView<Q extends Quiz> extends FrameLayout implements
         submitAnswer(findViewById(R.id.submitAnswer));
     }
 
+
+    @SuppressWarnings("UnusedParameters")
     private void submitAnswer(final View v) {
         final boolean answerCorrect = isAnswerCorrect();
         mQuiz.setSolved(true);

@@ -70,12 +70,13 @@ public final class PickerQuiz extends Quiz<Integer> {
         dest.writeInt(mStep);
     }
 
+    @SuppressWarnings("SimplifiableIfStatement")
     @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (!(o instanceof PickerQuiz)) {
             return false;
         }
         if (!super.equals(o)) {
@@ -84,17 +85,14 @@ public final class PickerQuiz extends Quiz<Integer> {
 
         PickerQuiz that = (PickerQuiz) o;
 
-        if (mMax != that.mMax) {
-            return false;
-        }
         if (mMin != that.mMin) {
             return false;
         }
-        if (mStep != that.mStep) {
+        if (mMax != that.mMax) {
             return false;
         }
+        return mStep == that.mStep;
 
-        return true;
     }
 
     @Override

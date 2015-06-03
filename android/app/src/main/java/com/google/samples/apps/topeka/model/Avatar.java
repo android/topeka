@@ -44,7 +44,7 @@ public enum Avatar {
 
     private final int mResId;
 
-    private Avatar(final int resId) {
+    Avatar(final int resId) {
         mResId = resId;
     }
 

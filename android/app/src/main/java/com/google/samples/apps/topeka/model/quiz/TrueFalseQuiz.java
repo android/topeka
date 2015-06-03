@@ -25,6 +25,7 @@ public final class TrueFalseQuiz extends Quiz<Boolean> {
         super(question, answer, solved);
     }
 
+    @SuppressWarnings("unused")
     public TrueFalseQuiz(Parcel in) {
         super(in);
         setAnswer(ParcelableHelper.readBoolean(in));

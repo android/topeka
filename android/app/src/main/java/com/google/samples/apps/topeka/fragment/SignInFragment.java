@@ -106,6 +106,7 @@ public class SignInFragment extends Fragment {
 
     private void checkIsInEditMode() {
         final Bundle arguments = getArguments();
+        //noinspection SimplifiableIfStatement
         if (null == arguments) {
             edit = false;
         } else {

@@ -128,6 +128,7 @@ public class QuizFragment extends Fragment {
         mProgressBar.setProgress(currentQuizPosition);
     }
 
+    @SuppressWarnings("ConstantConditions")
     private void setAvatarDrawable(ImageView avatarView) {
         Player player = PreferencesHelper.getPlayer(getActivity());
         avatarView.setImageResource(player.getAvatar().getDrawableId());
@@ -221,6 +222,7 @@ public class QuizFragment extends Fragment {
     }
 
     public void showSummary() {
+        @SuppressWarnings("ConstantConditions")
         final ListView scorecardView = (ListView) getView().findViewById(R.id.scorecard);
         mScoreAdapter = getScoreAdapter();
         scorecardView.setAdapter(mScoreAdapter);

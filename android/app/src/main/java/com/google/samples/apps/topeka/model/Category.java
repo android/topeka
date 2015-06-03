@@ -16,12 +16,12 @@
 
 package com.google.samples.apps.topeka.model;
 
-import com.google.samples.apps.topeka.helper.ParcelableHelper;
-import com.google.samples.apps.topeka.model.quiz.Quiz;
-
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
+
+import com.google.samples.apps.topeka.helper.ParcelableHelper;
+import com.google.samples.apps.topeka.model.quiz.Quiz;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -67,7 +67,7 @@ public class Category implements Parcelable {
         mName = in.readString();
         mId = in.readString();
         mTheme = Theme.values()[in.readInt()];
-        mQuizzes = new ArrayList<Quiz>();
+        mQuizzes = new ArrayList<>();
         in.readTypedList(mQuizzes, Quiz.CREATOR);
         mScores = in.createIntArray();
         mSolved = ParcelableHelper.readBoolean(in);
@@ -202,6 +202,7 @@ public class Category implements Parcelable {
         ParcelableHelper.writeBoolean(dest, mSolved);
     }
 
+    @SuppressWarnings("RedundantIfStatement")
     @Override
     public boolean equals(Object o) {
         if (this == o) {

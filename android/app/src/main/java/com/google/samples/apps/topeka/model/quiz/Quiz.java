@@ -16,11 +16,11 @@
 
 package com.google.samples.apps.topeka.model.quiz;
 
-import com.google.samples.apps.topeka.helper.ParcelableHelper;
-
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
+
+import com.google.samples.apps.topeka.helper.ParcelableHelper;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -107,13 +107,8 @@ public abstract class Quiz<A> implements Parcelable {
                 Constructor<? extends Quiz> constructor = type.getType()
                         .getConstructor(Parcel.class);
                 return constructor.newInstance(in);
-            } catch (InstantiationException e) {
-                Log.e(TAG, "createFromParcel ", e);
-            } catch (IllegalAccessException e) {
-                Log.e(TAG, "createFromParcel ", e);
-            } catch (InvocationTargetException e) {
-                Log.e(TAG, "createFromParcel ", e);
-            } catch (NoSuchMethodException e) {
+            } catch (InstantiationException | IllegalAccessException |
+                    InvocationTargetException | NoSuchMethodException e) {
                 Log.e(TAG, "createFromParcel ", e);
             }
             throw new UnsupportedOperationException("Could not create Quiz");
@@ -137,6 +132,7 @@ public abstract class Quiz<A> implements Parcelable {
         ParcelableHelper.writeBoolean(dest, mSolved);
     }
 
+    @SuppressWarnings("RedundantIfStatement")
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -175,6 +171,6 @@ public abstract class Quiz<A> implements Parcelable {
 
     @Override
     public String toString() {
-        return getType() + ": \"" + getQuestion() +"\"";
+        return getType() + ": \"" + getQuestion() + "\"";
     }
 }

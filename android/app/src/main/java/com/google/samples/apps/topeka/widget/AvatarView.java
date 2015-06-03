@@ -24,11 +24,6 @@ public class AvatarView extends ImageView {
         initOutlineProvider();
     }
 
-    public AvatarView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
-        initOutlineProvider();
-    }
-
     private void initOutlineProvider() {
         setOutlineProvider(new AvatarOutlineProvider());
         setClipToOutline(true);

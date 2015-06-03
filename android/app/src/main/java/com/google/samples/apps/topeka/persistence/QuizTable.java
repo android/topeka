@@ -22,26 +22,26 @@ import android.provider.BaseColumns;
  */
 public interface QuizTable {
 
-    static final String NAME = "quiz";
+    String NAME = "quiz";
 
-    static final String COLUMN_ID = BaseColumns._ID;
-    static final String FK_CATEGORY = "fk_category";
-    static final String COLUMN_TYPE = "type";
-    static final String COLUMN_QUESTION = "question";
-    static final String COLUMN_ANSWER = "answer";
-    static final String COLUMN_OPTIONS = "options";
-    static final String COLUMN_MIN = "min";
-    static final String COLUMN_MAX = "max";
-    static final String COLUMN_STEP = "step";
-    static final String COLUMN_START = "start";
-    static final String COLUMN_END = "end";
-    static final String COLUMN_SOLVED = "solved";
+    String COLUMN_ID = BaseColumns._ID;
+    String FK_CATEGORY = "fk_category";
+    String COLUMN_TYPE = "type";
+    String COLUMN_QUESTION = "question";
+    String COLUMN_ANSWER = "answer";
+    String COLUMN_OPTIONS = "options";
+    String COLUMN_MIN = "min";
+    String COLUMN_MAX = "max";
+    String COLUMN_STEP = "step";
+    String COLUMN_START = "start";
+    String COLUMN_END = "end";
+    String COLUMN_SOLVED = "solved";
 
-    public static final String[] PROJECTION = new String[] {COLUMN_ID, FK_CATEGORY, COLUMN_TYPE,
+    String[] PROJECTION = new String[] {COLUMN_ID, FK_CATEGORY, COLUMN_TYPE,
             COLUMN_QUESTION, COLUMN_ANSWER, COLUMN_OPTIONS, COLUMN_MIN,
             COLUMN_MAX, COLUMN_STEP, COLUMN_START, COLUMN_END, COLUMN_SOLVED};
 
-    static final String CREATE = "CREATE TABLE " + NAME + " ("
+    String CREATE = "CREATE TABLE " + NAME + " ("
             + COLUMN_ID + " INTEGER PRIMARY KEY, "
             + FK_CATEGORY + " REFERENCES "
             + CategoryTable.NAME + "(" + CategoryTable.COLUMN_ID + "), "

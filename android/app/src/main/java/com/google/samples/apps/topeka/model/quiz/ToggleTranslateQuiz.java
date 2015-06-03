@@ -29,6 +29,7 @@ public final class ToggleTranslateQuiz extends OptionsQuiz<String[]> {
         super(question, answer, options, solved);
     }
 
+    @SuppressWarnings("unused")
     public ToggleTranslateQuiz(Parcel in) {
         super(in);
         setAnswer(in.createIntArray());
@@ -70,6 +71,7 @@ public final class ToggleTranslateQuiz extends OptionsQuiz<String[]> {
         dest.writeSerializable(getOptions());
     }
 
+    @SuppressWarnings("RedundantIfStatement")
     @Override
     public boolean equals(Object o) {
         if (this == o) {

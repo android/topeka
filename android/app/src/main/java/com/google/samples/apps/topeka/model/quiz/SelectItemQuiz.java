@@ -25,6 +25,7 @@ public final class SelectItemQuiz extends OptionsQuiz<String> {
         super(question, answer, options, solved);
     }
 
+    @SuppressWarnings("unused")
     public SelectItemQuiz(Parcel in) {
         super(in);
         String[] options = in.createStringArray();

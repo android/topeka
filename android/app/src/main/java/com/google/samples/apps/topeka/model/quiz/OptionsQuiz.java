@@ -64,6 +64,7 @@ public abstract class OptionsQuiz<T> extends Quiz<int[]> {
         dest.writeIntArray(getAnswer());
     }
 
+    @SuppressWarnings("RedundantIfStatement")
     @Override
     public boolean equals(Object o) {
         if (this == o) {

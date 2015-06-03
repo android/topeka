@@ -26,6 +26,7 @@ public final class MultiSelectQuiz extends OptionsQuiz<String> {
         super(question, answer, options, solved);
     }
 
+    @SuppressWarnings("unused")
     public MultiSelectQuiz(Parcel in) {
         super(in);
         String options[] = in.createStringArray();

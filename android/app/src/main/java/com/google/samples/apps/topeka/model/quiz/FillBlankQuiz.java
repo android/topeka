@@ -29,6 +29,7 @@ public final class FillBlankQuiz extends Quiz<String> {
         mEnd = end;
     }
 
+    @SuppressWarnings("unused")
     public FillBlankQuiz(Parcel in) {
         super(in);
         setAnswer(in.readString());

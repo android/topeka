@@ -23,6 +23,7 @@ public final class AlphaPickerQuiz extends Quiz<String> {
         super(question, answer, solved);
     }
 
+    @SuppressWarnings("unused")
     public AlphaPickerQuiz(Parcel in) {
         super(in);
         setAnswer(in.readString());
