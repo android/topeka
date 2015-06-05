@@ -17,7 +17,7 @@
 <com.google.samples.apps.topeka.widget.AvatarView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/avatar"
-    android:layout_width="@dimen/avatar_size"
-    android:layout_height="@dimen/avatar_size"
+    android:layout_width="@dimen/size_fab"
+    android:layout_height="@dimen/size_fab"
     android:contentDescription="@string/an_avatar"
     android:layout_gravity="center" />

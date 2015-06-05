@@ -29,6 +29,6 @@
         android:id="@+id/category_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/padding_card_name" />
+        android:padding="@dimen/spacing_double" />
 
 </LinearLayout>

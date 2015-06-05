@@ -79,7 +79,7 @@ public abstract class AbsQuizView<Q extends Quiz> extends FrameLayout implements
     protected final int mMinHeightTouchTarget;
 
     private boolean mAnswered;
-    private final int mKeyline16;
+    private final int mSpacingDouble;
     private TextView mQuestionView;
     private FloatingActionButton mSubmitAnswer;
     private final LayoutInflater mLayoutInflater;
@@ -103,7 +103,7 @@ public abstract class AbsQuizView<Q extends Quiz> extends FrameLayout implements
         super(context);
         mQuiz = quiz;
         mCategory = category;
-        mKeyline16 = getResources().getDimensionPixelSize(R.dimen.keyline_16);
+        mSpacingDouble = getResources().getDimensionPixelSize(R.dimen.spacing_double);
         mSubmitAnswer = getSubmitButton(context);
         mLayoutInflater = LayoutInflater.from(context);
         mMinHeightTouchTarget = getResources()
@@ -168,17 +168,16 @@ public abstract class AbsQuizView<Q extends Quiz> extends FrameLayout implements
     }
 
     private void addFloatingActionButton() {
-        final int fabSize = getResources().getDimensionPixelSize(R.dimen.fab_size);
+        final int fabSize = getResources().getDimensionPixelSize(R.dimen.size_fab);
         int bottomOfQuestionView = findViewById(R.id.question_view).getBottom();
         final LayoutParams fabLayoutParams = new LayoutParams(fabSize, fabSize,
                 Gravity.END | Gravity.TOP);
-        final int fabPadding = getResources().getDimensionPixelSize(R.dimen.padding_fab);
         final int halfAFab = fabSize / 2;
         fabLayoutParams.setMargins(0, // left
                 bottomOfQuestionView - halfAFab, //top
                 0, // right
-                fabPadding); // bottom
-        fabLayoutParams.setMarginEnd(fabPadding);
+                mSpacingDouble); // bottom
+        fabLayoutParams.setMarginEnd(mSpacingDouble);
         addView(mSubmitAnswer, fabLayoutParams);
     }
 
@@ -198,7 +197,7 @@ public abstract class AbsQuizView<Q extends Quiz> extends FrameLayout implements
     }
 
     private void setDefaultPadding(View view) {
-        view.setPadding(mKeyline16, mKeyline16, mKeyline16, mKeyline16);
+        view.setPadding(mSpacingDouble, mSpacingDouble, mSpacingDouble, mSpacingDouble);
     }
 
     protected LayoutInflater getLayoutInflater() {

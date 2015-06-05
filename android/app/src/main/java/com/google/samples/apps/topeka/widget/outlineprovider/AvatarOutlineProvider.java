@@ -21,6 +21,6 @@ public class AvatarOutlineProvider extends RoundOutlineProvider {
 
     @Override
     public int getSizeResourceId() {
-        return R.dimen.avatar_size;
+        return R.dimen.size_fab;
     }
 }

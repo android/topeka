@@ -15,28 +15,24 @@
   ~ limitations under the License.
   -->
 <resources>
-    <dimen name="keyline_8">8dp</dimen>
-    <dimen name="keyline_16">16dp</dimen>
-    <dimen name="keyline_72">72dp</dimen>
-    <dimen name="avatar_size">56dp</dimen>
-    <dimen name="inset_fab">16dp</dimen>
-    <dimen name="padding_fab">16dp</dimen>
-    <dimen name="padding_icon">56dp</dimen>
-    <dimen name="padding_grid">4dp</dimen>
-    <dimen name="padding_category">4dp</dimen>
-    <dimen name="padding_default">4dp</dimen>
-    <dimen name="padding_avatar">16dp</dimen>
-    <dimen name="padding_card_name">16dp</dimen>
-    <dimen name="fab_size">56dp</dimen>
+    <dimen name="spacing_micro">4dp</dimen>
+    <dimen name="spacing_normal">8dp</dimen>
+    <dimen name="spacing_double">16dp</dimen>
+    <dimen name="spacing_huge">72dp</dimen>
+
+    <dimen name="size_fab">56dp</dimen>
+    <dimen name="size_toolbar">56dp</dimen>
+    <dimen name="size_score_mark">24dp</dimen>
+
     <dimen name="elevation_default">2dp</dimen>
-    <dimen name="elevation_fab">8dp</dimen>
     <dimen name="elevation_header">4dp</dimen>
-    <dimen name="size_edit_text">18sp</dimen>
-    <dimen name="size_card_name">14sp</dimen>
-    <dimen name="stroke_width_avatar">4dp</dimen>
+    <dimen name="elevation_fab">8dp</dimen>
+
     <dimen name="min_height_touch_target">48dp</dimen>
     <dimen name="min_height_question">144dp</dimen>
-    <dimen name="navigation_width">240dp</dimen>
-    <dimen name="toolbar_height">56dp</dimen>
-    <dimen name="score_mark_size">24dp</dimen>
+
+    <dimen name="stroke_width_avatar">4dp</dimen>
+
+    <dimen name="size_edit_text">18sp</dimen>
+    <dimen name="size_card_name">14sp</dimen>
 </resources>

@@ -17,8 +17,8 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingStart="@dimen/keyline_16"
-    android:paddingEnd="@dimen/keyline_16">
+    android:paddingStart="@dimen/spacing_double"
+    android:paddingEnd="@dimen/spacing_double">
 
     <ProgressBar
         android:id="@+id/empty"
@@ -30,10 +30,12 @@
     <FrameLayout
         android:id="@+id/content"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:paddingEnd="@dimen/spacing_double"
+        android:paddingStart="@dimen/spacing_double">
 
         <include
-            layout="@layout/sign_in_fab_check"
+            layout="@layout/fab_done"
             android:visibility="gone" />
 
         <LinearLayout

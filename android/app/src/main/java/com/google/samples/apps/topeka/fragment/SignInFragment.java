@@ -141,12 +141,12 @@ public class SignInFragment extends Fragment {
         mFirstName.addTextChangedListener(textWatcher);
         mLastInitial = (EditText) view.findViewById(R.id.last_initial);
         mLastInitial.addTextChangedListener(textWatcher);
-        mDoneFab = (DoneFab) view.findViewById(R.id.check);
+        mDoneFab = (DoneFab) view.findViewById(R.id.done);
         mDoneFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 switch (v.getId()) {
-                    case R.id.check:
+                    case R.id.done:
                         savePlayer(getActivity());
                         performSignInWithTransition(v);
                         break;
@@ -169,8 +169,6 @@ public class SignInFragment extends Fragment {
             }
         });
         mAvatarGrid.setNumColumns(calculateSpanCount());
-        mAvatarGrid
-                .setVerticalSpacing(getResources().getDimensionPixelSize(R.dimen.padding_avatar));
     }
 
 
@@ -210,8 +208,8 @@ public class SignInFragment extends Fragment {
      * @return The recommended amount of columns.
      */
     private int calculateSpanCount() {
-        int avatarSize = getResources().getDimensionPixelSize(R.dimen.avatar_size);
-        int avatarPadding = getResources().getDimensionPixelSize(R.dimen.padding_avatar);
+        int avatarSize = getResources().getDimensionPixelSize(R.dimen.size_fab);
+        int avatarPadding = getResources().getDimensionPixelSize(R.dimen.spacing_double);
         return mAvatarGrid.getWidth() / (avatarSize + avatarPadding);
     }
 }

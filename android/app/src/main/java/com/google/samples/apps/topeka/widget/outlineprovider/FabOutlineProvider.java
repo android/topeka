@@ -21,6 +21,6 @@ public class FabOutlineProvider extends RoundOutlineProvider {
 
     @Override
     public int getSizeResourceId() {
-        return R.dimen.fab_size;
+        return R.dimen.size_fab;
     }
 }

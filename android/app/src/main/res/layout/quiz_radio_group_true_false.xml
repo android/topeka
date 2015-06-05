@@ -24,7 +24,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:layout_marginEnd="@dimen/padding_default"
+        android:layout_marginEnd="@dimen/spacing_micro"
         android:text="@string/btn_true"
         style="@style/Topeka.CompoundButton.True" />
 
@@ -33,7 +33,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:layout_marginStart="@dimen/padding_default"
+        android:layout_marginStart="@dimen/spacing_micro"
         android:text="@string/btn_false"
         style="@style/Topeka.CompoundButton.False" />
 </RadioGroup>

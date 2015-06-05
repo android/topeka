@@ -23,11 +23,11 @@
 
     <com.google.samples.apps.topeka.widget.fab.FloatingActionButton
         android:id="@+id/fab_quiz"
-        android:layout_width="@dimen/fab_size"
-        android:layout_height="@dimen/fab_size"
+        android:layout_width="@dimen/size_fab"
+        android:layout_height="@dimen/size_fab"
         android:layout_gravity="bottom|end"
-        android:layout_marginBottom="@dimen/keyline_16"
-        android:layout_marginEnd="@dimen/keyline_16"
+        android:layout_marginBottom="@dimen/spacing_double"
+        android:layout_marginEnd="@dimen/spacing_double"
         android:transitionName="@string/transition_avatar" />
 
     <LinearLayout
@@ -41,7 +41,7 @@
             android:layout_height="?android:attr/actionBarSize"
             android:layout_gravity="top"
             android:background="?android:colorPrimary"
-            android:contentInsetStart="@dimen/keyline_72"
+            android:contentInsetStart="@dimen/spacing_huge"
             android:elevation="@dimen/elevation_header"
             android:navigationContentDescription="@string/up"
             android:navigationIcon="@drawable/ic_arrow_back"
@@ -60,9 +60,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_margin="@dimen/keyline_16"
+                android:layout_margin="@dimen/spacing_double"
                 android:contentDescription="@null"
-                android:padding="@dimen/keyline_16"
+                android:padding="@dimen/spacing_double"
                 android:scaleType="centerInside" />
 
             <FrameLayout
