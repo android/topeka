@@ -4,12 +4,14 @@ A fun to play quiz that showcases material design on Android
 
 ### Introduction
 
-Material design is a rational approach to visual, interaction and motion design
-across platforms. We originally launched the [Topeka web app](https://github.com/Polymer/topeka) as an open-source example of material design on the web.
+Material design is a new system for visual, interaction and motion design. We
+originally launched the [Topeka web app](https://github.com/Polymer/topeka)
+as an Open Source example of material design on the web.
 
 The Android version of Topeka demonstrates that the same branding and material
 design principles can be used to create a consistent experience across
-platforms. **TODO: LINK TO ARTICLE**
+platforms. You can read more about it on the
+[Android Developers blog](http://android-developers.blogspot.com/2015/06/more-material-design-with-topeka-for.html)
 
 ### Getting Started
 
