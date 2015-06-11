@@ -33,6 +33,10 @@ public class PlayerTest {
     private static final String LAST_INITIAL = "a";
     private static final String FIRST_NAME = "first";
 
+    private static Player getPlayerUnderTest() {
+        return new Player(FIRST_NAME, LAST_INITIAL, AVATAR);
+    }
+
     @Test
     public void writeToParcel() throws Exception {
         Player initial = getPlayerUnderTest();
@@ -41,9 +45,5 @@ public class PlayerTest {
         dest.setDataPosition(0);
         Player unparcelled = new Player(dest);
         assertThat(initial, is(unparcelled));
-    }
-
-    private static Player getPlayerUnderTest() {
-        return new Player(FIRST_NAME, LAST_INITIAL, AVATAR);
     }
 }

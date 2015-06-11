@@ -16,21 +16,21 @@
 
 package com.google.samples.apps.topeka.fragment;
 
-import com.google.samples.apps.topeka.R;
-import com.google.samples.apps.topeka.activity.QuizActivity;
-import com.google.samples.apps.topeka.adapter.CategoryAdapter;
-import com.google.samples.apps.topeka.model.Category;
-
 import android.app.Activity;
 import android.app.ActivityOptions;
-import android.os.Bundle;
 import android.app.Fragment;
+import android.os.Bundle;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
+
+import com.google.samples.apps.topeka.R;
+import com.google.samples.apps.topeka.activity.QuizActivity;
+import com.google.samples.apps.topeka.adapter.CategoryAdapter;
+import com.google.samples.apps.topeka.model.Category;
 
 import java.util.ArrayList;
 import java.util.List;

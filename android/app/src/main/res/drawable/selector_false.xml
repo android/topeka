@@ -18,7 +18,9 @@
     android:color="?android:attr/colorControlHighlight">
     <item>
         <selector>
-            <item android:state_checked="false" android:state_pressed="true">
+            <item
+                android:state_checked="false"
+                android:state_pressed="true">
                 <color android:color="@android:color/white" />
             </item>
             <item android:state_checked="true">

@@ -17,6 +17,6 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="oval">
     <stroke
-        android:color="@color/topeka_primary"
-        android:width="@dimen/stroke_width_avatar" />
+        android:width="@dimen/stroke_width_avatar"
+        android:color="@color/topeka_primary" />
 </shape>

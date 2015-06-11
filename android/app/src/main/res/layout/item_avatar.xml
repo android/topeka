@@ -15,9 +15,9 @@
   ~ limitations under the License.
   -->
 <com.google.samples.apps.topeka.widget.AvatarView
-    xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/avatar"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="@dimen/size_fab"
     android:layout_height="@dimen/size_fab"
-    android:contentDescription="@string/an_avatar"
-    android:layout_gravity="center" />
+    android:layout_gravity="center"
+    android:contentDescription="@string/an_avatar" />

@@ -30,14 +30,24 @@ import java.util.List;
 public class Category implements Parcelable {
 
     public static final String TAG = "Category";
+    public static final Creator<Category> CREATOR = new Creator<Category>() {
+        @Override
+        public Category createFromParcel(Parcel in) {
+            return new Category(in);
+        }
+
+        @Override
+        public Category[] newArray(int size) {
+            return new Category[size];
+        }
+    };
     private static final int SCORE = 8;
     private static final int NO_SCORE = 0;
-
     private final String mName;
     private final String mId;
     private final Theme mTheme;
-    private List<Quiz> mQuizzes;
     private final int[] mScores;
+    private List<Quiz> mQuizzes;
     private boolean mSolved;
 
     public Category(String name, String id, Theme theme, List<Quiz> quizzes, boolean solved) {
@@ -141,7 +151,6 @@ public class Category implements Parcelable {
         return mSolved;
     }
 
-
     public void setSolved(boolean solved) {
         this.mSolved = solved;
     }
@@ -174,18 +183,6 @@ public class Category implements Parcelable {
                 ", mSolved=" + mSolved +
                 '}';
     }
-
-    public static final Creator<Category> CREATOR = new Creator<Category>() {
-        @Override
-        public Category createFromParcel(Parcel in) {
-            return new Category(in);
-        }
-
-        @Override
-        public Category[] newArray(int size) {
-            return new Category[size];
-        }
-    };
 
     @Override
     public int describeContents() {

@@ -20,17 +20,17 @@
     android:fillViewport="true">
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/seekbar_progress"
+            style="@style/Topeka.TextAppearance.Title.Picker"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:gravity="center"
-            style="@style/Topeka.TextAppearance.Title.Picker" />
+            android:gravity="center" />
 
         <SeekBar
             android:id="@+id/seekbar"

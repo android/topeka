@@ -34,10 +34,30 @@ import java.lang.reflect.InvocationTargetException;
 public abstract class Quiz<A> implements Parcelable {
 
     private static final String TAG = "Quiz";
+    public static final Creator<Quiz> CREATOR = new Creator<Quiz>() {
+        @Override
+        public Quiz createFromParcel(Parcel in) {
+            int ordinal = in.readInt();
+            QuizType type = QuizType.values()[ordinal];
+            try {
+                Constructor<? extends Quiz> constructor = type.getType()
+                        .getConstructor(Parcel.class);
+                return constructor.newInstance(in);
+            } catch (InstantiationException | IllegalAccessException |
+                    InvocationTargetException | NoSuchMethodException e) {
+                Log.e(TAG, "createFromParcel ", e);
+            }
+            throw new UnsupportedOperationException("Could not create Quiz");
+        }
 
+        @Override
+        public Quiz[] newArray(int size) {
+            return new Quiz[size];
+        }
+    };
     private final String mQuestion;
-    private A mAnswer;
     private final String mQuizType;
+    private A mAnswer;
     /**
      * Flag indicating whether this quiz has already been solved.
      * It does not give information whether the solution was correct or not.
@@ -97,28 +117,6 @@ public abstract class Quiz<A> implements Parcelable {
     public int getId() {
         return getQuestion().hashCode();
     }
-
-    public static final Creator<Quiz> CREATOR = new Creator<Quiz>() {
-        @Override
-        public Quiz createFromParcel(Parcel in) {
-            int ordinal = in.readInt();
-            QuizType type = QuizType.values()[ordinal];
-            try {
-                Constructor<? extends Quiz> constructor = type.getType()
-                        .getConstructor(Parcel.class);
-                return constructor.newInstance(in);
-            } catch (InstantiationException | IllegalAccessException |
-                    InvocationTargetException | NoSuchMethodException e) {
-                Log.e(TAG, "createFromParcel ", e);
-            }
-            throw new UnsupportedOperationException("Could not create Quiz");
-        }
-
-        @Override
-        public Quiz[] newArray(int size) {
-            return new Quiz[size];
-        }
-    };
 
     @Override
     public int describeContents() {

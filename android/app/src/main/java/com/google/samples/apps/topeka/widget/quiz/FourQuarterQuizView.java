@@ -23,9 +23,9 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 
 import com.google.samples.apps.topeka.R;
+import com.google.samples.apps.topeka.adapter.OptionsQuizAdapter;
 import com.google.samples.apps.topeka.model.Category;
 import com.google.samples.apps.topeka.model.quiz.FourQuarterQuiz;
-import com.google.samples.apps.topeka.adapter.OptionsQuizAdapter;
 
 @SuppressLint("ViewConstructor")
 public class FourQuarterQuizView extends AbsQuizView<FourQuarterQuiz>

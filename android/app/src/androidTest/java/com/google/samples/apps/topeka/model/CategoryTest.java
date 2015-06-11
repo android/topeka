@@ -40,16 +40,6 @@ public class CategoryTest {
     private static final String CATEGORY_ID = "testId";
     private static final Theme CATEGORY_THEME = Theme.topeka;
 
-    @Test
-    public void writeToParcel() {
-        Category initialCategory = getCategoryUnderTest();
-        Parcel dest = Parcel.obtain();
-        initialCategory.writeToParcel(dest, 0);
-        dest.setDataPosition(0);
-        Category unparcelled = new Category(dest);
-        assertThat(initialCategory, is(unparcelled));
-    }
-
     private static Category getCategoryUnderTest() {
         return new Category(CATEGORY_NAME, CATEGORY_ID, CATEGORY_THEME, getQuizzes(), false);
     }
@@ -59,5 +49,15 @@ public class CategoryTest {
         quizzes.add(new TrueFalseQuiz("huh?", true, false));
         quizzes.add(new FillBlankQuiz("so?", "yeah", "go", "stop", false));
         return quizzes;
+    }
+
+    @Test
+    public void writeToParcel() {
+        Category initialCategory = getCategoryUnderTest();
+        Parcel dest = Parcel.obtain();
+        initialCategory.writeToParcel(dest, 0);
+        dest.setDataPosition(0);
+        Category unparcelled = new Category(dest);
+        assertThat(initialCategory, is(unparcelled));
     }
 }

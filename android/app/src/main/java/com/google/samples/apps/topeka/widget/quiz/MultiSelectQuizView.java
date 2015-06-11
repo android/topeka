@@ -25,10 +25,10 @@ import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.google.samples.apps.topeka.adapter.OptionsQuizAdapter;
 import com.google.samples.apps.topeka.helper.AnswerHelper;
 import com.google.samples.apps.topeka.model.Category;
 import com.google.samples.apps.topeka.model.quiz.MultiSelectQuiz;
-import com.google.samples.apps.topeka.adapter.OptionsQuizAdapter;
 
 @SuppressLint("ViewConstructor")
 public class MultiSelectQuizView extends AbsQuizView<MultiSelectQuiz>
@@ -70,6 +70,20 @@ public class MultiSelectQuizView extends AbsQuizView<MultiSelectQuiz>
         return bundle;
     }
 
+    @Override
+    public void setUserInput(Bundle savedInput) {
+        if (savedInput == null) {
+            return;
+        }
+        final boolean[] answers = savedInput.getBooleanArray(KEY_ANSWER);
+        if (null == answers) {
+            return;
+        }
+        for (int i = 0; i < answers.length; i++) {
+            mListView.setItemChecked(i, answers[i]);
+        }
+    }
+
     private boolean[] getBundleableAnswer() {
         SparseBooleanArray checkedItemPositions = mListView.getCheckedItemPositions();
         final int answerSize = checkedItemPositions.size();
@@ -84,20 +98,6 @@ public class MultiSelectQuizView extends AbsQuizView<MultiSelectQuiz>
             bundleableAnswer[key] = checkedItemPositions.valueAt(i);
         }
         return bundleableAnswer;
-    }
-
-    @Override
-    public void setUserInput(Bundle savedInput) {
-        if (savedInput == null) {
-            return;
-        }
-        final boolean[] answers = savedInput.getBooleanArray(KEY_ANSWER);
-        if (null == answers) {
-            return;
-        }
-        for (int i = 0; i < answers.length; i++) {
-            mListView.setItemChecked(i, answers[i]);
-        }
     }
 
     @Override

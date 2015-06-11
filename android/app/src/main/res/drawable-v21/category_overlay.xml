@@ -15,5 +15,5 @@
   ~ limitations under the License.
   -->
 <ripple xmlns:android="http://schemas.android.com/apk/res/android"
-        android:color="@color/touch_effect">
+    android:color="@color/touch_effect">
 </ripple>

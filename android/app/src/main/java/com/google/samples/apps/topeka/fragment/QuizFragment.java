@@ -44,22 +44,10 @@ import com.google.samples.apps.topeka.widget.quiz.AbsQuizView;
  */
 public class QuizFragment extends Fragment {
 
+    private static final String KEY_USER_INPUT = "USER_INPUT";
     private TextView mProgressText;
     private int mQuizSize;
     private ProgressBar mProgressBar;
-
-    /**
-     * Interface definition for a callback to be invoked when the quiz is started.
-     */
-    public interface SolvedStateListener {
-
-        /**
-         * This method will be invoked when the category has been solved.
-         */
-        void onCategorySolved();
-    }
-
-    private static final String KEY_USER_INPUT = "USER_INPUT";
     private Category mCategory;
     private AdapterViewAnimator mQuizView;
     private ScoreAdapter mScoreAdapter;
@@ -235,5 +223,16 @@ public class QuizFragment extends Fragment {
             mScoreAdapter = new ScoreAdapter(mCategory);
         }
         return mScoreAdapter;
+    }
+
+    /**
+     * Interface definition for a callback to be invoked when the quiz is started.
+     */
+    public interface SolvedStateListener {
+
+        /**
+         * This method will be invoked when the category has been solved.
+         */
+        void onCategorySolved();
     }
 }

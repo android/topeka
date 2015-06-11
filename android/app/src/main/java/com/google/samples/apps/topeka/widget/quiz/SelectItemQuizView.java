@@ -26,10 +26,10 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 
 import com.google.samples.apps.topeka.R;
+import com.google.samples.apps.topeka.adapter.OptionsQuizAdapter;
 import com.google.samples.apps.topeka.helper.AnswerHelper;
 import com.google.samples.apps.topeka.model.Category;
 import com.google.samples.apps.topeka.model.quiz.SelectItemQuiz;
-import com.google.samples.apps.topeka.adapter.OptionsQuizAdapter;
 
 @SuppressLint("ViewConstructor")
 public class SelectItemQuizView extends AbsQuizView<SelectItemQuiz>

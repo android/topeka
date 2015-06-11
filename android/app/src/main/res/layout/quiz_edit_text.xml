@@ -14,14 +14,14 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
-<EditText xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/quiz_edit_text"
+<EditText android:id="@+id/quiz_edit_text"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:minHeight="@dimen/min_height_touch_target"
+    android:layout_marginBottom="@dimen/spacing_normal"
+    android:gravity="bottom"
     android:imeOptions="actionDone"
     android:inputType="textCapWords"
-    android:gravity="bottom"
-    android:textColor="@color/text_dark"
-    android:layout_marginBottom="@dimen/spacing_normal"
-    android:singleLine="true" />
+    android:minHeight="@dimen/min_height_touch_target"
+    android:singleLine="true"
+    android:textColor="@color/text_dark" />

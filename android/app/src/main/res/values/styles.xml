@@ -15,6 +15,7 @@
   ~ limitations under the License.
   -->
 <resources>
+
     <style name="Topeka" parent="@android:style/Theme.Material.Light.NoActionBar">
         <item name="android:colorPrimary">@color/topeka_primary</item>
         <item name="android:colorPrimaryDark">@color/topeka_primary_dark</item>

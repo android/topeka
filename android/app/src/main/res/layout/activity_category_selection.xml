@@ -22,18 +22,18 @@
 
     <android.widget.Toolbar
         android:id="@+id/toolbar_player"
+        style="@style/Topeka.TextAppearance.Title"
         android:layout_width="match_parent"
         android:layout_height="?android:attr/actionBarSize"
-        style="@style/Topeka.TextAppearance.Title"
-        android:elevation="@dimen/elevation_header"
-        android:background="@color/topeka_primary">
+        android:background="@color/topeka_primary"
+        android:elevation="@dimen/elevation_header">
 
         <com.google.samples.apps.topeka.widget.AvatarView
             android:id="@+id/avatar"
             android:layout_width="@dimen/size_fab"
             android:layout_height="@dimen/size_fab"
             android:layout_marginEnd="@dimen/spacing_double"
-            android:transitionName="@string/transition_avatar"/>
+            android:transitionName="@string/transition_avatar" />
 
         <TextView
             android:id="@+id/title"
@@ -47,9 +47,9 @@
             style="@style/Topeka.TextAppearance.Title.Inverse"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingStart="@dimen/spacing_micro"
+            android:layout_gravity="center_vertical|end"
             android:paddingEnd="@dimen/spacing_micro"
-            android:layout_gravity="center_vertical|end" />
+            android:paddingStart="@dimen/spacing_micro" />
     </android.widget.Toolbar>
 
     <FrameLayout
@@ -60,9 +60,9 @@
         tools:ignore="MergeRootFrame">
 
         <ProgressBar
+            android:id="@+id/progress"
             android:layout_width="@dimen/size_fab"
             android:layout_height="@dimen/size_fab"
-            android:id="@+id/progress"
             android:layout_gravity="center"
             android:indeterminateOnly="true" />
 

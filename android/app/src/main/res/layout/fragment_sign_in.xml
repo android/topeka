@@ -17,15 +17,15 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingStart="@dimen/spacing_double"
-    android:paddingEnd="@dimen/spacing_double">
+    android:paddingEnd="@dimen/spacing_double"
+    android:paddingStart="@dimen/spacing_double">
 
     <ProgressBar
         android:id="@+id/empty"
         android:layout_width="@dimen/min_height_touch_target"
         android:layout_height="@dimen/min_height_touch_target"
-        android:progressTint="@color/topeka_accent"
-        android:layout_gravity="center" />
+        android:layout_gravity="center"
+        android:progressTint="@color/topeka_accent" />
 
     <FrameLayout
         android:id="@+id/content"
@@ -39,10 +39,10 @@
             android:visibility="gone" />
 
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_gravity="center">
+            android:layout_gravity="center"
+            android:orientation="vertical">
 
             <include
                 layout="@layout/sign_in_username"

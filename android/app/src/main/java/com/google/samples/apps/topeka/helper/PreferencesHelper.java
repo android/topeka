@@ -75,6 +75,7 @@ public class PreferencesHelper {
 
     /**
      * Signs out a player by removing all it's data.
+     *
      * @param context The Context which to obtain the SharedPreferences from.
      */
     public static void signOut(Context context) {

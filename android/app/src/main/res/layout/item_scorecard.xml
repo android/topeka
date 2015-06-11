@@ -16,42 +16,42 @@
   -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white"
-    android:paddingTop="@dimen/spacing_normal"
-    android:paddingBottom="@dimen/spacing_normal">
+    android:orientation="horizontal"
+    android:paddingBottom="@dimen/spacing_normal"
+    android:paddingTop="@dimen/spacing_normal">
 
     <ImageView
         android:id="@+id/solved_state"
         android:layout_width="@dimen/size_score_mark"
         android:layout_height="@dimen/size_score_mark"
-        android:contentDescription="@null"
-        android:src="@drawable/ic_done"
-        android:layout_marginStart="@dimen/spacing_double"
-        android:layout_marginEnd="@dimen/spacing_double"
         android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"/>
+        android:layout_alignParentTop="true"
+        android:layout_marginEnd="@dimen/spacing_double"
+        android:layout_marginStart="@dimen/spacing_double"
+        android:contentDescription="@null"
+        android:src="@drawable/ic_done" />
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_toEndOf="@id/solved_state">
+        android:layout_toEndOf="@id/solved_state"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/quiz"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:text="What's the answer to this question?"
-            android:textAppearance="?android:attr/textAppearanceListItem"/>
+            android:textAppearance="?android:attr/textAppearanceListItem"
+            tools:text="What's the answer to this question?" />
 
         <TextView
             android:id="@+id/answer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:text="This is an answer.\nThis too."
-            android:textAppearance="?android:attr/textAppearanceListItemSecondary" />
+            android:textAppearance="?android:attr/textAppearanceListItemSecondary"
+            tools:text="This is an answer.\nThis too." />
     </LinearLayout>
 </RelativeLayout>

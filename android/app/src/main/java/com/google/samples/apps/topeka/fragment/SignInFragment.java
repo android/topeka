@@ -18,9 +18,9 @@ package com.google.samples.apps.topeka.fragment;
 
 import android.app.Activity;
 import android.app.ActivityOptions;
+import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -30,10 +30,10 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.GridView;
 
-import com.google.samples.apps.topeka.activity.CategorySelectionActivity;
-import com.google.samples.apps.topeka.helper.PreferencesHelper;
 import com.google.samples.apps.topeka.R;
+import com.google.samples.apps.topeka.activity.CategorySelectionActivity;
 import com.google.samples.apps.topeka.adapter.AvatarAdapter;
+import com.google.samples.apps.topeka.helper.PreferencesHelper;
 import com.google.samples.apps.topeka.model.Avatar;
 import com.google.samples.apps.topeka.model.Player;
 import com.google.samples.apps.topeka.widget.fab.DoneFab;
@@ -44,6 +44,9 @@ import com.google.samples.apps.topeka.widget.fab.DoneFab;
 public class SignInFragment extends Fragment {
 
     private static final String ARG_EDIT = "EDIT";
+    private static final String KEY_FIRST_NAME = "firstName";
+    private static final String KEY_LAST_INITIAL = "lastInitial";
+    private static final String KEY_AVATAR_ID = "avatarId";
     private Player mPlayer;
     private EditText mFirstName;
     private EditText mLastInitial;
@@ -51,10 +54,6 @@ public class SignInFragment extends Fragment {
     private GridView mAvatarGrid;
     private DoneFab mDoneFab;
     private boolean edit;
-
-    private static final String KEY_FIRST_NAME = "firstName";
-    private static final String KEY_LAST_INITIAL = "lastInitial";
-    private static final String KEY_AVATAR_ID = "avatarId";
 
     public static SignInFragment newInstance(boolean edit) {
         Bundle args = new Bundle();

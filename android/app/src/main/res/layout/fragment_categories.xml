@@ -16,17 +16,17 @@
   -->
 
 <GridView
-    xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/categories"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="@dimen/spacing_micro"
-    android:horizontalSpacing="@dimen/spacing_micro"
-    android:verticalSpacing="@dimen/spacing_micro"
-    android:numColumns="auto_fit"
-    android:stretchMode="columnWidth"
-    android:clipToPadding="false"
     android:background="@color/topeka_blank"
+    android:clipToPadding="false"
+    android:drawSelectorOnTop="true"
+    android:horizontalSpacing="@dimen/spacing_micro"
     android:listSelector="@drawable/ripple"
+    android:numColumns="auto_fit"
+    android:padding="@dimen/spacing_micro"
     android:scrollbarStyle="outsideOverlay"
-    android:drawSelectorOnTop="true" />
+    android:stretchMode="columnWidth"
+    android:verticalSpacing="@dimen/spacing_micro" />

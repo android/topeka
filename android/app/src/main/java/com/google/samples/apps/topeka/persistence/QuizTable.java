@@ -37,7 +37,7 @@ public interface QuizTable {
     String COLUMN_END = "end";
     String COLUMN_SOLVED = "solved";
 
-    String[] PROJECTION = new String[] {COLUMN_ID, FK_CATEGORY, COLUMN_TYPE,
+    String[] PROJECTION = new String[]{COLUMN_ID, FK_CATEGORY, COLUMN_TYPE,
             COLUMN_QUESTION, COLUMN_ANSWER, COLUMN_OPTIONS, COLUMN_MIN,
             COLUMN_MAX, COLUMN_STEP, COLUMN_START, COLUMN_END, COLUMN_SOLVED};
 

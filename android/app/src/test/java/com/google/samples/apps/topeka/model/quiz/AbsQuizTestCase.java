@@ -44,7 +44,6 @@ public abstract class AbsQuizTestCase<Q extends Quiz> {
     /**
      * Implementations need to check that the expected answer is equal
      * to the one returned from the quiz.
-     *
      */
     @Test
     public abstract void quiz_answer_correctlyStored();

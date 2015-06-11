@@ -77,20 +77,18 @@ public abstract class AbsQuizView<Q extends Quiz> extends FrameLayout implements
             };
 
     protected final int mMinHeightTouchTarget;
-
-    private boolean mAnswered;
     private final int mSpacingDouble;
-    private TextView mQuestionView;
-    private FloatingActionButton mSubmitAnswer;
     private final LayoutInflater mLayoutInflater;
     private final Category mCategory;
     private final Q mQuiz;
-
     private final Interpolator mFastOutSlowInInterpolator;
     private final Interpolator mLinearOutSlowInInterpolator;
     private final int mColorAnimationDuration;
     private final int mIconAnimationDuration;
     private final int mScaleAnimationDuration;
+    private boolean mAnswered;
+    private TextView mQuestionView;
+    private FloatingActionButton mSubmitAnswer;
 
     /**
      * Enables creation of views for quizzes.
