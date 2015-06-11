@@ -16,12 +16,11 @@
 package com.google.samples.apps.topeka.widget.fab;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.util.AttributeSet;
 import android.widget.ImageView;
 
-import com.google.samples.apps.topeka.widget.outlineprovider.FabOutlineProvider;
 import com.google.samples.apps.topeka.R;
+import com.google.samples.apps.topeka.widget.outlineprovider.FabOutlineProvider;
 
 /**
  * Generic implementation of the
@@ -44,12 +43,10 @@ public class FloatingActionButton extends ImageView {
         super(context, attrs, defStyle);
         setFocusable(true);
         setClickable(true);
-        Resources resources = getResources();
-        final int fabPadding = resources.getDimensionPixelSize(R.dimen.spacing_double);
-        setPadding(fabPadding, fabPadding, fabPadding, fabPadding);
         setOutlineProvider(new FabOutlineProvider());
         setClipToOutline(true);
+        setScaleType(ScaleType.CENTER_INSIDE);
         setBackgroundResource(R.drawable.fab_background);
-        setElevation(resources.getDimension(R.dimen.elevation_fab));
+        setElevation(getResources().getDimension(R.dimen.elevation_fab));
     }
 }
