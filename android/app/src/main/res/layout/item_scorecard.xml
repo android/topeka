@@ -21,7 +21,8 @@
     android:background="@android:color/white"
     android:orientation="horizontal"
     android:paddingBottom="@dimen/spacing_normal"
-    android:paddingTop="@dimen/spacing_normal">
+    android:paddingTop="@dimen/spacing_normal"
+    tools:ignore="Overdraw">
 
     <ImageView
         android:id="@+id/solved_state"

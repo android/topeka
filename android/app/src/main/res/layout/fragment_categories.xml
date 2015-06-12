@@ -18,6 +18,7 @@
 <GridView
     android:id="@+id/categories"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/topeka_blank"
@@ -29,4 +30,5 @@
     android:padding="@dimen/spacing_micro"
     android:scrollbarStyle="outsideOverlay"
     android:stretchMode="columnWidth"
-    android:verticalSpacing="@dimen/spacing_micro" />
+    android:verticalSpacing="@dimen/spacing_micro"
+    tools:ignore="Overdraw" />

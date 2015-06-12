@@ -15,6 +15,5 @@
   ~ limitations under the License.
   -->
 <resources>
-    <dimen name="size_toolbar">64dp</dimen>
     <dimen name="spacing_double">24dp</dimen>
 </resources>

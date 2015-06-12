@@ -21,10 +21,8 @@
     <dimen name="spacing_huge">72dp</dimen>
 
     <dimen name="size_fab">56dp</dimen>
-    <dimen name="size_toolbar">56dp</dimen>
     <dimen name="size_score_mark">24dp</dimen>
 
-    <dimen name="elevation_default">2dp</dimen>
     <dimen name="elevation_header">4dp</dimen>
     <dimen name="elevation_fab">8dp</dimen>
 
@@ -34,5 +32,4 @@
     <dimen name="stroke_width_avatar">4dp</dimen>
 
     <dimen name="size_edit_text">18sp</dimen>
-    <dimen name="size_card_name">14sp</dimen>
 </resources>

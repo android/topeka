@@ -15,16 +15,12 @@
   ~ limitations under the License.
   -->
 <resources>
-    <string name="app_name">Quiz App</string>
-    <string name="action_settings">Settings</string>
-    <string name="description_play_arrow">Play arrow</string>
+    <string name="app_name">Topeka</string>
     <string name="last_initial">Last Initial</string>
     <string name="first_name">First Name</string>
     <string name="sign_in">Sign In</string>
     <string name="choose_avatar">Choose an Avatar</string>
     <string name="an_avatar">An Avatar</string>
-    <string name="content_description_start">Save selection and start</string>
-    <string name="description_user_preferences">User preferences</string>
     <string name="player_display_name">%1$s %2$s</string>
     <string name="quiz_of_quizzes">%1$s / %2$s</string>
     <string name="btn_true">True</string>

@@ -35,9 +35,12 @@ import com.google.samples.apps.topeka.helper.PreferencesHelper;
 import com.google.samples.apps.topeka.model.Category;
 import com.google.samples.apps.topeka.model.Player;
 import com.google.samples.apps.topeka.model.Theme;
+import com.google.samples.apps.topeka.model.quiz.Quiz;
 import com.google.samples.apps.topeka.persistence.TopekaDatabaseHelper;
 import com.google.samples.apps.topeka.widget.AvatarView;
 import com.google.samples.apps.topeka.widget.quiz.AbsQuizView;
+
+import java.util.List;
 
 /**
  * Encapsulates Quiz solving and displays it to the user.
@@ -102,7 +105,8 @@ public class QuizFragment extends Fragment {
 
     private void initProgressToolbar(View view) {
         final int firstUnsolvedQuizPosition = mCategory.getFirstUnsolvedQuizPosition();
-        mQuizSize = mCategory.getQuizzes().size();
+        final List<Quiz> quizzes = mCategory.getQuizzes();
+        mQuizSize = quizzes.size();
         mProgressText = (TextView) view.findViewById(R.id.progress_text);
         mProgressBar = ((ProgressBar) view.findViewById(R.id.progress));
         mProgressBar.setMax(mQuizSize);

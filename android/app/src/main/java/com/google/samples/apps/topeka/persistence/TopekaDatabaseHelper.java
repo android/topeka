@@ -245,6 +245,7 @@ public class TopekaDatabaseHelper extends SQLiteOpenHelper {
         do {
             quizzes.add(createQuizDueToType(cursor));
         } while (cursor.moveToNext());
+        cursor.close();
         return quizzes;
     }
 

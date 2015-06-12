@@ -14,8 +14,10 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
-<TextView android:id="@+id/question_view"
+<TextView
+    android:id="@+id/question_view"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?android:attr/colorPrimary"
@@ -24,4 +26,5 @@
     android:minHeight="@dimen/min_height_question"
     android:padding="@dimen/spacing_double"
     android:textAppearance="@android:style/TextAppearance.Material.Subhead"
-    android:textColor="?android:attr/textColorPrimary" />
+    android:textColor="?android:attr/textColorPrimary"
+    tools:ignore="Overdraw" />

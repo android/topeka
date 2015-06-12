@@ -18,6 +18,7 @@ package com.google.samples.apps.topeka.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.google.samples.apps.topeka.helper.ParcelableHelper;
@@ -50,7 +51,8 @@ public class Category implements Parcelable {
     private List<Quiz> mQuizzes;
     private boolean mSolved;
 
-    public Category(String name, String id, Theme theme, List<Quiz> quizzes, boolean solved) {
+    public Category(@NonNull String name, @NonNull String id, @NonNull Theme theme,
+            @NonNull List<Quiz> quizzes, boolean solved) {
         mName = name;
         mId = id;
         mTheme = theme;
@@ -95,6 +97,7 @@ public class Category implements Parcelable {
         return mTheme;
     }
 
+    @NonNull
     public List<Quiz> getQuizzes() {
         return mQuizzes;
     }

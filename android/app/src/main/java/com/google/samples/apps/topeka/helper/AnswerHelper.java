@@ -23,7 +23,7 @@ import android.util.SparseBooleanArray;
  */
 public class AnswerHelper {
 
-    private static final String SEPARATOR = System.getProperty("line.separator");
+    static final String SEPARATOR = System.getProperty("line.separator");
     private static final String TAG = "AnswerHelper";
 
     private AnswerHelper() {

@@ -18,6 +18,4 @@
     <string name="transition_avatar">AvatarTransition</string>
     <string name="transition_background">BackgroundTransition</string>
     <string name="transition_toolbar">ToolbarTransition</string>
-    <string name="transition_to_sign_in">TransitionToSignIn</string>
-    <string name="transition_icon_to_image">IconToImageTransition</string>
 </resources>
