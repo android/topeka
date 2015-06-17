@@ -80,13 +80,6 @@ public class SignInFragment extends Fragment {
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {
-        outState.putString(KEY_FIRST_NAME, mFirstName.getText().toString());
-        outState.putString(KEY_LAST_INITIAL, mLastInitial.getText().toString());
-        outState.putInt(KEY_AVATAR_ID, mAvatarGrid.getSelectedItemPosition());
-    }
-
-    @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         assurePlayerInit();
         checkIsInEditMode();
