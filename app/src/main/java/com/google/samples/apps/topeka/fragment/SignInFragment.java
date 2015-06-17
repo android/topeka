@@ -51,6 +51,7 @@ public class SignInFragment extends Fragment {
     private EditText mFirstName;
     private EditText mLastInitial;
     private Avatar mSelectedAvatar = Avatar.ONE;
+    private View mSelectedAvatarView;
     private GridView mAvatarGrid;
     private DoneFab mDoneFab;
     private boolean edit;
@@ -147,7 +148,7 @@ public class SignInFragment extends Fragment {
                 switch (v.getId()) {
                     case R.id.done:
                         savePlayer(getActivity());
-                        performSignInWithTransition(v);
+                        performSignInWithTransition(mSelectedAvatarView);
                         break;
                     default:
                         throw new UnsupportedOperationException(
@@ -164,6 +165,7 @@ public class SignInFragment extends Fragment {
         mAvatarGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                mSelectedAvatarView = view;
                 mSelectedAvatar = Avatar.values()[position];
             }
         });
