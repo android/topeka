@@ -44,9 +44,6 @@ import com.google.samples.apps.topeka.widget.fab.DoneFab;
 public class SignInFragment extends Fragment {
 
     private static final String ARG_EDIT = "EDIT";
-    private static final String KEY_FIRST_NAME = "firstName";
-    private static final String KEY_LAST_INITIAL = "lastInitial";
-    private static final String KEY_AVATAR_ID = "avatarId";
     private Player mPlayer;
     private EditText mFirstName;
     private EditText mLastInitial;
@@ -65,25 +62,18 @@ public class SignInFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
-            @Nullable Bundle savedInstanceState) {
+                             @Nullable Bundle savedInstanceState) {
         final View contentView = inflater.inflate(R.layout.fragment_sign_in, container, false);
         contentView.addOnLayoutChangeListener(new View.
                 OnLayoutChangeListener() {
             @Override
             public void onLayoutChange(View v, int left, int top, int right, int bottom,
-                    int oldLeft, int oldTop, int oldRight, int oldBottom) {
+                                       int oldLeft, int oldTop, int oldRight, int oldBottom) {
                 v.removeOnLayoutChangeListener(this);
                 setUpGridView(getView());
             }
         });
         return contentView;
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        outState.putString(KEY_FIRST_NAME, mFirstName.getText().toString());
-        outState.putString(KEY_LAST_INITIAL, mLastInitial.getText().toString());
-        outState.putInt(KEY_AVATAR_ID, mAvatarGrid.getSelectedItemPosition());
     }
 
     @Override
