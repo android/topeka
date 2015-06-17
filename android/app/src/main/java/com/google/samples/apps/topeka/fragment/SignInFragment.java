@@ -44,10 +44,12 @@ import com.google.samples.apps.topeka.widget.fab.DoneFab;
 public class SignInFragment extends Fragment {
 
     private static final String ARG_EDIT = "EDIT";
+    private static final int DEFAULT_AVATAR_INDEX = 0;
     private Player mPlayer;
     private EditText mFirstName;
     private EditText mLastInitial;
     private Avatar mSelectedAvatar = Avatar.ONE;
+    private View mSelectedAvatarView;
     private GridView mAvatarGrid;
     private DoneFab mDoneFab;
     private boolean edit;
@@ -107,7 +109,7 @@ public class SignInFragment extends Fragment {
         TextWatcher textWatcher = new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-        /* no-op */
+                /* no-op */
             }
 
             @Override
@@ -122,7 +124,7 @@ public class SignInFragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable s) {
-        /* no-op */
+                /* no-op */
             }
         };
 
@@ -137,7 +139,12 @@ public class SignInFragment extends Fragment {
                 switch (v.getId()) {
                     case R.id.done:
                         savePlayer(getActivity());
-                        performSignInWithTransition(v);
+                        if(null == mSelectedAvatarView) {
+                            performSignInWithTransition(mAvatarGrid.getChildAt(
+                                    DEFAULT_AVATAR_INDEX));
+                        } else {
+                            performSignInWithTransition(mSelectedAvatarView);
+                        }
                         break;
                     default:
                         throw new UnsupportedOperationException(
@@ -154,6 +161,7 @@ public class SignInFragment extends Fragment {
         mAvatarGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                mSelectedAvatarView = view;
                 mSelectedAvatar = Avatar.values()[position];
             }
         });
