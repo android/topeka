@@ -44,8 +44,10 @@ public class SignInActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
         final boolean edit = isInEditMode();
-        getFragmentManager().beginTransaction()
-                .replace(R.id.sign_in_container, SignInFragment.newInstance(edit)).commit();
+        if (savedInstanceState == null) {
+            getFragmentManager().beginTransaction()
+                    .replace(R.id.sign_in_container, SignInFragment.newInstance(edit)).commit();
+        }
     }
 
     private boolean isInEditMode() {
