@@ -115,9 +115,11 @@ public class QuizFragment extends Fragment {
     }
 
     private void setProgress(int currentQuizPosition) {
-        mProgressText
-                .setText(getString(R.string.quiz_of_quizzes, currentQuizPosition, mQuizSize));
-        mProgressBar.setProgress(currentQuizPosition);
+        if (isAdded()) {
+            mProgressText
+                    .setText(getString(R.string.quiz_of_quizzes, currentQuizPosition, mQuizSize));
+            mProgressBar.setProgress(currentQuizPosition);
+        }
     }
 
     @SuppressWarnings("ConstantConditions")
