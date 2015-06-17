@@ -52,14 +52,14 @@ public class AlphaPickerQuizView extends AbsQuizView<AlphaPickerQuiz> implements
         mCurrentSelection = (TextView) layout.findViewById(R.id.seekbar_progress);
         mCurrentSelection.setText(getAlphabet().get(0));
         mSeekBar = (SeekBar) layout.findViewById(R.id.seekbar);
-        mSeekBar.setMax(getAlphabet().size());
+        mSeekBar.setMax(getAlphabet().size() - 1);
         mSeekBar.setOnSeekBarChangeListener(this);
         return layout;
     }
 
     @Override
     protected boolean isAnswerCorrect() {
-        return getQuiz().isAnswerCorrect((String) mCurrentSelection.getText());
+        return getQuiz().isAnswerCorrect(mCurrentSelection.getText().toString());
     }
 
     @Override

@@ -16,9 +16,7 @@
   -->
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingEnd="@dimen/spacing_double"
-    android:paddingStart="@dimen/spacing_double">
+    android:layout_height="match_parent">
 
     <ProgressBar
         android:id="@+id/empty"
@@ -30,9 +28,7 @@
     <FrameLayout
         android:id="@+id/content"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingEnd="@dimen/spacing_double"
-        android:paddingStart="@dimen/spacing_double">
+        android:layout_height="match_parent">
 
         <include
             layout="@layout/fab_done"
@@ -42,7 +38,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingEnd="@dimen/spacing_double"
+            android:paddingStart="@dimen/spacing_double">
 
             <include
                 layout="@layout/sign_in_username"

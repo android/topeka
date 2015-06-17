@@ -115,6 +115,9 @@ public class QuizFragment extends Fragment {
     }
 
     private void setProgress(int currentQuizPosition) {
+        if (!isAdded()) {
+            return;
+        }
         mProgressText
                 .setText(getString(R.string.quiz_of_quizzes, currentQuizPosition, mQuizSize));
         mProgressBar.setProgress(currentQuizPosition);

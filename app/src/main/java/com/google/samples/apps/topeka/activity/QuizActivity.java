@@ -119,7 +119,15 @@ public class QuizActivity extends Activity {
 
     @Override
     public void onBackPressed() {
-        findViewById(R.id.icon).animate().scaleX(0).scaleY(0).setStartDelay(0)
+        final View iconView = findViewById(R.id.icon);
+        if (iconView == null) {
+            // Skip the animation if the icon is not initialized.
+            super.onBackPressed();
+            return;
+        }
+
+        // Scale the icon to 0 size before calling onBackPressed if it exists.
+        iconView.animate().scaleX(0).scaleY(0).setStartDelay(0)
                 .setInterpolator(mInterpolator).setListener(
                 new AnimatorListenerAdapter() {
                     @Override
