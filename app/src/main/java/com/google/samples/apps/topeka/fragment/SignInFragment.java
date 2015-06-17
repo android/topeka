@@ -23,6 +23,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,6 +48,7 @@ public class SignInFragment extends Fragment {
     private static final String KEY_FIRST_NAME = "firstName";
     private static final String KEY_LAST_INITIAL = "lastInitial";
     private static final String KEY_AVATAR_ID = "avatarId";
+    private static final int DEFAULT_AVATAR_INDEX = 0;
     private Player mPlayer;
     private EditText mFirstName;
     private EditText mLastInitial;
@@ -72,7 +74,7 @@ public class SignInFragment extends Fragment {
                 OnLayoutChangeListener() {
             @Override
             public void onLayoutChange(View v, int left, int top, int right, int bottom,
-                    int oldLeft, int oldTop, int oldRight, int oldBottom) {
+                                       int oldLeft, int oldTop, int oldRight, int oldBottom) {
                 v.removeOnLayoutChangeListener(this);
                 setUpGridView(getView());
             }
@@ -148,7 +150,13 @@ public class SignInFragment extends Fragment {
                 switch (v.getId()) {
                     case R.id.done:
                         savePlayer(getActivity());
-                        performSignInWithTransition(mSelectedAvatarView);
+
+                        if(null == mSelectedAvatarView) {
+                            performSignInWithTransition(mAvatarGrid.getChildAt(DEFAULT_AVATAR_INDEX));
+                        } else {
+                            performSignInWithTransition(mSelectedAvatarView);
+                        }
+
                         break;
                     default:
                         throw new UnsupportedOperationException(
