@@ -47,10 +47,12 @@ public class SignInFragment extends Fragment {
     private static final String KEY_FIRST_NAME = "firstName";
     private static final String KEY_LAST_INITIAL = "lastInitial";
     private static final String KEY_AVATAR_ID = "avatarId";
+    private static final int DEFAULT_AVATAR_INDEX = 0;
     private Player mPlayer;
     private EditText mFirstName;
     private EditText mLastInitial;
     private Avatar mSelectedAvatar = Avatar.ONE;
+    private View mSelectedAvatarView;
     private GridView mAvatarGrid;
     private DoneFab mDoneFab;
     private boolean edit;
@@ -147,7 +149,13 @@ public class SignInFragment extends Fragment {
                 switch (v.getId()) {
                     case R.id.done:
                         savePlayer(getActivity());
-                        performSignInWithTransition(v);
+
+                        if(null == mSelectedAvatarView) {
+                            performSignInWithTransition(mAvatarGrid.getChildAt(DEFAULT_AVATAR_INDEX));
+                        } else {
+                            performSignInWithTransition(mSelectedAvatarView);
+                        }
+
                         break;
                     default:
                         throw new UnsupportedOperationException(
@@ -164,6 +172,7 @@ public class SignInFragment extends Fragment {
         mAvatarGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                mSelectedAvatarView = view;
                 mSelectedAvatar = Avatar.values()[position];
             }
         });
