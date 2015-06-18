@@ -44,7 +44,7 @@ import com.google.samples.apps.topeka.widget.fab.DoneFab;
 public class SignInFragment extends Fragment {
 
     private static final String ARG_EDIT = "EDIT";
-    private static final int DEFAULT_AVATAR_INDEX = 0;
+    private static final String KEY_SELECTED_AVATAR_INDEX = "selectedAvatarIndex";
     private Player mPlayer;
     private EditText mFirstName;
     private EditText mLastInitial;
@@ -63,6 +63,15 @@ public class SignInFragment extends Fragment {
     }
 
     @Override
+    public void onCreate(Bundle savedInstanceState) {
+        if (savedInstanceState != null) {
+            int savedAvatarIndex = savedInstanceState.getInt(KEY_SELECTED_AVATAR_INDEX);
+            mSelectedAvatar = Avatar.values()[savedAvatarIndex];
+        }
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
             @Nullable Bundle savedInstanceState) {
         final View contentView = inflater.inflate(R.layout.fragment_sign_in, container, false);
@@ -76,6 +85,12 @@ public class SignInFragment extends Fragment {
             }
         });
         return contentView;
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putInt(KEY_SELECTED_AVATAR_INDEX, mSelectedAvatar.ordinal());
+        super.onSaveInstanceState(outState);
     }
 
     @Override
@@ -139,9 +154,9 @@ public class SignInFragment extends Fragment {
                 switch (v.getId()) {
                     case R.id.done:
                         savePlayer(getActivity());
-                        if(null == mSelectedAvatarView) {
+                        if (null == mSelectedAvatarView) {
                             performSignInWithTransition(mAvatarGrid.getChildAt(
-                                    DEFAULT_AVATAR_INDEX));
+                                    mSelectedAvatar.ordinal()));
                         } else {
                             performSignInWithTransition(mSelectedAvatarView);
                         }
@@ -166,6 +181,7 @@ public class SignInFragment extends Fragment {
             }
         });
         mAvatarGrid.setNumColumns(calculateSpanCount());
+        mAvatarGrid.setItemChecked(mSelectedAvatar.ordinal(), true);
     }
 
 

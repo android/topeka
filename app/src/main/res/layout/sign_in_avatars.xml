@@ -34,8 +34,8 @@
         android:id="@+id/avatars"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:choiceMode="singleChoice"
         android:cropToPadding="true"
-        android:drawSelectorOnTop="true"
-        android:listSelector="@drawable/selector_avatar"
+        android:listSelector="@android:color/transparent"
         android:verticalSpacing="@dimen/spacing_double" />
 </LinearLayout>
