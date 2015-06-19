@@ -52,6 +52,7 @@ public class SignInFragment extends Fragment {
     private View mSelectedAvatarView;
     private GridView mAvatarGrid;
     private DoneFab mDoneFab;
+    private boolean mShouldFinishOnStop;
     private boolean edit;
 
     public static SignInFragment newInstance(boolean edit) {
@@ -108,6 +109,14 @@ public class SignInFragment extends Fragment {
             getActivity().finish();
         }
         super.onViewCreated(view, savedInstanceState);
+    }
+
+    @Override
+    public void onStop() {
+        if (mShouldFinishOnStop) {
+            getActivity().finish();
+        }
+        super.onStop();
     }
 
     private void checkIsInEditMode() {
@@ -191,7 +200,7 @@ public class SignInFragment extends Fragment {
                 .makeSceneTransitionAnimation(activity, v,
                         activity.getString(R.string.transition_avatar));
         CategorySelectionActivity.start(activity, mPlayer, activityOptions);
-        activity.finishAfterTransition();
+        mShouldFinishOnStop = true;
     }
 
     private void initContents() {
