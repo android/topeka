@@ -62,11 +62,11 @@ public class JsonHelper {
     public static int[] jsonArrayToIntArray(String json) {
         try {
             JSONArray jsonArray = new JSONArray(json);
-            int[] stringArray = new int[jsonArray.length()];
+            int[] intArray = new int[jsonArray.length()];
             for (int i = 0; i < jsonArray.length(); i++) {
-                stringArray[i] = jsonArray.getInt(i);
+                intArray[i] = jsonArray.getInt(i);
             }
-            return stringArray;
+            return intArray;
         } catch (JSONException e) {
             Log.e(TAG, "Error during Json processing: ", e);
         }
