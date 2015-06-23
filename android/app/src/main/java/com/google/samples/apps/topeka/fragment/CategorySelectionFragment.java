@@ -30,10 +30,8 @@ import android.widget.GridView;
 import com.google.samples.apps.topeka.R;
 import com.google.samples.apps.topeka.activity.QuizActivity;
 import com.google.samples.apps.topeka.adapter.CategoryAdapter;
+import com.google.samples.apps.topeka.helper.TransitionHelper;
 import com.google.samples.apps.topeka.model.Category;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class CategorySelectionFragment extends Fragment {
 
@@ -77,31 +75,14 @@ public class CategorySelectionFragment extends Fragment {
     private void startQuizActivityWithTransition(Activity activity, View toolbar,
             Category category) {
 
-        // Avoid system UI glitches as described here:
-        // https://plus.google.com/+AlexLockwood/posts/RPtwZ5nNebb
-        View decor = activity.getWindow().getDecorView();
-        View statusBar = decor.findViewById(android.R.id.statusBarBackground);
-        View navBar = decor.findViewById(android.R.id.navigationBarBackground);
-
-        // Create pair of transition participants.
-        List<Pair> participants = new ArrayList<>(3);
-        participants.add(new Pair<>(toolbar, activity.getString(R.string.transition_toolbar)));
-        addNonNullViewToTransitionParticipants(statusBar, participants);
-        addNonNullViewToTransitionParticipants(navBar, participants);
-        @SuppressWarnings("unchecked")
+        final Pair[] pairs = TransitionHelper.createSafeTransitionParticipants(activity,
+                new Pair<>(toolbar, activity.getString(R.string.transition_toolbar)));
         ActivityOptions sceneTransitionAnimation = ActivityOptions
-                .makeSceneTransitionAnimation(activity,
-                        participants.toArray(new Pair[participants.size()]));
+                .makeSceneTransitionAnimation(activity, pairs);
 
-        // Starts the activity with the participants, animating from one to the other.
+        // Start the activity with the participants, animating from one to the other.
         final Bundle transitionBundle = sceneTransitionAnimation.toBundle();
         activity.startActivity(QuizActivity.getStartIntent(activity, category), transitionBundle);
     }
 
-    private void addNonNullViewToTransitionParticipants(View view, List<Pair> participants) {
-        if (view == null) {
-            return;
-        }
-        participants.add(new Pair<>(view, view.getTransitionName()));
-    }
 }
