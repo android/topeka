@@ -18,24 +18,26 @@ package com.google.samples.apps.topeka.activity;
 
 import android.app.Activity;
 import android.app.ActivityOptions;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.samples.apps.topeka.R;
 import com.google.samples.apps.topeka.fragment.SignInFragment;
+import com.google.samples.apps.topeka.helper.PreferencesHelper;
 
 public class SignInActivity extends Activity {
 
     private static final String EXTRA_EDIT = "EDIT";
 
-    public static void start(Context context, Boolean edit, ActivityOptions options) {
-        Intent starter = new Intent(context, SignInActivity.class);
+    public static void start(Activity activity, Boolean edit, ActivityOptions options) {
+        Intent starter = new Intent(activity, SignInActivity.class);
         starter.putExtra(EXTRA_EDIT, edit);
-        if (null == options) {
-            context.startActivity(starter);
+        if (options == null) {
+            activity.startActivity(starter);
+            activity.overridePendingTransition(android.R.anim.slide_in_left,
+                    android.R.anim.slide_out_right);
         } else {
-            context.startActivity(starter, options.toBundle());
+            activity.startActivity(starter, options.toBundle());
         }
     }
 
@@ -47,6 +49,14 @@ public class SignInActivity extends Activity {
         if (savedInstanceState == null) {
             getFragmentManager().beginTransaction()
                     .replace(R.id.sign_in_container, SignInFragment.newInstance(edit)).commit();
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (PreferencesHelper.isSignedIn(this)) {
+            finish();
         }
     }
 
