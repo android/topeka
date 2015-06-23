@@ -21,6 +21,8 @@ import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.transition.Fade;
+import android.transition.Transition;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -53,7 +55,7 @@ public class CategorySelectionActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        excludeStatusBarAndNavigationBarFromTransition();
         setContentView(R.layout.activity_category_selection);
         Player player = getIntent().getParcelableExtra(EXTRA_PLAYER);
         setUpToolbar(player);
@@ -62,6 +64,14 @@ public class CategorySelectionActivity extends Activity {
         } else {
             setProgressBarVisibility(View.GONE);
         }
+    }
+
+    private void excludeStatusBarAndNavigationBarFromTransition() {
+        // Prevent status bar and navigation bar from blinking
+        Transition fade = new Fade();
+        fade.excludeTarget(android.R.id.statusBarBackground, true);
+        fade.excludeTarget(android.R.id.navigationBarBackground, true);
+        getWindow().setEnterTransition(fade);
     }
 
     @Override
