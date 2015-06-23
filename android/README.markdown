@@ -11,14 +11,20 @@ as an Open Source example of material design on the web.
 The Android version of Topeka demonstrates that the same branding and material
 design principles can be used to create a consistent experience across
 platforms. You can read more about it on the
-[Android Developers blog](http://android-developers.blogspot.com/2015/06/more-material-design-with-topeka-for.html)
+[Android Developers
+blog](http://android-developers.blogspot.co.uk/2015/06/more-material-design-with-topeka-for_16.html).
+
+### Screenshots
+
+<img src="screenshots/categories.png" width="30%" />
+<img src="screenshots/category_history.png" width="30%" />
+<img src="screenshots/quiz_shakespeare.png" width="30%" />
 
 ### Getting Started
 
 Clone this repository, enter the top level directory and run <code>./gradlew tasks</code> to get an overview of all the tasks available for this project.
 
 Some important tasks are:
-
 
 ```
 assembleDebug - Assembles all Debug builds.
@@ -27,11 +33,6 @@ connectedAndroidTest - Installs and runs the tests for Debug build on connected
 devices.
 test - Run all unit tests.
 ```
-### Screenshots
-
-<img src="screenshots/categories.png" width="30%" />
-<img src="screenshots/category_history.png" width="30%" />
-<img src="screenshots/quiz_shakespeare.png" width="30%" />
 
 ### Support
 
