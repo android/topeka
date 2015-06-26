@@ -49,7 +49,7 @@
         android:layout_height="wrap_content"
         android:hint="@string/last_initial"
         android:imeOptions="actionDone"
-        android:inputType="textCapWords"
+        android:inputType="textNoSuggestions|textCapWords"
         android:maxLength="1"
         android:minHeight="?android:attr/actionBarSize"
         android:paddingBottom="@dimen/spacing_micro"

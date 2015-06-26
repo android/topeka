@@ -401,7 +401,13 @@ public class TopekaDatabaseHelper extends SQLiteOpenHelper {
 
     private void preFillDatabase(SQLiteDatabase db) {
         try {
-            fillCategoriesAndQuizzes(db);
+            db.beginTransaction();
+            try {
+                fillCategoriesAndQuizzes(db);
+                db.setTransactionSuccessful();
+            } finally {
+                db.endTransaction();
+            }
         } catch (IOException | JSONException e) {
             Log.e(TAG, "preFillDatabase", e);
         }

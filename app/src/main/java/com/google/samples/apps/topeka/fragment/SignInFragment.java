@@ -23,6 +23,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,17 +35,18 @@ import com.google.samples.apps.topeka.R;
 import com.google.samples.apps.topeka.activity.CategorySelectionActivity;
 import com.google.samples.apps.topeka.adapter.AvatarAdapter;
 import com.google.samples.apps.topeka.helper.PreferencesHelper;
+import com.google.samples.apps.topeka.helper.TransitionHelper;
 import com.google.samples.apps.topeka.model.Avatar;
 import com.google.samples.apps.topeka.model.Player;
 import com.google.samples.apps.topeka.widget.fab.DoneFab;
 
 /**
- * Enables selection of an {@link Avatar} and user name.
+ * Enable selection of an {@link Avatar} and user name.
  */
 public class SignInFragment extends Fragment {
 
     private static final String ARG_EDIT = "EDIT";
-    private static final int DEFAULT_AVATAR_INDEX = 0;
+    private static final String KEY_SELECTED_AVATAR_INDEX = "selectedAvatarIndex";
     private Player mPlayer;
     private EditText mFirstName;
     private EditText mLastInitial;
@@ -60,6 +62,15 @@ public class SignInFragment extends Fragment {
         SignInFragment fragment = new SignInFragment();
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        if (savedInstanceState != null) {
+            int savedAvatarIndex = savedInstanceState.getInt(KEY_SELECTED_AVATAR_INDEX);
+            mSelectedAvatar = Avatar.values()[savedAvatarIndex];
+        }
+        super.onCreate(savedInstanceState);
     }
 
     @Override
@@ -79,6 +90,12 @@ public class SignInFragment extends Fragment {
     }
 
     @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putInt(KEY_SELECTED_AVATAR_INDEX, mSelectedAvatar.ordinal());
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         assurePlayerInit();
         checkIsInEditMode();
@@ -89,8 +106,9 @@ public class SignInFragment extends Fragment {
             initContentViews(view);
             initContents();
         } else {
-            CategorySelectionActivity.start(getActivity(), mPlayer);
-            getActivity().finish();
+            final Activity activity = getActivity();
+            CategorySelectionActivity.start(activity, mPlayer);
+            activity.finish();
         }
         super.onViewCreated(view, savedInstanceState);
     }
@@ -139,9 +157,9 @@ public class SignInFragment extends Fragment {
                 switch (v.getId()) {
                     case R.id.done:
                         savePlayer(getActivity());
-                        if(null == mSelectedAvatarView) {
+                        if (null == mSelectedAvatarView) {
                             performSignInWithTransition(mAvatarGrid.getChildAt(
-                                    DEFAULT_AVATAR_INDEX));
+                                    mSelectedAvatar.ordinal()));
                         } else {
                             performSignInWithTransition(mSelectedAvatarView);
                         }
@@ -166,16 +184,18 @@ public class SignInFragment extends Fragment {
             }
         });
         mAvatarGrid.setNumColumns(calculateSpanCount());
+        mAvatarGrid.setItemChecked(mSelectedAvatar.ordinal(), true);
     }
 
 
     private void performSignInWithTransition(View v) {
-        Activity activity = getActivity();
+        final Activity activity = getActivity();
+
+        final Pair[] pairs = TransitionHelper.createSafeTransitionParticipants(activity,
+                new Pair<>(v, activity.getString(R.string.transition_avatar)));
         ActivityOptions activityOptions = ActivityOptions
-                .makeSceneTransitionAnimation(activity, v,
-                        activity.getString(R.string.transition_avatar));
+                .makeSceneTransitionAnimation(activity, pairs);
         CategorySelectionActivity.start(activity, mPlayer, activityOptions);
-        activity.finishAfterTransition();
     }
 
     private void initContents() {

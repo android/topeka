@@ -38,9 +38,11 @@ public class PreferencesHelperTest {
     @Test
     public void performPreferenceCycle() throws Exception {
         final Context context = InstrumentationRegistry.getTargetContext();
+        PreferencesHelper.signOut(context);
+        assertThat(PreferencesHelper.isSignedIn(context), is(false));
         PreferencesHelper.writeToPreferences(context, TEST_PLAYER);
         final Player resultingPlayer = PreferencesHelper.getPlayer(context);
         assertThat(resultingPlayer, is(TEST_PLAYER));
+        assertThat(PreferencesHelper.isSignedIn(context), is(true));
     }
-
 }
