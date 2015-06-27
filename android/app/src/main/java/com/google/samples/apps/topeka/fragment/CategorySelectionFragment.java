@@ -75,7 +75,7 @@ public class CategorySelectionFragment extends Fragment {
     private void startQuizActivityWithTransition(Activity activity, View toolbar,
             Category category) {
 
-        final Pair[] pairs = TransitionHelper.createSafeTransitionParticipants(activity,
+        final Pair[] pairs = TransitionHelper.createSafeTransitionParticipants(activity, false,
                 new Pair<>(toolbar, activity.getString(R.string.transition_toolbar)));
         ActivityOptions sceneTransitionAnimation = ActivityOptions
                 .makeSceneTransitionAnimation(activity, pairs);
