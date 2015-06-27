@@ -36,14 +36,19 @@ public class TransitionHelper {
      * avoiding glitches with the system UI.
      *
      * @param activity The activity used as start for the transition.
+     * @param includeStatusBar If false, the status bar will not be added as the transition
+     *        participant.
      * @return All transition participants.
      */
     public static Pair[] createSafeTransitionParticipants(@NonNull Activity activity,
-            @Nullable Pair... otherParticipants) {
+            boolean includeStatusBar, @Nullable Pair... otherParticipants) {
         // Avoid system UI glitches as described here:
         // https://plus.google.com/+AlexLockwood/posts/RPtwZ5nNebb
         View decor = activity.getWindow().getDecorView();
-        View statusBar = decor.findViewById(android.R.id.statusBarBackground);
+        View statusBar = null;
+        if (includeStatusBar) {
+            statusBar = decor.findViewById(android.R.id.statusBarBackground);
+        }
         View navBar = decor.findViewById(android.R.id.navigationBarBackground);
 
         // Create pair of transition participants.
