@@ -191,7 +191,7 @@ public class SignInFragment extends Fragment {
     private void performSignInWithTransition(View v) {
         final Activity activity = getActivity();
 
-        final Pair[] pairs = TransitionHelper.createSafeTransitionParticipants(activity,
+        final Pair[] pairs = TransitionHelper.createSafeTransitionParticipants(activity, true,
                 new Pair<>(v, activity.getString(R.string.transition_avatar)));
         ActivityOptions activityOptions = ActivityOptions
                 .makeSceneTransitionAnimation(activity, pairs);
