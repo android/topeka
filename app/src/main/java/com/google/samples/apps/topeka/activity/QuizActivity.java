@@ -132,6 +132,8 @@ public class QuizActivity extends Activity {
                 new AnimatorListenerAdapter() {
                     @Override
                     public void onAnimationEnd(Animator animation) {
+                        if (isFinishing() || isDestroyed())
+                            return;
                         QuizActivity.super.onBackPressed();
                         super.onAnimationEnd(animation);
                     }
