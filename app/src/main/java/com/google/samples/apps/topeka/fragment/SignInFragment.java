@@ -22,6 +22,7 @@ import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Pair;
 import android.view.LayoutInflater;
@@ -133,7 +134,7 @@ public class SignInFragment extends Fragment {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 // showing the floating action button if text is entered
-                if (count > 0) {
+                if (!TextUtils.isEmpty(s)) {
                     mDoneFab.setVisibility(View.VISIBLE);
                 } else {
                     mDoneFab.setVisibility(View.GONE);
