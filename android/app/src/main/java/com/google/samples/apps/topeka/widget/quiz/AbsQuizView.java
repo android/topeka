@@ -54,8 +54,7 @@ import com.google.samples.apps.topeka.widget.fab.FloatingActionButton;
  * @param <Q> The type of {@link com.google.samples.apps.topeka.model.quiz.Quiz} you want to
  * display.
  */
-public abstract class AbsQuizView<Q extends Quiz> extends FrameLayout implements
-        View.OnClickListener {
+public abstract class AbsQuizView<Q extends Quiz> extends FrameLayout {
 
     /** Property for animating the foreground color */
     public static final Property<FrameLayout, Integer> FOREGROUND_COLOR =
@@ -186,10 +185,12 @@ public abstract class AbsQuizView<Q extends Quiz> extends FrameLayout implements
             mSubmitAnswer.setVisibility(GONE);
             mSubmitAnswer.setScaleY(0);
             mSubmitAnswer.setScaleX(0);
-            //Set QuizActivity to handle clicks on answer submission.
-            if (context instanceof QuizActivity) {
-                mSubmitAnswer.setOnClickListener(this);
-            }
+            mSubmitAnswer.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    submitAnswer(v);
+                }
+            });
         }
         return mSubmitAnswer;
     }
@@ -264,16 +265,6 @@ public abstract class AbsQuizView<Q extends Quiz> extends FrameLayout implements
     protected void allowAnswer() {
         if (!isAnswered()) {
             allowAnswer(true);
-        }
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.submitAnswer: {
-                submitAnswer(v);
-                break;
-            }
         }
     }
 

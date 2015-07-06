@@ -133,10 +133,10 @@ public class SignInFragment extends Fragment {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 // showing the floating action button if text is entered
-                if (count > 0) {
-                    mDoneFab.setVisibility(View.VISIBLE);
-                } else {
+                if (s.length() == 0) {
                     mDoneFab.setVisibility(View.GONE);
+                } else {
+                    mDoneFab.setVisibility(View.VISIBLE);
                 }
             }
 

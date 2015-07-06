@@ -33,8 +33,7 @@ import com.google.samples.apps.topeka.model.Category;
 import com.google.samples.apps.topeka.model.quiz.ToggleTranslateQuiz;
 
 @SuppressLint("ViewConstructor")
-public class ToggleTranslateQuizView extends AbsQuizView<ToggleTranslateQuiz>
-        implements AdapterView.OnItemClickListener {
+public class ToggleTranslateQuizView extends AbsQuizView<ToggleTranslateQuiz> {
 
     private static final String KEY_ANSWERS = "ANSWERS";
 
@@ -54,7 +53,17 @@ public class ToggleTranslateQuizView extends AbsQuizView<ToggleTranslateQuiz>
         mListView.setAdapter(new OptionsQuizAdapter(getQuiz().getReadableOptions(),
                 R.layout.item_answer));
         mListView.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
-        mListView.setOnItemClickListener(this);
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                toggleAnswerFor(position);
+                if (view instanceof CompoundButton) {
+                    ((CompoundButton) view).setChecked(mAnswers[position]);
+                }
+
+                allowAnswer();
+            }
+        });
         return mListView;
     }
 
@@ -85,16 +94,6 @@ public class ToggleTranslateQuizView extends AbsQuizView<ToggleTranslateQuiz>
         for (int i = 0; i < mAnswers.length; i++) {
             mListView.performItemClick(mListView.getChildAt(i), i, adapter.getItemId(i));
         }
-    }
-
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        toggleAnswerFor(position);
-        if (view instanceof CompoundButton) {
-            ((CompoundButton) view).toggle();
-        }
-
-        allowAnswer();
     }
 
     private void toggleAnswerFor(int answerId) {

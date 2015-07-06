@@ -50,10 +50,26 @@ public class TrueFalseQuizView extends AbsQuizView<TrueFalseQuiz> {
     protected View createQuizContentView() {
         final ViewGroup container = (ViewGroup) getLayoutInflater().inflate(
                 R.layout.quiz_radio_group_true_false, this, false);
+
+        OnClickListener clickListener = new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switch (v.getId()) {
+                    case R.id.answerTrue:
+                        mAnswer = true;
+                        break;
+                    case R.id.answerFalse:
+                        mAnswer = false;
+                        break;
+                }
+                allowAnswer();
+            }
+        };
+
         mAnswerTrue = container.findViewById(R.id.answerTrue);
-        mAnswerTrue.setOnClickListener(this);
+        mAnswerTrue.setOnClickListener(clickListener);
         mAnswerFalse = container.findViewById(R.id.answerFalse);
-        mAnswerFalse.setOnClickListener(this);
+        mAnswerFalse.setOnClickListener(clickListener);
         return container;
     }
 
@@ -81,19 +97,5 @@ public class TrueFalseQuizView extends AbsQuizView<TrueFalseQuiz> {
     private void performSelection(View selection) {
         selection.performClick();
         selection.setSelected(true);
-    }
-
-    @Override
-    public void onClick(View v) {
-        super.onClick(v);
-        switch (v.getId()) {
-            case R.id.answerTrue:
-                mAnswer = true;
-                break;
-            case R.id.answerFalse:
-                mAnswer = false;
-                break;
-        }
-        allowAnswer();
     }
 }

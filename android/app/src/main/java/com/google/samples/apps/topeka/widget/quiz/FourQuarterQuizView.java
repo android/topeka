@@ -28,8 +28,7 @@ import com.google.samples.apps.topeka.model.Category;
 import com.google.samples.apps.topeka.model.quiz.FourQuarterQuiz;
 
 @SuppressLint("ViewConstructor")
-public class FourQuarterQuizView extends AbsQuizView<FourQuarterQuiz>
-        implements AdapterView.OnItemClickListener {
+public class FourQuarterQuizView extends AbsQuizView<FourQuarterQuiz> {
 
     private static final String KEY_ANSWER = "ANSWER";
     private int mAnswered = -1;
@@ -46,7 +45,13 @@ public class FourQuarterQuizView extends AbsQuizView<FourQuarterQuiz>
         mAnswerView.setNumColumns(2);
         mAnswerView.setAdapter(new OptionsQuizAdapter(getQuiz().getOptions(),
                 R.layout.item_answer));
-        mAnswerView.setOnItemClickListener(this);
+        mAnswerView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                allowAnswer();
+                mAnswered = position;
+            }
+        });
         return mAnswerView;
     }
 
@@ -84,12 +89,6 @@ public class FourQuarterQuizView extends AbsQuizView<FourQuarterQuiz>
                 mAnswerView.getAdapter().getItemId(mAnswered));
         mAnswerView.getChildAt(mAnswered).setSelected(true);
         mAnswerView.setSelection(mAnswered);
-    }
-
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        allowAnswer();
-        mAnswered = position;
     }
 
     @Override

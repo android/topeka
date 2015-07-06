@@ -30,8 +30,8 @@ import com.google.samples.apps.topeka.R;
 import com.google.samples.apps.topeka.model.Category;
 import com.google.samples.apps.topeka.model.quiz.Quiz;
 
-public abstract class TextInputQuizView<Q extends Quiz> extends AbsQuizView<Q> implements
-        TextWatcher, TextView.OnEditorActionListener {
+public abstract class TextInputQuizView<Q extends Quiz> extends AbsQuizView<Q>
+        implements TextWatcher, TextView.OnEditorActionListener {
 
     public TextInputQuizView(Context context, Category category, Q quiz) {
         super(context, category, quiz);
@@ -46,28 +46,9 @@ public abstract class TextInputQuizView<Q extends Quiz> extends AbsQuizView<Q> i
     }
 
     @Override
-    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-        allowAnswer(after > 0);
-    }
-
-    @Override
-    public void onTextChanged(CharSequence s, int start, int before, int count) {
-        /* no-op */
-    }
-
-    @Override
-    public void afterTextChanged(Editable s) {
-        /* no-op */
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.submitAnswer:
-                hideKeyboard(v);
-                break;
-        }
-        super.onClick(v);
+    protected void submitAnswer() {
+        hideKeyboard(this);
+        super.submitAnswer();
     }
 
     /**
@@ -87,9 +68,6 @@ public abstract class TextInputQuizView<Q extends Quiz> extends AbsQuizView<Q> i
 
     @Override
     public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-        /* submit the answer and hide the keyboard once the action done
-         * has been tapped if text has been entered.
-         */
         if (TextUtils.isEmpty(v.getText())) {
             return false;
         }
@@ -100,5 +78,20 @@ public abstract class TextInputQuizView<Q extends Quiz> extends AbsQuizView<Q> i
             return true;
         }
         return false;
+    }
+
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        /* no-op */
+    }
+
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+        /* no-op */
+    }
+
+    @Override
+    public void afterTextChanged(Editable s) {
+        allowAnswer(!TextUtils.isEmpty(s));
     }
 }

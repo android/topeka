@@ -32,8 +32,7 @@ import com.google.samples.apps.topeka.model.Category;
 import com.google.samples.apps.topeka.model.quiz.SelectItemQuiz;
 
 @SuppressLint("ViewConstructor")
-public class SelectItemQuizView extends AbsQuizView<SelectItemQuiz>
-        implements AdapterView.OnItemClickListener {
+public class SelectItemQuizView extends AbsQuizView<SelectItemQuiz> {
 
     private static final String KEY_ANSWERS = "ANSWERS";
 
@@ -54,7 +53,13 @@ public class SelectItemQuizView extends AbsQuizView<SelectItemQuiz>
                 new OptionsQuizAdapter(getQuiz().getOptions(), R.layout.item_answer_start,
                         getContext(), true));
         mListView.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
-        mListView.setOnItemClickListener(this);
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                allowAnswer();
+                toggleAnswerFor(position);
+            }
+        });
         return mListView;
     }
 
@@ -85,12 +90,6 @@ public class SelectItemQuizView extends AbsQuizView<SelectItemQuiz>
         for (int i = 0; i < mAnswers.length; i++) {
             mListView.performItemClick(mListView.getChildAt(i), i, adapter.getItemId(i));
         }
-    }
-
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        allowAnswer();
-        toggleAnswerFor(position);
     }
 
     private void toggleAnswerFor(int answerId) {
