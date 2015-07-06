@@ -28,8 +28,7 @@ import com.google.samples.apps.topeka.model.Category;
 import com.google.samples.apps.topeka.model.quiz.PickerQuiz;
 
 @SuppressLint("ViewConstructor")
-public final class PickerQuizView extends AbsQuizView<PickerQuiz>
-        implements SeekBar.OnSeekBarChangeListener {
+public final class PickerQuizView extends AbsQuizView<PickerQuiz> {
 
     private static final String KEY_ANSWER = "ANSWER";
 
@@ -53,8 +52,29 @@ public final class PickerQuizView extends AbsQuizView<PickerQuiz>
         mCurrentSelection.setText(String.valueOf(mMin));
         mSeekBar = (SeekBar) layout.findViewById(R.id.seekbar);
         mSeekBar.setMax(getSeekBarMax());
-        mSeekBar.setOnSeekBarChangeListener(this);
+        mSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                setCurrentSelectionText(mMin + progress);
+                allowAnswer();
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                /* no-op */
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                /* no-op */
+            }
+        });
         return layout;
+    }
+
+    private void setCurrentSelectionText(int progress) {
+        mProgress = progress / mStep * mStep;
+        mCurrentSelection.setText(String.valueOf(mProgress));
     }
 
     @Override
@@ -96,26 +116,5 @@ public final class PickerQuizView extends AbsQuizView<PickerQuiz>
         final int realMin = Math.min(absMin, absMax);
         final int realMax = Math.max(absMin, absMax);
         return realMax - realMin;
-    }
-
-    @Override
-    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-        setCurrentSelectionText(mMin + progress);
-        allowAnswer();
-    }
-
-    private void setCurrentSelectionText(int progress) {
-        mProgress = progress / mStep * mStep;
-        mCurrentSelection.setText(String.valueOf(mProgress));
-    }
-
-    @Override
-    public void onStartTrackingTouch(SeekBar seekBar) {
-        /* no-op */
-    }
-
-    @Override
-    public void onStopTrackingTouch(SeekBar seekBar) {
-        /* no-op */
     }
 }

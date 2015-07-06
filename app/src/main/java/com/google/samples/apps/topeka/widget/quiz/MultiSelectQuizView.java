@@ -18,7 +18,6 @@ package com.google.samples.apps.topeka.widget.quiz;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.View;
 import android.widget.AbsListView;
@@ -31,11 +30,9 @@ import com.google.samples.apps.topeka.model.Category;
 import com.google.samples.apps.topeka.model.quiz.MultiSelectQuiz;
 
 @SuppressLint("ViewConstructor")
-public class MultiSelectQuizView extends AbsQuizView<MultiSelectQuiz>
-        implements AdapterView.OnItemClickListener {
+public class MultiSelectQuizView extends AbsQuizView<MultiSelectQuiz> {
 
     private static final String KEY_ANSWER = "ANSWER";
-    private static final String TAG = "MultiSelectQuizView";
 
     private ListView mListView;
 
@@ -51,7 +48,12 @@ public class MultiSelectQuizView extends AbsQuizView<MultiSelectQuiz>
                         android.R.layout.simple_list_item_multiple_choice));
         mListView.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
         mListView.setItemsCanFocus(false);
-        mListView.setOnItemClickListener(this);
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                allowAnswer();
+            }
+        });
         return mListView;
     }
 
@@ -98,11 +100,5 @@ public class MultiSelectQuizView extends AbsQuizView<MultiSelectQuiz>
             bundleableAnswer[key] = checkedItemPositions.valueAt(i);
         }
         return bundleableAnswer;
-    }
-
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Log.d(TAG, "clicked pos: " + position);
-        allowAnswer();
     }
 }
