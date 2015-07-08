@@ -32,6 +32,6 @@ public class DoneFab extends FloatingActionButton {
 
     public DoneFab(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        setImageResource(R.drawable.ic_done);
+        setImageResource(R.drawable.ic_tick);
     }
 }

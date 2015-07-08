@@ -96,14 +96,14 @@ public class ScoreAdapter extends BaseAdapter {
 
     private Drawable getSuccessIcon(Context context) {
         if (null == mSuccessIcon) {
-            mSuccessIcon = loadAndTint(context, R.drawable.ic_done, R.color.theme_green_primary);
+            mSuccessIcon = loadAndTint(context, R.drawable.ic_tick, R.color.theme_green_primary);
         }
         return mSuccessIcon;
     }
 
     private Drawable getFailedIcon(Context context) {
         if (null == mFailedIcon) {
-            mFailedIcon = loadAndTint(context, R.drawable.ic_fail, R.color.theme_red_primary);
+            mFailedIcon = loadAndTint(context, R.drawable.ic_cross, R.color.theme_red_primary);
         }
         return mFailedIcon;
     }
