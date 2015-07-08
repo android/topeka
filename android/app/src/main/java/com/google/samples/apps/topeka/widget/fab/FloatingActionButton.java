@@ -20,7 +20,7 @@ import android.util.AttributeSet;
 import android.widget.ImageView;
 
 import com.google.samples.apps.topeka.R;
-import com.google.samples.apps.topeka.widget.outlineprovider.FabOutlineProvider;
+import com.google.samples.apps.topeka.widget.outlineprovider.RoundOutlineProvider;
 
 /**
  * Generic implementation of the
@@ -43,10 +43,17 @@ public class FloatingActionButton extends ImageView {
         super(context, attrs, defStyle);
         setFocusable(true);
         setClickable(true);
-        setOutlineProvider(new FabOutlineProvider());
         setClipToOutline(true);
         setScaleType(ScaleType.CENTER_INSIDE);
         setBackgroundResource(R.drawable.fab_background);
         setElevation(getResources().getDimension(R.dimen.elevation_fab));
+    }
+
+    @Override
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+        super.onSizeChanged(w, h, oldw, oldh);
+        if (w > 0 && h > 0) {
+            setOutlineProvider(new RoundOutlineProvider(Math.min(w, h)));
+        }
     }
 }

@@ -15,6 +15,9 @@
  */
 package com.google.samples.apps.topeka.widget;
 
+import com.google.samples.apps.topeka.R;
+import com.google.samples.apps.topeka.widget.outlineprovider.RoundOutlineProvider;
+
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
@@ -22,9 +25,6 @@ import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.widget.Checkable;
 import android.widget.ImageView;
-
-import com.google.samples.apps.topeka.R;
-import com.google.samples.apps.topeka.widget.outlineprovider.AvatarOutlineProvider;
 
 /**
  * A simple view that wraps an avatar.
@@ -43,11 +43,6 @@ public class AvatarView extends ImageView implements Checkable {
 
     public AvatarView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        initOutlineProvider();
-    }
-
-    private void initOutlineProvider() {
-        setOutlineProvider(new AvatarOutlineProvider());
         setClipToOutline(true);
     }
 
@@ -76,4 +71,13 @@ public class AvatarView extends ImageView implements Checkable {
             border.draw(canvas);
         }
     }
+
+    @Override
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+        super.onSizeChanged(w, h, oldw, oldh);
+        if (w > 0 && h > 0) {
+            setOutlineProvider(new RoundOutlineProvider(Math.min(w, h)));
+        }
+    }
+
 }
