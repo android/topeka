@@ -152,7 +152,7 @@ public class CategoryAdapter extends BaseAdapter {
      * @return The tinted check mark
      */
     private Drawable loadTintedDoneDrawable() {
-        final Drawable done = mActivity.getDrawable(R.drawable.ic_done);
+        final Drawable done = mActivity.getDrawable(R.drawable.ic_tick);
         tintDrawable(done, android.R.color.white);
         return done;
     }

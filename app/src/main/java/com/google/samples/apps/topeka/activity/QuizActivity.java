@@ -202,7 +202,7 @@ public class QuizActivity extends Activity {
                     }
 
                     private void showQuizFabWithDoneIcon() {
-                        mQuizFab.setImageResource(R.drawable.ic_done);
+                        mQuizFab.setImageResource(R.drawable.ic_tick);
                         mQuizFab.setId(R.id.quiz_done);
                         mQuizFab.setVisibility(View.VISIBLE);
                         mQuizFab.setScaleX(0);
