@@ -21,6 +21,7 @@
     <dimen name="spacing_huge">72dp</dimen>
 
     <dimen name="size_fab">56dp</dimen>
+    <dimen name="size_avatar_toolbar">40dp</dimen>
     <dimen name="size_score_mark">24dp</dimen>
 
     <dimen name="elevation_header">4dp</dimen>
