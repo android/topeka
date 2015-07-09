@@ -31,6 +31,11 @@
         <item name="android:windowBackground">@color/light_grey</item>
     </style>
 
+    <!-- Contains the enter transition for CategorySelectionActivity. -->
+    <style name="Topeka.CategorySelectionActivity">
+        <item name="android:windowSharedElementEnterTransition">@transition/category_enter</item>
+    </style>
+
     <style name="Topeka.Blue" parent="Topeka">
         <item name="android:colorPrimary">@color/theme_blue_primary</item>
         <item name="android:colorPrimaryDark">@color/theme_blue_primary</item>

@@ -21,6 +21,7 @@ import android.app.ActivityOptions;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.view.animation.FastOutSlowInInterpolator;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Pair;
@@ -157,12 +158,17 @@ public class SignInFragment extends Fragment {
                 switch (v.getId()) {
                     case R.id.done:
                         savePlayer(getActivity());
-                        if (null == mSelectedAvatarView) {
-                            performSignInWithTransition(mAvatarGrid.getChildAt(
-                                    mSelectedAvatar.ordinal()));
-                        } else {
-                            performSignInWithTransition(mSelectedAvatarView);
-                        }
+                        removeDoneFab(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (null == mSelectedAvatarView) {
+                                    performSignInWithTransition(mAvatarGrid.getChildAt(
+                                            mSelectedAvatar.ordinal()));
+                                } else {
+                                    performSignInWithTransition(mSelectedAvatarView);
+                                }
+                            }
+                        });
                         break;
                     default:
                         throw new UnsupportedOperationException(
@@ -171,6 +177,15 @@ public class SignInFragment extends Fragment {
                 }
             }
         });
+    }
+
+    private void removeDoneFab(@Nullable Runnable endAction) {
+        mDoneFab.animate()
+                .scaleX(0)
+                .scaleY(0)
+                .setInterpolator(new FastOutSlowInInterpolator())
+                .withEndAction(endAction)
+                .start();
     }
 
     private void setUpGridView(View container) {

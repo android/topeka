@@ -55,6 +55,7 @@
             android:layout_gravity="center"
             android:transitionName="@string/transition_background">
 
+            <!-- Alpha and scales are being used during entry animation -->
             <ImageView
                 android:id="@+id/icon"
                 android:layout_width="wrap_content"
@@ -63,7 +64,10 @@
                 android:layout_margin="@dimen/spacing_double"
                 android:contentDescription="@null"
                 android:padding="@dimen/spacing_double"
-                android:scaleType="centerInside" />
+                android:scaleType="centerInside"
+                android:alpha="0"
+                android:scaleX="0.7"
+                android:scaleY="0.7"/>
 
             <FrameLayout
                 android:id="@+id/quiz_fragment_container"
