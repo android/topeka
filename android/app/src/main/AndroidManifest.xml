@@ -36,11 +36,12 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".activity.CategorySelectionActivity" />
+        <activity
+            android:name=".activity.CategorySelectionActivity"
+            android:theme="@style/Topeka.CategorySelectionActivity" />
 
         <activity
             android:name=".activity.QuizActivity"
-            android:parentActivityName=".activity.CategorySelectionActivity"
             android:windowSoftInputMode="adjustPan" />
 
     </application>

@@ -23,6 +23,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.transition.Transition;
+import android.transition.TransitionInflater;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewAnimationUtils;
@@ -91,6 +93,11 @@ public class QuizActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // Inflate and set the enter transition for this activity.
+        final Transition sharedElementEnterTransition = TransitionInflater.from(this)
+                .inflateTransition(R.transition.quiz_enter);
+        getWindow().setSharedElementEnterTransition(sharedElementEnterTransition);
+
         mCategoryId = getIntent().getStringExtra(Category.TAG);
         mInterpolator = AnimationUtils.loadInterpolator(this,
                 android.R.interpolator.fast_out_slow_in);
@@ -127,7 +134,11 @@ public class QuizActivity extends Activity {
         }
 
         // Scale the icon to 0 size before calling onBackPressed if it exists.
-        iconView.animate().scaleX(0).scaleY(0).setStartDelay(0)
+        iconView.animate()
+                .scaleX(.7f)
+                .scaleY(.7f)
+                .alphaBy(-1f)
+                .setStartDelay(0)
                 .setInterpolator(mInterpolator).setListener(
                 new AnimatorListenerAdapter() {
                     @Override
@@ -138,7 +149,8 @@ public class QuizActivity extends Activity {
                         QuizActivity.super.onBackPressed();
                         super.onAnimationEnd(animation);
                     }
-                });
+                })
+                .start();
     }
 
     private void startQuizFromClickOn(final View view) {
@@ -207,9 +219,12 @@ public class QuizActivity extends Activity {
                         mQuizFab.setVisibility(View.VISIBLE);
                         mQuizFab.setScaleX(0);
                         mQuizFab.setScaleY(0);
-                        mQuizFab.animate().scaleX(1).scaleY(1).
-                                setInterpolator(mInterpolator)
-                                .setListener(null);
+                        mQuizFab.animate()
+                                .scaleX(1)
+                                .scaleY(1)
+                                .setInterpolator(mInterpolator)
+                                .setListener(null)
+                                .start();
                     }
                 });
         // the toolbar should not have more elevation than the content while playing
@@ -253,11 +268,14 @@ public class QuizActivity extends Activity {
         mQuizFab.setImageResource(R.drawable.ic_play);
         mQuizFab.setVisibility(mSavedStateIsPlaying ? View.GONE : View.VISIBLE);
         mQuizFab.setOnClickListener(mOnClickListener);
-        mIcon.setScaleX(0);
-        mIcon.setScaleY(0);
         mIcon.setImageResource(resId);
-        mIcon.animate().scaleX(1).scaleY(1).setInterpolator(mInterpolator)
-                .setStartDelay(300);
+        mIcon.animate()
+                .scaleX(1)
+                .scaleY(1)
+                .alpha(1)
+                .setInterpolator(mInterpolator)
+                .setStartDelay(300)
+                .start();
     }
 
     private void initToolbar(Category category) {
