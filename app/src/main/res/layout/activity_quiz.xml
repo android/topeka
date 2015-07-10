@@ -21,6 +21,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <!-- Scale is being used during entry animation -->
     <com.google.samples.apps.topeka.widget.fab.FloatingActionButton
         android:id="@+id/fab_quiz"
         android:layout_width="@dimen/size_fab"
@@ -28,6 +29,8 @@
         android:layout_gravity="bottom|end"
         android:layout_marginBottom="@dimen/spacing_double"
         android:layout_marginEnd="@dimen/spacing_double"
+        android:scaleX="0"
+        android:scaleY="0"
         android:transitionName="@string/transition_avatar" />
 
     <LinearLayout
