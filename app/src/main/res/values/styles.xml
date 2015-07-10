@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright 2015 Google Inc.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~      http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+<resources>
+
+    <style name="Topeka" parent="@android:style/Theme.Material.Light.NoActionBar">
+        <item name="android:colorPrimary">@color/topeka_primary</item>
+        <item name="android:colorPrimaryDark">@color/topeka_primary_dark</item>
+        <item name="android:colorAccent">@color/topeka_accent</item>
+        <item name="android:textColorPrimary">@android:color/black</item>
+        <item name="android:textColorPrimaryInverse">@color/text_light</item>
+        <item name="android:statusBarColor">@color/topeka_primary_dark</item>
+        <item name="android:textColor">@color/text_dark</item>
+        <item name="android:radioButtonStyle">@style/Topeka.CompoundButton.Radio</item>
+        <item name="android:windowContentTransitions">true</item>
+        <item name="android:titleTextAppearance">@style/Topeka.TextAppearance.Title</item>
+        <item name="android:buttonStyle">@style/Topeka.CompoundButton</item>
+        <item name="android:windowBackground">@color/light_grey</item>
+    </style>
+
+    <!-- Contains the enter transition for CategorySelectionActivity. -->
+    <style name="Topeka.CategorySelectionActivity">
+        <item name="android:windowSharedElementEnterTransition">@transition/category_enter</item>
+    </style>
+
+    <style name="Topeka.Blue" parent="Topeka">
+        <item name="android:colorPrimary">@color/theme_blue_primary</item>
+        <item name="android:colorPrimaryDark">@color/theme_blue_primary</item>
+        <item name="android:textColorPrimary">@color/theme_blue_text</item>
+        <item name="android:statusBarColor">@color/theme_blue_primary_dark</item>
+        <item name="android:windowBackground">@color/theme_blue_background</item>
+        <item name="android:colorAccent">@color/theme_blue_accent</item>
+    </style>
+
+    <style name="Topeka.Green" parent="Topeka">
+        <item name="android:colorPrimary">@color/theme_green_primary</item>
+        <item name="android:colorPrimaryDark">@color/theme_green_primary</item>
+        <item name="android:textColorPrimary">@color/theme_green_text</item>
+        <item name="android:statusBarColor">@color/theme_green_primary_dark</item>
+        <item name="android:windowBackground">@color/theme_green_background</item>
+        <item name="android:colorAccent">@color/theme_green_accent</item>
+    </style>
+
+    <style name="Topeka.Purple" parent="Topeka">
+        <item name="android:colorPrimary">@color/theme_purple_primary</item>
+        <item name="android:colorPrimaryDark">@color/theme_purple_primary</item>
+        <item name="android:textColorPrimary">@color/theme_purple_text</item>
+        <item name="android:statusBarColor">@color/theme_purple_primary_dark</item>
+        <item name="android:windowBackground">@color/theme_purple_background</item>
+        <item name="android:colorAccent">@color/theme_purple_accent</item>
+    </style>
+
+    <style name="Topeka.Red" parent="Topeka">
+        <item name="android:colorPrimary">@color/theme_red_primary</item>
+        <item name="android:colorPrimaryDark">@color/theme_red_primary</item>
+        <item name="android:textColorPrimary">@color/theme_red_text</item>
+        <item name="android:statusBarColor">@color/theme_red_primary_dark</item>
+        <item name="android:windowBackground">@color/theme_red_background</item>
+        <item name="android:colorAccent">@color/theme_red_accent</item>
+    </style>
+
+    <style name="Topeka.Yellow" parent="Topeka">
+        <item name="android:colorPrimary">@color/theme_yellow_primary</item>
+        <item name="android:colorPrimaryDark">@color/theme_yellow_primary</item>
+        <item name="android:textColorPrimary">@color/theme_yellow_text</item>
+        <item name="android:statusBarColor">@color/theme_yellow_primary_dark</item>
+        <item name="android:windowBackground">@color/theme_yellow_background</item>
+        <item name="android:colorAccent">@color/theme_yellow_accent</item>
+    </style>
+
+    <style name="Topeka.CompoundButton" parent="@android:style/Widget.Material.Button.Borderless">
+        <item name="android:background">@drawable/selector_button</item>
+    </style>
+
+    <style name="Topeka.CompoundButton.Radio" parent="Topeka.CompoundButton">
+        <item name="android:background">@drawable/selector_checkable</item>
+    </style>
+
+    <style name="Topeka.CompoundButton.True" parent="Topeka.CompoundButton">
+        <item name="android:background">@drawable/selector_true</item>
+    </style>
+
+    <style name="Topeka.CompoundButton.False" parent="Topeka.CompoundButton">
+        <item name="android:background">@drawable/selector_false</item>
+    </style>
+
+    <style name="Topeka.TextAppearance">
+    </style>
+
+    <style name="Topeka.TextAppearance.Title" parent="android:TextAppearance.Material.Title">
+        <item name="android:textColor">@color/topeka_primary</item>
+    </style>
+
+    <style name="Topeka.TextAppearance.Title.Inverse"
+        parent="android:TextAppearance.Material.Title">
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="Topeka.TextAppearance.Title.Picker" parent="Topeka.TextAppearance.Title">
+        <item name="android:textSize">96sp</item>
+    </style>
+
+    <style name="Topeka.TextAppearance.Subhead" parent="android:TextAppearance.Material.Subhead">
+        <item name="android:textColor">@color/topeka_primary</item>
+    </style>
+</resources>

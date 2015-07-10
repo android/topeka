@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright 2015 Google Inc.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~      http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+<merge
+    android:id="@+id/quiz_container"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.google.samples.apps.topeka.widget.fab.FloatingActionButton
+        android:id="@+id/fab_quiz"
+        android:layout_width="@dimen/size_fab"
+        android:layout_height="@dimen/size_fab"
+        android:layout_gravity="bottom|end"
+        android:layout_marginBottom="@dimen/spacing_double"
+        android:layout_marginEnd="@dimen/spacing_double"
+        android:transitionName="@string/transition_avatar" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <Toolbar
+            android:id="@+id/toolbar_activity_quiz"
+            android:layout_width="match_parent"
+            android:layout_height="?android:attr/actionBarSize"
+            android:layout_gravity="top"
+            android:background="?android:colorPrimary"
+            android:contentInsetStart="@dimen/spacing_huge"
+            android:elevation="@dimen/elevation_header"
+            android:navigationContentDescription="@string/up"
+            android:navigationIcon="@drawable/ic_arrow_back"
+            android:transitionName="@string/transition_toolbar">
+            <!--an empty tag is required to get touch feedback on the navigation icon-->
+        </Toolbar>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:transitionName="@string/transition_background">
+
+            <!-- Alpha and scales are being used during entry animation -->
+            <ImageView
+                android:id="@+id/icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="@dimen/spacing_double"
+                android:contentDescription="@null"
+                android:padding="@dimen/spacing_double"
+                android:scaleType="centerInside"
+                android:alpha="0"
+                android:scaleX="0.7"
+                android:scaleY="0.7"/>
+
+            <FrameLayout
+                android:id="@+id/quiz_fragment_container"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:visibility="invisible" />
+        </FrameLayout>
+    </LinearLayout>
+</merge>
