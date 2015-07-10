@@ -126,28 +126,32 @@ public class QuizActivity extends Activity {
 
     @Override
     public void onBackPressed() {
-        final View iconView = findViewById(R.id.icon);
-        if (iconView == null) {
-            // Skip the animation if the icon is not initialized.
+        if (mIcon == null || mQuizFab == null) {
+            // Skip the animation if icon or fab are not initialized.
             super.onBackPressed();
             return;
         }
 
-        // Scale the icon to 0 size before calling onBackPressed if it exists.
-        iconView.animate()
+        // Scale the icon and fab to 0 size before calling onBackPressed if it exists.
+        mIcon.animate()
                 .scaleX(.7f)
                 .scaleY(.7f)
-                .alphaBy(-1f)
-                .setStartDelay(0)
-                .setInterpolator(mInterpolator).setListener(
-                new AnimatorListenerAdapter() {
+                .alpha(0f)
+                .setInterpolator(mInterpolator)
+                .start();
+
+        mQuizFab.animate()
+                .scaleX(0f)
+                .scaleY(0f)
+                .setInterpolator(mInterpolator)
+                .setStartDelay(100)
+                .setListener(new AnimatorListenerAdapter() {
                     @Override
                     public void onAnimationEnd(Animator animation) {
                         if (isFinishing() || isDestroyed()) {
                             return;
                         }
                         QuizActivity.super.onBackPressed();
-                        super.onAnimationEnd(animation);
                     }
                 })
                 .start();
@@ -170,7 +174,6 @@ public class QuizActivity extends Activity {
             @Override
             public void onAnimationEnd(Animator animation) {
                 mIcon.setVisibility(View.GONE);
-                super.onAnimationEnd(animation);
                 mCircularReveal.removeListener(this);
             }
         });
@@ -204,7 +207,6 @@ public class QuizActivity extends Activity {
                                 @Override
                                 public void onAnimationEnd(Animator animation) {
                                     showQuizFabWithDoneIcon();
-                                    super.onAnimationEnd(animation);
                                     mCircularReveal.removeListener(this);
                                 }
                             });
@@ -217,8 +219,8 @@ public class QuizActivity extends Activity {
                         mQuizFab.setImageResource(R.drawable.ic_tick);
                         mQuizFab.setId(R.id.quiz_done);
                         mQuizFab.setVisibility(View.VISIBLE);
-                        mQuizFab.setScaleX(0);
-                        mQuizFab.setScaleY(0);
+                        mQuizFab.setScaleX(0f);
+                        mQuizFab.setScaleY(0f);
                         mQuizFab.animate()
                                 .scaleX(1)
                                 .scaleY(1)
@@ -264,10 +266,6 @@ public class QuizActivity extends Activity {
         int resId = getResources().getIdentifier(IMAGE_CATEGORY + categoryId, DRAWABLE,
                 getApplicationContext().getPackageName());
         mIcon.setImageResource(resId);
-        mQuizFab = (FloatingActionButton) findViewById(R.id.fab_quiz);
-        mQuizFab.setImageResource(R.drawable.ic_play);
-        mQuizFab.setVisibility(mSavedStateIsPlaying ? View.GONE : View.VISIBLE);
-        mQuizFab.setOnClickListener(mOnClickListener);
         mIcon.setImageResource(resId);
         mIcon.animate()
                 .scaleX(1)
@@ -275,6 +273,16 @@ public class QuizActivity extends Activity {
                 .alpha(1)
                 .setInterpolator(mInterpolator)
                 .setStartDelay(300)
+                .start();
+        mQuizFab = (FloatingActionButton) findViewById(R.id.fab_quiz);
+        mQuizFab.setImageResource(R.drawable.ic_play);
+        mQuizFab.setVisibility(mSavedStateIsPlaying ? View.GONE : View.VISIBLE);
+        mQuizFab.setOnClickListener(mOnClickListener);
+        mQuizFab.animate()
+                .scaleX(1)
+                .scaleY(1)
+                .setInterpolator(mInterpolator)
+                .setStartDelay(400)
                 .start();
     }
 
