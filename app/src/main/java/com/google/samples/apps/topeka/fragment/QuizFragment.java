@@ -15,7 +15,6 @@
  */
 package com.google.samples.apps.topeka.fragment;
 
-import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.ContextThemeWrapper;
@@ -44,7 +43,7 @@ import java.util.List;
 /**
  * Encapsulates Quiz solving and displays it to the user.
  */
-public class QuizFragment extends Fragment {
+public class QuizFragment extends android.support.v4.app.Fragment {
 
     private static final String KEY_USER_INPUT = "USER_INPUT";
     private TextView mProgressText;

@@ -65,6 +65,7 @@ public final class FillTwoBlanksQuiz extends Quiz<String[]> {
         if (answer != null ? !Arrays.equals(answer, quiz.getAnswer()) : quiz.getAnswer() != null) {
             return false;
         }
+        //noinspection RedundantIfStatement
         if (!question.equals(quiz.getQuestion())) {
             return false;
         }

@@ -88,6 +88,7 @@ public final class FourQuarterQuiz extends OptionsQuiz<String> {
             return false;
         }
 
+        //noinspection RedundantIfStatement
         if (!Arrays.equals(getOptions(), quiz.getOptions())) {
             return false;
         }

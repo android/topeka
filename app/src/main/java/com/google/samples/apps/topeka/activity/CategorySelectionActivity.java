@@ -16,11 +16,12 @@
 
 package com.google.samples.apps.topeka.activity;
 
-import android.app.Activity;
 import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -34,7 +35,7 @@ import com.google.samples.apps.topeka.model.Player;
 import com.google.samples.apps.topeka.persistence.TopekaDatabaseHelper;
 import com.google.samples.apps.topeka.widget.AvatarView;
 
-public class CategorySelectionActivity extends Activity {
+public class CategorySelectionActivity extends AppCompatActivity {
 
     private static final String EXTRA_PLAYER = "player";
 
@@ -78,7 +79,8 @@ public class CategorySelectionActivity extends Activity {
         //noinspection ConstantConditions
         getActionBar().setDisplayShowTitleEnabled(false);
         final AvatarView avatarView = (AvatarView) toolbar.findViewById(R.id.avatar);
-        avatarView.setImageDrawable(getDrawable(player.getAvatar().getDrawableId()));
+        avatarView.setImageDrawable(ContextCompat.getDrawable(this,
+                player.getAvatar().getDrawableId()));
         ((TextView) toolbar.findViewById(R.id.title)).setText(getDisplayName(player));
     }
 
@@ -112,7 +114,7 @@ public class CategorySelectionActivity extends Activity {
     }
 
     private void attachCategoryGridFragment() {
-        getFragmentManager().beginTransaction()
+        getSupportFragmentManager().beginTransaction()
                 .replace(R.id.quiz_container, CategorySelectionFragment.newInstance())
                 .commit();
         setProgressBarVisibility(View.GONE);

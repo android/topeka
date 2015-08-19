@@ -19,6 +19,8 @@ import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.ColorRes;
 import android.support.annotation.DrawableRes;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -118,12 +120,12 @@ public class ScoreAdapter extends BaseAdapter {
      */
     private Drawable loadAndTint(Context context, @DrawableRes int drawableId,
             @ColorRes int tintColor) {
-        Drawable imageDrawable = context.getDrawable(drawableId);
+        Drawable imageDrawable = ContextCompat.getDrawable(context, drawableId);
         if (imageDrawable == null) {
             throw new IllegalArgumentException("The drawable with id " + drawableId
                     + " does not exist");
         }
-        imageDrawable.setTint(context.getResources().getColor(tintColor));
+        DrawableCompat.setTint(imageDrawable, tintColor);
         return imageDrawable;
     }
 

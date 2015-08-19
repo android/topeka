@@ -16,11 +16,12 @@
 
 package com.google.samples.apps.topeka.widget.fab;
 
-import com.google.samples.apps.topeka.R;
-
 import android.content.Context;
+import android.support.design.widget.FloatingActionButton;
 import android.util.AttributeSet;
 import android.widget.Checkable;
+
+import com.google.samples.apps.topeka.R;
 
 /**
  * A {@link FloatingActionButton} that implements {@link Checkable} to allow display of different

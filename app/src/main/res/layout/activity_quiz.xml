@@ -22,7 +22,7 @@
     android:orientation="vertical">
 
     <!-- Scale is being used during entry animation -->
-    <com.google.samples.apps.topeka.widget.fab.FloatingActionButton
+    <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab_quiz"
         android:layout_width="@dimen/size_fab"
         android:layout_height="@dimen/size_fab"
@@ -38,19 +38,19 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <Toolbar
+        <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar_activity_quiz"
             android:layout_width="match_parent"
             android:layout_height="?android:attr/actionBarSize"
             android:layout_gravity="top"
-            android:background="?android:colorPrimary"
+            android:background="?colorPrimary"
             android:contentInsetStart="@dimen/spacing_huge"
             android:elevation="@dimen/elevation_header"
             android:navigationContentDescription="@string/up"
             android:navigationIcon="@drawable/ic_arrow_back"
             android:transitionName="@string/transition_toolbar">
             <!--an empty tag is required to get touch feedback on the navigation icon-->
-        </Toolbar>
+        </android.support.v7.widget.Toolbar>
 
         <FrameLayout
             android:layout_width="match_parent"

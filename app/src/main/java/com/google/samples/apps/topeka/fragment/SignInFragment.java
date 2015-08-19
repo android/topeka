@@ -18,9 +18,10 @@ package com.google.samples.apps.topeka.fragment;
 
 import android.app.Activity;
 import android.app.ActivityOptions;
-import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.animation.FastOutSlowInInterpolator;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -39,7 +40,6 @@ import com.google.samples.apps.topeka.helper.PreferencesHelper;
 import com.google.samples.apps.topeka.helper.TransitionHelper;
 import com.google.samples.apps.topeka.model.Avatar;
 import com.google.samples.apps.topeka.model.Player;
-import com.google.samples.apps.topeka.widget.fab.DoneFab;
 
 /**
  * Enable selection of an {@link Avatar} and user name.
@@ -54,7 +54,7 @@ public class SignInFragment extends Fragment {
     private Avatar mSelectedAvatar = Avatar.ONE;
     private View mSelectedAvatarView;
     private GridView mAvatarGrid;
-    private DoneFab mDoneFab;
+    private FloatingActionButton mDoneFab;
     private boolean edit;
 
     public static SignInFragment newInstance(boolean edit) {
@@ -151,7 +151,7 @@ public class SignInFragment extends Fragment {
         mFirstName.addTextChangedListener(textWatcher);
         mLastInitial = (EditText) view.findViewById(R.id.last_initial);
         mLastInitial.addTextChangedListener(textWatcher);
-        mDoneFab = (DoneFab) view.findViewById(R.id.done);
+        mDoneFab = (FloatingActionButton) view.findViewById(R.id.done);
         mDoneFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

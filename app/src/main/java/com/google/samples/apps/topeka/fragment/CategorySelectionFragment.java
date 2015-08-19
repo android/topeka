@@ -18,8 +18,8 @@ package com.google.samples.apps.topeka.fragment;
 
 import android.app.Activity;
 import android.app.ActivityOptions;
-import android.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;

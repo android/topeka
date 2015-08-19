@@ -18,12 +18,12 @@ apply plugin: 'com.android.application'
 
 android {
     buildToolsVersion "22.0.1"
-    compileSdkVersion 22
+    compileSdkVersion 23
 
     defaultConfig {
         applicationId "com.google.samples.apps.topeka"
         minSdkVersion 21
-        targetSdkVersion 22
+        targetSdkVersion 23
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
@@ -42,8 +42,10 @@ android {
 }
 
 dependencies {
-    compile 'com.android.support:cardview-v7:22.2.0'
-    compile 'com.android.support:recyclerview-v7:22.2.0'
+    compile 'com.android.support:appcompat-v7:23.0.0'
+    compile 'com.android.support:cardview-v7:23.0.0'
+    compile 'com.android.support:design:23.0.0'
+    compile 'com.android.support:recyclerview-v7:23.0.0'
     testCompile 'junit:junit:4.12'
     androidTestCompile 'com.android.support.test:testing-support-lib:0.1'
     androidTestCompile 'org.hamcrest:hamcrest-core:1.3'

@@ -18,30 +18,34 @@ package com.google.samples.apps.topeka.activity;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.transition.Transition;
 import android.transition.TransitionInflater;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewAnimationUtils;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.animation.AnimationUtils;
 import android.view.animation.Interpolator;
 import android.widget.ImageView;
-import android.widget.Toolbar;
 
 import com.google.samples.apps.topeka.R;
 import com.google.samples.apps.topeka.fragment.QuizFragment;
 import com.google.samples.apps.topeka.model.Category;
 import com.google.samples.apps.topeka.persistence.TopekaDatabaseHelper;
-import com.google.samples.apps.topeka.widget.fab.FloatingActionButton;
 
 import static com.google.samples.apps.topeka.adapter.CategoryAdapter.DRAWABLE;
 
-public class QuizActivity extends Activity {
+public class QuizActivity extends AppCompatActivity {
 
     private static final String TAG = "QuizActivity";
     private static final String IMAGE_CATEGORY = "image_category_";
@@ -52,7 +56,7 @@ public class QuizActivity extends Activity {
     private String mCategoryId;
     private QuizFragment mQuizFragment;
     private Toolbar mToolbar;
-    private ImageView mQuizFab;
+    private FloatingActionButton mQuizFab;
     private boolean mSavedStateIsPlaying;
     private ImageView mIcon;
     private Animator mCircularReveal;
@@ -104,14 +108,14 @@ public class QuizActivity extends Activity {
         if (null != savedInstanceState) {
             mSavedStateIsPlaying = savedInstanceState.getBoolean(STATE_IS_PLAYING);
         }
-        populate(mCategoryId);
         super.onCreate(savedInstanceState);
+        populate(mCategoryId);
     }
 
     @Override
     protected void onResume() {
         if (mSavedStateIsPlaying) {
-            mQuizFragment = (QuizFragment) getFragmentManager().findFragmentByTag(
+            mQuizFragment = (QuizFragment) getSupportFragmentManager().findFragmentByTag(
                     FRAGMENT_TAG);
             findViewById(R.id.quiz_fragment_container).setVisibility(View.VISIBLE);
         }
@@ -159,7 +163,7 @@ public class QuizActivity extends Activity {
 
     private void startQuizFromClickOn(final View view) {
         initQuizFragment();
-        getFragmentManager().beginTransaction()
+        getSupportFragmentManager().beginTransaction()
                 .replace(R.id.quiz_fragment_container, mQuizFragment, FRAGMENT_TAG).commit();
         final View fragmentContainer = findViewById(R.id.quiz_fragment_container);
         int centerX = (view.getLeft() + view.getRight()) / 2;
@@ -255,7 +259,13 @@ public class QuizActivity extends Activity {
             finish();
         }
         Category category = TopekaDatabaseHelper.getCategoryWith(this, categoryId);
-        setTheme(category.getTheme().getStyleId());
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = getWindow();
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(ContextCompat.getColor(this,
+                    category.getTheme().getPrimaryDarkColor()));
+        }
+
         initLayout(category.getId());
         initToolbar(category);
     }
@@ -288,6 +298,8 @@ public class QuizActivity extends Activity {
 
     private void initToolbar(Category category) {
         mToolbar = (Toolbar) findViewById(R.id.toolbar_activity_quiz);
+        mToolbar.setBackgroundColor(
+                ContextCompat.getColor(this, category.getTheme().getPrimaryColor()));
         mToolbar.setTitle(category.getName());
         mToolbar.setNavigationOnClickListener(mOnClickListener);
         if (mSavedStateIsPlaying) {

@@ -17,10 +17,13 @@ package com.google.samples.apps.topeka.widget.quiz;
 
 import android.animation.ObjectAnimator;
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.annotation.ColorInt;
 import android.support.annotation.DimenRes;
+import android.support.v4.content.ContextCompat;
 import android.util.IntProperty;
 import android.util.Property;
 import android.view.Gravity;
@@ -81,7 +84,6 @@ public abstract class AbsQuizView<Q extends Quiz> extends FrameLayout {
     private final Q mQuiz;
     private final Interpolator mFastOutSlowInInterpolator;
     private final Interpolator mLinearOutSlowInInterpolator;
-    private final int mColorAnimationDuration;
     private final int mIconAnimationDuration;
     private final int mScaleAnimationDuration;
     private boolean mAnswered;
@@ -108,7 +110,6 @@ public abstract class AbsQuizView<Q extends Quiz> extends FrameLayout {
                 .loadInterpolator(getContext(), android.R.interpolator.fast_out_slow_in);
         mLinearOutSlowInInterpolator = AnimationUtils
                 .loadInterpolator(getContext(), android.R.interpolator.linear_out_slow_in);
-        mColorAnimationDuration = 400;
         mIconAnimationDuration = 300;
         mScaleAnimationDuration = 200;
 
@@ -133,6 +134,8 @@ public abstract class AbsQuizView<Q extends Quiz> extends FrameLayout {
      */
     private void setUpQuestionView() {
         mQuestionView = (TextView) mLayoutInflater.inflate(R.layout.question, this, false);
+        mQuestionView.setBackgroundColor(ContextCompat.getColor(getContext(),
+                mCategory.getTheme().getPrimaryColor()));
         mQuestionView.setText(getQuiz().getQuestion());
     }
 
@@ -292,9 +295,10 @@ public abstract class AbsQuizView<Q extends Quiz> extends FrameLayout {
         mSubmitAnswer.setChecked(answerCorrect);
 
         // Decide which background color to use.
-        final int backgroundColor = getResources()
-                .getColor(answerCorrect ? R.color.green : R.color.red);
-        animateFabBackgroundColor(backgroundColor);
+        final int backgroundColor = ContextCompat.getColor(getContext(),
+                answerCorrect ? R.color.green : R.color.red);
+        mSubmitAnswer.setBackgroundTintList(
+                ColorStateList.valueOf(ContextCompat.getColor(getContext(), backgroundColor)));
         hideFab();
         resizeView();
         moveViewOffScreen(answerCorrect);
@@ -329,16 +333,7 @@ public abstract class AbsQuizView<Q extends Quiz> extends FrameLayout {
                 .start();
     }
 
-    private void animateFabBackgroundColor(int backgroundColor) {
-        // Set color, duration and interpolator for the color change. Then start the animation.
-        final ObjectAnimator fabColorAnimator = ObjectAnimator
-                .ofArgb(mSubmitAnswer, "backgroundColor", Color.WHITE, backgroundColor);
-        fabColorAnimator.setDuration(mColorAnimationDuration)
-                .setInterpolator(mFastOutSlowInInterpolator);
-        fabColorAnimator.start();
-    }
-
-    private void animateForegroundColor(int targetColor) {
+    private void animateForegroundColor(@ColorInt int targetColor) {
         final ObjectAnimator foregroundAnimator = ObjectAnimator
                 .ofArgb(this, FOREGROUND_COLOR, Color.WHITE, targetColor);
         foregroundAnimator

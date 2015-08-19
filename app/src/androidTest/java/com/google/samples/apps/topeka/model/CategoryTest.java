@@ -45,7 +45,7 @@ public class CategoryTest {
     }
 
     private static List<Quiz> getQuizzes() {
-        List<Quiz> quizzes = new ArrayList<Quiz>();
+        List<Quiz> quizzes = new ArrayList<>();
         quizzes.add(new TrueFalseQuiz("huh?", true, false));
         quizzes.add(new FillBlankQuiz("so?", "yeah", "go", "stop", false));
         return quizzes;
