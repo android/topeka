@@ -20,7 +20,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <android.widget.Toolbar
+    <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar_player"
         style="@style/Topeka.TextAppearance.Title"
         android:layout_width="match_parent"
@@ -36,6 +36,7 @@
             android:transitionName="@string/transition_avatar" />
 
         <TextView
+            tools:ignore="PrivateResource"
             android:id="@+id/title"
             style="@style/Topeka.TextAppearance.Title.Inverse"
             android:layout_width="wrap_content"
@@ -50,7 +51,7 @@
             android:layout_gravity="center_vertical|end"
             android:paddingEnd="@dimen/spacing_micro"
             android:paddingStart="@dimen/spacing_micro" />
-    </android.widget.Toolbar>
+    </android.support.v7.widget.Toolbar>
 
     <FrameLayout
         android:id="@+id/quiz_container"

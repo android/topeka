@@ -20,12 +20,13 @@ import android.app.Activity;
 import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 
 import com.google.samples.apps.topeka.R;
 import com.google.samples.apps.topeka.fragment.SignInFragment;
 import com.google.samples.apps.topeka.helper.PreferencesHelper;
 
-public class SignInActivity extends Activity {
+public class SignInActivity extends AppCompatActivity {
 
     private static final String EXTRA_EDIT = "EDIT";
 
@@ -47,7 +48,7 @@ public class SignInActivity extends Activity {
         setContentView(R.layout.activity_sign_in);
         final boolean edit = isInEditMode();
         if (savedInstanceState == null) {
-            getFragmentManager().beginTransaction()
+            getSupportFragmentManager().beginTransaction()
                     .replace(R.id.sign_in_container, SignInFragment.newInstance(edit)).commit();
         }
     }

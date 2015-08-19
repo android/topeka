@@ -17,14 +17,16 @@
 package com.google.samples.apps.topeka.fragment;
 
 import android.app.Activity;
-import android.app.ActivityOptions;
-import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.app.Fragment;
+import android.support.v4.util.Pair;
+import android.support.v4.view.ViewCompat;
 import android.support.v4.view.animation.FastOutSlowInInterpolator;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,7 +41,6 @@ import com.google.samples.apps.topeka.helper.PreferencesHelper;
 import com.google.samples.apps.topeka.helper.TransitionHelper;
 import com.google.samples.apps.topeka.model.Avatar;
 import com.google.samples.apps.topeka.model.Player;
-import com.google.samples.apps.topeka.widget.fab.DoneFab;
 
 /**
  * Enable selection of an {@link Avatar} and user name.
@@ -54,7 +55,7 @@ public class SignInFragment extends Fragment {
     private Avatar mSelectedAvatar = Avatar.ONE;
     private View mSelectedAvatarView;
     private GridView mAvatarGrid;
-    private DoneFab mDoneFab;
+    private FloatingActionButton mDoneFab;
     private boolean edit;
 
     public static SignInFragment newInstance(boolean edit) {
@@ -151,7 +152,7 @@ public class SignInFragment extends Fragment {
         mFirstName.addTextChangedListener(textWatcher);
         mLastInitial = (EditText) view.findViewById(R.id.last_initial);
         mLastInitial.addTextChangedListener(textWatcher);
-        mDoneFab = (DoneFab) view.findViewById(R.id.done);
+        mDoneFab = (FloatingActionButton) view.findViewById(R.id.done);
         mDoneFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -180,7 +181,7 @@ public class SignInFragment extends Fragment {
     }
 
     private void removeDoneFab(@Nullable Runnable endAction) {
-        mDoneFab.animate()
+        ViewCompat.animate(mDoneFab)
                 .scaleX(0)
                 .scaleY(0)
                 .setInterpolator(new FastOutSlowInInterpolator())
@@ -208,7 +209,7 @@ public class SignInFragment extends Fragment {
 
         final Pair[] pairs = TransitionHelper.createSafeTransitionParticipants(activity, true,
                 new Pair<>(v, activity.getString(R.string.transition_avatar)));
-        ActivityOptions activityOptions = ActivityOptions
+        ActivityOptionsCompat activityOptions = ActivityOptionsCompat
                 .makeSceneTransitionAnimation(activity, pairs);
         CategorySelectionActivity.start(activity, mPlayer, activityOptions);
     }

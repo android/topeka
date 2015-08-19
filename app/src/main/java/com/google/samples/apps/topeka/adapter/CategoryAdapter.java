@@ -20,6 +20,8 @@ import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
 import android.support.annotation.ColorRes;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -141,8 +143,9 @@ public class CategoryAdapter extends BaseAdapter {
      * @return The tinted resource
      */
     private Drawable loadTintedCategoryDrawable(Category category, int categoryImageResource) {
-        final Drawable categoryIcon = mActivity.getDrawable(categoryImageResource);
-        tintDrawable(categoryIcon, category.getTheme().getPrimaryColor());
+        final Drawable categoryIcon = ContextCompat.getDrawable(mActivity, categoryImageResource);
+
+        DrawableCompat.setTint(categoryIcon, category.getTheme().getPrimaryColor());
         return categoryIcon;
     }
 
@@ -152,19 +155,9 @@ public class CategoryAdapter extends BaseAdapter {
      * @return The tinted check mark
      */
     private Drawable loadTintedDoneDrawable() {
-        final Drawable done = mActivity.getDrawable(R.drawable.ic_tick);
-        tintDrawable(done, android.R.color.white);
+        final Drawable done = ContextCompat.getDrawable(mActivity, R.drawable.ic_tick);
+        DrawableCompat.setTint(done, android.R.color.white);
         return done;
-    }
-
-    /**
-     * Convenience method for drawable tinting.
-     *
-     * @param drawable The drawable to tint.
-     * @param colorRes The color resource id of the color used for tinting.
-     */
-    private void tintDrawable(Drawable drawable, @ColorRes int colorRes) {
-        drawable.setTint(getColor(colorRes));
     }
 
     /**
@@ -174,6 +167,6 @@ public class CategoryAdapter extends BaseAdapter {
      * @return The loaded color.
      */
     private int getColor(@ColorRes int colorRes) {
-        return mResources.getColor(colorRes);
+        return ContextCompat.getColor(mActivity, colorRes);
     }
 }

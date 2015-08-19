@@ -22,6 +22,9 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.util.AttributeSet;
 import android.widget.Checkable;
 import android.widget.ImageView;
@@ -66,7 +69,7 @@ public class AvatarView extends ImageView implements Checkable {
     protected void onDraw(@NonNull Canvas canvas) {
         super.onDraw(canvas);
         if (mChecked) {
-            Drawable border = getResources().getDrawable(R.drawable.selector_avatar, null);
+            Drawable border = ContextCompat.getDrawable(getContext(), R.drawable.selector_avatar);
             border.setBounds(0, 0, getWidth(), getHeight());
             border.draw(canvas);
         }
@@ -79,5 +82,4 @@ public class AvatarView extends ImageView implements Checkable {
             setOutlineProvider(new RoundOutlineProvider(Math.min(w, h)));
         }
     }
-
 }

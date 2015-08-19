@@ -17,10 +17,14 @@ package com.google.samples.apps.topeka.widget.quiz;
 
 import android.animation.ObjectAnimator;
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.annotation.ColorInt;
 import android.support.annotation.DimenRes;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewCompat;
 import android.util.IntProperty;
 import android.util.Property;
 import android.view.Gravity;
@@ -81,7 +85,6 @@ public abstract class AbsQuizView<Q extends Quiz> extends FrameLayout {
     private final Q mQuiz;
     private final Interpolator mFastOutSlowInInterpolator;
     private final Interpolator mLinearOutSlowInInterpolator;
-    private final int mColorAnimationDuration;
     private final int mIconAnimationDuration;
     private final int mScaleAnimationDuration;
     private boolean mAnswered;
@@ -104,11 +107,12 @@ public abstract class AbsQuizView<Q extends Quiz> extends FrameLayout {
         mLayoutInflater = LayoutInflater.from(context);
         mMinHeightTouchTarget = getResources()
                 .getDimensionPixelSize(R.dimen.min_height_touch_target);
+        //noinspection ResourceType
         mFastOutSlowInInterpolator = AnimationUtils
                 .loadInterpolator(getContext(), android.R.interpolator.fast_out_slow_in);
+        //noinspection ResourceType
         mLinearOutSlowInInterpolator = AnimationUtils
                 .loadInterpolator(getContext(), android.R.interpolator.linear_out_slow_in);
-        mColorAnimationDuration = 400;
         mIconAnimationDuration = 300;
         mScaleAnimationDuration = 200;
 
@@ -133,6 +137,8 @@ public abstract class AbsQuizView<Q extends Quiz> extends FrameLayout {
      */
     private void setUpQuestionView() {
         mQuestionView = (TextView) mLayoutInflater.inflate(R.layout.question, this, false);
+        mQuestionView.setBackgroundColor(ContextCompat.getColor(getContext(),
+                mCategory.getTheme().getPrimaryColor()));
         mQuestionView.setText(getQuiz().getQuestion());
     }
 
@@ -251,8 +257,11 @@ public abstract class AbsQuizView<Q extends Quiz> extends FrameLayout {
             if (answered) {
                 mSubmitAnswer.setVisibility(View.VISIBLE);
             }
-            mSubmitAnswer.animate().scaleX(targetScale).scaleY(targetScale)
-                    .setInterpolator(mFastOutSlowInInterpolator);
+            ViewCompat.animate(mSubmitAnswer)
+                    .scaleX(targetScale)
+                    .scaleY(targetScale)
+                    .setInterpolator(mFastOutSlowInInterpolator)
+                    .start();
             mAnswered = answered;
         }
     }
@@ -292,9 +301,9 @@ public abstract class AbsQuizView<Q extends Quiz> extends FrameLayout {
         mSubmitAnswer.setChecked(answerCorrect);
 
         // Decide which background color to use.
-        final int backgroundColor = getResources()
-                .getColor(answerCorrect ? R.color.green : R.color.red);
-        animateFabBackgroundColor(backgroundColor);
+        final int backgroundColor = ContextCompat.getColor(getContext(),
+                answerCorrect ? R.color.green : R.color.red);
+        mSubmitAnswer.setBackgroundTintList(ColorStateList.valueOf(backgroundColor));
         hideFab();
         resizeView();
         moveViewOffScreen(answerCorrect);
@@ -304,7 +313,7 @@ public abstract class AbsQuizView<Q extends Quiz> extends FrameLayout {
     }
 
     private void hideFab() {
-        mSubmitAnswer.animate()
+        ViewCompat.animate(mSubmitAnswer)
                 .setDuration(mScaleAnimationDuration)
                 .setStartDelay(mIconAnimationDuration * 2)
                 .scaleX(0f)
@@ -317,28 +326,19 @@ public abstract class AbsQuizView<Q extends Quiz> extends FrameLayout {
         final float widthHeightRatio = (float) getHeight() / (float) getWidth();
 
         // Animate X and Y scaling separately to allow different start delays.
-        animate()
+        ViewCompat.animate(this)
                 .scaleY(.5f / widthHeightRatio)
                 .setDuration(300)
                 .setStartDelay(750)
                 .start();
-        animate()
+        ViewCompat.animate(this)
                 .scaleX(.5f)
                 .setDuration(300)
                 .setStartDelay(800)
                 .start();
     }
 
-    private void animateFabBackgroundColor(int backgroundColor) {
-        // Set color, duration and interpolator for the color change. Then start the animation.
-        final ObjectAnimator fabColorAnimator = ObjectAnimator
-                .ofArgb(mSubmitAnswer, "backgroundColor", Color.WHITE, backgroundColor);
-        fabColorAnimator.setDuration(mColorAnimationDuration)
-                .setInterpolator(mFastOutSlowInInterpolator);
-        fabColorAnimator.start();
-    }
-
-    private void animateForegroundColor(int targetColor) {
+    private void animateForegroundColor(@ColorInt int targetColor) {
         final ObjectAnimator foregroundAnimator = ObjectAnimator
                 .ofArgb(this, FOREGROUND_COLOR, Color.WHITE, targetColor);
         foregroundAnimator
@@ -350,7 +350,7 @@ public abstract class AbsQuizView<Q extends Quiz> extends FrameLayout {
 
     private void moveViewOffScreen(final boolean answerCorrect) {
         // Animate the current view off the screen.
-        animate()
+        ViewCompat.animate(this)
                 .setDuration(200)
                 .setStartDelay(1200)
                 .setInterpolator(mLinearOutSlowInInterpolator)

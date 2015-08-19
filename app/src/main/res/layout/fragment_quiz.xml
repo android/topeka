@@ -32,9 +32,9 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:background="@android:color/white" />
+        android:background="?android:attr/windowBackground" />
 
-    <Toolbar
+    <android.support.v7.widget.Toolbar
         android:id="@+id/progress_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -69,9 +69,10 @@
 
                 <TextView
                     android:id="@+id/progress_text"
+                    android:textColor="?android:attr/textColorPrimary"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
             </LinearLayout>
         </LinearLayout>
-    </Toolbar>
+    </android.support.v7.widget.Toolbar>
 </LinearLayout>

@@ -18,5 +18,6 @@
 <manifest
     xmlns:android="http://schemas.android.com/apk/res/android">
     <!-- speed up app deployment in debug mode -->
-    <application android:vmSafeMode="true" />
+    <application android:vmSafeMode="true"
+        android:allowBackup="false" />
 </manifest>
