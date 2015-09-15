@@ -106,8 +106,10 @@ public abstract class AbsQuizView<Q extends Quiz> extends FrameLayout {
         mLayoutInflater = LayoutInflater.from(context);
         mMinHeightTouchTarget = getResources()
                 .getDimensionPixelSize(R.dimen.min_height_touch_target);
+        //noinspection ResourceType
         mFastOutSlowInInterpolator = AnimationUtils
                 .loadInterpolator(getContext(), android.R.interpolator.fast_out_slow_in);
+        //noinspection ResourceType
         mLinearOutSlowInInterpolator = AnimationUtils
                 .loadInterpolator(getContext(), android.R.interpolator.linear_out_slow_in);
         mIconAnimationDuration = 300;
@@ -297,8 +299,7 @@ public abstract class AbsQuizView<Q extends Quiz> extends FrameLayout {
         // Decide which background color to use.
         final int backgroundColor = ContextCompat.getColor(getContext(),
                 answerCorrect ? R.color.green : R.color.red);
-        mSubmitAnswer.setBackgroundTintList(
-                ColorStateList.valueOf(ContextCompat.getColor(getContext(), backgroundColor)));
+        mSubmitAnswer.setBackgroundTintList(ColorStateList.valueOf(backgroundColor));
         hideFab();
         resizeView();
         moveViewOffScreen(answerCorrect);

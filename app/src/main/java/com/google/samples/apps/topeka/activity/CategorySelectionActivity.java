@@ -81,6 +81,7 @@ public class CategorySelectionActivity extends AppCompatActivity {
         final AvatarView avatarView = (AvatarView) toolbar.findViewById(R.id.avatar);
         avatarView.setImageDrawable(ContextCompat.getDrawable(this,
                 player.getAvatar().getDrawableId()));
+        //noinspection PrivateResource
         ((TextView) toolbar.findViewById(R.id.title)).setText(getDisplayName(player));
     }
 

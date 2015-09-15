@@ -15,8 +15,9 @@
   ~ limitations under the License.
   -->
 <merge
-    android:id="@+id/quiz_container"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/quiz_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -60,6 +61,7 @@
 
             <!-- Alpha and scales are being used during entry animation -->
             <ImageView
+                tools:ignore="PrivateResource"
                 android:id="@+id/icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

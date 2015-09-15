@@ -103,6 +103,7 @@ public class QuizActivity extends AppCompatActivity {
         getWindow().setSharedElementEnterTransition(sharedElementEnterTransition);
 
         mCategoryId = getIntent().getStringExtra(Category.TAG);
+        //noinspection ResourceType
         mInterpolator = AnimationUtils.loadInterpolator(this,
                 android.R.interpolator.fast_out_slow_in);
         if (null != savedInstanceState) {
@@ -272,6 +273,7 @@ public class QuizActivity extends AppCompatActivity {
 
     private void initLayout(String categoryId) {
         setContentView(R.layout.activity_quiz);
+        //noinspection PrivateResource
         mIcon = (ImageView) findViewById(R.id.icon);
         int resId = getResources().getIdentifier(IMAGE_CATEGORY + categoryId, DRAWABLE,
                 getApplicationContext().getPackageName());

@@ -36,6 +36,7 @@
             android:transitionName="@string/transition_avatar" />
 
         <TextView
+            tools:ignore="PrivateResource"
             android:id="@+id/title"
             style="@style/Topeka.TextAppearance.Title.Inverse"
             android:layout_width="wrap_content"
