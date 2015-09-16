@@ -25,6 +25,8 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewCompat;
+import android.support.v4.view.ViewPropertyAnimatorListenerAdapter;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.transition.Transition;
@@ -138,21 +140,21 @@ public class QuizActivity extends AppCompatActivity {
         }
 
         // Scale the icon and fab to 0 size before calling onBackPressed if it exists.
-        mIcon.animate()
+        ViewCompat.animate(mIcon)
                 .scaleX(.7f)
                 .scaleY(.7f)
                 .alpha(0f)
                 .setInterpolator(mInterpolator)
                 .start();
 
-        mQuizFab.animate()
+        ViewCompat.animate(mQuizFab)
                 .scaleX(0f)
                 .scaleY(0f)
                 .setInterpolator(mInterpolator)
                 .setStartDelay(100)
-                .setListener(new AnimatorListenerAdapter() {
+                .setListener(new ViewPropertyAnimatorListenerAdapter() {
                     @Override
-                    public void onAnimationEnd(Animator animation) {
+                    public void onAnimationEnd(View view) {
                         if (isFinishing() || isDestroyed()) {
                             return;
                         }
@@ -162,18 +164,37 @@ public class QuizActivity extends AppCompatActivity {
                 .start();
     }
 
-    private void startQuizFromClickOn(final View view) {
+    private void startQuizFromClickOn(final View clickedView) {
         initQuizFragment();
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.quiz_fragment_container, mQuizFragment, FRAGMENT_TAG).commit();
         final View fragmentContainer = findViewById(R.id.quiz_fragment_container);
-        int centerX = (view.getLeft() + view.getRight()) / 2;
-        int centerY = (view.getTop() + view.getBottom()) / 2;
-        int finalRadius = Math.max(fragmentContainer.getWidth(), fragmentContainer.getHeight());
+
+        prepareCircularReveal(clickedView, fragmentContainer);
+        ViewCompat.animate(clickedView)
+                .scaleX(0)
+                .scaleY(0)
+                .setInterpolator(mInterpolator)
+                .setListener(new ViewPropertyAnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(View view) {
+                        fragmentContainer.setVisibility(View.VISIBLE);
+                        mCircularReveal.start();
+                        clickedView.setVisibility(View.GONE);
+                    }
+                })
+                .start();
+
+        // the toolbar should not have more elevation than the content while playing
+        mToolbar.setElevation(0);
+    }
+
+    private void prepareCircularReveal(View startView, View targetView) {
+        int centerX = (startView.getLeft() + startView.getRight()) / 2;
+        int centerY = (startView.getTop() + startView.getBottom()) / 2;
+        int finalRadius = Math.max(targetView.getWidth(), targetView.getHeight());
         mCircularReveal = ViewAnimationUtils.createCircularReveal(
-                fragmentContainer, centerX, centerY, 0, finalRadius);
-        fragmentContainer.setVisibility(View.VISIBLE);
-        view.setVisibility(View.GONE);
+                targetView, centerX, centerY, 0, finalRadius);
 
         mCircularReveal.addListener(new AnimatorListenerAdapter() {
             @Override
@@ -182,11 +203,6 @@ public class QuizActivity extends AppCompatActivity {
                 mCircularReveal.removeListener(this);
             }
         });
-
-        mCircularReveal.start();
-
-        // the toolbar should not have more elevation than the content while playing
-        mToolbar.setElevation(0);
     }
 
     public void elevateToolbar() {
@@ -226,7 +242,7 @@ public class QuizActivity extends AppCompatActivity {
                         mQuizFab.setVisibility(View.VISIBLE);
                         mQuizFab.setScaleX(0f);
                         mQuizFab.setScaleY(0f);
-                        mQuizFab.animate()
+                        ViewCompat.animate(mQuizFab)
                                 .scaleX(1)
                                 .scaleY(1)
                                 .setInterpolator(mInterpolator)
@@ -260,6 +276,7 @@ public class QuizActivity extends AppCompatActivity {
             finish();
         }
         Category category = TopekaDatabaseHelper.getCategoryWith(this, categoryId);
+        setTheme(category.getTheme().getStyleId());
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = getWindow();
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
@@ -279,7 +296,7 @@ public class QuizActivity extends AppCompatActivity {
                 getApplicationContext().getPackageName());
         mIcon.setImageResource(resId);
         mIcon.setImageResource(resId);
-        mIcon.animate()
+        ViewCompat.animate(mIcon)
                 .scaleX(1)
                 .scaleY(1)
                 .alpha(1)
@@ -290,7 +307,7 @@ public class QuizActivity extends AppCompatActivity {
         mQuizFab.setImageResource(R.drawable.ic_play);
         mQuizFab.setVisibility(mSavedStateIsPlaying ? View.GONE : View.VISIBLE);
         mQuizFab.setOnClickListener(mOnClickListener);
-        mQuizFab.animate()
+        ViewCompat.animate(mQuizFab)
                 .scaleX(1)
                 .scaleY(1)
                 .setInterpolator(mInterpolator)

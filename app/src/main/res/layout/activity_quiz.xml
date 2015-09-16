@@ -57,7 +57,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center"
-            android:transitionName="@string/transition_background">
+            android:transitionName="@string/transition_background"
+            android:background="?android:attr/windowBackground">
 
             <!-- Alpha and scales are being used during entry animation -->
             <ImageView

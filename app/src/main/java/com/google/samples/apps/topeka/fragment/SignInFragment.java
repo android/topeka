@@ -22,6 +22,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewCompat;
 import android.support.v4.view.animation.FastOutSlowInInterpolator;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -180,7 +181,7 @@ public class SignInFragment extends Fragment {
     }
 
     private void removeDoneFab(@Nullable Runnable endAction) {
-        mDoneFab.animate()
+        ViewCompat.animate(mDoneFab)
                 .scaleX(0)
                 .scaleY(0)
                 .setInterpolator(new FastOutSlowInInterpolator())
