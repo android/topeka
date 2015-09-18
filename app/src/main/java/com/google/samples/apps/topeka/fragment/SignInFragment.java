@@ -17,16 +17,16 @@
 package com.google.samples.apps.topeka.fragment;
 
 import android.app.Activity;
-import android.app.ActivityOptions;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.util.Pair;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.view.animation.FastOutSlowInInterpolator;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -209,7 +209,7 @@ public class SignInFragment extends Fragment {
 
         final Pair[] pairs = TransitionHelper.createSafeTransitionParticipants(activity, true,
                 new Pair<>(v, activity.getString(R.string.transition_avatar)));
-        ActivityOptions activityOptions = ActivityOptions
+        ActivityOptionsCompat activityOptions = ActivityOptionsCompat
                 .makeSceneTransitionAnimation(activity, pairs);
         CategorySelectionActivity.start(activity, mPlayer, activityOptions);
     }

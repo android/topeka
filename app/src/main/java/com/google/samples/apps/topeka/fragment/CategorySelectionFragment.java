@@ -17,10 +17,10 @@
 package com.google.samples.apps.topeka.fragment;
 
 import android.app.Activity;
-import android.app.ActivityOptions;
 import android.os.Bundle;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
-import android.util.Pair;
+import android.support.v4.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -77,7 +77,7 @@ public class CategorySelectionFragment extends Fragment {
 
         final Pair[] pairs = TransitionHelper.createSafeTransitionParticipants(activity, false,
                 new Pair<>(toolbar, activity.getString(R.string.transition_toolbar)));
-        ActivityOptions sceneTransitionAnimation = ActivityOptions
+        ActivityOptionsCompat sceneTransitionAnimation = ActivityOptionsCompat
                 .makeSceneTransitionAnimation(activity, pairs);
 
         // Start the activity with the participants, animating from one to the other.
