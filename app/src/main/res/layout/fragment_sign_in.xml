@@ -51,7 +51,6 @@
                     android:layout_weight="2" />
 
         </LinearLayout>
-
         <include
                 layout="@layout/fab_done"
                 android:visibility="gone" />

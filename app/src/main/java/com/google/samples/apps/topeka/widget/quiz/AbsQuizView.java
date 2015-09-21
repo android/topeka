@@ -16,14 +16,6 @@
 
 package com.google.samples.apps.topeka.widget.quiz;
 
-import com.google.samples.apps.topeka.R;
-import com.google.samples.apps.topeka.activity.QuizActivity;
-import com.google.samples.apps.topeka.helper.ApiLevelHelper;
-import com.google.samples.apps.topeka.model.Category;
-import com.google.samples.apps.topeka.model.Theme;
-import com.google.samples.apps.topeka.model.quiz.Quiz;
-import com.google.samples.apps.topeka.widget.fab.CheckableFab;
-
 import android.animation.ArgbEvaluator;
 import android.animation.ObjectAnimator;
 import android.content.Context;
@@ -49,6 +41,13 @@ import android.view.animation.Interpolator;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.google.samples.apps.topeka.R;
+import com.google.samples.apps.topeka.activity.QuizActivity;
+import com.google.samples.apps.topeka.helper.ApiLevelHelper;
+import com.google.samples.apps.topeka.model.Category;
+import com.google.samples.apps.topeka.model.quiz.Quiz;
+import com.google.samples.apps.topeka.widget.fab.CheckableFab;
 
 /**
  * This is the base class for displaying a {@link com.google.samples.apps.topeka.model.quiz.Quiz}.
@@ -282,10 +281,6 @@ public abstract class AbsQuizView<Q extends Quiz> extends FrameLayout {
         submitAnswer(findViewById(R.id.submitAnswer));
     }
 
-    protected Theme getCategoryTheme() {
-        return mCategory.getTheme();
-    }
-
     @SuppressWarnings("UnusedParameters")
     private void submitAnswer(final View v) {
         final boolean answerCorrect = isAnswerCorrect();
@@ -299,6 +294,8 @@ public abstract class AbsQuizView<Q extends Quiz> extends FrameLayout {
      * @param answerCorrect <code>true</code> if the answer was correct, else <code>false</code>.
      */
     private void performScoreAnimation(final boolean answerCorrect) {
+
+        mSubmitAnswer.setChecked(answerCorrect);
 
         // Decide which background color to use.
         final int backgroundColor = ContextCompat.getColor(getContext(),

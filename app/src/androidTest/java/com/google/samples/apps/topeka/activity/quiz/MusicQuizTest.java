@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 Google Inc.
+ * Copyright 2015 Google Inc. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,26 +14,12 @@
  * limitations under the License.
  */
 
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
+package com.google.samples.apps.topeka.activity.quiz;
 
-buildscript {
-    repositories {
-        jcenter()
-    }
-    dependencies {
-        classpath 'com.android.tools.build:gradle:1.3.0'
+public class MusicQuizTest extends BaseQuizActivityTest {
 
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
-    }
-}
-
-task wrapper(type: Wrapper) {
-    gradleVersion = "2.7"
-}
-
-allprojects {
-    repositories {
-        jcenter()
+    @Override
+    int getCategory() {
+        return 6;
     }
 }

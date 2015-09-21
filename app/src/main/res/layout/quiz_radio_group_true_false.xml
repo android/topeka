@@ -20,7 +20,7 @@
             android:orientation="horizontal">
 
     <RadioButton
-            android:id="@+id/answerTrue"
+            android:id="@+id/answer_true"
             style="@style/Topeka.CompoundButton.True"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -30,7 +30,7 @@
             android:text="@string/btn_true" />
 
     <RadioButton
-            android:id="@+id/answerFalse"
+            android:id="@+id/answer_false"
             style="@style/Topeka.CompoundButton.False"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

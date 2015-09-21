@@ -24,6 +24,7 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
+import com.google.samples.apps.topeka.R;
 import com.google.samples.apps.topeka.model.Category;
 import com.google.samples.apps.topeka.model.quiz.FillTwoBlanksQuiz;
 
@@ -48,6 +49,7 @@ public class FillTwoBlanksQuizView extends TextInputQuizView<FillTwoBlanksQuiz> 
         mAnswerOne = createEditText();
         mAnswerOne.setImeOptions(EditorInfo.IME_ACTION_NEXT);
         mAnswerTwo = createEditText();
+        mAnswerTwo.setId(R.id.quiz_edit_text_two);
         addEditText(layout, mAnswerOne);
         addEditText(layout, mAnswerTwo);
         return layout;

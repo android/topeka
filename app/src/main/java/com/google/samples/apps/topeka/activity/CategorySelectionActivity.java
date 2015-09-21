@@ -19,6 +19,7 @@ package com.google.samples.apps.topeka.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -40,15 +41,20 @@ public class CategorySelectionActivity extends AppCompatActivity {
     private static final String EXTRA_PLAYER = "player";
 
     public static void start(Context context, Player player, ActivityOptionsCompat options) {
-        Intent starter = new Intent(context, CategorySelectionActivity.class);
-        starter.putExtra(EXTRA_PLAYER, player);
+        Intent starter = getStartIntent(context, player);
         context.startActivity(starter, options.toBundle());
     }
 
     public static void start(Context context, Player player) {
+        Intent starter = getStartIntent(context, player);
+        context.startActivity(starter);
+    }
+
+    @NonNull
+    static Intent getStartIntent(Context context, Player player) {
         Intent starter = new Intent(context, CategorySelectionActivity.class);
         starter.putExtra(EXTRA_PLAYER, player);
-        context.startActivity(starter);
+        return starter;
     }
 
     @Override
@@ -57,6 +63,9 @@ public class CategorySelectionActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_category_selection);
         Player player = getIntent().getParcelableExtra(EXTRA_PLAYER);
+        if (!PreferencesHelper.isSignedIn(this) && player != null) {
+            PreferencesHelper.writeToPreferences(this, player);
+        }
         setUpToolbar(player);
         if (savedInstanceState == null) {
             attachCategoryGridFragment();
