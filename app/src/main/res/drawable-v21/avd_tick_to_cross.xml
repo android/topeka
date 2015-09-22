@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <!--
   ~ Copyright 2015 Google Inc.
   ~
@@ -14,20 +13,21 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
+
 <animated-vector
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:drawable="@drawable/ic_tick">
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:drawable="@drawable/ic_tick">
 
     <target
-        android:name="@string/line_1"
-        android:animation="@animator/tick_to_cross_line_1" />
+            android:name="@string/line_1"
+            android:animation="@animator/tick_to_cross_line_1" />
 
     <target
-        android:name="@string/line_2"
-        android:animation="@animator/tick_to_cross_line_2" />
+            android:name="@string/line_2"
+            android:animation="@animator/tick_to_cross_line_2" />
 
     <target
-        android:name="@string/groupTickCross"
-        android:animation="@animator/rotate_tick_to_cross" />
+            android:name="@string/groupTickCross"
+            android:animation="@animator/rotate_tick_to_cross" />
 
 </animated-vector>

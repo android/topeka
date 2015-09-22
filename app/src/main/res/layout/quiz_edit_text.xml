@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <!--
   ~ Copyright 2015 Google Inc.
   ~
@@ -14,16 +13,17 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
+
 <EditText xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/quiz_edit_text"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_marginBottom="@dimen/spacing_normal"
-    android:gravity="bottom"
-    android:imeOptions="actionDone"
-    android:inputType="textCapWords"
-    android:minHeight="@dimen/min_height_touch_target"
-    android:singleLine="true"
-    android:textColor="@color/text_dark"
-    tools:ignore="LabelFor" />
+          android:id="@+id/quiz_edit_text"
+          xmlns:android="http://schemas.android.com/apk/res/android"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:layout_marginBottom="@dimen/spacing_normal"
+          android:gravity="bottom"
+          android:imeOptions="actionDone"
+          android:inputType="textCapWords"
+          android:minHeight="@dimen/min_height_touch_target"
+          android:singleLine="true"
+          android:textColor="@color/text_dark"
+          tools:ignore="LabelFor" />

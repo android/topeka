@@ -37,11 +37,12 @@ public class TransitionHelper {
      *
      * @param activity The activity used as start for the transition.
      * @param includeStatusBar If false, the status bar will not be added as the transition
-     *        participant.
+     * participant.
      * @return All transition participants.
      */
     public static Pair[] createSafeTransitionParticipants(@NonNull Activity activity,
-            boolean includeStatusBar, @Nullable Pair... otherParticipants) {
+                                                          boolean includeStatusBar,
+                                                          @Nullable Pair... otherParticipants) {
         // Avoid system UI glitches as described here:
         // https://plus.google.com/+AlexLockwood/posts/RPtwZ5nNebb
         View decor = activity.getWindow().getDecorView();

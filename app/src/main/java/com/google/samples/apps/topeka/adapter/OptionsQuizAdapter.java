@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.google.samples.apps.topeka.adapter;
 
 import android.content.Context;
@@ -54,8 +55,8 @@ public class OptionsQuizAdapter extends BaseAdapter {
      * @param context The context for the adapter.
      * @param withPrefix True if a prefix should be given to all items.
      */
-    public OptionsQuizAdapter(String[] options, @LayoutRes int layoutId, Context context,
-            boolean withPrefix) {
+    public OptionsQuizAdapter(String[] options, @LayoutRes int layoutId,
+                              Context context, boolean withPrefix) {
         mOptions = options;
         mLayoutId = layoutId;
         if (withPrefix) {

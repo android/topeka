@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <!--
   ~ Copyright 2015 Google Inc.
   ~
@@ -14,6 +13,7 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
+
 <resources>
 
     <!-- Exists for inheritance purposes -->
@@ -108,7 +108,7 @@
     </style>
 
     <style name="Topeka.TextAppearance.Title.Inverse"
-        parent="android:TextAppearance.Material.Title">
+           parent="android:TextAppearance.Material.Title">
         <item name="android:textColor">@android:color/white</item>
     </style>
 

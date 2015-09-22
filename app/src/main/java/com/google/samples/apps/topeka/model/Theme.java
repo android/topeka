@@ -57,8 +57,8 @@ public enum Theme {
     private final int mStyleId;
 
     Theme(final int colorPrimaryId, final int colorPrimaryDarkId,
-            final int windowBackgroundColorId, final int textColorPrimaryId,
-            final int styleId) {
+          final int windowBackgroundColorId, final int textColorPrimaryId,
+          final int styleId) {
         mColorPrimaryId = colorPrimaryId;
         mWindowBackgroundColorId = windowBackgroundColorId;
         mColorPrimaryDarkId = colorPrimaryDarkId;

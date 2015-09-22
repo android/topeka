@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.google.samples.apps.topeka.widget.quiz;
 
 import android.annotation.SuppressLint;
@@ -74,8 +75,10 @@ public class FourQuarterQuizView extends AbsQuizView<FourQuarterQuiz> {
             } else {
                 addOnLayoutChangeListener(new OnLayoutChangeListener() {
                     @Override
-                    public void onLayoutChange(View v, int left, int top, int right, int bottom,
-                            int oldLeft, int oldTop, int oldRight, int oldBottom) {
+                    public void onLayoutChange(View v, int left, int top,
+                                               int right, int bottom,
+                                               int oldLeft, int oldTop,
+                                               int oldRight, int oldBottom) {
                         v.removeOnLayoutChangeListener(this);
                         setUpUserInput();
                     }
