@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.google.samples.apps.topeka.adapter;
 
 import android.content.Context;
@@ -119,7 +120,7 @@ public class ScoreAdapter extends BaseAdapter {
      * @return The tinted drawable.
      */
     private Drawable loadAndTint(Context context, @DrawableRes int drawableId,
-            @ColorRes int tintColor) {
+                                 @ColorRes int tintColor) {
         Drawable imageDrawable = ContextCompat.getDrawable(context, drawableId);
         if (imageDrawable == null) {
             throw new IllegalArgumentException("The drawable with id " + drawableId

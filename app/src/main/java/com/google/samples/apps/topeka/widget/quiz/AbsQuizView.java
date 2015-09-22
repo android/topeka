@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.google.samples.apps.topeka.widget.quiz;
 
 import android.animation.ObjectAnimator;
@@ -124,8 +125,8 @@ public abstract class AbsQuizView<Q extends Quiz> extends FrameLayout {
         addOnLayoutChangeListener(new OnLayoutChangeListener() {
             @Override
             public void onLayoutChange(View v, int left, int top, int right, int bottom,
-                    int oldLeft,
-                    int oldTop, int oldRight, int oldBottom) {
+                                       int oldLeft,
+                                       int oldTop, int oldRight, int oldBottom) {
                 removeOnLayoutChangeListener(this);
                 addFloatingActionButton();
             }

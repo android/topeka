@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.google.samples.apps.topeka.persistence;
 
 import android.content.ContentValues;
@@ -304,8 +305,8 @@ public class TopekaDatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
-    private static Quiz createFillBlankQuiz(Cursor cursor, String question, String answer,
-            boolean solved) {
+    private static Quiz createFillBlankQuiz(Cursor cursor, String question,
+                                            String answer, boolean solved) {
         final String start = cursor.getString(9);
         final String end = cursor.getString(10);
         return new FillBlankQuiz(question, answer, start, end, solved);
@@ -316,29 +317,29 @@ public class TopekaDatabaseHelper extends SQLiteOpenHelper {
         return new FillTwoBlanksQuiz(question, answerArray, solved);
     }
 
-    private static Quiz createFourQuarterQuiz(String question, String answer, String options,
-            boolean solved) {
+    private static Quiz createFourQuarterQuiz(String question, String answer,
+                                              String options, boolean solved) {
         final int[] answerArray = JsonHelper.jsonArrayToIntArray(answer);
         final String[] optionsArray = JsonHelper.jsonArrayToStringArray(options);
         return new FourQuarterQuiz(question, answerArray, optionsArray, solved);
     }
 
-    private static Quiz createMultiSelectQuiz(String question, String answer, String options,
-            boolean solved) {
+    private static Quiz createMultiSelectQuiz(String question, String answer,
+                                              String options, boolean solved) {
         final int[] answerArray = JsonHelper.jsonArrayToIntArray(answer);
         final String[] optionsArray = JsonHelper.jsonArrayToStringArray(options);
         return new MultiSelectQuiz(question, answerArray, optionsArray, solved);
     }
 
-    private static Quiz createSelectItemQuiz(String question, String answer, String options,
-            boolean solved) {
+    private static Quiz createSelectItemQuiz(String question, String answer,
+                                             String options, boolean solved) {
         final int[] answerArray = JsonHelper.jsonArrayToIntArray(answer);
         final String[] optionsArray = JsonHelper.jsonArrayToStringArray(options);
         return new SelectItemQuiz(question, answerArray, optionsArray, solved);
     }
 
-    private static Quiz createToggleTranslateQuiz(String question, String answer, String options,
-            boolean solved) {
+    private static Quiz createToggleTranslateQuiz(String question, String answer,
+                                                  String options, boolean solved) {
         final int[] answerArray = JsonHelper.jsonArrayToIntArray(answer);
         final String[][] optionsArrays = extractOptionsArrays(options);
         return new ToggleTranslateQuiz(question, answerArray, optionsArrays, solved);
@@ -439,7 +440,7 @@ public class TopekaDatabaseHelper extends SQLiteOpenHelper {
     }
 
     private void fillCategory(SQLiteDatabase db, ContentValues values, JSONObject category,
-            String categoryId) throws JSONException {
+                              String categoryId) throws JSONException {
         values.clear();
         values.put(CategoryTable.COLUMN_ID, categoryId);
         values.put(CategoryTable.COLUMN_NAME, category.getString(JsonAttributes.NAME));
@@ -450,7 +451,7 @@ public class TopekaDatabaseHelper extends SQLiteOpenHelper {
     }
 
     private void fillQuizzesForCategory(SQLiteDatabase db, ContentValues values, JSONArray quizzes,
-            String categoryId) throws JSONException {
+                                        String categoryId) throws JSONException {
         JSONObject quiz;
         for (int i = 0; i < quizzes.length(); i++) {
             quiz = quizzes.getJSONObject(i);
@@ -479,7 +480,7 @@ public class TopekaDatabaseHelper extends SQLiteOpenHelper {
      * @throws JSONException Thrown when there's an issue with JSON.
      */
     private void putNonEmptyString(ContentValues values, JSONObject quiz, String jsonKey,
-            String contentKey) throws JSONException {
+                                   String contentKey) throws JSONException {
         final String stringToPut = quiz.optString(jsonKey, null);
         if (!TextUtils.isEmpty(stringToPut)) {
             values.put(contentKey, stringToPut);

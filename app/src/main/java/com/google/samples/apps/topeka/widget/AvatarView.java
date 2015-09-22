@@ -13,10 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.google.samples.apps.topeka.widget;
 
-import com.google.samples.apps.topeka.R;
-import com.google.samples.apps.topeka.widget.outlineprovider.RoundOutlineProvider;
+package com.google.samples.apps.topeka.widget;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -28,6 +26,9 @@ import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.util.AttributeSet;
 import android.widget.Checkable;
 import android.widget.ImageView;
+
+import com.google.samples.apps.topeka.R;
+import com.google.samples.apps.topeka.widget.outlineprovider.RoundOutlineProvider;
 
 /**
  * A simple view that wraps an avatar.

@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <!--
   ~ Copyright 2015 Google Inc.
   ~
@@ -14,10 +13,12 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
-<objectAnimator xmlns:android="http://schemas.android.com/apk/res/android"
-    android:duration="300"
-    android:interpolator="@android:interpolator/fast_out_linear_in"
-    android:propertyName="y"
-    android:valueFrom="0"
-    android:valueTo="-2000"
-    android:valueType="floatType" />
+
+<objectAnimator
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:duration="300"
+        android:interpolator="@android:interpolator/fast_out_linear_in"
+        android:propertyName="y"
+        android:valueFrom="0"
+        android:valueTo="-2000"
+        android:valueType="floatType" />

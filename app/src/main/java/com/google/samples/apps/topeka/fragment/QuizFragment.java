@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.google.samples.apps.topeka.fragment;
 
 import android.os.Bundle;
@@ -56,7 +57,7 @@ public class QuizFragment extends android.support.v4.app.Fragment {
     private SolvedStateListener mSolvedStateListener;
 
     public static QuizFragment newInstance(String categoryId,
-            SolvedStateListener solvedStateListener) {
+                                           SolvedStateListener solvedStateListener) {
         if (categoryId == null) {
             throw new IllegalArgumentException("The category can not be null");
         }
@@ -79,7 +80,7 @@ public class QuizFragment extends android.support.v4.app.Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
-            @Nullable Bundle savedInstanceState) {
+                             @Nullable Bundle savedInstanceState) {
         // Create a themed Context and custom LayoutInflater
         // to get nicely themed views in this Fragment.
         final Theme theme = mCategory.getTheme();
@@ -165,8 +166,7 @@ public class QuizFragment extends android.support.v4.app.Fragment {
         mQuizView.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
             @Override
             public void onLayoutChange(View v, int left, int top, int right, int bottom,
-                    int oldLeft,
-                    int oldTop, int oldRight, int oldBottom) {
+                                       int oldLeft, int oldTop, int oldRight, int oldBottom) {
                 mQuizView.removeOnLayoutChangeListener(this);
                 View currentChild = mQuizView.getChildAt(0);
                 if (currentChild instanceof ViewGroup) {

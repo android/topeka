@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <!--
   ~ Copyright 2015 Google Inc.
   ~
@@ -14,73 +13,69 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
-<merge
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/quiz_container"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+       xmlns:tools="http://schemas.android.com/tools"
+       android:id="@+id/quiz_container"
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       android:orientation="vertical">
 
     <!-- Scale is being used during entry animation -->
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab_quiz"
-        android:layout_width="@dimen/size_fab"
-        android:layout_height="@dimen/size_fab"
-        android:layout_gravity="bottom|end"
-        android:layout_marginBottom="@dimen/spacing_double"
-        android:layout_marginEnd="@dimen/spacing_double"
-        android:scaleX="0"
-        android:scaleY="0"
-        android:transitionName="@string/transition_avatar" />
+            android:id="@+id/fab_quiz"
+            android:layout_width="@dimen/size_fab"
+            android:layout_height="@dimen/size_fab"
+            android:layout_gravity="bottom|end"
+            android:layout_marginBottom="@dimen/spacing_double"
+            android:layout_marginEnd="@dimen/spacing_double"
+            android:scaleX="0"
+            android:scaleY="0"
+            android:transitionName="@string/transition_avatar" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+    <LinearLayout android:layout_width="match_parent"
+                  android:layout_height="match_parent"
+                  android:orientation="vertical">
 
         <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar_activity_quiz"
-            android:layout_width="match_parent"
-            android:layout_height="?android:attr/actionBarSize"
-            android:layout_gravity="top"
-            android:background="?colorPrimary"
-            android:contentInsetStart="@dimen/spacing_huge"
-            android:elevation="@dimen/elevation_header"
-            android:navigationContentDescription="@string/up"
-            android:navigationIcon="@drawable/ic_arrow_back"
-            android:transitionName="@string/transition_toolbar">
+                android:id="@+id/toolbar_activity_quiz"
+                android:layout_width="match_parent"
+                android:layout_height="?android:attr/actionBarSize"
+                android:layout_gravity="top"
+                android:background="?colorPrimary"
+                android:contentInsetStart="@dimen/spacing_huge"
+                android:elevation="@dimen/elevation_header"
+                android:navigationContentDescription="@string/up"
+                android:navigationIcon="@drawable/ic_arrow_back"
+                android:transitionName="@string/transition_toolbar">
             <!--an empty tag is required to get touch feedback on the navigation icon-->
         </android.support.v7.widget.Toolbar>
 
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:transitionName="@string/transition_background"
-            android:background="?android:attr/windowBackground">
+        <FrameLayout android:layout_width="match_parent"
+                     android:layout_height="match_parent"
+                     android:layout_gravity="center"
+                     android:transitionName="@string/transition_background"
+                     android:background="?android:attr/windowBackground">
 
             <!-- Alpha and scales are being used during entry animation -->
-            <ImageView
-                tools:ignore="PrivateResource"
-                android:id="@+id/icon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_margin="@dimen/spacing_double"
-                android:contentDescription="@null"
-                android:padding="@dimen/spacing_double"
-                android:scaleType="centerInside"
-                android:alpha="0"
-                android:scaleX="0.7"
-                android:scaleY="0.7"/>
+            <ImageView android:id="@+id/icon"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       tools:ignore="PrivateResource"
+                       android:layout_gravity="center"
+                       android:layout_margin="@dimen/spacing_double"
+                       android:contentDescription="@null"
+                       android:padding="@dimen/spacing_double"
+                       android:scaleType="centerInside"
+                       android:alpha="0"
+                       android:scaleX="0.7"
+                       android:scaleY="0.7" />
 
-            <FrameLayout
-                android:id="@+id/quiz_fragment_container"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:visibility="invisible" />
+            <FrameLayout android:id="@+id/quiz_fragment_container"
+                         android:layout_width="match_parent"
+                         android:layout_height="match_parent"
+                         android:layout_gravity="center"
+                         android:visibility="invisible" />
         </FrameLayout>
     </LinearLayout>
 </merge>
