@@ -29,6 +29,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.view.animation.Interpolator;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -177,7 +178,7 @@ public abstract class AbsQuizView<Q extends Quiz> extends FrameLayout {
         addView(mSubmitAnswer, fabLayoutParams);
     }
 
-    private CheckableFab getSubmitButton(Context context) {
+    private CheckableFab getSubmitButton(final Context context) {
         if (null == mSubmitAnswer) {
             mSubmitAnswer = new CheckableFab(context);
             mSubmitAnswer.setId(R.id.submitAnswer);
@@ -188,6 +189,11 @@ public abstract class AbsQuizView<Q extends Quiz> extends FrameLayout {
                 @Override
                 public void onClick(View v) {
                     submitAnswer(v);
+                    // check for keyboard, if keyboard is open then it will be closed
+                    InputMethodManager imm = (InputMethodManager)context.getSystemService(Context.INPUT_METHOD_SERVICE);
+                    if(imm.isAcceptingText()){
+                        imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                    }
                 }
             });
         }
