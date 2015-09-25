@@ -145,8 +145,7 @@ public class CategoryAdapter extends BaseAdapter {
      */
     private Drawable loadTintedCategoryDrawable(Category category, int categoryImageResource) {
         final Drawable categoryIcon = ContextCompat.getDrawable(mActivity, categoryImageResource);
-
-        DrawableCompat.setTint(categoryIcon, category.getTheme().getPrimaryColor());
+        DrawableCompat.setTint(categoryIcon, getColor(category.getTheme().getPrimaryColor()));
         return categoryIcon;
     }
 
@@ -157,7 +156,7 @@ public class CategoryAdapter extends BaseAdapter {
      */
     private Drawable loadTintedDoneDrawable() {
         final Drawable done = ContextCompat.getDrawable(mActivity, R.drawable.ic_tick);
-        DrawableCompat.setTint(done, android.R.color.white);
+        DrawableCompat.setTint(done, getColor(android.R.color.white));
         return done;
     }
 

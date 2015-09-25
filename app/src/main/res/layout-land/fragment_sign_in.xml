@@ -48,6 +48,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_marginEnd="@dimen/spacing_double"
+                    android:layout_marginRight="@dimen/spacing_double"
                     android:layout_weight="1" />
 
             <include
@@ -56,5 +57,8 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1" />
         </LinearLayout>
+        <include
+                layout="@layout/fab_done"
+                android:visibility="gone" />
     </FrameLayout>
 </FrameLayout>

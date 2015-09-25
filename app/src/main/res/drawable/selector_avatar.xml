@@ -19,4 +19,5 @@
     <stroke
             android:width="@dimen/stroke_width_avatar"
             android:color="@color/topeka_primary" />
+    <solid android:color="@android:color/transparent" />
 </shape>

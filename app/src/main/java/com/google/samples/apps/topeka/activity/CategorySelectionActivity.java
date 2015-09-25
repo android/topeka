@@ -78,7 +78,7 @@ public class CategorySelectionActivity extends AppCompatActivity {
         //noinspection ConstantConditions
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         final AvatarView avatarView = (AvatarView) toolbar.findViewById(R.id.avatar);
-        avatarView.setImageResource(player.getAvatar().getDrawableId());
+        avatarView.setAvatar(player.getAvatar().getDrawableId());
         //noinspection PrivateResource
         ((TextView) toolbar.findViewById(R.id.title)).setText(getDisplayName(player));
     }

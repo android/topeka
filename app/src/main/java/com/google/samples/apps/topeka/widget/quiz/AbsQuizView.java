@@ -16,33 +16,34 @@
 
 package com.google.samples.apps.topeka.widget.quiz;
 
-import android.animation.ObjectAnimator;
+import com.google.samples.apps.topeka.R;
+import com.google.samples.apps.topeka.activity.QuizActivity;
+import com.google.samples.apps.topeka.helper.ApiLevelHelper;
+import com.google.samples.apps.topeka.model.Category;
+import com.google.samples.apps.topeka.model.Theme;
+import com.google.samples.apps.topeka.model.quiz.Quiz;
+import com.google.samples.apps.topeka.widget.fab.CheckableFab;
+
 import android.content.Context;
 import android.content.res.ColorStateList;
-import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.ColorInt;
 import android.support.annotation.DimenRes;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.MarginLayoutParamsCompat;
 import android.support.v4.view.ViewCompat;
-import android.util.IntProperty;
-import android.util.Property;
+import android.support.v4.view.animation.LinearOutSlowInInterpolator;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AnimationUtils;
 import android.view.animation.Interpolator;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import com.google.samples.apps.topeka.R;
-import com.google.samples.apps.topeka.activity.QuizActivity;
-import com.google.samples.apps.topeka.model.Category;
-import com.google.samples.apps.topeka.model.quiz.Quiz;
-import com.google.samples.apps.topeka.widget.fab.CheckableFab;
 
 /**
  * This is the base class for displaying a {@link com.google.samples.apps.topeka.model.quiz.Quiz}.
@@ -56,48 +57,31 @@ import com.google.samples.apps.topeka.widget.fab.CheckableFab;
  * </p>
  *
  * @param <Q> The type of {@link com.google.samples.apps.topeka.model.quiz.Quiz} you want to
- * display.
+ *            display.
  */
 public abstract class AbsQuizView<Q extends Quiz> extends FrameLayout {
 
-    /** Property for animating the foreground color */
-    public static final Property<FrameLayout, Integer> FOREGROUND_COLOR =
-            new IntProperty<FrameLayout>("foregroundColor") {
-
-                @Override
-                public void setValue(FrameLayout object, int value) {
-                    if (object.getForeground() instanceof ColorDrawable) {
-                        ((ColorDrawable) object.getForeground()).setColor(value);
-                    } else {
-                        object.setForeground(new ColorDrawable(value));
-                    }
-                }
-
-                @Override
-                public Integer get(FrameLayout object) {
-                    return ((ColorDrawable) object.getForeground()).getColor();
-                }
-            };
-
+    private static final int ANSWER_HIDE_DELAY = 500;
+    private static final int FOREGROUND_COLOR_CHANGE_DELAY = 750;
     protected final int mMinHeightTouchTarget;
     private final int mSpacingDouble;
     private final LayoutInflater mLayoutInflater;
     private final Category mCategory;
     private final Q mQuiz;
-    private final Interpolator mFastOutSlowInInterpolator;
-    private final Interpolator mLinearOutSlowInInterpolator;
-    private final int mIconAnimationDuration;
-    private final int mScaleAnimationDuration;
+    private Interpolator mLinearOutSlowInInterpolator;
     private boolean mAnswered;
     private TextView mQuestionView;
     private CheckableFab mSubmitAnswer;
+    private Handler mHandler;
+    private Runnable mForegroundChangeRunnable;
+    private Runnable mHideFabRunnable;
 
     /**
      * Enables creation of views for quizzes.
      *
-     * @param context The context for this view.
+     * @param context  The context for this view.
      * @param category The {@link Category} this view is running in.
-     * @param quiz The actual {@link Quiz} that is going to be displayed.
+     * @param quiz     The actual {@link Quiz} that is going to be displayed.
      */
     public AbsQuizView(Context context, Category category, Q quiz) {
         super(context);
@@ -108,14 +92,8 @@ public abstract class AbsQuizView<Q extends Quiz> extends FrameLayout {
         mLayoutInflater = LayoutInflater.from(context);
         mMinHeightTouchTarget = getResources()
                 .getDimensionPixelSize(R.dimen.min_height_touch_target);
-        //noinspection ResourceType
-        mFastOutSlowInInterpolator = AnimationUtils
-                .loadInterpolator(getContext(), android.R.interpolator.fast_out_slow_in);
-        //noinspection ResourceType
-        mLinearOutSlowInInterpolator = AnimationUtils
-                .loadInterpolator(getContext(), android.R.interpolator.linear_out_slow_in);
-        mIconAnimationDuration = 300;
-        mScaleAnimationDuration = 200;
+        mLinearOutSlowInInterpolator = new LinearOutSlowInInterpolator();
+        mHandler = new Handler();
 
         setId(quiz.getId());
         setUpQuestionView();
@@ -180,7 +158,11 @@ public abstract class AbsQuizView<Q extends Quiz> extends FrameLayout {
                 bottomOfQuestionView - halfAFab, //top
                 0, // right
                 mSpacingDouble); // bottom
-        fabLayoutParams.setMarginEnd(mSpacingDouble);
+        MarginLayoutParamsCompat.setMarginEnd(fabLayoutParams, mSpacingDouble);
+        if (ApiLevelHelper.isLowerThan(Build.VERSION_CODES.LOLLIPOP)) {
+            // Account for the fab's emulated shadow.
+            fabLayoutParams.topMargin -= (mSubmitAnswer.getPaddingTop() / 2);
+        }
         addView(mSubmitAnswer, fabLayoutParams);
     }
 
@@ -188,9 +170,7 @@ public abstract class AbsQuizView<Q extends Quiz> extends FrameLayout {
         if (null == mSubmitAnswer) {
             mSubmitAnswer = new CheckableFab(context);
             mSubmitAnswer.setId(R.id.submitAnswer);
-            mSubmitAnswer.setVisibility(GONE);
-            mSubmitAnswer.setScaleY(0);
-            mSubmitAnswer.setScaleX(0);
+            mSubmitAnswer.hide();
             mSubmitAnswer.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -254,15 +234,11 @@ public abstract class AbsQuizView<Q extends Quiz> extends FrameLayout {
      */
     protected void allowAnswer(final boolean answered) {
         if (null != mSubmitAnswer) {
-            final float targetScale = answered ? 1f : 0f;
             if (answered) {
-                mSubmitAnswer.setVisibility(View.VISIBLE);
+                mSubmitAnswer.show();
+            } else {
+                mSubmitAnswer.hide();
             }
-            ViewCompat.animate(mSubmitAnswer)
-                    .scaleX(targetScale)
-                    .scaleY(targetScale)
-                    .setInterpolator(mFastOutSlowInInterpolator)
-                    .start();
             mAnswered = answered;
         }
     }
@@ -284,6 +260,9 @@ public abstract class AbsQuizView<Q extends Quiz> extends FrameLayout {
         submitAnswer(findViewById(R.id.submitAnswer));
     }
 
+    protected Theme getCategoryTheme() {
+        return mCategory.getTheme();
+    }
 
     @SuppressWarnings("UnusedParameters")
     private void submitAnswer(final View v) {
@@ -305,22 +284,18 @@ public abstract class AbsQuizView<Q extends Quiz> extends FrameLayout {
         final int backgroundColor = ContextCompat.getColor(getContext(),
                 answerCorrect ? R.color.green : R.color.red);
         mSubmitAnswer.setBackgroundTintList(ColorStateList.valueOf(backgroundColor));
-        hideFab();
+        mHideFabRunnable = new Runnable() {
+            @Override
+            public void run() {
+                mSubmitAnswer.hide();
+            }
+        };
+        mHandler.postDelayed(mHideFabRunnable, ANSWER_HIDE_DELAY);
         resizeView();
         moveViewOffScreen(answerCorrect);
         // Animate the foreground color to match the background color.
         // This overlays all content within the current view.
         animateForegroundColor(backgroundColor);
-    }
-
-    private void hideFab() {
-        ViewCompat.animate(mSubmitAnswer)
-                .setDuration(mScaleAnimationDuration)
-                .setStartDelay(mIconAnimationDuration * 2)
-                .scaleX(0f)
-                .scaleY(0f)
-                .setInterpolator(mLinearOutSlowInInterpolator)
-                .start();
     }
 
     private void resizeView() {
@@ -339,14 +314,26 @@ public abstract class AbsQuizView<Q extends Quiz> extends FrameLayout {
                 .start();
     }
 
-    private void animateForegroundColor(@ColorInt int targetColor) {
-        final ObjectAnimator foregroundAnimator = ObjectAnimator
-                .ofArgb(this, FOREGROUND_COLOR, Color.WHITE, targetColor);
-        foregroundAnimator
-                .setDuration(200)
-                .setInterpolator(mLinearOutSlowInInterpolator);
-        foregroundAnimator.setStartDelay(750);
-        foregroundAnimator.start();
+    @Override
+    protected void onDetachedFromWindow() {
+        if (mForegroundChangeRunnable != null) {
+            mHandler.removeCallbacks(mForegroundChangeRunnable);
+        }
+        if (mHideFabRunnable != null) {
+            mHandler.removeCallbacks(mHideFabRunnable);
+        }
+        super.onDetachedFromWindow();
+    }
+
+    private void animateForegroundColor(@ColorInt final int targetColor) {
+        mForegroundChangeRunnable = new Runnable() {
+            @Override
+            public void run() {
+                setForeground(new ColorDrawable(targetColor));
+                mForegroundChangeRunnable = null;
+            }
+        };
+        mHandler.postDelayed(mForegroundChangeRunnable, FOREGROUND_COLOR_CHANGE_DELAY);
     }
 
     private void moveViewOffScreen(final boolean answerCorrect) {

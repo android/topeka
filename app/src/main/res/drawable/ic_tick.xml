@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!--
   ~ Copyright 2015 Google Inc.
   ~
@@ -13,32 +14,6 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
-
-<vector xmlns:android="http://schemas.android.com/apk/res/android"
-        android:width="24dp"
-        android:height="24dp"
-        android:viewportHeight="@integer/viewport_height"
-        android:viewportWidth="@integer/viewport_width">
-
-    <group
-            android:name="@string/groupTickCross"
-            android:pivotX="@integer/viewport_center_x"
-            android:pivotY="@integer/viewport_center_y">
-
-        <path
-                android:name="@string/line_1"
-                android:pathData="@string/path_tick_line_1"
-                android:strokeColor="@color/tick_cross_stroke_color"
-                android:strokeLineCap="square"
-                android:strokeWidth="@integer/tick_cross_stroke_width" />
-
-        <path
-                android:name="@string/line_2"
-                android:pathData="@string/path_tick_line_2"
-                android:strokeColor="@color/tick_cross_stroke_color"
-                android:strokeLineCap="square"
-                android:strokeWidth="@integer/tick_cross_stroke_width" />
-
-    </group>
-
-</vector>
+ 
+<bitmap xmlns:android="http://schemas.android.com/apk/res/android"
+        android:src="@drawable/ic_check_black" />

@@ -136,9 +136,9 @@ public class SignInFragment extends Fragment {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 // showing the floating action button if text is entered
                 if (s.length() == 0) {
-                    mDoneFab.setVisibility(View.GONE);
+                    mDoneFab.hide();
                 } else {
-                    mDoneFab.setVisibility(View.VISIBLE);
+                    mDoneFab.show();
                 }
             }
 

@@ -43,7 +43,11 @@ public class ToggleTranslateQuizView extends AbsQuizView<ToggleTranslateQuiz> {
 
     public ToggleTranslateQuizView(Context context, Category category, ToggleTranslateQuiz quiz) {
         super(context, category, quiz);
-        mAnswers = new boolean[quiz.getOptions().length];
+        initAnswerSpace();
+    }
+
+    private void initAnswerSpace() {
+        mAnswers = new boolean[getQuiz().getOptions().length];
     }
 
     @Override
@@ -89,6 +93,7 @@ public class ToggleTranslateQuizView extends AbsQuizView<ToggleTranslateQuiz> {
         }
         mAnswers = savedInput.getBooleanArray(KEY_ANSWERS);
         if (mAnswers == null) {
+            initAnswerSpace();
             return;
         }
         ListAdapter adapter = mListView.getAdapter();
