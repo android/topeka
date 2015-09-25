@@ -16,8 +16,12 @@
 
 package com.google.samples.apps.topeka.fragment;
 
+import android.annotation.TargetApi;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.view.ViewCompat;
+import android.support.v4.view.animation.FastOutLinearInInterpolator;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,6 +34,7 @@ import android.widget.TextView;
 import com.google.samples.apps.topeka.R;
 import com.google.samples.apps.topeka.adapter.QuizAdapter;
 import com.google.samples.apps.topeka.adapter.ScoreAdapter;
+import com.google.samples.apps.topeka.helper.ApiLevelHelper;
 import com.google.samples.apps.topeka.helper.PreferencesHelper;
 import com.google.samples.apps.topeka.model.Category;
 import com.google.samples.apps.topeka.model.Player;
@@ -94,12 +99,20 @@ public class QuizFragment extends android.support.v4.app.Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         mQuizView = (AdapterViewAnimator) view.findViewById(R.id.quiz_view);
         decideOnViewToDisplay();
-        mQuizView.setInAnimation(getActivity(), R.animator.slide_in_bottom);
-        mQuizView.setOutAnimation(getActivity(), R.animator.slide_out_top);
+        setQuizViewAnimations();
         final AvatarView avatar = (AvatarView) view.findViewById(R.id.avatar);
         setAvatarDrawable(avatar);
         initProgressToolbar(view);
         super.onViewCreated(view, savedInstanceState);
+    }
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    private void setQuizViewAnimations() {
+        if (ApiLevelHelper.isLowerThan(Build.VERSION_CODES.LOLLIPOP)) {
+            return;
+        }
+        mQuizView.setInAnimation(getActivity(), R.animator.slide_in_bottom);
+        mQuizView.setOutAnimation(getActivity(), R.animator.slide_out_top);
     }
 
     private void initProgressToolbar(View view) {
@@ -125,7 +138,13 @@ public class QuizFragment extends android.support.v4.app.Fragment {
     @SuppressWarnings("ConstantConditions")
     private void setAvatarDrawable(AvatarView avatarView) {
         Player player = PreferencesHelper.getPlayer(getActivity());
-        avatarView.setImageResource(player.getAvatar().getDrawableId());
+        avatarView.setAvatar(player.getAvatar().getDrawableId());
+        ViewCompat.animate(avatarView)
+                .setInterpolator(new FastOutLinearInInterpolator())
+                .setStartDelay(500)
+                .scaleX(1)
+                .scaleY(1)
+                .start();
     }
 
     private void decideOnViewToDisplay() {
@@ -166,7 +185,8 @@ public class QuizFragment extends android.support.v4.app.Fragment {
         mQuizView.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
             @Override
             public void onLayoutChange(View v, int left, int top, int right, int bottom,
-                                       int oldLeft, int oldTop, int oldRight, int oldBottom) {
+                                       int oldLeft,
+                                       int oldTop, int oldRight, int oldBottom) {
                 mQuizView.removeOnLayoutChangeListener(this);
                 View currentChild = mQuizView.getChildAt(0);
                 if (currentChild instanceof ViewGroup) {

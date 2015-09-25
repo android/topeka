@@ -33,6 +33,7 @@
                 android:layout_width="@dimen/size_avatar_toolbar"
                 android:layout_height="@dimen/size_avatar_toolbar"
                 android:layout_marginEnd="@dimen/spacing_double"
+                android:layout_marginRight="@dimen/spacing_double"
                 android:transitionName="@string/transition_avatar" />
 
         <TextView android:id="@+id/title"

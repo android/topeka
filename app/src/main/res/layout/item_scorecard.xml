@@ -15,20 +15,21 @@
   -->
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@android:color/white"
-                android:orientation="horizontal"
-                android:paddingBottom="@dimen/spacing_normal"
-                android:paddingTop="@dimen/spacing_normal"
-                tools:ignore="Overdraw">
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@null"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/spacing_normal"
+        android:paddingTop="@dimen/spacing_normal"
+        tools:ignore="Overdraw">
 
     <ImageView
             android:id="@+id/solved_state"
             android:layout_width="@dimen/size_score_mark"
             android:layout_height="@dimen/size_score_mark"
             android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
             android:layout_marginEnd="@dimen/spacing_double"
             android:layout_marginStart="@dimen/spacing_double"
@@ -39,6 +40,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_toEndOf="@id/solved_state"
+            android:layout_toRightOf="@id/solved_state"
             android:orientation="vertical">
 
         <TextView

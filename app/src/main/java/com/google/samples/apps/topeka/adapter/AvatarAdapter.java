@@ -49,7 +49,7 @@ public class AvatarAdapter extends BaseAdapter {
     }
 
     private void setAvatar(AvatarView mIcon, Avatar avatar) {
-        mIcon.setImageResource(avatar.getDrawableId());
+        mIcon.setAvatar(avatar.getDrawableId());
         mIcon.setContentDescription(avatar.getNameForAccessibility());
     }
 

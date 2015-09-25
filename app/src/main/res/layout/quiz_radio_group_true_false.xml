@@ -20,20 +20,22 @@
             android:orientation="horizontal">
 
     <RadioButton
-            android:id="@+id/answerTrue"
+            android:id="@+id/answer_true"
             style="@style/Topeka.CompoundButton.True"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/spacing_micro"
+            android:layout_marginRight="@dimen/spacing_micro"
             android:layout_weight="1"
             android:text="@string/btn_true" />
 
     <RadioButton
-            android:id="@+id/answerFalse"
+            android:id="@+id/answer_false"
             style="@style/Topeka.CompoundButton.False"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/spacing_micro"
+            android:layout_marginLeft="@dimen/spacing_micro"
             android:layout_weight="1"
             android:text="@string/btn_false" />
 </RadioGroup>

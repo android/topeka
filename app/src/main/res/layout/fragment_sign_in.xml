@@ -30,10 +30,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-        <include
-                layout="@layout/fab_done"
-                android:visibility="gone" />
-
         <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -55,5 +51,8 @@
                     android:layout_weight="2" />
 
         </LinearLayout>
+        <include
+                layout="@layout/fab_done"
+                android:visibility="gone" />
     </FrameLayout>
 </FrameLayout>

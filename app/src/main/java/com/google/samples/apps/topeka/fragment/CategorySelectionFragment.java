@@ -18,6 +18,7 @@ package com.google.samples.apps.topeka.fragment;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.util.Pair;
@@ -82,7 +83,8 @@ public class CategorySelectionFragment extends Fragment {
 
         // Start the activity with the participants, animating from one to the other.
         final Bundle transitionBundle = sceneTransitionAnimation.toBundle();
-        activity.startActivity(QuizActivity.getStartIntent(activity, category), transitionBundle);
+        ActivityCompat.startActivity(getActivity(),
+                QuizActivity.getStartIntent(activity, category), transitionBundle);
     }
 
 }

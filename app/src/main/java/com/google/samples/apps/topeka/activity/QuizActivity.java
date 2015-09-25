@@ -18,30 +18,33 @@ package com.google.samples.apps.topeka.activity;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.VisibleForTesting;
 import android.support.design.widget.FloatingActionButton;
+import android.support.test.espresso.contrib.CountingIdlingResource;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPropertyAnimatorListenerAdapter;
+import android.support.v4.view.animation.FastOutSlowInInterpolator;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.transition.Transition;
-import android.transition.TransitionInflater;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.Window;
-import android.view.WindowManager;
-import android.view.animation.AnimationUtils;
 import android.view.animation.Interpolator;
 import android.widget.ImageView;
 
 import com.google.samples.apps.topeka.R;
 import com.google.samples.apps.topeka.fragment.QuizFragment;
+import com.google.samples.apps.topeka.helper.ApiLevelHelper;
 import com.google.samples.apps.topeka.model.Category;
 import com.google.samples.apps.topeka.persistence.TopekaDatabaseHelper;
 
@@ -54,6 +57,7 @@ public class QuizActivity extends AppCompatActivity {
     private static final String STATE_IS_PLAYING = "isPlaying";
     private static final int UNDEFINED = -1;
     private static final String FRAGMENT_TAG = "Quiz";
+
     private Interpolator mInterpolator;
     private String mCategoryId;
     private QuizFragment mQuizFragment;
@@ -62,6 +66,7 @@ public class QuizActivity extends AppCompatActivity {
     private boolean mSavedStateIsPlaying;
     private ImageView mIcon;
     private Animator mCircularReveal;
+    private CountingIdlingResource mCountingIdlingResource;
 
     private View.OnClickListener mOnClickListener = new View.OnClickListener() {
         @Override
@@ -74,12 +79,12 @@ public class QuizActivity extends AppCompatActivity {
                     submitAnswer();
                     break;
                 case R.id.quiz_done:
-                    finishAfterTransition();
+                    ActivityCompat.finishAfterTransition(QuizActivity.this);
                     break;
                 case UNDEFINED:
                     final CharSequence contentDescription = v.getContentDescription();
-                    if (contentDescription != null && contentDescription.equals(
-                            getString(R.string.up))) {
+                    if (contentDescription != null && contentDescription
+                            .equals(getString(R.string.up))) {
                         onBackPressed();
                         break;
                     }
@@ -99,15 +104,9 @@ public class QuizActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // Inflate and set the enter transition for this activity.
-        final Transition sharedElementEnterTransition = TransitionInflater.from(this)
-                .inflateTransition(R.transition.quiz_enter);
-        getWindow().setSharedElementEnterTransition(sharedElementEnterTransition);
-
+        mCountingIdlingResource = new CountingIdlingResource("Quiz");
         mCategoryId = getIntent().getStringExtra(Category.TAG);
-        //noinspection ResourceType
-        mInterpolator = AnimationUtils.loadInterpolator(this,
-                android.R.interpolator.fast_out_slow_in);
+        mInterpolator = new FastOutSlowInInterpolator();
         if (null != savedInstanceState) {
             mSavedStateIsPlaying = savedInstanceState.getBoolean(STATE_IS_PLAYING);
         }
@@ -153,9 +152,12 @@ public class QuizActivity extends AppCompatActivity {
                 .setInterpolator(mInterpolator)
                 .setStartDelay(100)
                 .setListener(new ViewPropertyAnimatorListenerAdapter() {
+                    @SuppressLint("NewApi")
                     @Override
                     public void onAnimationEnd(View view) {
-                        if (isFinishing() || isDestroyed()) {
+                        if (isFinishing() ||
+                                (ApiLevelHelper.isAtLeast(Build.VERSION_CODES.JELLY_BEAN_MR1)
+                                        && isDestroyed())) {
                             return;
                         }
                         QuizActivity.super.onBackPressed();
@@ -169,7 +171,24 @@ public class QuizActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.quiz_fragment_container, mQuizFragment, FRAGMENT_TAG).commit();
         final View fragmentContainer = findViewById(R.id.quiz_fragment_container);
+        revealFragmentContainer(clickedView, fragmentContainer);
+        // the toolbar should not have more elevation than the content while playing
+        setToolbarElevation(false);
+    }
 
+    private void revealFragmentContainer(final View clickedView, final View fragmentContainer) {
+        if (ApiLevelHelper.isAtLeast(Build.VERSION_CODES.LOLLIPOP)) {
+            revealFragmentContainerLollipop(clickedView, fragmentContainer);
+        } else {
+            fragmentContainer.setVisibility(View.VISIBLE);
+            clickedView.setVisibility(View.GONE);
+            mIcon.setVisibility(View.GONE);
+        }
+    }
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    private void revealFragmentContainerLollipop(final View clickedView,
+                                                 final View fragmentContainer) {
         prepareCircularReveal(clickedView, fragmentContainer);
         ViewCompat.animate(clickedView)
                 .scaleX(0)
@@ -184,15 +203,13 @@ public class QuizActivity extends AppCompatActivity {
                     }
                 })
                 .start();
-
-        // the toolbar should not have more elevation than the content while playing
-        mToolbar.setElevation(0);
     }
 
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     private void prepareCircularReveal(View startView, View targetView) {
         int centerX = (startView.getLeft() + startView.getRight()) / 2;
         int centerY = (startView.getTop() + startView.getBottom()) / 2;
-        int finalRadius = Math.max(targetView.getWidth(), targetView.getHeight());
+        float finalRadius = (float) Math.hypot((double) centerX, (double) centerY);
         mCircularReveal = ViewAnimationUtils.createCircularReveal(
                 targetView, centerX, centerY, 0, finalRadius);
 
@@ -205,8 +222,11 @@ public class QuizActivity extends AppCompatActivity {
         });
     }
 
-    public void elevateToolbar() {
-        mToolbar.setElevation(getResources().getDimension(R.dimen.elevation_header));
+    public void setToolbarElevation(boolean shouldElevate) {
+        if (ApiLevelHelper.isAtLeast(Build.VERSION_CODES.LOLLIPOP)) {
+            mToolbar.setElevation(shouldElevate ?
+                    getResources().getDimension(R.dimen.elevation_header) : 0);
+        }
     }
 
     private void initQuizFragment() {
@@ -214,7 +234,7 @@ public class QuizActivity extends AppCompatActivity {
                 new QuizFragment.SolvedStateListener() {
                     @Override
                     public void onCategorySolved() {
-                        elevateToolbar();
+                        setToolbarElevation(true);
                         displayDoneFab();
                     }
 
@@ -250,8 +270,10 @@ public class QuizActivity extends AppCompatActivity {
                                 .start();
                     }
                 });
-        // the toolbar should not have more elevation than the content while playing
-        mToolbar.setElevation(0);
+        if (ApiLevelHelper.isAtLeast(Build.VERSION_CODES.LOLLIPOP)) {
+            // the toolbar should not have more elevation than the content while playing
+            setToolbarElevation(false);
+        }
     }
 
     /**
@@ -261,13 +283,20 @@ public class QuizActivity extends AppCompatActivity {
         submitAnswer();
     }
 
+    /**
+     * Solely exists for testing purposes and making sure Espresso does not get confused.
+     */
+    public void lockIdlingResource() {
+        mCountingIdlingResource.increment();
+    }
+
     private void submitAnswer() {
-        elevateToolbar();
+        mCountingIdlingResource.decrement();
         if (!mQuizFragment.showNextPage()) {
             mQuizFragment.showSummary();
             return;
         }
-        mToolbar.setElevation(0);
+        setToolbarElevation(false);
     }
 
     private void populate(String categoryId) {
@@ -277,13 +306,11 @@ public class QuizActivity extends AppCompatActivity {
         }
         Category category = TopekaDatabaseHelper.getCategoryWith(this, categoryId);
         setTheme(category.getTheme().getStyleId());
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        if (ApiLevelHelper.isAtLeast(Build.VERSION_CODES.LOLLIPOP)) {
             Window window = getWindow();
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             window.setStatusBarColor(ContextCompat.getColor(this,
                     category.getTheme().getPrimaryDarkColor()));
         }
-
         initLayout(category.getId());
         initToolbar(category);
     }
@@ -305,14 +332,12 @@ public class QuizActivity extends AppCompatActivity {
                 .start();
         mQuizFab = (FloatingActionButton) findViewById(R.id.fab_quiz);
         mQuizFab.setImageResource(R.drawable.ic_play);
-        mQuizFab.setVisibility(mSavedStateIsPlaying ? View.GONE : View.VISIBLE);
+        if (mSavedStateIsPlaying) {
+            mQuizFab.hide();
+        } else {
+            mQuizFab.show();
+        }
         mQuizFab.setOnClickListener(mOnClickListener);
-        ViewCompat.animate(mQuizFab)
-                .scaleX(1)
-                .scaleY(1)
-                .setInterpolator(mInterpolator)
-                .setStartDelay(400)
-                .start();
     }
 
     private void initToolbar(Category category) {
@@ -323,7 +348,12 @@ public class QuizActivity extends AppCompatActivity {
         mToolbar.setNavigationOnClickListener(mOnClickListener);
         if (mSavedStateIsPlaying) {
             // the toolbar should not have more elevation than the content while playing
-            mToolbar.setElevation(0);
+            setToolbarElevation(false);
         }
+    }
+
+    @VisibleForTesting
+    public CountingIdlingResource getCountingIdlingResource() {
+        return mCountingIdlingResource;
     }
 }

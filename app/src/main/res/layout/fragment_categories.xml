@@ -24,7 +24,7 @@
         android:clipToPadding="false"
         android:drawSelectorOnTop="true"
         android:horizontalSpacing="@dimen/spacing_micro"
-        android:listSelector="@drawable/ripple"
+        android:listSelector="@drawable/selector_categories"
         android:numColumns="auto_fit"
         android:padding="@dimen/spacing_micro"
         android:scrollbarStyle="outsideOverlay"
