@@ -19,6 +19,7 @@ package com.google.samples.apps.topeka.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -104,7 +105,7 @@ public class CategorySelectionActivity extends AppCompatActivity {
         PreferencesHelper.signOut(this);
         TopekaDatabaseHelper.reset(this);
         SignInActivity.start(this, false, null);
-        finishAfterTransition();
+        ActivityCompat.finishAfterTransition(this);
     }
 
     private String getDisplayName(Player player) {

@@ -24,7 +24,7 @@
         <item name="android:windowSharedElementEnterTransition">@transition/category_enter</item>
     </style>
 
-    <style name="Topeka.QuizSelectionActivity">
+    <style name="Topeka.QuizActivity">
         <item name="android:windowSharedElementEnterTransition">@transition/quiz_enter</item>
     </style>
 </resources>

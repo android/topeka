@@ -24,8 +24,10 @@ import com.google.samples.apps.topeka.model.Theme;
 import com.google.samples.apps.topeka.model.quiz.Quiz;
 import com.google.samples.apps.topeka.widget.fab.CheckableFab;
 
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -36,6 +38,8 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.MarginLayoutParamsCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.view.animation.LinearOutSlowInInterpolator;
+import android.util.IntProperty;
+import android.util.Property;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -278,11 +282,19 @@ public abstract class AbsQuizView<Q extends Quiz> extends FrameLayout {
      */
     private void performScoreAnimation(final boolean answerCorrect) {
 
-        mSubmitAnswer.setChecked(answerCorrect);
-
         // Decide which background color to use.
         final int backgroundColor = ContextCompat.getColor(getContext(),
                 answerCorrect ? R.color.green : R.color.red);
+        adjustFab(answerCorrect, backgroundColor);
+        resizeView();
+        moveViewOffScreen(answerCorrect);
+        // Animate the foreground color to match the background color.
+        // This overlays all content within the current view.
+        animateForegroundColor(backgroundColor);
+    }
+
+    private void adjustFab(boolean answerCorrect, int backgroundColor) {
+        mSubmitAnswer.setChecked(answerCorrect);
         mSubmitAnswer.setBackgroundTintList(ColorStateList.valueOf(backgroundColor));
         mHideFabRunnable = new Runnable() {
             @Override
@@ -291,11 +303,6 @@ public abstract class AbsQuizView<Q extends Quiz> extends FrameLayout {
             }
         };
         mHandler.postDelayed(mHideFabRunnable, ANSWER_HIDE_DELAY);
-        resizeView();
-        moveViewOffScreen(answerCorrect);
-        // Animate the foreground color to match the background color.
-        // This overlays all content within the current view.
-        animateForegroundColor(backgroundColor);
     }
 
     private void resizeView() {

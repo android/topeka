@@ -18,6 +18,7 @@ package com.google.samples.apps.topeka.activity;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
@@ -32,14 +33,10 @@ import android.support.v4.view.ViewPropertyAnimatorListenerAdapter;
 import android.support.v4.view.animation.FastOutSlowInInterpolator;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.transition.Transition;
-import android.transition.TransitionInflater;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.Window;
-import android.view.WindowManager;
-import android.view.animation.AnimationUtils;
 import android.view.animation.Interpolator;
 import android.widget.ImageView;
 
@@ -150,6 +147,7 @@ public class QuizActivity extends AppCompatActivity {
                 .setInterpolator(mInterpolator)
                 .setStartDelay(100)
                 .setListener(new ViewPropertyAnimatorListenerAdapter() {
+                    @SuppressLint("NewApi")
                     @Override
                     public void onAnimationEnd(View view) {
                         if (isFinishing() ||

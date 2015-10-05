@@ -20,6 +20,8 @@ import android.annotation.TargetApi;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.view.ViewCompat;
+import android.support.v4.view.animation.FastOutLinearInInterpolator;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -137,6 +139,12 @@ public class QuizFragment extends android.support.v4.app.Fragment {
     private void setAvatarDrawable(AvatarView avatarView) {
         Player player = PreferencesHelper.getPlayer(getActivity());
         avatarView.setAvatar(player.getAvatar().getDrawableId());
+        ViewCompat.animate(avatarView)
+                .setInterpolator(new FastOutLinearInInterpolator())
+                .setStartDelay(500)
+                .scaleX(1)
+                .scaleY(1)
+                .start();
     }
 
     private void decideOnViewToDisplay() {
