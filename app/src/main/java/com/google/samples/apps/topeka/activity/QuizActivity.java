@@ -204,7 +204,7 @@ public class QuizActivity extends AppCompatActivity {
     private void prepareCircularReveal(View startView, View targetView) {
         int centerX = (startView.getLeft() + startView.getRight()) / 2;
         int centerY = (startView.getTop() + startView.getBottom()) / 2;
-        int finalRadius = Math.max(targetView.getWidth(), targetView.getHeight());
+        float finalRadius = (float) Math.hypot((double) centerX, (double) centerY);
         mCircularReveal = ViewAnimationUtils.createCircularReveal(
                 targetView, centerX, centerY, 0, finalRadius);
 

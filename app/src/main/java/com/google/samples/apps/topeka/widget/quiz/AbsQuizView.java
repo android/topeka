@@ -24,6 +24,7 @@ import com.google.samples.apps.topeka.model.Theme;
 import com.google.samples.apps.topeka.model.quiz.Quiz;
 import com.google.samples.apps.topeka.widget.fab.CheckableFab;
 
+import android.animation.ArgbEvaluator;
 import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.res.ColorStateList;
@@ -77,8 +78,25 @@ public abstract class AbsQuizView<Q extends Quiz> extends FrameLayout {
     private TextView mQuestionView;
     private CheckableFab mSubmitAnswer;
     private Handler mHandler;
-    private Runnable mForegroundChangeRunnable;
     private Runnable mHideFabRunnable;
+
+    private static final Property FOREGROUND_COLOR =
+            new IntProperty<AbsQuizView>("foregroundColor") {
+
+        @Override
+        public void setValue(AbsQuizView layout, int value) {
+            if (layout.getForeground() instanceof ColorDrawable) {
+                ((ColorDrawable) layout.getForeground().mutate()).setColor(value);
+            } else {
+                layout.setForeground(new ColorDrawable(value));
+            }
+        }
+
+        @Override
+        public Integer get(AbsQuizView layout) {
+            return ((ColorDrawable) layout.getForeground()).getColor();
+        }
+    };
 
     /**
      * Enables creation of views for quizzes.
@@ -312,20 +330,17 @@ public abstract class AbsQuizView<Q extends Quiz> extends FrameLayout {
         ViewCompat.animate(this)
                 .scaleY(.5f / widthHeightRatio)
                 .setDuration(300)
-                .setStartDelay(750)
+                .setStartDelay(FOREGROUND_COLOR_CHANGE_DELAY + 200)
                 .start();
         ViewCompat.animate(this)
                 .scaleX(.5f)
                 .setDuration(300)
-                .setStartDelay(800)
+                .setStartDelay(FOREGROUND_COLOR_CHANGE_DELAY + 250)
                 .start();
     }
 
     @Override
     protected void onDetachedFromWindow() {
-        if (mForegroundChangeRunnable != null) {
-            mHandler.removeCallbacks(mForegroundChangeRunnable);
-        }
         if (mHideFabRunnable != null) {
             mHandler.removeCallbacks(mHideFabRunnable);
         }
@@ -333,21 +348,18 @@ public abstract class AbsQuizView<Q extends Quiz> extends FrameLayout {
     }
 
     private void animateForegroundColor(@ColorInt final int targetColor) {
-        mForegroundChangeRunnable = new Runnable() {
-            @Override
-            public void run() {
-                setForeground(new ColorDrawable(targetColor));
-                mForegroundChangeRunnable = null;
-            }
-        };
-        mHandler.postDelayed(mForegroundChangeRunnable, FOREGROUND_COLOR_CHANGE_DELAY);
+        ObjectAnimator animator = ObjectAnimator.ofInt(this, FOREGROUND_COLOR,
+                Color.TRANSPARENT, targetColor);
+        animator.setEvaluator(new ArgbEvaluator());
+        animator.setStartDelay(FOREGROUND_COLOR_CHANGE_DELAY);
+        animator.start();
     }
 
     private void moveViewOffScreen(final boolean answerCorrect) {
         // Animate the current view off the screen.
         ViewCompat.animate(this)
                 .setDuration(200)
-                .setStartDelay(1200)
+                .setStartDelay(FOREGROUND_COLOR_CHANGE_DELAY * 2)
                 .setInterpolator(mLinearOutSlowInInterpolator)
                 .withEndAction(new Runnable() {
                     @Override
