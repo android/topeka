@@ -29,7 +29,6 @@ import android.support.annotation.ColorInt;
 import android.support.annotation.DimenRes;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.MarginLayoutParamsCompat;
-import android.support.v4.view.ViewCompat;
 import android.support.v4.view.animation.LinearOutSlowInInterpolator;
 import android.util.IntProperty;
 import android.util.Property;
@@ -78,24 +77,29 @@ public abstract class AbsQuizView<Q extends Quiz> extends FrameLayout {
     private CheckableFab mSubmitAnswer;
     private Handler mHandler;
     private Runnable mHideFabRunnable;
+    private Runnable mMoveOffScreenRunnable;
 
-    private static final Property FOREGROUND_COLOR =
+    private static final Property<AbsQuizView, Integer> FOREGROUND_COLOR =
             new IntProperty<AbsQuizView>("foregroundColor") {
 
-        @Override
-        public void setValue(AbsQuizView layout, int value) {
-            if (layout.getForeground() instanceof ColorDrawable) {
-                ((ColorDrawable) layout.getForeground().mutate()).setColor(value);
-            } else {
-                layout.setForeground(new ColorDrawable(value));
-            }
-        }
+                @Override
+                public void setValue(AbsQuizView layout, int value) {
+                    if (layout.getForeground() instanceof ColorDrawable) {
+                        ((ColorDrawable) layout.getForeground().mutate()).setColor(value);
+                    } else {
+                        layout.setForeground(new ColorDrawable(value));
+                    }
+                }
 
-        @Override
-        public Integer get(AbsQuizView layout) {
-            return ((ColorDrawable) layout.getForeground()).getColor();
-        }
-    };
+                @Override
+                public Integer get(AbsQuizView layout) {
+                    if (layout.getForeground() instanceof ColorDrawable) {
+                        return ((ColorDrawable) layout.getForeground()).getColor();
+                    } else {
+                        return Color.TRANSPARENT;
+                    }
+                }
+            };
 
     /**
      * Enables creation of views for quizzes.
@@ -111,6 +115,7 @@ public abstract class AbsQuizView<Q extends Quiz> extends FrameLayout {
         mSpacingDouble = getResources().getDimensionPixelSize(R.dimen.spacing_double);
         mSubmitAnswer = getSubmitButton(context);
         mLayoutInflater = LayoutInflater.from(context);
+        mSubmitAnswer = getSubmitButton(context);
         mMinHeightTouchTarget = getResources()
                 .getDimensionPixelSize(R.dimen.min_height_touch_target);
         mLinearOutSlowInInterpolator = new LinearOutSlowInInterpolator();
@@ -189,8 +194,8 @@ public abstract class AbsQuizView<Q extends Quiz> extends FrameLayout {
 
     private CheckableFab getSubmitButton(Context context) {
         if (null == mSubmitAnswer) {
-            mSubmitAnswer = new CheckableFab(context);
-            mSubmitAnswer.setId(R.id.submitAnswer);
+            mSubmitAnswer = (CheckableFab) getLayoutInflater()
+                    .inflate(R.layout.answer_submit, this, false);
             mSubmitAnswer.hide();
             mSubmitAnswer.setOnClickListener(new OnClickListener() {
                 @Override
@@ -295,8 +300,6 @@ public abstract class AbsQuizView<Q extends Quiz> extends FrameLayout {
      */
     private void performScoreAnimation(final boolean answerCorrect) {
 
-        mSubmitAnswer.setChecked(answerCorrect);
-
         // Decide which background color to use.
         final int backgroundColor = ContextCompat.getColor(getContext(),
                 answerCorrect ? R.color.green : R.color.red);
@@ -322,24 +325,28 @@ public abstract class AbsQuizView<Q extends Quiz> extends FrameLayout {
 
     private void resizeView() {
         final float widthHeightRatio = (float) getHeight() / (float) getWidth();
-
         // Animate X and Y scaling separately to allow different start delays.
-        ViewCompat.animate(this)
-                .scaleY(.5f / widthHeightRatio)
-                .setDuration(300)
-                .setStartDelay(FOREGROUND_COLOR_CHANGE_DELAY + 200)
-                .start();
-        ViewCompat.animate(this)
-                .scaleX(.5f)
-                .setDuration(300)
-                .setStartDelay(FOREGROUND_COLOR_CHANGE_DELAY + 250)
-                .start();
+        // object animators for x and y with different durations and then run them independently
+        resizeViewProperty(View.SCALE_X, .5f, 200);
+        resizeViewProperty(View.SCALE_Y, .5f / widthHeightRatio, 250);
+    }
+
+    private void resizeViewProperty(Property<View, Float> property,
+                                    float targetScale, int durationOffset) {
+        ObjectAnimator animator = ObjectAnimator.ofFloat(this, property,
+                1f, targetScale);
+        animator.setInterpolator(mLinearOutSlowInInterpolator);
+        animator.setStartDelay(FOREGROUND_COLOR_CHANGE_DELAY + durationOffset);
+        animator.start();
     }
 
     @Override
     protected void onDetachedFromWindow() {
         if (mHideFabRunnable != null) {
             mHandler.removeCallbacks(mHideFabRunnable);
+        }
+        if (mMoveOffScreenRunnable != null) {
+            mHandler.removeCallbacks(mMoveOffScreenRunnable);
         }
         super.onDetachedFromWindow();
     }
@@ -353,21 +360,18 @@ public abstract class AbsQuizView<Q extends Quiz> extends FrameLayout {
     }
 
     private void moveViewOffScreen(final boolean answerCorrect) {
-        // Animate the current view off the screen.
-        ViewCompat.animate(this)
-                .setDuration(200)
-                .setStartDelay(FOREGROUND_COLOR_CHANGE_DELAY * 2)
-                .setInterpolator(mLinearOutSlowInInterpolator)
-                .withEndAction(new Runnable() {
-                    @Override
-                    public void run() {
-                        mCategory.setScore(getQuiz(), answerCorrect);
-                        if (getContext() instanceof QuizActivity) {
-                            ((QuizActivity) getContext()).proceed();
-                        }
-                    }
-                })
-                .start();
+        // Move the current view off the screen.
+        mMoveOffScreenRunnable = new Runnable() {
+            @Override
+            public void run() {
+                mCategory.setScore(getQuiz(), answerCorrect);
+                if (getContext() instanceof QuizActivity) {
+                    ((QuizActivity) getContext()).proceed();
+                }
+            }
+        };
+        mHandler.postDelayed(mMoveOffScreenRunnable,
+                FOREGROUND_COLOR_CHANGE_DELAY * 2);
     }
 
     private void setMinHeightInternal(View view, @DimenRes int resId) {
