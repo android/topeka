@@ -113,9 +113,8 @@ public abstract class AbsQuizView<Q extends Quiz> extends FrameLayout {
         mQuiz = quiz;
         mCategory = category;
         mSpacingDouble = getResources().getDimensionPixelSize(R.dimen.spacing_double);
-        mSubmitAnswer = getSubmitButton(context);
         mLayoutInflater = LayoutInflater.from(context);
-        mSubmitAnswer = getSubmitButton(context);
+        mSubmitAnswer = getSubmitButton();
         mMinHeightTouchTarget = getResources()
                 .getDimensionPixelSize(R.dimen.min_height_touch_target);
         mLinearOutSlowInInterpolator = new LinearOutSlowInInterpolator();
@@ -192,7 +191,7 @@ public abstract class AbsQuizView<Q extends Quiz> extends FrameLayout {
         addView(mSubmitAnswer, fabLayoutParams);
     }
 
-    private CheckableFab getSubmitButton(Context context) {
+    private CheckableFab getSubmitButton() {
         if (null == mSubmitAnswer) {
             mSubmitAnswer = (CheckableFab) getLayoutInflater()
                     .inflate(R.layout.answer_submit, this, false);
@@ -299,7 +298,7 @@ public abstract class AbsQuizView<Q extends Quiz> extends FrameLayout {
      * @param answerCorrect <code>true</code> if the answer was correct, else <code>false</code>.
      */
     private void performScoreAnimation(final boolean answerCorrect) {
-
+        ((QuizActivity) getContext()).lockIdlingResource();
         // Decide which background color to use.
         final int backgroundColor = ContextCompat.getColor(getContext(),
                 answerCorrect ? R.color.green : R.color.red);

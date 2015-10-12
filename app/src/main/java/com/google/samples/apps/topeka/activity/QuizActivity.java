@@ -25,7 +25,9 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.VisibleForTesting;
 import android.support.design.widget.FloatingActionButton;
+import android.support.test.espresso.contrib.CountingIdlingResource;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewCompat;
@@ -63,6 +65,7 @@ public class QuizActivity extends AppCompatActivity {
     private boolean mSavedStateIsPlaying;
     private ImageView mIcon;
     private Animator mCircularReveal;
+    private CountingIdlingResource mCountingIdlingResource;
 
     private View.OnClickListener mOnClickListener = new View.OnClickListener() {
         @Override
@@ -100,6 +103,7 @@ public class QuizActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        mCountingIdlingResource = new CountingIdlingResource("Quiz");
         mCategoryId = getIntent().getStringExtra(Category.TAG);
         mInterpolator = new FastOutSlowInInterpolator();
         if (null != savedInstanceState) {
@@ -278,7 +282,15 @@ public class QuizActivity extends AppCompatActivity {
         submitAnswer();
     }
 
+    /**
+     * Solely exists for testing purposes and making sure Espresso does not get confused.
+     */
+    public void lockIdlingResource() {
+        mCountingIdlingResource.increment();
+    }
+
     private void submitAnswer() {
+        mCountingIdlingResource.decrement();
         if (!mQuizFragment.showNextPage()) {
             mQuizFragment.showSummary();
             return;
@@ -337,5 +349,10 @@ public class QuizActivity extends AppCompatActivity {
             // the toolbar should not have more elevation than the content while playing
             setToolbarElevation(false);
         }
+    }
+
+    @VisibleForTesting
+    public CountingIdlingResource getCountingIdlingResource() {
+        return mCountingIdlingResource;
     }
 }

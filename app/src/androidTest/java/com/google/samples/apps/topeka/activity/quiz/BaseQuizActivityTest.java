@@ -19,10 +19,10 @@ package com.google.samples.apps.topeka.activity.quiz;
 import android.content.Context;
 import android.content.Intent;
 import android.support.test.InstrumentationRegistry;
+import android.support.test.espresso.Espresso;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.test.suitebuilder.annotation.LargeTest;
-import android.util.Log;
 
 import com.google.samples.apps.topeka.R;
 import com.google.samples.apps.topeka.activity.QuizActivity;
@@ -34,6 +34,8 @@ import com.google.samples.apps.topeka.model.Player;
 import com.google.samples.apps.topeka.model.quiz.Quiz;
 import com.google.samples.apps.topeka.persistence.TopekaDatabaseHelper;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -70,28 +72,45 @@ public abstract class BaseQuizActivityTest {
                     Context targetContext = InstrumentationRegistry.getTargetContext();
                     mCategories = TopekaDatabaseHelper.getCategories(targetContext, false);
                     return QuizActivity.getStartIntent(targetContext,
-                            mCategories.get(getCategory()));
+                            getCurrentCategory());
                 }
             };
 
     abstract int getCategory();
 
-    @Test
-    public void category_solveCorrectly() {
-        testCategory(getCategory());
+    @Before
+    public void registerIdlingResources() {
+        Espresso.registerIdlingResources(mActivityRule.getActivity().getCountingIdlingResource());
     }
 
-    protected void testCategory(int position) {
-        final Category category = mCategories.get(position);
-        onView(withText(category.getName())).check(matches(isDisplayed()));
+    @Test
+    public void categoryName_isDisplayed() {
+        onView(withText(getCurrentCategory().getName())).check(matches(isDisplayed()));
+    }
+
+    @Test
+    public void category_solveCorrectly() {
+        testCategory();
+    }
+
+    protected void testCategory() {
+        final Category category = getCurrentCategory();
         onView(withId(R.id.fab_quiz)).perform(click());
         for (Quiz quiz : category.getQuizzes()) {
-            Log.d("Quiz", "Solving " + quiz.getType() + ": " + quiz.getQuestion());
             SolveQuizHelper.solveQuiz(quiz);
             onView(allOf(withId(R.id.submitAnswer), isDisplayed()))
                     .check(matches(isDisplayed()))
                     .perform(click());
         }
+    }
+
+    private Category getCurrentCategory() {
+        return mCategories.get(getCategory());
+    }
+
+    @After
+    public void unregisterIdlingResources() {
+        Espresso.unregisterIdlingResources(mActivityRule.getActivity().getCountingIdlingResource());
     }
 
 }
