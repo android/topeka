@@ -49,9 +49,10 @@ dependencies {
     compile 'com.android.support.test.espresso:espresso-idling-resource:2.2.1'
     testCompile 'junit:junit:4.12'
 
-    androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.1'
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.1') {
+        exclude module: 'espresso-idling-resource'
+    }
     androidTestCompile 'com.android.support.test:rules:0.4'
     androidTestCompile 'com.android.support.test:runner:0.4'
     androidTestCompile 'org.hamcrest:hamcrest-core:1.3'
-
 }

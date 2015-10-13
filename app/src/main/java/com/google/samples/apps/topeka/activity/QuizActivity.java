@@ -83,8 +83,8 @@ public class QuizActivity extends AppCompatActivity {
                     break;
                 case UNDEFINED:
                     final CharSequence contentDescription = v.getContentDescription();
-                    if (contentDescription != null && contentDescription.equals(
-                            getString(R.string.up))) {
+                    if (contentDescription != null && contentDescription
+                            .equals(getString(R.string.up))) {
                         onBackPressed();
                         break;
                     }
