@@ -4,7 +4,7 @@ A fun to play quiz that showcases material design on Android
 
 ### Introduction
 
-Material design is a new system for visual, interaction and motion design. 
+Material design is a new system for visual, interaction and motion design.
 The Android version of Topeka demonstrates that the same branding and material
 design principles can be used to create a consistent experience across
 platforms.

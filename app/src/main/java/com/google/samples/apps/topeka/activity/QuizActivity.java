@@ -57,6 +57,7 @@ public class QuizActivity extends AppCompatActivity {
     private static final String STATE_IS_PLAYING = "isPlaying";
     private static final int UNDEFINED = -1;
     private static final String FRAGMENT_TAG = "Quiz";
+
     private Interpolator mInterpolator;
     private String mCategoryId;
     private QuizFragment mQuizFragment;

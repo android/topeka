@@ -14,11 +14,14 @@
  * limitations under the License.
  */
 package android.support.test.espresso.contrib;
-import android.support.test.espresso.IdlingResource;
+
 import android.os.SystemClock;
+import android.support.test.espresso.IdlingResource;
 import android.text.TextUtils;
 import android.util.Log;
+
 import java.util.concurrent.atomic.AtomicInteger;
+
 /**
  * An implementation of {@link IdlingResource} that determines idleness by maintaining an internal
  * counter. When the counter is 0 - it is considered to be idle, when it is non-zero it is not
@@ -70,8 +73,8 @@ import java.util.concurrent.atomic.AtomicInteger;
  *   }
  *   </pre>
  *
- *   Then in your test setup:
- *   <pre>
+ * Then in your test setup:
+ * <pre>
  *   {@code
  *     public void setUp() throws Exception {
  *       super.setUp();
@@ -82,7 +85,6 @@ import java.util.concurrent.atomic.AtomicInteger;
  *     }
  *   }
  *   </pre>
- *
  */
 @SuppressWarnings("javadoc")
 public final class CountingIdlingResource implements IdlingResource {
@@ -95,6 +97,7 @@ public final class CountingIdlingResource implements IdlingResource {
     // read/written from any thread - used for debugging messages.
     private volatile long becameBusyAt = 0;
     private volatile long becameIdleAt = 0;
+
     /**
      * Creates a CountingIdlingResource without debug tracing.
      *
@@ -103,11 +106,13 @@ public final class CountingIdlingResource implements IdlingResource {
     public CountingIdlingResource(String resourceName) {
         this(resourceName, false);
     }
+
     /**
      * Creates a CountingIdlingResource.
      *
      * @param resourceName the resource name this resource should report to Espresso.
-     * @param debugCounting if true increment & decrement calls will print trace information to logs.
+     * @param debugCounting if true increment & decrement calls will print trace information to
+     * logs.
      */
     public CountingIdlingResource(String resourceName, boolean debugCounting) {
         if (TextUtils.isEmpty(resourceName)) {
@@ -116,18 +121,22 @@ public final class CountingIdlingResource implements IdlingResource {
         this.resourceName = resourceName;
         this.debugCounting = debugCounting;
     }
+
     @Override
     public String getName() {
         return resourceName;
     }
+
     @Override
     public boolean isIdleNow() {
         return counter.get() == 0;
     }
+
     @Override
     public void registerIdleTransitionCallback(ResourceCallback resourceCallback) {
         this.resourceCallback = resourceCallback;
     }
+
     /**
      * Increments the count of in-flight transactions to the resource being monitored.
      *
@@ -139,9 +148,11 @@ public final class CountingIdlingResource implements IdlingResource {
             becameBusyAt = SystemClock.uptimeMillis();
         }
         if (debugCounting) {
-            Log.i(TAG, "Resource: " + resourceName + " in-use-count incremented to: " + (counterVal + 1));
+            Log.i(TAG, "Resource: " + resourceName + " in-use-count incremented to: "
+                    + (counterVal + 1));
         }
     }
+
     /**
      * Decrements the count of in-flight transactions to the resource being monitored.
      *
@@ -160,16 +171,18 @@ public final class CountingIdlingResource implements IdlingResource {
         }
         if (debugCounting) {
             if (counterVal == 0) {
-                Log.i(TAG, "Resource: " + resourceName + " went idle! (Time spent not idle: " +
-                        (becameIdleAt - becameBusyAt) + ")");
+                Log.i(TAG, "Resource: " + resourceName + " went idle! (Time spent not idle: "
+                        + (becameIdleAt - becameBusyAt) + ")");
             } else {
-                Log.i(TAG, "Resource: " + resourceName + " in-use-count decremented to: " + counterVal);
+                Log.i(TAG, "Resource: " + resourceName + " in-use-count decremented to: "
+                        + counterVal);
             }
         }
         if (counterVal < 0) {
             throw new IllegalArgumentException("Counter has been corrupted!");
         }
     }
+
     /**
      * Prints the current state of this resource to the logcat at info level.
      */
