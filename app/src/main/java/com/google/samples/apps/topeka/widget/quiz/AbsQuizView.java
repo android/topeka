@@ -204,7 +204,6 @@ public abstract class AbsQuizView<Q extends Quiz> extends FrameLayout {
                 @Override
                 public void onClick(View v) {
                     submitAnswer(v);
-                    // check for keyboard, if keyboard is open then it will be closed
                     if (mInputMethodManager.isAcceptingText()) {
                         mInputMethodManager.hideSoftInputFromWindow(v.getWindowToken(), 0);
                     }
