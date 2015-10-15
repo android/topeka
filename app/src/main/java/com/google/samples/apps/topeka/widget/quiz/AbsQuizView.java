@@ -37,6 +37,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Interpolator;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -78,6 +79,7 @@ public abstract class AbsQuizView<Q extends Quiz> extends FrameLayout {
     private Handler mHandler;
     private Runnable mHideFabRunnable;
     private Runnable mMoveOffScreenRunnable;
+    private InputMethodManager mInputMethodManager;
 
     private static final Property<AbsQuizView, Integer> FOREGROUND_COLOR =
             new IntProperty<AbsQuizView>("foregroundColor") {
@@ -119,6 +121,8 @@ public abstract class AbsQuizView<Q extends Quiz> extends FrameLayout {
                 .getDimensionPixelSize(R.dimen.min_height_touch_target);
         mLinearOutSlowInInterpolator = new LinearOutSlowInInterpolator();
         mHandler = new Handler();
+        mInputMethodManager = (InputMethodManager) context.getSystemService
+                (Context.INPUT_METHOD_SERVICE);
 
         setId(quiz.getId());
         setUpQuestionView();
@@ -200,6 +204,10 @@ public abstract class AbsQuizView<Q extends Quiz> extends FrameLayout {
                 @Override
                 public void onClick(View v) {
                     submitAnswer(v);
+                    // check for keyboard, if keyboard is open then it will be closed
+                    if (mInputMethodManager.isAcceptingText()) {
+                        mInputMethodManager.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                    }
                 }
             });
         }
