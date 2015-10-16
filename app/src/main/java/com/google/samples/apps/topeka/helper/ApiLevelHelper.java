@@ -23,6 +23,10 @@ import android.os.Build;
  */
 public class ApiLevelHelper {
 
+    private ApiLevelHelper() {
+        //no instance
+    }
+
     /**
      * Checks if the current api level is at least the provided value.
      *

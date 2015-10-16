@@ -25,6 +25,7 @@
                  android:theme="@style/Topeka">
 
         <activity android:name=".activity.SignInActivity"
+                  android:theme="@style/Topeka.SignInActivity"
                   android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -22,21 +22,21 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.util.Pair;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.GridView;
 
 import com.google.samples.apps.topeka.R;
 import com.google.samples.apps.topeka.activity.QuizActivity;
 import com.google.samples.apps.topeka.adapter.CategoryAdapter;
 import com.google.samples.apps.topeka.helper.TransitionHelper;
 import com.google.samples.apps.topeka.model.Category;
+import com.google.samples.apps.topeka.widget.OffsetDecoration;
 
 public class CategorySelectionFragment extends Fragment {
 
-    private CategoryAdapter mCategoryAdapter;
+    private CategoryAdapter mAdapter;
 
     public static CategorySelectionFragment newInstance() {
         return new CategorySelectionFragment();
@@ -50,26 +50,33 @@ public class CategorySelectionFragment extends Fragment {
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
-        setUpQuizGrid((GridView) view.findViewById(R.id.categories));
+        setUpQuizGrid((RecyclerView) view.findViewById(R.id.categories));
         super.onViewCreated(view, savedInstanceState);
     }
 
-    private void setUpQuizGrid(GridView categoriesView) {
-        categoriesView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Activity activity = getActivity();
-                startQuizActivityWithTransition(activity, view.findViewById(R.id.category_title),
-                        mCategoryAdapter.getItem(position));
-            }
-        });
-        mCategoryAdapter = new CategoryAdapter(getActivity());
-        categoriesView.setAdapter(mCategoryAdapter);
+    private void setUpQuizGrid(RecyclerView categoriesView) {
+        final int spacing = getContext().getResources()
+                .getDimensionPixelSize(R.dimen.spacing_nano);
+        categoriesView.addItemDecoration(new OffsetDecoration(spacing));
+        mAdapter = new CategoryAdapter(getActivity());
+        mAdapter.setOnItemClickListener(
+                new CategoryAdapter.OnItemClickListener() {
+                    @Override
+                    public void onClick(View v, int position) {
+                        Activity activity = getActivity();
+                        startQuizActivityWithTransition(activity,
+                                v.findViewById(R.id.category_title),
+                                mAdapter.getItem(position));
+                    }
+                });
+        categoriesView.setAdapter(mAdapter);
     }
 
     @Override
     public void onResume() {
-        mCategoryAdapter.notifyDataSetChanged();
+        // TODO: 10/19/15 don't use notifyDataSetChanged directly
+        mAdapter.notifyDataSetChanged();
+        getActivity().supportStartPostponedEnterTransition();
         super.onResume();
     }
 

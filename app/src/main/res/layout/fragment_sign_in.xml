@@ -34,20 +34,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
-                android:orientation="vertical"
-                android:paddingEnd="@dimen/spacing_double"
-                android:paddingStart="@dimen/spacing_double">
+                android:orientation="vertical">
 
             <include
-                    layout="@layout/sign_in_username"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
+                    layout="@layout/sign_in_username"
                     android:layout_weight="1" />
 
             <include
-                    layout="@layout/sign_in_avatars"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
+                    layout="@layout/sign_in_avatars"
                     android:layout_weight="2" />
 
         </LinearLayout>

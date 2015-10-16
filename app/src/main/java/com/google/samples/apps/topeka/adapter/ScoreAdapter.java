@@ -126,7 +126,7 @@ public class ScoreAdapter extends BaseAdapter {
             throw new IllegalArgumentException("The drawable with id " + drawableId
                     + " does not exist");
         }
-        DrawableCompat.setTint(imageDrawable, tintColor);
+        DrawableCompat.setTint(DrawableCompat.wrap(imageDrawable), tintColor);
         return imageDrawable;
     }
 

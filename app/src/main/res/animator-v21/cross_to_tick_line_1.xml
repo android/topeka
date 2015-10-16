@@ -19,6 +19,6 @@
         android:propertyName="pathData"
         android:valueFrom="@string/path_cross_line_1"
         android:valueTo="@string/path_tick_line_1"
-        android:duration="@integer/duration"
+        android:duration="@integer/tick_cross_duration"
         android:interpolator="@android:interpolator/fast_out_slow_in"
         android:valueType="pathType" />
