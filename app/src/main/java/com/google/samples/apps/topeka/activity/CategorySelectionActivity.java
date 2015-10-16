@@ -16,6 +16,7 @@
 
 package com.google.samples.apps.topeka.activity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -40,9 +41,9 @@ public class CategorySelectionActivity extends AppCompatActivity {
 
     private static final String EXTRA_PLAYER = "player";
 
-    public static void start(Context context, Player player, ActivityOptionsCompat options) {
-        Intent starter = getStartIntent(context, player);
-        context.startActivity(starter, options.toBundle());
+    public static void start(Activity activity, Player player, ActivityOptionsCompat options) {
+        Intent starter = getStartIntent(activity, player);
+        ActivityCompat.startActivity(activity, starter, options.toBundle());
     }
 
     public static void start(Context context, Player player) {

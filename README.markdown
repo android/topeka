@@ -12,8 +12,8 @@ platforms.
 We originally launched the [Topeka web app](https://github.com/Polymer/topeka)
 as an Open Source example of material design on the web.
 
-The current release of Topeka is available to users down to API level 16 aka [Jelly
-Bean](http://developer.android.com/about/versions/android-4.1.html).
+The current release of Topeka is available to users down to API level 14 aka
+[Ice Cream Sandwich](http://developer.android.com/about/versions/android-4.0.html).
 This is being accomplished by utilizing several [support
 libraries](https://developer.android.com/tools/support-library/index.html).
 Especially

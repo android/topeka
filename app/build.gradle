@@ -22,7 +22,7 @@ android {
 
     defaultConfig {
         applicationId "com.google.samples.apps.topeka"
-        minSdkVersion 16
+        minSdkVersion 14
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
