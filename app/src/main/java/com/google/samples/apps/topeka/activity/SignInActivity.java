@@ -17,9 +17,10 @@
 package com.google.samples.apps.topeka.activity;
 
 import android.app.Activity;
-import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.app.AppCompatActivity;
 
 import com.google.samples.apps.topeka.R;
@@ -30,7 +31,7 @@ public class SignInActivity extends AppCompatActivity {
 
     private static final String EXTRA_EDIT = "EDIT";
 
-    public static void start(Activity activity, Boolean edit, ActivityOptions options) {
+    public static void start(Activity activity, Boolean edit, ActivityOptionsCompat options) {
         Intent starter = new Intent(activity, SignInActivity.class);
         starter.putExtra(EXTRA_EDIT, edit);
         if (options == null) {
@@ -38,7 +39,7 @@ public class SignInActivity extends AppCompatActivity {
             activity.overridePendingTransition(android.R.anim.slide_in_left,
                     android.R.anim.slide_out_right);
         } else {
-            activity.startActivity(starter, options.toBundle());
+            ActivityCompat.startActivity(activity, starter, options.toBundle());
         }
     }
 
