@@ -19,9 +19,8 @@ package com.google.samples.apps.topeka.widget;
 import com.google.samples.apps.topeka.helper.ViewUtils;
 
 import android.annotation.TargetApi;
-import android.app.SharedElementCallback;
 import android.os.Build;
-import android.support.v4.view.ViewCompat;
+import android.support.v4.app.SharedElementCallback;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.TextView;

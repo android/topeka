@@ -17,7 +17,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:orientation="vertical">
+              android:orientation="vertical"
+              android:background="?android:attr/windowBackground">
 
     <ListView
             android:id="@+id/scorecard"
@@ -25,14 +26,13 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:fillViewport="true"
-            android:visibility="gone" />
+            android:visibility="gone"/>
 
     <AdapterViewFlipper
             android:id="@+id/quiz_view"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
-            android:background="?android:attr/windowBackground" />
+            android:layout_weight="1"/>
 
     <android.support.v7.widget.Toolbar
             android:id="@+id/progress_toolbar"
@@ -53,7 +53,7 @@
                     style="@style/Widget.AppCompat.ProgressBar.Horizontal"
                     android:layout_marginEnd="@dimen/spacing_double"
                     android:layout_marginRight="@dimen/spacing_double"
-                    android:progressTint="?android:colorAccent" />
+                    android:progressTint="?android:colorAccent"/>
 
             <LinearLayout
                     android:layout_width="match_parent"
@@ -69,13 +69,13 @@
                         android:layout_marginEnd="@dimen/spacing_double"
                         android:layout_marginRight="@dimen/spacing_double"
                         android:scaleX="0"
-                        android:scaleY="0" />
+                        android:scaleY="0"/>
 
                 <TextView
                         android:id="@+id/progress_text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColor="?android:attr/textColorPrimary" />
+                        android:textColor="?android:attr/textColorPrimary"/>
             </LinearLayout>
         </LinearLayout>
     </android.support.v7.widget.Toolbar>

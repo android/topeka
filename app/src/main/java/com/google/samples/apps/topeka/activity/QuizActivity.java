@@ -52,6 +52,7 @@ import com.google.samples.apps.topeka.fragment.QuizFragment;
 import com.google.samples.apps.topeka.helper.ApiLevelHelper;
 import com.google.samples.apps.topeka.helper.ViewUtils;
 import com.google.samples.apps.topeka.model.Category;
+import com.google.samples.apps.topeka.model.JsonAttributes;
 import com.google.samples.apps.topeka.persistence.TopekaDatabaseHelper;
 import com.google.samples.apps.topeka.widget.TextSharedElementCallback;
 
@@ -74,7 +75,6 @@ public class QuizActivity extends AppCompatActivity {
     private ImageView mIcon;
     private Animator mCircularReveal;
     private CountingIdlingResource mCountingIdlingResource;
-    private TextView mTitleView;
     private View mToolbarBack;
 
     private View.OnClickListener mOnClickListener = new View.OnClickListener() {
@@ -121,34 +121,34 @@ public class QuizActivity extends AppCompatActivity {
                 .getDimensionPixelSize(R.dimen.category_item_text_size);
         int paddingStart = getResources().getDimensionPixelSize(R.dimen.spacing_double);
         final int startDelay = getResources().getInteger(R.integer.toolbar_transition_duration);
-        setEnterSharedElementCallback(new TextSharedElementCallback(categoryNameTextSize,
-                paddingStart) {
-            @Override
-            public void onSharedElementStart(List<String> sharedElementNames,
-                                             List<View> sharedElements,
-                                             List<View> sharedElementSnapshots) {
-                super.onSharedElementStart(sharedElementNames,
-                        sharedElements,
-                        sharedElementSnapshots);
-                mToolbarBack.setScaleX(0f);
-                mToolbarBack.setScaleY(0f);
-            }
+        ActivityCompat.setEnterSharedElementCallback(this,
+                new TextSharedElementCallback(categoryNameTextSize, paddingStart) {
+                    @Override
+                    public void onSharedElementStart(List<String> sharedElementNames,
+                                                     List<View> sharedElements,
+                                                     List<View> sharedElementSnapshots) {
+                        super.onSharedElementStart(sharedElementNames,
+                                sharedElements,
+                                sharedElementSnapshots);
+                        mToolbarBack.setScaleX(0f);
+                        mToolbarBack.setScaleY(0f);
+                    }
 
-            @Override
-            public void onSharedElementEnd(List<String> sharedElementNames,
-                                           List<View> sharedElements,
-                                           List<View> sharedElementSnapshots) {
-                super.onSharedElementEnd(sharedElementNames,
-                        sharedElements,
-                        sharedElementSnapshots);
-                // Make sure to perform this animation after the transition has ended.
-                ViewCompat.animate(mToolbarBack)
-                        .setStartDelay(startDelay)
-                        .scaleX(1f)
-                        .scaleY(1f)
-                        .alpha(1f);
-            }
-        });
+                    @Override
+                    public void onSharedElementEnd(List<String> sharedElementNames,
+                                                   List<View> sharedElements,
+                                                   List<View> sharedElementSnapshots) {
+                        super.onSharedElementEnd(sharedElementNames,
+                                sharedElements,
+                                sharedElementSnapshots);
+                        // Make sure to perform this animation after the transition has ended.
+                        ViewCompat.animate(mToolbarBack)
+                                .setStartDelay(startDelay)
+                                .scaleX(1f)
+                                .scaleY(1f)
+                                .alpha(1f);
+                    }
+                });
     }
 
     @Override
@@ -156,7 +156,11 @@ public class QuizActivity extends AppCompatActivity {
         if (mSavedStateIsPlaying) {
             mQuizFragment = (QuizFragment) getSupportFragmentManager().findFragmentByTag(
                     FRAGMENT_TAG);
+            if (!mQuizFragment.hasSolvedStateListener()) {
+                mQuizFragment.setSolvedStateListener(getSolvedStateListener());
+            }
             findViewById(R.id.quiz_fragment_container).setVisibility(View.VISIBLE);
+            mQuizFab.hide();
         } else {
             initQuizFragment();
         }
@@ -287,7 +291,7 @@ public class QuizActivity extends AppCompatActivity {
 
     public void setToolbarElevation(boolean shouldElevate) {
         if (ApiLevelHelper.isAtLeast(Build.VERSION_CODES.LOLLIPOP)) {
-            mTitleView.setElevation(shouldElevate ?
+            mToolbarBack.setElevation(shouldElevate ?
                     getResources().getDimension(R.dimen.elevation_header) : 0);
         }
     }
@@ -296,50 +300,59 @@ public class QuizActivity extends AppCompatActivity {
         if (mQuizFragment != null) {
             return;
         }
-        mQuizFragment = QuizFragment.newInstance(mCategory.getId(),
-                new QuizFragment.SolvedStateListener() {
-                    @Override
-                    public void onCategorySolved() {
-                        setToolbarElevation(true);
-                        displayDoneFab();
-                    }
+        mQuizFragment = QuizFragment.newInstance(mCategory.getId(), getSolvedStateListener());
+        // the toolbar should not have more elevation than the content while playing
+        setToolbarElevation(false);
+    }
 
-                    private void displayDoneFab() {
-                        /* We're re-using the already existing fab and give it some
-                         * new values. This has to run delayed due to the queued animation
-                         * to hide the fab initially.
-                         */
-                        if (null != mCircularReveal && mCircularReveal.isRunning()) {
-                            mCircularReveal.addListener(new AnimatorListenerAdapter() {
-                                @Override
-                                public void onAnimationEnd(Animator animation) {
-                                    showQuizFabWithDoneIcon();
-                                    mCircularReveal.removeListener(this);
-                                }
-                            });
-                        } else {
+    @NonNull
+    private QuizFragment.SolvedStateListener getSolvedStateListener() {
+        return new QuizFragment.SolvedStateListener() {
+            @Override
+            public void onCategorySolved() {
+                setResultSolved();
+                setToolbarElevation(true);
+                displayDoneFab();
+            }
+
+            private void displayDoneFab() {
+                /* We're re-using the already existing fab and give it some
+                 * new values. This has to run delayed due to the queued animation
+                 * to hide the fab initially.
+                 */
+                if (null != mCircularReveal && mCircularReveal.isRunning()) {
+                    mCircularReveal.addListener(new AnimatorListenerAdapter() {
+                        @Override
+                        public void onAnimationEnd(Animator animation) {
                             showQuizFabWithDoneIcon();
+                            mCircularReveal.removeListener(this);
                         }
-                    }
+                    });
+                } else {
+                    showQuizFabWithDoneIcon();
+                }
+            }
 
-                    private void showQuizFabWithDoneIcon() {
-                        mQuizFab.setImageResource(R.drawable.ic_tick);
-                        mQuizFab.setId(R.id.quiz_done);
-                        mQuizFab.setVisibility(View.VISIBLE);
-                        mQuizFab.setScaleX(0f);
-                        mQuizFab.setScaleY(0f);
-                        ViewCompat.animate(mQuizFab)
-                                .scaleX(1)
-                                .scaleY(1)
-                                .setInterpolator(mInterpolator)
-                                .setListener(null)
-                                .start();
-                    }
-                });
-        if (ApiLevelHelper.isAtLeast(Build.VERSION_CODES.LOLLIPOP)) {
-            // the toolbar should not have more elevation than the content while playing
-            setToolbarElevation(false);
-        }
+            private void showQuizFabWithDoneIcon() {
+                mQuizFab.setImageResource(R.drawable.ic_tick);
+                mQuizFab.setId(R.id.quiz_done);
+                mQuizFab.setVisibility(View.VISIBLE);
+                mQuizFab.setScaleX(0f);
+                mQuizFab.setScaleY(0f);
+                ViewCompat.animate(mQuizFab)
+                        .scaleX(1)
+                        .scaleY(1)
+                        .setInterpolator(mInterpolator)
+                        .setListener(null)
+                        .start();
+            }
+        };
+    }
+
+    private void setResultSolved() {
+        Intent categoryIntent = new Intent();
+        categoryIntent.putExtra(JsonAttributes.ID, mCategory.getId());
+        setResult(R.id.solved, categoryIntent);
     }
 
     /**
@@ -360,6 +373,7 @@ public class QuizActivity extends AppCompatActivity {
         mCountingIdlingResource.decrement();
         if (!mQuizFragment.showNextPage()) {
             mQuizFragment.showSummary();
+            setResultSolved();
             return;
         }
         setToolbarElevation(false);
@@ -407,12 +421,12 @@ public class QuizActivity extends AppCompatActivity {
     }
 
     private void initToolbar(Category category) {
-        mTitleView = (TextView) findViewById(R.id.category_title);
-        mTitleView.setText(category.getName());
-        mTitleView.setTextColor(ContextCompat.getColor(this,
-                category.getTheme().getTextPrimaryColor()));
         mToolbarBack = findViewById(R.id.back);
         mToolbarBack.setOnClickListener(mOnClickListener);
+        TextView titleView = (TextView) findViewById(R.id.category_title);
+        titleView.setText(category.getName());
+        titleView.setTextColor(ContextCompat.getColor(this,
+                category.getTheme().getTextPrimaryColor()));
         if (mSavedStateIsPlaying) {
             // the toolbar should not have more elevation than the content while playing
             setToolbarElevation(false);

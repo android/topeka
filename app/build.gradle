@@ -51,6 +51,11 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.1') {
         exclude module: 'espresso-idling-resource'
     }
+    androidTestCompile('com.android.support.test.espresso:espresso-contrib:2.2.1') {
+        exclude module: 'espresso-core'
+        exclude module: 'recyclerview-v7'
+        exclude module: 'support-v4'
+    }
     androidTestCompile 'com.android.support.test:rules:0.4'
     androidTestCompile 'com.android.support.test:runner:0.4'
     androidTestCompile 'org.hamcrest:hamcrest-core:1.3'

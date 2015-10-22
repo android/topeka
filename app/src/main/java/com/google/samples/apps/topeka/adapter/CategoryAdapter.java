@@ -98,6 +98,25 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
         return mCategories.get(position);
     }
 
+    /**
+     * @see android.support.v7.widget.RecyclerView.Adapter#notifyItemChanged(int)
+     * @param id Id of changed category.
+     */
+    public final void notifyItemChanged(String id) {
+        updateCategories(mActivity);
+        notifyItemChanged(getItemPositionById(id));
+    }
+
+    private int getItemPositionById(String id) {
+        for (int i = 0; i < mCategories.size(); i++) {
+            if (mCategories.get(i).getId().equals(id)) {
+                return i;
+            }
+
+        }
+        return -1;
+    }
+
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
         mOnItemClickListener = onItemClickListener;
     }
@@ -140,7 +159,8 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
      * @return The tinted resource
      */
     private Drawable loadTintedCategoryDrawable(Category category, int categoryImageResource) {
-        final Drawable categoryIcon = ContextCompat.getDrawable(mActivity, categoryImageResource);
+        final Drawable categoryIcon = ContextCompat
+                .getDrawable(mActivity, categoryImageResource).mutate();
         return wrapAndTint(categoryIcon, category.getTheme().getPrimaryColor());
     }
 

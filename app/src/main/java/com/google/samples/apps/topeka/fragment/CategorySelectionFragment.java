@@ -17,6 +17,7 @@
 package com.google.samples.apps.topeka.fragment;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
@@ -32,6 +33,7 @@ import com.google.samples.apps.topeka.activity.QuizActivity;
 import com.google.samples.apps.topeka.adapter.CategoryAdapter;
 import com.google.samples.apps.topeka.helper.TransitionHelper;
 import com.google.samples.apps.topeka.model.Category;
+import com.google.samples.apps.topeka.model.JsonAttributes;
 import com.google.samples.apps.topeka.widget.OffsetDecoration;
 
 public class CategorySelectionFragment extends Fragment {
@@ -74,10 +76,16 @@ public class CategorySelectionFragment extends Fragment {
 
     @Override
     public void onResume() {
-        // TODO: 10/19/15 don't use notifyDataSetChanged directly
-        mAdapter.notifyDataSetChanged();
         getActivity().supportStartPostponedEnterTransition();
         super.onResume();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == R.id.request_category && resultCode == R.id.solved) {
+            mAdapter.notifyItemChanged(data.getStringExtra(JsonAttributes.ID));
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     private void startQuizActivityWithTransition(Activity activity, View toolbar,
@@ -90,8 +98,11 @@ public class CategorySelectionFragment extends Fragment {
 
         // Start the activity with the participants, animating from one to the other.
         final Bundle transitionBundle = sceneTransitionAnimation.toBundle();
-        ActivityCompat.startActivity(getActivity(),
-                QuizActivity.getStartIntent(activity, category), transitionBundle);
+        Intent startIntent = QuizActivity.getStartIntent(activity, category);
+        ActivityCompat.startActivityForResult(activity,
+                startIntent,
+                R.id.request_category,
+                transitionBundle);
     }
 
 }

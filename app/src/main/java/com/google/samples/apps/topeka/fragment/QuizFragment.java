@@ -243,6 +243,16 @@ public class QuizFragment extends android.support.v4.app.Fragment {
         mQuizView.setVisibility(View.GONE);
     }
 
+    public boolean hasSolvedStateListener() {
+        return mSolvedStateListener != null;
+    }
+    public void setSolvedStateListener(SolvedStateListener solvedStateListener) {
+        mSolvedStateListener = solvedStateListener;
+        if (mCategory.isSolved() && null != mSolvedStateListener) {
+                mSolvedStateListener.onCategorySolved();
+            }
+    }
+
     private ScoreAdapter getScoreAdapter() {
         if (null == mScoreAdapter) {
             mScoreAdapter = new ScoreAdapter(mCategory);

@@ -24,6 +24,8 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.transition.TransitionInflater;
@@ -105,6 +107,14 @@ public class CategorySelectionActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.category_container);
+        if (fragment != null) {
+            fragment.onActivityResult(requestCode, resultCode, data);
+        }
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.sign_out: {
@@ -132,8 +142,13 @@ public class CategorySelectionActivity extends AppCompatActivity {
     }
 
     private void attachCategoryGridFragment() {
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.quiz_container, CategorySelectionFragment.newInstance())
+        FragmentManager supportFragmentManager = getSupportFragmentManager();
+        Fragment fragment = supportFragmentManager.findFragmentById(R.id.category_container);
+        if (!(fragment instanceof CategorySelectionFragment)) {
+            fragment = CategorySelectionFragment.newInstance();
+        }
+        supportFragmentManager.beginTransaction()
+                .replace(R.id.category_container, fragment)
                 .commit();
         setProgressBarVisibility(View.GONE);
     }
