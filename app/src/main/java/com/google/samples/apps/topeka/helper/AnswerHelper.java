@@ -85,7 +85,7 @@ public class AnswerHelper {
                 return false;
             }
         }
-        return true;
+        return checkedItems.size() == answerIds.length;
     }
 
 }
