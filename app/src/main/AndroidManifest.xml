@@ -36,6 +36,7 @@
                   android:theme="@style/Topeka.CategorySelectionActivity" />
 
         <activity android:name=".activity.QuizActivity"
+                  android:launchMode="singleTop"
                   android:windowSoftInputMode="adjustPan"
                   android:theme="@style/Topeka.QuizActivity"/>
 
