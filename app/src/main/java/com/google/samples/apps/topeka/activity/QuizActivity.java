@@ -18,6 +18,7 @@ package com.google.samples.apps.topeka.activity;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.animation.AnimatorSet;
 import android.animation.ArgbEvaluator;
 import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
@@ -74,10 +75,12 @@ public class QuizActivity extends AppCompatActivity {
     private boolean mSavedStateIsPlaying;
     private ImageView mIcon;
     private Animator mCircularReveal;
+    private ObjectAnimator mColorChange;
     private CountingIdlingResource mCountingIdlingResource;
     private View mToolbarBack;
 
-    private View.OnClickListener mOnClickListener = new View.OnClickListener() {
+
+    View.OnClickListener mOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(final View v) {
             switch (v.getId()) {
@@ -244,12 +247,6 @@ public class QuizActivity extends AppCompatActivity {
                                                  final FrameLayout fragmentContainer) {
         prepareCircularReveal(clickedView, fragmentContainer);
 
-        int accentColor = ContextCompat.getColor(this, mCategory.getTheme().getAccentColor());
-        final ObjectAnimator revealWave = ObjectAnimator.ofInt(fragmentContainer,
-                ViewUtils.FOREGROUND_COLOR, accentColor, Color.TRANSPARENT);
-        revealWave.setEvaluator(new ArgbEvaluator());
-        revealWave.setInterpolator(mInterpolator);
-
         ViewCompat.animate(clickedView)
                 .scaleX(0)
                 .scaleY(0)
@@ -265,13 +262,13 @@ public class QuizActivity extends AppCompatActivity {
                 .start();
 
         fragmentContainer.setVisibility(View.VISIBLE);
-        revealWave.start();
-        mCircularReveal.start();
-        clickedView.setVisibility(View.GONE);
+        AnimatorSet animatorSet = new AnimatorSet();
+        animatorSet.play(mCircularReveal).with(mColorChange);
+        animatorSet.start();
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    private void prepareCircularReveal(View startView, View targetView) {
+    private void prepareCircularReveal(View startView, FrameLayout targetView) {
         int centerX = (startView.getLeft() + startView.getRight()) / 2;
         // Subtract the start view's height to adjust for relative coordinates on screen.
         int centerY = (startView.getTop() + startView.getBottom()) / 2 - startView.getHeight();
@@ -287,6 +284,13 @@ public class QuizActivity extends AppCompatActivity {
                 mCircularReveal.removeListener(this);
             }
         });
+        // Adding a color animation from the FAB's color to transparent creates a dissolve like
+        // effect to the circular reveal.
+        int accentColor = ContextCompat.getColor(this, mCategory.getTheme().getAccentColor());
+        mColorChange = ObjectAnimator.ofInt(targetView,
+                ViewUtils.FOREGROUND_COLOR, accentColor, Color.TRANSPARENT);
+        mColorChange.setEvaluator(new ArgbEvaluator());
+        mColorChange.setInterpolator(mInterpolator);
     }
 
     public void setToolbarElevation(boolean shouldElevate) {
