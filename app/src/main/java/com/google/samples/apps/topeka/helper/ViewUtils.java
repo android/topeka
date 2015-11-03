@@ -91,7 +91,6 @@ public class ViewUtils {
                 }
             };
 
-
     /**
      * Allows making changes to the start padding of a view.
      * Using this with something else than {@link ChangeBounds}
