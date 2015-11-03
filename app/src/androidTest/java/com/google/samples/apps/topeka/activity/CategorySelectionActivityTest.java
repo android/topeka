@@ -19,6 +19,7 @@ package com.google.samples.apps.topeka.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.test.InstrumentationRegistry;
+import android.support.test.espresso.contrib.RecyclerViewActions;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.test.suitebuilder.annotation.LargeTest;
@@ -37,18 +38,15 @@ import org.junit.runner.RunWith;
 
 import java.util.List;
 
-import static android.support.test.espresso.Espresso.onData;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.Espresso.openActionBarOverflowOrOptionsMenu;
 import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.action.ViewActions.scrollTo;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static junit.framework.Assert.assertFalse;
-import static org.hamcrest.Matchers.allOf;
-import static org.hamcrest.Matchers.instanceOf;
-import static org.hamcrest.Matchers.is;
 
 @RunWith(AndroidJUnit4.class)
 @LargeTest
@@ -80,11 +78,14 @@ public class CategorySelectionActivityTest {
     }
 
     @Test
-    public void allCategories_areDisplayed() {
-        for (Category category : mCategories) {
-            onData(allOf(is(instanceOf(Category.class)), is(category)))
-                    .inAdapterView(withId(R.id.categories))
-                    .check(matches(isDisplayed()));
+    public void allCategories_areDisplayed() throws InterruptedException {
+        String categoryName;
+        for (int i = 0; i < mCategories.size(); i++) {
+            categoryName = mCategories.get(i).getName();
+            onView(withId(R.id.categories))
+                    .perform(RecyclerViewActions.actionOnItemAtPosition(i, scrollTo()));
+            onView(withText(categoryName)).check(matches(isDisplayed()));
+
         }
     }
 

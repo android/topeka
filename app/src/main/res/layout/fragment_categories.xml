@@ -14,20 +14,16 @@
   ~ limitations under the License.
   -->
 
-<GridView
-        android:id="@+id/categories"
+<android.support.v7.widget.RecyclerView
         xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/categories"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/topeka_blank"
+        android:padding="@dimen/spacing_nano"
         android:clipToPadding="false"
-        android:drawSelectorOnTop="true"
-        android:horizontalSpacing="@dimen/spacing_micro"
-        android:listSelector="@drawable/selector_categories"
-        android:numColumns="auto_fit"
-        android:padding="@dimen/spacing_micro"
         android:scrollbarStyle="outsideOverlay"
-        android:stretchMode="columnWidth"
-        android:verticalSpacing="@dimen/spacing_micro"
-        tools:ignore="Overdraw" />
+        android:scrollbars="vertical"
+        app:layoutManager="android.support.v7.widget.GridLayoutManager"
+        android:transitionGroup="false"
+        app:spanCount="2" />

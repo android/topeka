@@ -18,6 +18,8 @@
               xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
+              android:background="@color/topeka_blank"
+              android:transitionGroup="false"
               android:orientation="vertical">
 
     <android.support.v7.widget.Toolbar
@@ -52,7 +54,7 @@
                   android:paddingStart="@dimen/spacing_micro" />
     </android.support.v7.widget.Toolbar>
 
-    <FrameLayout android:id="@+id/quiz_container"
+    <FrameLayout android:id="@+id/category_container"
                  android:layout_width="match_parent"
                  android:layout_height="match_parent"
                  tools:context="activity.QuizSelectionActivity"

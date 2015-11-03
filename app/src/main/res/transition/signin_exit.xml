@@ -14,11 +14,15 @@
   ~ limitations under the License.
   -->
 
-<objectAnimator
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:propertyName="pathData"
-        android:valueFrom="@string/path_cross_line_2"
-        android:valueTo="@string/path_tick_line_2"
-        android:duration="@integer/tick_cross_duration"
-        android:interpolator="@android:interpolator/fast_out_slow_in"
-        android:valueType="pathType" />
+<transitionSet xmlns:android="http://schemas.android.com/apk/res/android">
+    <slide android:slideEdge="left">
+        <targets>
+            <target android:excludeId="@android:id/statusBarBackground" />
+        </targets>
+    </slide>
+    <fade>
+        <targets>
+            <target android:targetId="@id/fragment_sign_in_content" />
+        </targets>
+    </fade>
+</transitionSet>

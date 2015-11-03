@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <!--
   ~ Copyright (C) 2015 The Android Open Source Project
   ~
@@ -18,13 +17,26 @@
 <resources>
     <style name="Topeka" parent="Topeka.Base">
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:windowContentTransitions">true</item>
     </style>
 
     <style name="Topeka.CategorySelectionActivity">
-        <item name="android:windowSharedElementEnterTransition">@transition/category_enter</item>
+        <item name="android:windowSharedElementEnterTransition">
+            @transition/category_shared_enter
+        </item>
+        <item name="android:windowEnterTransition">@transition/category_enter</item>
+        <item name="android:windowExitTransition">@transition/category_exit</item>
+        <item name="android:windowBackground">@color/topeka_blank</item>
     </style>
 
     <style name="Topeka.QuizActivity">
-        <item name="android:windowSharedElementEnterTransition">@transition/quiz_enter</item>
+        <item name="android:windowSharedElementEnterTransition">@transition/quiz_shared_enter</item>
     </style>
+
+    <style name="Topeka.SignInActivity">
+        <item name="android:windowEnterTransition">@transition/signin_enter</item>
+        <item name="android:windowExitTransition">@transition/signin_exit</item>
+        <item name="android:windowBackground">@color/topeka_blank</item>
+    </style>
+
 </resources>

@@ -20,4 +20,7 @@
     <item name="quiz_content" type="id" />
     <item name="quiz_done" type="id" />
     <item name="quiz_edit_text_two" type="id" />
+    <item name="solved" type="id" />
+    <item name="request_category" type="id" />
+
 </resources>

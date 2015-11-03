@@ -15,8 +15,10 @@
   -->
 
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:id="@+id/fragment_sign_in_content"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
+             android:clipToPadding="false"
              android:paddingEnd="@dimen/spacing_double"
              android:paddingStart="@dimen/spacing_double">
 

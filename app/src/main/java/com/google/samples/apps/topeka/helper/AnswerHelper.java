@@ -31,7 +31,6 @@ public class AnswerHelper {
         //no instance
     }
 
-
     /**
      * Converts an array of answers to a readable answer.
      *

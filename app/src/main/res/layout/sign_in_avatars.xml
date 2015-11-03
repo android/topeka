@@ -24,18 +24,23 @@
 
     <TextView
             android:id="@+id/toolbar_choose_avatar"
-            style="@style/Topeka.TextAppearance.Title"
             android:layout_width="match_parent"
             android:layout_height="?android:attr/actionBarSize"
+            style="@style/Topeka.TextAppearance.Title"
             android:gravity="center_vertical"
-            android:text="@string/choose_avatar" />
+            android:text="@string/choose_avatar"
+            android:paddingEnd="@dimen/spacing_double"
+            android:paddingStart="@dimen/spacing_double"
+            android:clipToPadding="false" />
 
     <GridView
             android:id="@+id/avatars"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:choiceMode="singleChoice"
-            android:cropToPadding="true"
             android:listSelector="@android:color/transparent"
-            android:verticalSpacing="@dimen/spacing_double" />
+            android:verticalSpacing="@dimen/spacing_double"
+            android:paddingEnd="@dimen/spacing_double"
+            android:paddingStart="@dimen/spacing_double"
+            android:clipToPadding="false" />
 </LinearLayout>

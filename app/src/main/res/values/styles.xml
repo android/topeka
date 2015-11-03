@@ -28,7 +28,6 @@
         <item name="android:statusBarColor">@color/topeka_primary_dark</item>
         <item name="android:textColor">@color/text_dark</item>
         <item name="android:radioButtonStyle">@style/Topeka.CompoundButton.Radio</item>
-        <item name="android:windowContentTransitions">true</item>
         <item name="android:buttonStyle">@style/Topeka.CompoundButton</item>
         <item name="android:windowBackground">@color/light_grey</item>
         <item name="android:colorBackground">@color/light_grey</item>
@@ -36,6 +35,7 @@
 
     <style name="Topeka.CategorySelectionActivity" />
     <style name="Topeka.QuizActivity" />
+    <style name="Topeka.SignInActivity" />
 
     <style name="Topeka.Blue">
         <item name="colorPrimary">@color/theme_blue_primary</item>
@@ -100,6 +100,10 @@
     </style>
 
     <style name="Topeka.TextAppearance">
+    </style>
+
+    <style name="Topeka.TextAppearance.CategoryItem" parent="TextAppearance.AppCompat.Small">
+        <item name="android:textSize">@dimen/category_item_text_size</item>
     </style>
 
     <style name="Topeka.TextAppearance.Title" parent="TextAppearance.AppCompat.Title">

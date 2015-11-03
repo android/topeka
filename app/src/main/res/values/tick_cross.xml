@@ -36,6 +36,6 @@
     <color name="tick_cross_stroke_color">@android:color/black</color>
 
     <!-- timing -->
-    <integer name="duration">450</integer>
+    <integer name="tick_cross_duration">450</integer>
 
 </resources>

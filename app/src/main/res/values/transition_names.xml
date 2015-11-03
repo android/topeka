@@ -16,6 +16,5 @@
 
 <resources>
     <string name="transition_avatar">AvatarTransition</string>
-    <string name="transition_background">BackgroundTransition</string>
     <string name="transition_toolbar">ToolbarTransition</string>
 </resources>
