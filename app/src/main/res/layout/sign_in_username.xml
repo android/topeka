@@ -31,7 +31,14 @@
             android:gravity="center_vertical"
             android:text="@string/sign_in" />
 
-    <EditText
+
+    <android.support.design.widget.TextInputLayout
+        style="@style/Topeka.TextAppearance.Title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp">
+
+        <EditText
             android:id="@+id/first_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -42,17 +49,25 @@
             android:paddingBottom="@dimen/spacing_micro"
             android:paddingTop="@dimen/spacing_micro"
             android:textSize="@dimen/size_edit_text" />
+        />
+    </android.support.design.widget.TextInputLayout>
 
+    <android.support.design.widget.TextInputLayout
+        style="@style/Topeka.TextAppearance.Title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp">
     <EditText
-            android:id="@+id/last_initial"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/last_initial"
-            android:imeOptions="actionDone"
-            android:inputType="textNoSuggestions|textCapWords"
-            android:maxLength="1"
-            android:minHeight="?android:attr/actionBarSize"
-            android:paddingBottom="@dimen/spacing_micro"
-            android:paddingTop="@dimen/spacing_micro"
-            android:textSize="@dimen/size_edit_text" />
+        android:id="@+id/last_initial"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/last_initial"
+        android:imeOptions="actionDone"
+        android:inputType="textNoSuggestions|textCapWords"
+        android:maxLength="1"
+        android:minHeight="?android:attr/actionBarSize"
+        android:paddingBottom="@dimen/spacing_micro"
+        android:paddingTop="@dimen/spacing_micro"
+        android:textSize="@dimen/size_edit_text" />
+    </android.support.design.widget.TextInputLayout>
 </LinearLayout>
