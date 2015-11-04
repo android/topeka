@@ -38,9 +38,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingStart="@dimen/spacing_double"
-            android:paddingTop="@dimen/spacing_micro"
             android:paddingEnd="@dimen/spacing_double"
-            android:paddingBottom="@dimen/spacing_micro"
             android:clipToPadding="false"
             android:transitionGroup="true">
         <EditText
@@ -58,9 +56,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingStart="@dimen/spacing_double"
-            android:paddingTop="@dimen/spacing_micro"
             android:paddingEnd="@dimen/spacing_double"
-            android:paddingBottom="@dimen/spacing_micro"
             android:clipToPadding="false"
             android:transitionGroup="true">
         <EditText
