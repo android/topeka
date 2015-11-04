@@ -89,6 +89,11 @@ public abstract class BaseQuizActivityTest {
     }
 
     @Test
+    public void goBack_fromToolbar() {
+        onView(withId(R.id.back)).perform(click());
+    }
+
+    @Test
     public void category_solveCorrectly() {
         testCategory();
     }
