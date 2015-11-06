@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <!--
   ~ Copyright 2015 Google Inc.
   ~
@@ -14,46 +13,45 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
+
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+             android:id="@+id/fragment_sign_in_content"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent">
 
     <ProgressBar
-        android:id="@+id/empty"
-        android:layout_width="@dimen/min_height_touch_target"
-        android:layout_height="@dimen/min_height_touch_target"
-        android:layout_gravity="center"
-        android:progressTint="@color/topeka_accent" />
+            android:id="@+id/empty"
+            android:layout_width="@dimen/min_height_touch_target"
+            android:layout_height="@dimen/min_height_touch_target"
+            android:layout_gravity="center"
+            android:progressTint="@color/topeka_accent" />
 
     <FrameLayout
-        android:id="@+id/content"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <include
-            layout="@layout/fab_done"
-            android:visibility="gone" />
+            android:id="@+id/content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:orientation="vertical"
-            android:paddingEnd="@dimen/spacing_double"
-            android:paddingStart="@dimen/spacing_double">
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:orientation="vertical">
 
             <include
-                layout="@layout/sign_in_username"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1" />
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    layout="@layout/sign_in_username"
+                    android:layout_weight="1" />
 
             <include
-                layout="@layout/sign_in_avatars"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="2" />
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    layout="@layout/sign_in_avatars"
+                    android:layout_weight="2" />
 
         </LinearLayout>
+        <include
+                layout="@layout/fab_done"
+                android:visibility="gone" />
     </FrameLayout>
 </FrameLayout>

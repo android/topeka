@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <!--
   ~ Copyright 2015 Google Inc.
   ~
@@ -14,9 +13,11 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
+
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
-    android:shape="oval">
+       android:shape="oval">
     <stroke
-        android:width="@dimen/stroke_width_avatar"
-        android:color="@color/topeka_primary" />
+            android:width="@dimen/stroke_width_avatar"
+            android:color="@color/topeka_primary" />
+    <solid android:color="@android:color/transparent" />
 </shape>

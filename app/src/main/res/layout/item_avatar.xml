@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <!--
   ~ Copyright 2015 Google Inc.
   ~
@@ -14,10 +13,11 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
+
 <com.google.samples.apps.topeka.widget.AvatarView
-    android:id="@+id/avatar"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="@dimen/size_fab"
-    android:layout_height="@dimen/size_fab"
-    android:layout_gravity="center"
-    android:contentDescription="@string/an_avatar" />
+        android:id="@+id/avatar"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="@dimen/size_fab"
+        android:layout_height="@dimen/size_fab"
+        android:layout_gravity="center"
+        android:contentDescription="@string/an_avatar" />

@@ -13,11 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.google.samples.apps.topeka.fragment;
 
-import android.app.Fragment;
+import android.annotation.TargetApi;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.view.ViewCompat;
+import android.support.v4.view.animation.FastOutLinearInInterpolator;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,6 +34,7 @@ import android.widget.TextView;
 import com.google.samples.apps.topeka.R;
 import com.google.samples.apps.topeka.adapter.QuizAdapter;
 import com.google.samples.apps.topeka.adapter.ScoreAdapter;
+import com.google.samples.apps.topeka.helper.ApiLevelHelper;
 import com.google.samples.apps.topeka.helper.PreferencesHelper;
 import com.google.samples.apps.topeka.model.Category;
 import com.google.samples.apps.topeka.model.Player;
@@ -44,7 +49,7 @@ import java.util.List;
 /**
  * Encapsulates Quiz solving and displays it to the user.
  */
-public class QuizFragment extends Fragment {
+public class QuizFragment extends android.support.v4.app.Fragment {
 
     private static final String KEY_USER_INPUT = "USER_INPUT";
     private TextView mProgressText;
@@ -57,7 +62,7 @@ public class QuizFragment extends Fragment {
     private SolvedStateListener mSolvedStateListener;
 
     public static QuizFragment newInstance(String categoryId,
-            SolvedStateListener solvedStateListener) {
+                                           SolvedStateListener solvedStateListener) {
         if (categoryId == null) {
             throw new IllegalArgumentException("The category can not be null");
         }
@@ -80,7 +85,7 @@ public class QuizFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
-            @Nullable Bundle savedInstanceState) {
+                             @Nullable Bundle savedInstanceState) {
         // Create a themed Context and custom LayoutInflater
         // to get nicely themed views in this Fragment.
         final Theme theme = mCategory.getTheme();
@@ -94,12 +99,20 @@ public class QuizFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         mQuizView = (AdapterViewAnimator) view.findViewById(R.id.quiz_view);
         decideOnViewToDisplay();
-        mQuizView.setInAnimation(getActivity(), R.animator.slide_in_bottom);
-        mQuizView.setOutAnimation(getActivity(), R.animator.slide_out_top);
+        setQuizViewAnimations();
         final AvatarView avatar = (AvatarView) view.findViewById(R.id.avatar);
         setAvatarDrawable(avatar);
         initProgressToolbar(view);
         super.onViewCreated(view, savedInstanceState);
+    }
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    private void setQuizViewAnimations() {
+        if (ApiLevelHelper.isLowerThan(Build.VERSION_CODES.LOLLIPOP)) {
+            return;
+        }
+        mQuizView.setInAnimation(getActivity(), R.animator.slide_in_bottom);
+        mQuizView.setOutAnimation(getActivity(), R.animator.slide_out_top);
     }
 
     private void initProgressToolbar(View view) {
@@ -125,7 +138,13 @@ public class QuizFragment extends Fragment {
     @SuppressWarnings("ConstantConditions")
     private void setAvatarDrawable(AvatarView avatarView) {
         Player player = PreferencesHelper.getPlayer(getActivity());
-        avatarView.setImageResource(player.getAvatar().getDrawableId());
+        avatarView.setAvatar(player.getAvatar().getDrawableId());
+        ViewCompat.animate(avatarView)
+                .setInterpolator(new FastOutLinearInInterpolator())
+                .setStartDelay(500)
+                .scaleX(1)
+                .scaleY(1)
+                .start();
     }
 
     private void decideOnViewToDisplay() {
@@ -166,8 +185,8 @@ public class QuizFragment extends Fragment {
         mQuizView.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
             @Override
             public void onLayoutChange(View v, int left, int top, int right, int bottom,
-                    int oldLeft,
-                    int oldTop, int oldRight, int oldBottom) {
+                                       int oldLeft,
+                                       int oldTop, int oldRight, int oldBottom) {
                 mQuizView.removeOnLayoutChangeListener(this);
                 View currentChild = mQuizView.getChildAt(0);
                 if (currentChild instanceof ViewGroup) {
@@ -222,6 +241,16 @@ public class QuizFragment extends Fragment {
         scorecardView.setAdapter(mScoreAdapter);
         scorecardView.setVisibility(View.VISIBLE);
         mQuizView.setVisibility(View.GONE);
+    }
+
+    public boolean hasSolvedStateListener() {
+        return mSolvedStateListener != null;
+    }
+    public void setSolvedStateListener(SolvedStateListener solvedStateListener) {
+        mSolvedStateListener = solvedStateListener;
+        if (mCategory.isSolved() && null != mSolvedStateListener) {
+                mSolvedStateListener.onCategorySolved();
+            }
     }
 
     private ScoreAdapter getScoreAdapter() {

@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.google.samples.apps.topeka.model;
 
 import android.os.Parcel;
@@ -45,7 +46,7 @@ public class CategoryTest {
     }
 
     private static List<Quiz> getQuizzes() {
-        List<Quiz> quizzes = new ArrayList<Quiz>();
+        List<Quiz> quizzes = new ArrayList<>();
         quizzes.add(new TrueFalseQuiz("huh?", true, false));
         quizzes.add(new FillBlankQuiz("so?", "yeah", "go", "stop", false));
         return quizzes;

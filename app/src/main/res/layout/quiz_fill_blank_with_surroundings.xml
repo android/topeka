@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <!--
   ~ Copyright 2015 Google Inc.
   ~
@@ -14,20 +13,24 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
 
     <TextView
-        android:id="@+id/start"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+            tools:ignore="PrivateResource"
+            android:id="@+id/start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
     <include layout="@layout/quiz_edit_text" />
 
     <TextView
-        android:id="@+id/end"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+            tools:ignore="PrivateResource"
+            android:id="@+id/end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 </LinearLayout>

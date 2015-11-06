@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <!--
   ~ Copyright 2015 Google Inc.
   ~
@@ -14,7 +13,9 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
+
 <resources>
+    <dimen name="spacing_nano">2dp</dimen>
     <dimen name="spacing_micro">4dp</dimen>
     <dimen name="spacing_normal">8dp</dimen>
     <dimen name="spacing_double">16dp</dimen>
@@ -25,7 +26,6 @@
     <dimen name="size_score_mark">24dp</dimen>
 
     <dimen name="elevation_header">4dp</dimen>
-    <dimen name="elevation_fab">8dp</dimen>
 
     <dimen name="min_height_touch_target">48dp</dimen>
     <dimen name="min_height_question">144dp</dimen>
@@ -33,4 +33,5 @@
     <dimen name="stroke_width_avatar">4dp</dimen>
 
     <dimen name="size_edit_text">18sp</dimen>
+    <dimen name="category_item_text_size">14sp</dimen>
 </resources>

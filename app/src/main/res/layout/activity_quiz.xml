@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <!--
   ~ Copyright 2015 Google Inc.
   ~
@@ -14,70 +13,82 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
+
 <merge
-    android:id="@+id/quiz_container"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
-
-    <!-- Scale is being used during entry animation -->
-    <com.google.samples.apps.topeka.widget.fab.FloatingActionButton
-        android:id="@+id/fab_quiz"
-        android:layout_width="@dimen/size_fab"
-        android:layout_height="@dimen/size_fab"
-        android:layout_gravity="bottom|end"
-        android:layout_marginBottom="@dimen/spacing_double"
-        android:layout_marginEnd="@dimen/spacing_double"
-        android:scaleX="0"
-        android:scaleY="0"
-        android:transitionName="@string/transition_avatar" />
-
-    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/quiz_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <Toolbar
-            android:id="@+id/toolbar_activity_quiz"
-            android:layout_width="match_parent"
-            android:layout_height="?android:attr/actionBarSize"
-            android:layout_gravity="top"
-            android:background="?android:colorPrimary"
-            android:contentInsetStart="@dimen/spacing_huge"
-            android:elevation="@dimen/elevation_header"
-            android:navigationContentDescription="@string/up"
-            android:navigationIcon="@drawable/ic_arrow_back"
-            android:transitionName="@string/transition_toolbar">
-            <!--an empty tag is required to get touch feedback on the navigation icon-->
-        </Toolbar>
-
-        <FrameLayout
+    <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:transitionName="@string/transition_background">
+            android:background="?android:windowBackground"
+            android:orientation="vertical">
+
+        <!-- Fake a toolbar for easier animations -->
+        <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            <TextView android:id="@+id/category_title"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:paddingStart="@dimen/spacing_huge"
+                      android:paddingLeft="@dimen/spacing_huge"
+                      android:paddingTop="@dimen/spacing_micro"
+                      android:paddingBottom="@dimen/spacing_micro"
+                      android:minHeight="?actionBarSize"
+                      android:background="?colorPrimary"
+                      android:textAppearance="@style/Topeka.TextAppearance.Title"
+                      android:gravity="center_vertical"
+                      android:transitionName="@string/transition_toolbar"/>
+            <ImageButton android:id="@+id/back"
+                         android:layout_height="wrap_content"
+                         android:layout_width="wrap_content"
+                         android:padding="@dimen/spacing_double"
+                         android:src="@drawable/ic_arrow_back"
+                         android:layout_gravity="start|center_vertical"
+                         android:background="@drawable/selector_subtle"/>
+        </FrameLayout>
+
+        <FrameLayout android:layout_width="match_parent"
+                     android:layout_height="match_parent"
+                     android:layout_gravity="center">
 
             <!-- Alpha and scales are being used during entry animation -->
-            <ImageView
-                android:id="@+id/icon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_margin="@dimen/spacing_double"
-                android:contentDescription="@null"
-                android:padding="@dimen/spacing_double"
-                android:scaleType="centerInside"
-                android:alpha="0"
-                android:scaleX="0.7"
-                android:scaleY="0.7"/>
+            <ImageView android:id="@+id/icon"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       tools:ignore="PrivateResource"
+                       android:layout_gravity="center"
+                       android:layout_margin="@dimen/spacing_double"
+                       android:contentDescription="@null"
+                       android:padding="@dimen/spacing_double"
+                       android:scaleType="centerInside"
+                       android:alpha="0"
+                       android:scaleX="0.7"
+                       android:scaleY="0.7"/>
 
-            <FrameLayout
-                android:id="@+id/quiz_fragment_container"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:visibility="invisible" />
+            <FrameLayout android:id="@+id/quiz_fragment_container"
+                         android:layout_width="match_parent"
+                         android:layout_height="match_parent"
+                         android:layout_gravity="center"
+                         android:visibility="invisible"/>
         </FrameLayout>
     </LinearLayout>
+
+    <!-- Scale is being used during entry animation -->
+    <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab_quiz"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fabSize="normal"
+            android:layout_gravity="bottom|end"
+            android:layout_marginBottom="@dimen/spacing_double"
+            android:layout_marginEnd="@dimen/spacing_double"
+            android:layout_marginRight="@dimen/spacing_double"
+            android:transitionName="@string/transition_avatar"/>
 </merge>

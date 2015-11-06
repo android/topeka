@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.google.samples.apps.topeka.widget.quiz;
 
 import android.annotation.SuppressLint;
@@ -79,9 +80,11 @@ public class FillBlankQuizView extends TextInputQuizView<FillBlankQuiz> {
         mAnswerView = (EditText) container.findViewById(R.id.quiz_edit_text);
         mAnswerView.addTextChangedListener(this);
         mAnswerView.setOnEditorActionListener(this);
+        //noinspection PrivateResource
         TextView startView = (TextView) container.findViewById(R.id.start);
         setExistingContentOrHide(startView, start);
 
+        //noinspection PrivateResource
         TextView endView = (TextView) container.findViewById(R.id.end);
         setExistingContentOrHide(endView, end);
 

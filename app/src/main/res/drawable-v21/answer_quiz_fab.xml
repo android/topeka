@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <!--
   ~ Copyright 2015 Google Inc.
   ~
@@ -18,20 +17,20 @@
 <animated-selector xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/correct"
-        android:drawable="@drawable/ic_tick"
-        android:state_checked="true" />
+            android:id="@+id/correct"
+            android:drawable="@drawable/ic_tick"
+            android:state_checked="true" />
     <item
-        android:id="@+id/incorrect"
-        android:drawable="@drawable/ic_cross"
-        android:state_checked="false" />
+            android:id="@+id/incorrect"
+            android:drawable="@drawable/ic_cross"
+            android:state_checked="false" />
     <transition
-        android:fromId="@id/incorrect"
-        android:toId="@id/correct"
-        android:drawable="@drawable/avd_cross_to_tick"/>
+            android:fromId="@id/incorrect"
+            android:toId="@id/correct"
+            android:drawable="@drawable/avd_cross_to_tick" />
     <transition
-        android:fromId="@id/correct"
-        android:toId="@id/incorrect"
-        android:drawable="@drawable/avd_tick_to_cross" />
+            android:fromId="@id/correct"
+            android:toId="@id/incorrect"
+            android:drawable="@drawable/avd_tick_to_cross" />
 
 </animated-selector>

@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.google.samples.apps.topeka.widget.quiz;
 
 import android.annotation.SuppressLint;
@@ -46,12 +47,13 @@ public class SelectItemQuizView extends AbsQuizView<SelectItemQuiz> {
 
     @Override
     protected View createQuizContentView() {
-        mListView = new ListView(getContext());
+        Context context = getContext();
+        mListView = new ListView(context);
         mListView.setDivider(null);
         mListView.setSelector(R.drawable.selector_button);
         mListView.setAdapter(
                 new OptionsQuizAdapter(getQuiz().getOptions(), R.layout.item_answer_start,
-                        getContext(), true));
+                        context, true));
         mListView.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

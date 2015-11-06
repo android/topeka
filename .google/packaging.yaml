@@ -5,7 +5,7 @@
 ---
 status:       PUBLISHED
 technologies: [Android]
-categories:   [Design, UI, Testing, Transition, Views]
+categories:   [Design]
 languages:    [Java]
 solutions:    [Mobile]
 
@@ -25,6 +25,5 @@ apiRefs:
     - android:android.view.animation.Interpolator
     - android:android.view.ViewOutlineProvider
     - android:android.view.ContextThemeWrapper
-
 
 license: apache2-google

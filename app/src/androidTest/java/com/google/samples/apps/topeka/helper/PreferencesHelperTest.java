@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.google.samples.apps.topeka.helper;
 
 import android.content.Context;
@@ -23,6 +24,7 @@ import android.test.suitebuilder.annotation.SmallTest;
 import com.google.samples.apps.topeka.model.Avatar;
 import com.google.samples.apps.topeka.model.Player;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -34,6 +36,11 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public class PreferencesHelperTest {
 
     private static final Player TEST_PLAYER = new Player("Zaphod", "B", Avatar.FOUR);
+
+    @Before
+    public void clearPreferences() {
+        PreferencesHelper.signOut(InstrumentationRegistry.getTargetContext());
+    }
 
     @Test
     public void performPreferenceCycle() throws Exception {

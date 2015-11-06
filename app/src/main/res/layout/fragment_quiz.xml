@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <!--
   ~ Copyright 2015 Google Inc.
   ~
@@ -14,64 +13,70 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              android:background="?android:attr/windowBackground">
 
     <ListView
-        android:id="@+id/scorecard"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:fillViewport="true"
-        android:visibility="gone" />
+            android:id="@+id/scorecard"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:fillViewport="true"
+            android:visibility="gone"/>
 
     <AdapterViewFlipper
-        android:id="@+id/quiz_view"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:background="@android:color/white" />
+            android:id="@+id/quiz_view"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
 
-    <Toolbar
-        android:id="@+id/progress_toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="?android:colorPrimary"
-        android:elevation="@dimen/elevation_header">
+    <android.support.v7.widget.Toolbar
+            android:id="@+id/progress_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?colorPrimary"
+            android:elevation="@dimen/elevation_header">
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <ProgressBar
-                android:id="@+id/progress"
-                style="@android:style/Widget.Material.ProgressBar.Horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/spacing_double"
-                android:progressTint="?android:colorAccent" />
-
-            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:baselineAligned="false"
-                android:orientation="horizontal">
+                android:orientation="vertical">
+
+            <ProgressBar
+                    android:id="@+id/progress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                    android:layout_marginEnd="@dimen/spacing_double"
+                    android:layout_marginRight="@dimen/spacing_double"
+                    android:progressTint="?android:colorAccent"/>
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:baselineAligned="false"
+                    android:orientation="horizontal">
 
                 <com.google.samples.apps.topeka.widget.AvatarView
-                    android:id="@+id/avatar"
-                    android:layout_width="@dimen/size_avatar_toolbar"
-                    android:layout_height="@dimen/size_avatar_toolbar"
-                    android:layout_marginBottom="@dimen/spacing_normal"
-                    android:layout_marginEnd="@dimen/spacing_double" />
+                        android:id="@+id/avatar"
+                        android:layout_width="@dimen/size_avatar_toolbar"
+                        android:layout_height="@dimen/size_avatar_toolbar"
+                        android:layout_marginBottom="@dimen/spacing_normal"
+                        android:layout_marginEnd="@dimen/spacing_double"
+                        android:layout_marginRight="@dimen/spacing_double"
+                        android:scaleX="0"
+                        android:scaleY="0"/>
 
                 <TextView
-                    android:id="@+id/progress_text"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                        android:id="@+id/progress_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="?android:attr/textColorPrimary"/>
             </LinearLayout>
         </LinearLayout>
-    </Toolbar>
+    </android.support.v7.widget.Toolbar>
 </LinearLayout>

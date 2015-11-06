@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.google.samples.apps.topeka.model.quiz;
 
 import android.os.Parcel;
@@ -65,6 +66,7 @@ public final class FillTwoBlanksQuiz extends Quiz<String[]> {
         if (answer != null ? !Arrays.equals(answer, quiz.getAnswer()) : quiz.getAnswer() != null) {
             return false;
         }
+        //noinspection RedundantIfStatement
         if (!question.equals(quiz.getQuestion())) {
             return false;
         }

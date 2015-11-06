@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.google.samples.apps.topeka.widget.quiz;
 
 import android.annotation.SuppressLint;
@@ -55,10 +56,10 @@ public class TrueFalseQuizView extends AbsQuizView<TrueFalseQuiz> {
             @Override
             public void onClick(View v) {
                 switch (v.getId()) {
-                    case R.id.answerTrue:
+                    case R.id.answer_true:
                         mAnswer = true;
                         break;
-                    case R.id.answerFalse:
+                    case R.id.answer_false:
                         mAnswer = false;
                         break;
                 }
@@ -66,9 +67,9 @@ public class TrueFalseQuizView extends AbsQuizView<TrueFalseQuiz> {
             }
         };
 
-        mAnswerTrue = container.findViewById(R.id.answerTrue);
+        mAnswerTrue = container.findViewById(R.id.answer_true);
         mAnswerTrue.setOnClickListener(clickListener);
-        mAnswerFalse = container.findViewById(R.id.answerFalse);
+        mAnswerFalse = container.findViewById(R.id.answer_false);
         mAnswerFalse.setOnClickListener(clickListener);
         return container;
     }

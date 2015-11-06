@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <!--
   ~ Copyright 2015 Google Inc.
   ~
@@ -16,9 +15,16 @@
   -->
 
 <transitionSet xmlns:android="http://schemas.android.com/apk/res/android">
-    <changeBounds />
-    <changeTransform />
-    <changeClipBounds />
-    <changeImageTransform />
-    <arcMotion android:minimumHorizontalAngle="45" />
+    <slide android:slideEdge="right">
+        <targets>
+            <target android:excludeId="@android:id/statusBarBackground" />
+            <target android:excludeId="@android:id/navigationBarBackground" />
+            <target android:excludeId="@id/toolbar_player" />
+        </targets>
+    </slide>
+    <fade>
+        <targets>
+            <target android:targetId="@id/toolbar_player" />
+        </targets>
+    </fade>
 </transitionSet>

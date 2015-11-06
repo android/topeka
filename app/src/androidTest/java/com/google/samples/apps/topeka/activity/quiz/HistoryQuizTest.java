@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 Google Inc.
+ * Copyright 2015 Google Inc. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,21 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.google.samples.apps.topeka.adapter;
 
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
+package com.google.samples.apps.topeka.activity.quiz;
 
-import com.google.samples.apps.topeka.R;
+public class HistoryQuizTest extends BaseQuizActivityTest {
 
-public class CategoryViewHolder {
-
-    protected TextView title;
-    protected ImageView icon;
-
-    public CategoryViewHolder(LinearLayout container) {
-        icon = (ImageView) container.findViewById(R.id.category_icon);
-        title = (TextView) container.findViewById(R.id.category_title);
+    @Override
+    int getCategory() {
+        return 2;
     }
 }

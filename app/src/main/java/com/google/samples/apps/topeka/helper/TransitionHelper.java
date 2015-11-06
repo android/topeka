@@ -16,10 +16,12 @@
 
 package com.google.samples.apps.topeka.helper;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.util.Pair;
+import android.support.v4.util.Pair;
 import android.view.View;
 
 import java.util.ArrayList;
@@ -31,17 +33,22 @@ import java.util.List;
  */
 public class TransitionHelper {
 
+    private TransitionHelper() {
+        //no instance
+    }
     /**
      * Create the transition participants required during a activity transition while
      * avoiding glitches with the system UI.
      *
      * @param activity The activity used as start for the transition.
      * @param includeStatusBar If false, the status bar will not be added as the transition
-     *        participant.
+     * participant.
      * @return All transition participants.
      */
-    public static Pair[] createSafeTransitionParticipants(@NonNull Activity activity,
-            boolean includeStatusBar, @Nullable Pair... otherParticipants) {
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    public static Pair<View, String>[] createSafeTransitionParticipants(@NonNull Activity activity,
+                                                          boolean includeStatusBar,
+                                                          @Nullable Pair... otherParticipants) {
         // Avoid system UI glitches as described here:
         // https://plus.google.com/+AlexLockwood/posts/RPtwZ5nNebb
         View decor = activity.getWindow().getDecorView();
@@ -63,6 +70,7 @@ public class TransitionHelper {
         return participants.toArray(new Pair[participants.size()]);
     }
 
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     private static void addNonNullViewToTransitionParticipants(View view, List<Pair> participants) {
         if (view == null) {
             return;

@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <!--
   ~ Copyright 2015 Google Inc.
   ~
@@ -14,28 +13,34 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
+
 <LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:showIn="@layout/fragment_sign_in">
-
-    <TextView
-        android:id="@+id/toolbar_choose_avatar"
-        style="@style/Topeka.TextAppearance.Title"
-        android:layout_width="match_parent"
-        android:layout_height="?android:attr/actionBarSize"
-        android:gravity="center_vertical"
-        android:text="@string/choose_avatar" />
-
-    <GridView
-        android:id="@+id/avatars"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:choiceMode="singleChoice"
-        android:cropToPadding="true"
-        android:listSelector="@android:color/transparent"
-        android:verticalSpacing="@dimen/spacing_double" />
+        android:orientation="vertical"
+        tools:showIn="@layout/fragment_sign_in">
+
+    <TextView
+            android:id="@+id/toolbar_choose_avatar"
+            android:layout_width="match_parent"
+            android:layout_height="?android:attr/actionBarSize"
+            style="@style/Topeka.TextAppearance.Title"
+            android:gravity="center_vertical"
+            android:text="@string/choose_avatar"
+            android:paddingEnd="@dimen/spacing_double"
+            android:paddingStart="@dimen/spacing_double"
+            android:clipToPadding="false" />
+
+    <GridView
+            android:id="@+id/avatars"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:choiceMode="singleChoice"
+            android:listSelector="@android:color/transparent"
+            android:verticalSpacing="@dimen/spacing_double"
+            android:paddingEnd="@dimen/spacing_double"
+            android:paddingStart="@dimen/spacing_double"
+            android:clipToPadding="false" />
 </LinearLayout>

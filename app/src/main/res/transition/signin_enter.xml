@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <!--
   ~ Copyright 2015 Google Inc.
   ~
@@ -14,7 +13,10 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
-<ripple xmlns:android="http://schemas.android.com/apk/res/android"
-    android:color="@color/touch_effect">
-    <item android:drawable="@android:color/white" />
-</ripple>
+
+<slide xmlns:android="http://schemas.android.com/apk/res/android" android:slideEdge="left">
+    <targets>
+        <target android:excludeId="@android:id/statusBarBackground" />
+        <target android:excludeId="@android:id/navigationBarBackground" />
+    </targets>
+</slide>

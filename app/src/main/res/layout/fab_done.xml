@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <!--
   ~ Copyright 2015 Google Inc.
   ~
@@ -14,11 +13,17 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
-<com.google.samples.apps.topeka.widget.fab.DoneFab
-    android:id="@+id/done"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="@dimen/size_fab"
-    android:layout_height="@dimen/size_fab"
-    android:layout_gravity="bottom|end"
-    android:layout_marginBottom="@dimen/spacing_double"
-    android:layout_marginEnd="@dimen/spacing_double" />
+
+<android.support.design.widget.FloatingActionButton
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/done"
+        app:fabSize="normal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginBottom="@dimen/spacing_double"
+        android:layout_marginEnd="@dimen/spacing_double"
+        android:layout_marginRight="@dimen/spacing_double"
+        android:src="@drawable/ic_tick"
+        app:backgroundTint="@color/topeka_primary" />

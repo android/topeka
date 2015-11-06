@@ -4,14 +4,29 @@ A fun to play quiz that showcases material design on Android
 
 ### Introduction
 
-Material design is a new system for visual, interaction and motion design. We
-originally launched the [Topeka web app](https://github.com/Polymer/topeka)
-as an Open Source example of material design on the web.
-
+Material design is a new system for visual, interaction and motion design.
 The Android version of Topeka demonstrates that the same branding and material
 design principles can be used to create a consistent experience across
-platforms. You can read more about it on the
-[Android Developers
+platforms.
+
+We originally launched the [Topeka web app](https://github.com/Polymer/topeka)
+as an Open Source example of material design on the web.
+
+The current release of Topeka is available to users down to API level 14 aka
+[Ice Cream Sandwich](http://developer.android.com/about/versions/android-4.0.html).
+This is being accomplished by utilizing several [support
+libraries](https://developer.android.com/tools/support-library/index.html).
+Especially
+[AppCompat](https://developer.android.com/tools/support-library/features.html#v7-appcompat)
+and the [design support
+library](https://developer.android.com/tools/support-library/features.html#design)
+play important roles.
+
+Topeka also features a set of [Espresso
+tests](http://google.github.io/android-testing-support-library) which can be
+executed with the `connectedAndroidTest` gradle task.
+
+You can read more about the project on the [Android Developers
 blog](http://android-developers.blogspot.co.uk/2015/06/more-material-design-with-topeka-for_16.html).
 
 ### Screenshots
@@ -22,7 +37,8 @@ blog](http://android-developers.blogspot.co.uk/2015/06/more-material-design-with
 
 ### Getting Started
 
-Clone this repository, enter the top level directory and run <code>./gradlew tasks</code> to get an overview of all the tasks available for this project.
+Clone this repository, enter the top level directory and run <code>./gradlew tasks</code>
+to get an overview of all the tasks available for this project.
 
 Some important tasks are:
 

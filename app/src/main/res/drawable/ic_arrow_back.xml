@@ -14,12 +14,5 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
-<vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:width="24dp"
-    android:height="24dp"
-    android:viewportHeight="48"
-    android:viewportWidth="48">
-    <path
-        android:fillColor="?android:attr/textColorPrimary"
-        android:pathData="M40 22H15.66l11.17-11.17L24 8 8 24l16 16 2.83-2.83L15.66 26H40v-4z" />
-</vector>
+<bitmap xmlns:android="http://schemas.android.com/apk/res/android"
+        android:src="@drawable/ic_arrow_back_black" />

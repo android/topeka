@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <!--
   ~ Copyright 2015 Google Inc.
   ~
@@ -14,17 +13,18 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
+
 <TextView
-    android:id="@+id/question_view"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="?android:attr/colorPrimary"
-    android:elevation="@dimen/elevation_header"
-    android:gravity="center_vertical"
-    android:minHeight="@dimen/min_height_question"
-    android:padding="@dimen/spacing_double"
-    android:textAppearance="@android:style/TextAppearance.Material.Subhead"
-    android:textColor="?android:attr/textColorPrimary"
-    tools:ignore="Overdraw" />
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/question_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="?colorPrimary"
+        android:elevation="@dimen/elevation_header"
+        android:gravity="center_vertical"
+        android:minHeight="@dimen/min_height_question"
+        android:padding="@dimen/spacing_double"
+        android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+        android:textColor="?android:attr/textColorPrimary"
+        tools:ignore="Overdraw" />

@@ -16,12 +16,17 @@
 
 package com.google.samples.apps.topeka.widget.fab;
 
-import com.google.samples.apps.topeka.R;
-
 import android.content.Context;
+import android.support.design.widget.FloatingActionButton;
 import android.util.AttributeSet;
 import android.widget.Checkable;
 
+import com.google.samples.apps.topeka.R;
+
+/**
+ * A {@link FloatingActionButton} that implements {@link Checkable} to allow display of different
+ * icons in it's states.
+ */
 public class CheckableFab extends FloatingActionButton implements Checkable {
 
     private static final int[] CHECKED = {android.R.attr.state_checked};

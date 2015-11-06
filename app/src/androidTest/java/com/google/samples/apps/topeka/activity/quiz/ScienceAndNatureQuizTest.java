@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 Google Inc.
+ * Copyright 2015 Google Inc. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,25 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.google.samples.apps.topeka.widget.fab;
 
-import android.content.Context;
-import android.util.AttributeSet;
+package com.google.samples.apps.topeka.activity.quiz;
 
-import com.google.samples.apps.topeka.R;
+public class ScienceAndNatureQuizTest extends BaseQuizActivityTest {
 
-public class DoneFab extends FloatingActionButton {
-
-    public DoneFab(Context context) {
-        this(context, null);
-    }
-
-    public DoneFab(Context context, AttributeSet attrs) {
-        this(context, attrs, 0);
-    }
-
-    public DoneFab(Context context, AttributeSet attrs, int defStyle) {
-        super(context, attrs, defStyle);
-        setImageResource(R.drawable.ic_tick);
+    @Override
+    int getCategory() {
+        return 4;
     }
 }

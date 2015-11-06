@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.google.samples.apps.topeka.helper;
 
 import android.support.test.runner.AndroidJUnit4;
@@ -36,7 +37,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public class AnswerHelperTest {
 
     private static final int[] OPTIONS = new int[]{0, 1, 2};
-    private int[] WRONG_OPTIONS = new int[]{2, 3};
+    private int[] WRONG_OPTIONS = new int[]{2, 1};
     private SparseBooleanArray mCorrectAnswer;
 
     @Before

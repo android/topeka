@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <!--
   ~ Copyright 2015 Google Inc.
   ~
@@ -14,16 +13,12 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
-<ripple xmlns:android="http://schemas.android.com/apk/res/android"
-    android:color="?android:attr/colorAccent">
-    <item>
-        <selector>
-            <item android:state_pressed="true">
-                <color android:color="?android:attr/windowBackground" />
-            </item>
-            <item>
-                <color android:color="?android:attr/colorPrimary" />
-            </item>
-        </selector>
+
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_pressed="true">
+        <color android:color="@color/light_grey" />
     </item>
-</ripple>
+    <item>
+        <color android:color="@color/topeka_primary" />
+    </item>
+</selector>

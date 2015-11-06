@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.google.samples.apps.topeka.model.quiz;
 
 import android.os.Parcel;
@@ -88,6 +89,7 @@ public final class FourQuarterQuiz extends OptionsQuiz<String> {
             return false;
         }
 
+        //noinspection RedundantIfStatement
         if (!Arrays.equals(getOptions(), quiz.getOptions())) {
             return false;
         }

@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.google.samples.apps.topeka.helper;
 
 import android.util.Log;
@@ -29,7 +30,6 @@ public class AnswerHelper {
     private AnswerHelper() {
         //no instance
     }
-
 
     /**
      * Converts an array of answers to a readable answer.
@@ -84,7 +84,7 @@ public class AnswerHelper {
                 return false;
             }
         }
-        return true;
+        return checkedItems.size() == answerIds.length;
     }
 
 }

@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <!--
   ~ Copyright 2015 Google Inc.
   ~
@@ -14,26 +13,29 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
+
 <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="horizontal">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
 
     <RadioButton
-        android:id="@+id/answerTrue"
-        style="@style/Topeka.CompoundButton.True"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/spacing_micro"
-        android:layout_weight="1"
-        android:text="@string/btn_true" />
+            android:id="@+id/answer_true"
+            style="@style/Topeka.CompoundButton.True"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/spacing_micro"
+            android:layout_marginRight="@dimen/spacing_micro"
+            android:layout_weight="1"
+            android:text="@string/btn_true" />
 
     <RadioButton
-        android:id="@+id/answerFalse"
-        style="@style/Topeka.CompoundButton.False"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/spacing_micro"
-        android:layout_weight="1"
-        android:text="@string/btn_false" />
+            android:id="@+id/answer_false"
+            style="@style/Topeka.CompoundButton.False"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_micro"
+            android:layout_marginLeft="@dimen/spacing_micro"
+            android:layout_weight="1"
+            android:text="@string/btn_false" />
 </RadioGroup>
