@@ -121,4 +121,11 @@
     <style name="Topeka.TextAppearance.Subhead" parent="TextAppearance.AppCompat.Subhead">
         <item name="android:textColor">@color/topeka_primary</item>
     </style>
+
+    <style name="Topeka.TextAppearance.ListItem" parent="TextAppearance.AppCompat.Subhead">
+    </style>
+
+    <style name="Topeka.TextAppearance.ListItemSecondary" parent="TextAppearance.AppCompat.Body1">
+    </style>
+
 </resources>

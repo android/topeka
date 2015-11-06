@@ -23,4 +23,4 @@
         android:minHeight="@dimen/min_height_touch_target"
         android:paddingStart="@dimen/spacing_normal"
         android:paddingEnd="@dimen/spacing_normal"
-        android:textAppearance="?android:attr/textAppearanceListItem" />
+        android:textAppearance="@style/Topeka.TextAppearance.ListItem" />
