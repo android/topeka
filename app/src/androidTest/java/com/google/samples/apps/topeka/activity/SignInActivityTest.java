@@ -35,11 +35,13 @@ import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.matcher.ViewMatchers.isChecked;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static java.lang.String.valueOf;
 import static org.hamcrest.Matchers.anything;
+import static org.hamcrest.Matchers.isEmptyOrNullString;
 import static org.hamcrest.Matchers.not;
 
 @RunWith(AndroidJUnit4.class)
@@ -69,6 +71,12 @@ public class SignInActivityTest {
     }
 
     @Test
+    public void signIn_checkIfEditTextViewsAreInitiallyEmpty() {
+        onView(withId(R.id.first_name)).check(matches(withText(isEmptyOrNullString())));
+        onView(withId(R.id.last_initial)).check(matches(withText(isEmptyOrNullString())));
+    }
+
+    @Test
     public void signIn_performSuccessful() {
         inputData();
         onView(withId(R.id.done)).check(matches(isDisplayed())).perform(click());
@@ -82,7 +90,7 @@ public class SignInActivityTest {
                     .inAdapterView(withId(R.id.avatars))
                     .atPosition(15)
                     .check(matches(isDisplayed()))
-                    .perform(click());
+                    .perform(click()).check(matches(isChecked()));
         }
     }
 
