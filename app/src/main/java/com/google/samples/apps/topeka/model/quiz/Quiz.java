@@ -35,6 +35,7 @@ public abstract class Quiz<A> implements Parcelable {
 
     private static final String TAG = "Quiz";
     public static final Creator<Quiz> CREATOR = new Creator<Quiz>() {
+        @SuppressWarnings("TryWithIdenticalCatches")
         @Override
         public Quiz createFromParcel(Parcel in) {
             int ordinal = in.readInt();
@@ -43,9 +44,14 @@ public abstract class Quiz<A> implements Parcelable {
                 Constructor<? extends Quiz> constructor = type.getType()
                         .getConstructor(Parcel.class);
                 return constructor.newInstance(in);
-            } catch (InstantiationException | IllegalAccessException |
-                    InvocationTargetException | NoSuchMethodException e) {
-                Log.e(TAG, "createFromParcel ", e);
+            } catch (InstantiationException e) {
+                performLegacyCatch(e);
+            } catch (IllegalAccessException e) {
+                performLegacyCatch(e);
+            } catch (InvocationTargetException e) {
+                performLegacyCatch(e);
+            } catch (NoSuchMethodException e) {
+                performLegacyCatch(e);
             }
             throw new UnsupportedOperationException("Could not create Quiz");
         }
@@ -55,6 +61,11 @@ public abstract class Quiz<A> implements Parcelable {
             return new Quiz[size];
         }
     };
+
+    private static void performLegacyCatch(Exception e) {
+        Log.e(TAG, "createFromParcel ", e);
+    }
+
     private final String mQuestion;
     private final String mQuizType;
     private A mAnswer;

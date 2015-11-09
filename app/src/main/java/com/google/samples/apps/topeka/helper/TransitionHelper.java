@@ -67,6 +67,7 @@ public class TransitionHelper {
                 && otherParticipants[0] == null)) {
             participants.addAll(Arrays.asList(otherParticipants));
         }
+        //noinspection unchecked
         return participants.toArray(new Pair[participants.size()]);
     }
 

@@ -20,7 +20,8 @@
               android:layout_height="match_parent"
               android:background="@color/topeka_blank"
               android:transitionGroup="false"
-              android:orientation="vertical">
+              android:orientation="vertical"
+              tools:ignore="Overdraw,UnusedAttribute">
 
     <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar_player"
@@ -28,7 +29,8 @@
             android:layout_height="?android:attr/actionBarSize"
             style="@style/Topeka.TextAppearance.Title"
             android:background="@color/topeka_primary"
-            android:elevation="@dimen/elevation_header">
+            android:elevation="@dimen/elevation_header"
+            tools:ignore="UnusedAttribute">
 
         <com.google.samples.apps.topeka.widget.AvatarView
                 android:id="@+id/avatar"
@@ -36,7 +38,8 @@
                 android:layout_height="@dimen/size_avatar_toolbar"
                 android:layout_marginEnd="@dimen/spacing_double"
                 android:layout_marginRight="@dimen/spacing_double"
-                android:transitionName="@string/transition_avatar" />
+                android:transitionName="@string/transition_avatar"
+                tools:ignore="UnusedAttribute" />
 
         <TextView android:id="@+id/title"
                   android:layout_width="wrap_content"
@@ -51,7 +54,8 @@
                   style="@style/Topeka.TextAppearance.Title.Inverse"
                   android:layout_gravity="center_vertical|end"
                   android:paddingEnd="@dimen/spacing_micro"
-                  android:paddingStart="@dimen/spacing_micro" />
+                  android:paddingStart="@dimen/spacing_micro"
+                  tools:ignore="NewApi" />
     </android.support.v7.widget.Toolbar>
 
     <FrameLayout android:id="@+id/category_container"

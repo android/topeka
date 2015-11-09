@@ -47,14 +47,14 @@
                 android:id="@+id/quiz"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceListItem"
+                android:textAppearance="@style/Topeka.TextAppearance.ListItem"
                 tools:text="What's the answer to this question?" />
 
         <TextView
                 android:id="@+id/answer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceListItemSecondary"
+                android:textAppearance="@style/Topeka.TextAppearance.ListItemSecondary"
                 tools:text="This is an answer.\nThis too." />
     </LinearLayout>
 </RelativeLayout>

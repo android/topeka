@@ -36,7 +36,7 @@ import java.util.List;
 public class TextSharedElementCallback extends SharedElementCallback {
 
     private final int mInitialPaddingStart;
-    private float mInitialTextSize;
+    private final float mInitialTextSize;
     private float mTargetViewTextSize;
     private int mTargetViewPaddingStart;
     private static final String TAG = "TextResize";

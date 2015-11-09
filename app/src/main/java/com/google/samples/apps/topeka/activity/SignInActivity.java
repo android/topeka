@@ -34,6 +34,7 @@ public class SignInActivity extends AppCompatActivity {
     public static void start(Activity activity, Boolean edit) {
         Intent starter = new Intent(activity, SignInActivity.class);
         starter.putExtra(EXTRA_EDIT, edit);
+        //noinspection unchecked
         ActivityCompat.startActivity(activity,
                 starter,
                 ActivityOptionsCompat.makeSceneTransitionAnimation(activity).toBundle());

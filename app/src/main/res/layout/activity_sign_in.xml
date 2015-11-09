@@ -22,4 +22,4 @@
              tools:context="activity.SignInActivity"
              android:background="@color/light_grey"
              android:transitionGroup="false"
-             tools:ignore="MergeRootFrame" />
+             tools:ignore="MergeRootFrame,Overdraw,UnusedAttribute" />

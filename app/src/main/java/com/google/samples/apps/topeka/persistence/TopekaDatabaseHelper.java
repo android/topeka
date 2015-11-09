@@ -477,10 +477,9 @@ public class TopekaDatabaseHelper extends SQLiteOpenHelper {
      * @param quiz The quiz potentially containing the data.
      * @param jsonKey The key to look for.
      * @param contentKey The key use for placing the data in the database.
-     * @throws JSONException Thrown when there's an issue with JSON.
      */
     private void putNonEmptyString(ContentValues values, JSONObject quiz, String jsonKey,
-                                   String contentKey) throws JSONException {
+                                   String contentKey) {
         final String stringToPut = quiz.optString(jsonKey, null);
         if (!TextUtils.isEmpty(stringToPut)) {
             values.put(contentKey, stringToPut);

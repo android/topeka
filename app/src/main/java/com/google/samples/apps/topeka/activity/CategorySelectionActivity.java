@@ -16,6 +16,7 @@
 
 package com.google.samples.apps.topeka.activity;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -125,6 +126,7 @@ public class CategorySelectionActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @SuppressLint("NewApi")
     private void signOut() {
         PreferencesHelper.signOut(this);
         TopekaDatabaseHelper.reset(this);

@@ -56,7 +56,7 @@ public abstract class BaseQuizActivityTest {
 
     private List<Category> mCategories;
     @Rule
-    public ActivityTestRule<QuizActivity> mActivityRule =
+    public final ActivityTestRule<QuizActivity> mActivityRule =
             new ActivityTestRule<QuizActivity>(QuizActivity.class) {
                 @Override
                 protected void beforeActivityLaunched() {

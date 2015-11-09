@@ -20,4 +20,4 @@
           android:layout_height="wrap_content"
           android:gravity="center"
           android:minHeight="@dimen/min_height_touch_target"
-          android:textAppearance="?android:attr/textAppearanceListItem" />
+          android:textAppearance="@style/Topeka.TextAppearance.ListItem" />

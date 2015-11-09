@@ -209,6 +209,7 @@ public class SignInFragment extends Fragment {
 
         final Pair[] pairs = TransitionHelper.createSafeTransitionParticipants(activity, true,
                 new Pair<>(v, activity.getString(R.string.transition_avatar)));
+        @SuppressWarnings("unchecked")
         ActivityOptionsCompat activityOptions = ActivityOptionsCompat
                 .makeSceneTransitionAnimation(activity, pairs);
         CategorySelectionActivity.start(activity, mPlayer, activityOptions);

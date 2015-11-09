@@ -16,12 +16,14 @@
 
 package com.google.samples.apps.topeka.model.quiz;
 
+import android.annotation.SuppressLint;
 import android.os.Parcel;
 
 import com.google.samples.apps.topeka.helper.AnswerHelper;
 
 import java.util.Arrays;
 
+@SuppressLint("ParcelCreator")
 public final class FillTwoBlanksQuiz extends Quiz<String[]> {
 
     public FillTwoBlanksQuiz(String question, String[] answer, boolean solved) {

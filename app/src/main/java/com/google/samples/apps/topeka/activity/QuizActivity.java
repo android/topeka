@@ -80,7 +80,7 @@ public class QuizActivity extends AppCompatActivity {
     private View mToolbarBack;
 
 
-    View.OnClickListener mOnClickListener = new View.OnClickListener() {
+    final View.OnClickListener mOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(final View v) {
             switch (v.getId()) {
@@ -293,6 +293,7 @@ public class QuizActivity extends AppCompatActivity {
         mColorChange.setInterpolator(mInterpolator);
     }
 
+    @SuppressLint("NewApi")
     public void setToolbarElevation(boolean shouldElevate) {
         if (ApiLevelHelper.isAtLeast(Build.VERSION_CODES.LOLLIPOP)) {
             mToolbarBack.setElevation(shouldElevate ?
@@ -383,6 +384,7 @@ public class QuizActivity extends AppCompatActivity {
         setToolbarElevation(false);
     }
 
+    @SuppressLint("NewApi")
     private void populate(String categoryId) {
         if (null == categoryId) {
             Log.w(TAG, "Didn't find a category. Finishing");
