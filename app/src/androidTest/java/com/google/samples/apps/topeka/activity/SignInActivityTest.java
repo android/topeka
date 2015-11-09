@@ -29,13 +29,17 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import static android.support.test.espresso.Espresso.onData;
 import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static java.lang.String.valueOf;
+import static org.hamcrest.Matchers.anything;
 import static org.hamcrest.Matchers.not;
 
 @RunWith(AndroidJUnit4.class)
@@ -67,13 +71,25 @@ public class SignInActivityTest {
     @Test
     public void signIn_performSuccessful() {
         inputData();
-        onView(withId(R.id.done)).check(matches(isDisplayed()));
+        onView(withId(R.id.done)).check(matches(isDisplayed())).perform(click());
+        onView(withId(R.id.toolbar_player)).check(matches(isDisplayed()));
+    }
+
+    @Test
+    public void signIn_chooseAvatar() {
+        for (int i = 0; i < 16; i++) {
+            onData(anything())
+                    .inAdapterView(withId(R.id.avatars))
+                    .atPosition(15)
+                    .check(matches(isDisplayed()))
+                    .perform(click());
+        }
     }
 
     @Test
     public void signIn_withLongLastName() {
         inputData();
-        onView(withId(R.id.last_initial)).perform(typeText("somelongtext"), closeSoftKeyboard());
+        onView(withId(R.id.last_initial)).perform(typeText(valueOf(R.string.first_name)), closeSoftKeyboard());
         onView(withId(R.id.last_initial)).check(matches(withText(TEST_LAST_INITIAL)));
     }
 
