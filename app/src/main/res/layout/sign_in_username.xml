@@ -32,7 +32,8 @@
             android:text="@string/sign_in"
             android:paddingEnd="@dimen/spacing_double"
             android:paddingStart="@dimen/spacing_double"
-            android:clipToPadding="false" />
+            android:clipToPadding="false"
+            tools:ignore="UnusedAttribute,NewApi" />
 
     <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
@@ -42,7 +43,8 @@
             android:paddingEnd="@dimen/spacing_double"
             android:paddingBottom="@dimen/spacing_micro"
             android:clipToPadding="false"
-            android:transitionGroup="true">
+            android:transitionGroup="true"
+            tools:ignore="UnusedAttribute,NewApi">
         <EditText
                 android:id="@+id/first_name"
                 android:layout_width="match_parent"
@@ -62,7 +64,8 @@
             android:paddingEnd="@dimen/spacing_double"
             android:paddingBottom="@dimen/spacing_micro"
             android:clipToPadding="false"
-            android:transitionGroup="true">
+            android:transitionGroup="true"
+            tools:ignore="UnusedAttribute,NewApi">
         <EditText
                 android:id="@+id/last_initial"
                 android:layout_width="match_parent"

@@ -18,6 +18,7 @@ package com.google.samples.apps.topeka.widget.quiz;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -25,6 +26,7 @@ import android.widget.GridView;
 
 import com.google.samples.apps.topeka.R;
 import com.google.samples.apps.topeka.adapter.OptionsQuizAdapter;
+import com.google.samples.apps.topeka.helper.ApiLevelHelper;
 import com.google.samples.apps.topeka.model.Category;
 import com.google.samples.apps.topeka.model.quiz.FourQuarterQuiz;
 
@@ -64,13 +66,14 @@ public class FourQuarterQuizView extends AbsQuizView<FourQuarterQuiz> {
     }
 
     @Override
+    @SuppressLint("NewApi")
     public void setUserInput(Bundle savedInput) {
         if (savedInput == null) {
             return;
         }
         mAnswered = savedInput.getInt(KEY_ANSWER);
         if (mAnswered != -1) {
-            if (isLaidOut()) {
+            if (ApiLevelHelper.isAtLeast(Build.VERSION_CODES.KITKAT) && isLaidOut()) {
                 setUpUserInput();
             } else {
                 addOnLayoutChangeListener(new OnLayoutChangeListener() {

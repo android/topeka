@@ -14,6 +14,7 @@
   ~ limitations under the License.
   -->
 
+<!--suppress AndroidElementNotAllowed -->
 <transitionSet xmlns:android="http://schemas.android.com/apk/res/android"
                android:interpolator="@android:interpolator/fast_out_slow_in"
                android:duration="@integer/toolbar_transition_duration">

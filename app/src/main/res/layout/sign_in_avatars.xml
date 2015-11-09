@@ -31,7 +31,8 @@
             android:text="@string/choose_avatar"
             android:paddingEnd="@dimen/spacing_double"
             android:paddingStart="@dimen/spacing_double"
-            android:clipToPadding="false" />
+            android:clipToPadding="false"
+            tools:ignore="NewApi"/>
 
     <GridView
             android:id="@+id/avatars"

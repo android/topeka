@@ -18,6 +18,7 @@ package com.google.samples.apps.topeka.widget.quiz;
 
 import android.animation.ArgbEvaluator;
 import android.animation.ObjectAnimator;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
@@ -25,7 +26,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.ColorInt;
-import android.support.annotation.DimenRes;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.MarginLayoutParamsCompat;
 import android.support.v4.view.animation.LinearOutSlowInInterpolator;
@@ -66,19 +66,18 @@ public abstract class AbsQuizView<Q extends Quiz> extends FrameLayout {
 
     private static final int ANSWER_HIDE_DELAY = 500;
     private static final int FOREGROUND_COLOR_CHANGE_DELAY = 750;
-    protected final int mMinHeightTouchTarget;
     private final int mSpacingDouble;
     private final LayoutInflater mLayoutInflater;
     private final Category mCategory;
     private final Q mQuiz;
-    private Interpolator mLinearOutSlowInInterpolator;
+    private final Interpolator mLinearOutSlowInInterpolator;
+    private final Handler mHandler;
+    private final InputMethodManager mInputMethodManager;
     private boolean mAnswered;
     private TextView mQuestionView;
     private CheckableFab mSubmitAnswer;
-    private Handler mHandler;
     private Runnable mHideFabRunnable;
     private Runnable mMoveOffScreenRunnable;
-    private InputMethodManager mInputMethodManager;
 
     /**
      * Enables creation of views for quizzes.
@@ -94,8 +93,6 @@ public abstract class AbsQuizView<Q extends Quiz> extends FrameLayout {
         mSpacingDouble = getResources().getDimensionPixelSize(R.dimen.spacing_double);
         mLayoutInflater = LayoutInflater.from(context);
         mSubmitAnswer = getSubmitButton();
-        mMinHeightTouchTarget = getResources()
-                .getDimensionPixelSize(R.dimen.min_height_touch_target);
         mLinearOutSlowInInterpolator = new LinearOutSlowInInterpolator();
         mHandler = new Handler();
         mInputMethodManager = (InputMethodManager) context.getSystemService
@@ -142,7 +139,7 @@ public abstract class AbsQuizView<Q extends Quiz> extends FrameLayout {
         if (quizContentView instanceof ViewGroup) {
             ((ViewGroup) quizContentView).setClipToPadding(false);
         }
-        setMinHeightInternal(quizContentView, R.dimen.min_height_question);
+        setMinHeightInternal(quizContentView);
         return quizContentView;
     }
 
@@ -295,6 +292,7 @@ public abstract class AbsQuizView<Q extends Quiz> extends FrameLayout {
         animateForegroundColor(backgroundColor);
     }
 
+    @SuppressLint("NewApi")
     private void adjustFab(boolean answerCorrect, int backgroundColor) {
         mSubmitAnswer.setChecked(answerCorrect);
         mSubmitAnswer.setBackgroundTintList(ColorStateList.valueOf(backgroundColor));
@@ -358,7 +356,7 @@ public abstract class AbsQuizView<Q extends Quiz> extends FrameLayout {
                 FOREGROUND_COLOR_CHANGE_DELAY * 2);
     }
 
-    private void setMinHeightInternal(View view, @DimenRes int resId) {
-        view.setMinimumHeight(getResources().getDimensionPixelSize(resId));
+    private void setMinHeightInternal(View view) {
+        view.setMinimumHeight(getResources().getDimensionPixelSize(R.dimen.min_height_question));
     }
 }

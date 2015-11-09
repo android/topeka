@@ -27,4 +27,4 @@
         android:padding="@dimen/spacing_double"
         android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
         android:textColor="?android:attr/textColorPrimary"
-        tools:ignore="Overdraw" />
+        tools:ignore="Overdraw,UnusedAttribute,PrivateResource" />

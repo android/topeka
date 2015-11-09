@@ -16,8 +16,10 @@
 
 package com.google.samples.apps.topeka.model.quiz;
 
+import android.annotation.SuppressLint;
 import android.os.Parcel;
 
+@SuppressLint("ParcelCreator")
 public final class FillBlankQuiz extends Quiz<String> {
 
     private final String mStart;

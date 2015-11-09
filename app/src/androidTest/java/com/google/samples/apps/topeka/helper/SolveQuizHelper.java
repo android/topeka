@@ -112,6 +112,7 @@ public class SolveQuizHelper {
     }
 
     private static void testOptionsQuizWithType(Quiz quiz, Class<? extends View> type) {
+        @SuppressWarnings("unchecked")
         OptionsQuiz<String> stringOptionsQuiz = (OptionsQuiz<String>) quiz;
         for (int i : stringOptionsQuiz.getAnswer()) {
             onData(equalTo(stringOptionsQuiz.getOptions()[i]))

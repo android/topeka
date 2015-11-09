@@ -16,10 +16,12 @@
 
 package com.google.samples.apps.topeka.model.quiz;
 
+import android.annotation.SuppressLint;
 import android.os.Parcel;
 
 import com.google.samples.apps.topeka.helper.AnswerHelper;
 
+@SuppressLint("ParcelCreator")
 public final class SelectItemQuiz extends OptionsQuiz<String> {
 
     public SelectItemQuiz(String question, int[] answer, String[] options, boolean solved) {

@@ -39,6 +39,7 @@ import com.google.samples.apps.topeka.widget.OffsetDecoration;
 public class CategorySelectionFragment extends Fragment {
 
     private CategoryAdapter mAdapter;
+    private static final int REQUEST_CATEGORY = 0x2300;
 
     public static CategorySelectionFragment newInstance() {
         return new CategorySelectionFragment();
@@ -82,7 +83,7 @@ public class CategorySelectionFragment extends Fragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == R.id.request_category && resultCode == R.id.solved) {
+        if (requestCode == REQUEST_CATEGORY && resultCode == R.id.solved) {
             mAdapter.notifyItemChanged(data.getStringExtra(JsonAttributes.ID));
         }
         super.onActivityResult(requestCode, resultCode, data);
@@ -93,6 +94,7 @@ public class CategorySelectionFragment extends Fragment {
 
         final Pair[] pairs = TransitionHelper.createSafeTransitionParticipants(activity, false,
                 new Pair<>(toolbar, activity.getString(R.string.transition_toolbar)));
+        @SuppressWarnings("unchecked")
         ActivityOptionsCompat sceneTransitionAnimation = ActivityOptionsCompat
                 .makeSceneTransitionAnimation(activity, pairs);
 
@@ -101,7 +103,7 @@ public class CategorySelectionFragment extends Fragment {
         Intent startIntent = QuizActivity.getStartIntent(activity, category);
         ActivityCompat.startActivityForResult(activity,
                 startIntent,
-                R.id.request_category,
+                REQUEST_CATEGORY,
                 transitionBundle);
     }
 

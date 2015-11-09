@@ -16,6 +16,7 @@
 
 package com.google.samples.apps.topeka.widget;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.drawable.BitmapDrawable;
@@ -75,6 +76,7 @@ public class AvatarView extends ImageView implements Checkable {
      *
      * @param resId The image's resource id.
      */
+    @SuppressLint("NewApi")
     public void setAvatar(@DrawableRes int resId) {
         if (ApiLevelHelper.isAtLeast(Build.VERSION_CODES.LOLLIPOP)) {
             setClipToOutline(true);
@@ -88,6 +90,7 @@ public class AvatarView extends ImageView implements Checkable {
         Drawable drawable = ResourcesCompat.getDrawable(getResources(), resId,
                 getContext().getTheme());
         BitmapDrawable bitmapDrawable = (BitmapDrawable) drawable;
+        @SuppressWarnings("ConstantConditions")
         RoundedBitmapDrawable roundedDrawable = RoundedBitmapDrawableFactory.create(getResources(),
                 bitmapDrawable.getBitmap());
         roundedDrawable.setCircular(true);
@@ -105,6 +108,7 @@ public class AvatarView extends ImageView implements Checkable {
     }
 
     @Override
+    @SuppressLint("NewApi")
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
         if (ApiLevelHelper.isLowerThan(Build.VERSION_CODES.LOLLIPOP)) {

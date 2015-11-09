@@ -35,7 +35,7 @@ import android.widget.TextView;
 /**
  * A transition that resizes text of a TextView.
  */
-@TargetApi(Build.VERSION_CODES.KITKAT)
+@TargetApi(Build.VERSION_CODES.LOLLIPOP)
 public class TextResizeTransition extends Transition {
 
     private static final String PROPERTY_NAME_TEXT_RESIZE =

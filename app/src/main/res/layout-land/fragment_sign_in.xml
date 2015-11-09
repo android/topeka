@@ -15,6 +15,7 @@
   -->
 
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:tools="http://schemas.android.com/tools"
              android:id="@+id/fragment_sign_in_content"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
@@ -27,7 +28,8 @@
             android:layout_width="@dimen/min_height_touch_target"
             android:layout_height="@dimen/min_height_touch_target"
             android:layout_gravity="center"
-            android:progressTint="@color/topeka_accent" />
+            android:progressTint="@color/topeka_accent"
+            tools:ignore="UnusedAttribute" />
 
     <FrameLayout
             android:id="@+id/content"
