@@ -20,22 +20,34 @@ import android.support.test.InstrumentationRegistry;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.test.suitebuilder.annotation.LargeTest;
+import android.view.View;
 
+import com.google.samples.apps.topeka.AnimationAwareTestRule;
 import com.google.samples.apps.topeka.R;
 import com.google.samples.apps.topeka.helper.PreferencesHelper;
+import com.google.samples.apps.topeka.model.Avatar;
 
+import org.hamcrest.Matcher;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import static android.support.test.espresso.Espresso.onData;
 import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.matcher.ViewMatchers.isClickable;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static android.support.test.espresso.matcher.ViewMatchers.isEnabled;
+import static android.support.test.espresso.matcher.ViewMatchers.isFocusable;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static junit.framework.Assert.assertTrue;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.isEmptyOrNullString;
 import static org.hamcrest.Matchers.not;
 
 @RunWith(AndroidJUnit4.class)
@@ -54,6 +66,10 @@ public class SignInActivityTest {
                 }
             };
 
+    @Rule
+    public AnimationAwareTestRule mAnimationAwareTestRule =
+            new AnimationAwareTestRule();
+
     @Before
     public void clearPreferences() throws Exception {
         PreferencesHelper.signOut(InstrumentationRegistry.getTargetContext());
@@ -65,20 +81,73 @@ public class SignInActivityTest {
     }
 
     @Test
-    public void signIn_performSuccessful() {
+    public void signIn_inputDataSuccessfully() {
         inputData();
         onView(withId(R.id.done)).check(matches(isDisplayed()));
     }
 
+    public void signIn_performSignIn() {
+        inputData();
+        onView(withId(R.id.done)).perform(click());
+        assertTrue(PreferencesHelper.isSignedIn(InstrumentationRegistry.getTargetContext()));
+    }
+
     @Test
     public void signIn_withLongLastName() {
-        inputData();
-        onView(withId(R.id.last_initial)).perform(typeText("somelongtext"), closeSoftKeyboard());
-        onView(withId(R.id.last_initial)).check(matches(withText(TEST_LAST_INITIAL)));
+        typeAndHideKeyboard(R.id.last_initial, TEST_FIRST_NAME);
+        String expectedValue = String.valueOf(TEST_FIRST_NAME.charAt(0));
+        onView(withId(R.id.last_initial)).check(matches(withText(expectedValue)));
+    }
+
+    @Test
+    public void firstName_isInitiallyEmpty() {
+        editTextIsEmpty(R.id.first_name);
+    }
+
+    @Test
+    public void lastInitial_isInitiallyEmpty() {
+        editTextIsEmpty(R.id.last_initial);
+    }
+
+    private void editTextIsEmpty(int id) {
+        onView(withId(id))
+                .check(matches(withText(isEmptyOrNullString())));
+    }
+
+    @Test
+    public void avatar_allClickable() {
+        checkOnAvatar(isClickable());
+    }
+
+    @Test
+    public void avatar_allDisplayed() {
+        checkOnAvatar(isDisplayed());
+    }
+
+    @Test
+    public void avatar_isEnabled() {
+        checkOnAvatar(isEnabled());
+    }
+
+    @Test
+    public void avatar_isFocusable() {
+        checkOnAvatar(isFocusable());
+    }
+
+    private void checkOnAvatar(Matcher<View> matcher) {
+        for (int i = 0; i < Avatar.values().length; i++) {
+            onData(equalTo(Avatar.values()[i]))
+                    .inAdapterView(withId(R.id.avatars))
+                    .check(matches(matcher));
+        }
     }
 
     private void inputData() {
-        onView(withId(R.id.first_name)).perform(typeText(TEST_FIRST_NAME), closeSoftKeyboard());
-        onView(withId(R.id.last_initial)).perform(typeText(TEST_LAST_INITIAL), closeSoftKeyboard());
+        typeAndHideKeyboard(R.id.first_name, TEST_FIRST_NAME);
+        typeAndHideKeyboard(R.id.last_initial, TEST_LAST_INITIAL);
+    }
+
+    private void typeAndHideKeyboard(int targetViewId, String text) {
+        onView(withId(targetViewId)).perform(typeText(text), closeSoftKeyboard());
     }
 }

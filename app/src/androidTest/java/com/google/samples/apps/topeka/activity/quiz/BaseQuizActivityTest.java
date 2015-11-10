@@ -24,6 +24,7 @@ import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.test.suitebuilder.annotation.LargeTest;
 
+import com.google.samples.apps.topeka.AnimationAwareTestRule;
 import com.google.samples.apps.topeka.R;
 import com.google.samples.apps.topeka.activity.QuizActivity;
 import com.google.samples.apps.topeka.helper.PreferencesHelper;
@@ -75,6 +76,10 @@ public abstract class BaseQuizActivityTest {
                             getCurrentCategory());
                 }
             };
+
+    @Rule
+    public final AnimationAwareTestRule mAnimationAwareTestRule =
+            new AnimationAwareTestRule();
 
     abstract int getCategory();
 
