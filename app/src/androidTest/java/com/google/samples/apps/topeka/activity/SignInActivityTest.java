@@ -40,7 +40,6 @@ import static android.support.test.espresso.matcher.ViewMatchers.withContentDesc
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withParent;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
-import static com.google.samples.apps.topeka.R.id.last_initial;
 import static org.hamcrest.Matchers.isEmptyOrNullString;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.core.AllOf.allOf;
@@ -78,7 +77,7 @@ public class SignInActivityTest {
 
     @Test
     public void checkIfLastInitialEditTextIsInitiallyEmpty() {
-        onView(withId(last_initial)).check(matches(withText(isEmptyOrNullString())));
+        onView(withId(R.id.last_initial)).check(matches(withText(isEmptyOrNullString())));
     }
 
     @Test
@@ -202,12 +201,12 @@ public class SignInActivityTest {
     @Test
     public void signIn_withLongLastName() {
         inputData();
-        onView(withId(last_initial)).perform(typeText(TEST_FIRST_NAME), closeSoftKeyboard());
-        onView(withId(last_initial)).check(matches(withText(TEST_LAST_INITIAL)));
+        onView(withId(R.id.last_initial)).perform(typeText(TEST_FIRST_NAME), closeSoftKeyboard());
+        onView(withId(R.id.last_initial)).check(matches(withText(TEST_LAST_INITIAL)));
     }
 
     private void inputData() {
         onView(withId(R.id.first_name)).perform(typeText(TEST_FIRST_NAME), closeSoftKeyboard());
-        onView(withId(last_initial)).perform(typeText(TEST_LAST_INITIAL), closeSoftKeyboard());
+        onView(withId(R.id.last_initial)).perform(typeText(TEST_LAST_INITIAL), closeSoftKeyboard());
     }
 }
