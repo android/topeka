@@ -24,6 +24,7 @@ import android.test.suitebuilder.annotation.LargeTest;
 import com.google.samples.apps.topeka.R;
 import com.google.samples.apps.topeka.helper.PreferencesHelper;
 
+import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -35,6 +36,7 @@ import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard
 import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isChecked;
+import static android.support.test.espresso.matcher.ViewMatchers.isClickable;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withContentDescription;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
@@ -83,119 +85,136 @@ public class SignInActivityTest {
     @Test
     public void signIn_performSuccessful() {
         inputData();
-        onView(withId(R.id.done)).check(matches(isDisplayed())).perform(click());
+        onView(withId(R.id.done))
+                .check(matches(isDisplayed()))
+                .check(matches(isClickable()));
     }
 
     @Test
-    public void signIn_chooseAvatar_01() {
+    public void chooseAvatar_01() {
         onView(allOf(withParent(withId(R.id.avatars)), withContentDescription("Avatar 01")))
                 .check(matches(isDisplayed()))
-                .perform(click()).check(matches(isChecked()));
+                .perform(click())
+                .check(matches(isChecked()));
     }
 
     @Test
-    public void signIn_chooseAvatar_02() {
+    public void chooseAvatar_02() {
         onView(allOf(withParent(withId(R.id.avatars)), withContentDescription("Avatar 11")))
                 .check(matches(isDisplayed()))
-                .perform(click()).check(matches(isChecked()));
+                .perform(click())
+                .check(matches(isChecked()));
     }
 
     @Test
-    public void signIn_chooseAvatar_03() {
+    public void chooseAvatar_03() {
         onView(allOf(withParent(withId(R.id.avatars)), withContentDescription("Avatar 21")))
                 .check(matches(isDisplayed()))
-                .perform(click()).check(matches(isChecked()));
+                .perform(click())
+                .check(matches(isChecked()));
     }
 
     @Test
-    public void signIn_chooseAvatar_04() {
+    public void chooseAvatar_04() {
         onView(allOf(withParent(withId(R.id.avatars)), withContentDescription("Avatar 31")))
                 .check(matches(isDisplayed()))
-                .perform(click()).check(matches(isChecked()));
+                .perform(click())
+                .check(matches(isChecked()));
     }
 
     @Test
-    public void signIn_chooseAvatar_05() {
+    public void chooseAvatar_05() {
         onView(allOf(withParent(withId(R.id.avatars)), withContentDescription("Avatar 41")))
                 .check(matches(isDisplayed()))
-                .perform(click()).check(matches(isChecked()));
+                .perform(click())
+                .check(matches(isChecked()));
     }
 
     @Test
-    public void signIn_chooseAvatar_06() {
+    public void chooseAvatar_06() {
         onView(allOf(withParent(withId(R.id.avatars)), withContentDescription("Avatar 51")))
                 .check(matches(isDisplayed()))
-                .perform(click()).check(matches(isChecked()));
+                .perform(click())
+                .check(matches(isChecked()));
     }
 
     @Test
-    public void signIn_chooseAvatar_07() {
+    public void chooseAvatar_07() {
         onView(allOf(withParent(withId(R.id.avatars)), withContentDescription("Avatar 61")))
                 .check(matches(isDisplayed()))
-                .perform(click()).check(matches(isChecked()));
+                .perform(click())
+                .check(matches(isChecked()));
     }
 
     @Test
-    public void signIn_chooseAvatar_08() {
+    public void chooseAvatar_08() {
         onView(allOf(withParent(withId(R.id.avatars)), withContentDescription("Avatar 71")))
                 .check(matches(isDisplayed()))
-                .perform(click()).check(matches(isChecked()));
+                .perform(click())
+                .check(matches(isChecked()));
     }
 
     @Test
-    public void signIn_chooseAvatar_09() {
+    public void chooseAvatar_09() {
         onView(allOf(withParent(withId(R.id.avatars)), withContentDescription("Avatar 81")))
                 .check(matches(isDisplayed()))
                 .perform(click()).check(matches(isChecked()));
     }
 
     @Test
-    public void signIn_chooseAvatar_10() {
+    public void chooseAvatar_10() {
         onView(allOf(withParent(withId(R.id.avatars)), withContentDescription("Avatar 91")))
                 .check(matches(isDisplayed()))
-                .perform(click()).check(matches(isChecked()));
+                .perform(click())
+                .check(matches(isChecked()));
     }
 
     @Test
-    public void signIn_chooseAvatar_11() {
+    public void chooseAvatar_11() {
         onView(allOf(withParent(withId(R.id.avatars)), withContentDescription("Avatar 101")))
                 .check(matches(isDisplayed()))
-                .perform(click()).check(matches(isChecked()));
+                .perform(click())
+                .check(matches(isChecked()));
     }
 
     @Test
-    public void signIn_chooseAvatar_12() {
+    public void chooseAvatar_12() {
         onView(allOf(withParent(withId(R.id.avatars)), withContentDescription("Avatar 111")))
                 .check(matches(isDisplayed()))
-                .perform(click()).check(matches(isChecked()));
+                .perform(click())
+                .check(matches(isChecked()));
     }
 
     @Test
-    public void signIn_chooseAvatar_13() {
+    public void chooseAvatar_13() {
         onView(allOf(withParent(withId(R.id.avatars)), withContentDescription("Avatar 121")))
                 .check(matches(isDisplayed()))
-                .perform(click()).check(matches(isChecked()));
+                .perform(click())
+                .check(matches(isChecked()));
     }
 
     @Test
-    public void signIn_chooseAvatar_14() {
+    public void chooseAvatar_14() {
         onView(allOf(withParent(withId(R.id.avatars)), withContentDescription("Avatar 131")))
                 .check(matches(isDisplayed()))
-                .perform(click()).check(matches(isChecked()));
+                .perform(click())
+                .check(matches(isChecked()));
     }
 
     @Test
-    public void signIn_chooseAvatar_15() {
+    public void chooseAvatar_15() {
         onView(allOf(withParent(withId(R.id.avatars)), withContentDescription("Avatar 141")))
                 .check(matches(isDisplayed()))
-                .perform(click()).check(matches(isChecked()));
+                .perform(click())
+                .check(matches(isChecked()));
     }
 
     @Test
-    public void signIn_chooseAvatar_16() {
+    public void chooseAvatar_16() {
         onView(allOf(withParent(withId(R.id.avatars)), withContentDescription("Avatar 151")))
                 .check(matches(isDisplayed()))
-                .perform(click()).check(matches(isChecked()));
+                .perform(click())
+                .check(matches(Matchers.allOf(isChecked())));
     }
 
     @Test
