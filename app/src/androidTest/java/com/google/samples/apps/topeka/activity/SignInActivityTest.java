@@ -202,7 +202,7 @@ public class SignInActivityTest {
     @Test
     public void signIn_withLongLastName() {
         inputData();
-        onView(withId(last_initial)).perform(typeText(InstrumentationRegistry.getTargetContext().getResources().getString(R.string.last_initial)), closeSoftKeyboard());
+        onView(withId(last_initial)).perform(typeText(TEST_FIRST_NAME), closeSoftKeyboard());
         onView(withId(last_initial)).check(matches(withText(TEST_LAST_INITIAL)));
     }
 
