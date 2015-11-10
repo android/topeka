@@ -72,12 +72,12 @@ public class SignInActivityTest {
     }
 
     @Test
-    public void signIn_checkIfFirstNameEditTextIsInitiallyEmpty() {
+    public void checkIfFirstNameEditTextIsInitiallyEmpty() {
         onView(withId(R.id.first_name)).check(matches(withText(isEmptyOrNullString())));
     }
 
     @Test
-    public void signIn_checkIfLastInitialEditTextIsInitiallyEmpty() {
+    public void checkIfLastInitialEditTextIsInitiallyEmpty() {
         onView(withId(last_initial)).check(matches(withText(isEmptyOrNullString())));
     }
 
