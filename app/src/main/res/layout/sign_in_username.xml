@@ -24,14 +24,14 @@
 
     <TextView
         android:id="@+id/toolbar_sign_in"
-        style="@style/Topeka.TextAppearance.Title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:clipToPadding="false"
+        style="@style/Topeka.TextAppearance.Title"
         android:elevation="@dimen/elevation_header"
+        android:text="@string/sign_in"
         android:paddingEnd="@dimen/spacing_double"
         android:paddingStart="@dimen/spacing_double"
-        android:text="@string/sign_in"
+        android:clipToPadding="false"
         tools:ignore="UnusedAttribute,NewApi"/>
 
     <android.support.design.widget.TextInputLayout
