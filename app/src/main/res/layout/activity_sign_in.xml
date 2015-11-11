@@ -20,6 +20,7 @@
              android:layout_width="match_parent"
              android:layout_height="match_parent"
              tools:context="activity.SignInActivity"
-             android:background="@color/light_grey"
-             android:transitionGroup="false"
-             tools:ignore="MergeRootFrame,Overdraw,UnusedAttribute" />
+    android:background="@color/light_grey"
+    android:transitionGroup="false"
+    android:padding="@dimen/spacing_double"
+    tools:ignore="MergeRootFrame,Overdraw,UnusedAttribute"/>
