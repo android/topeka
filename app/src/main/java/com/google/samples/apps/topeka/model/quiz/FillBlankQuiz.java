@@ -58,6 +58,11 @@ public final class FillBlankQuiz extends Quiz<String> {
     }
 
     @Override
+    public boolean isAnswerCorrect(String answer) {
+        return getAnswer().equalsIgnoreCase(answer);
+    }
+
+    @Override
     public void writeToParcel(Parcel dest, int flags) {
         super.writeToParcel(dest, flags);
         dest.writeString(getAnswer());

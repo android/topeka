@@ -226,6 +226,8 @@ public class QuizActivity extends AppCompatActivity {
                 .replace(R.id.quiz_fragment_container, mQuizFragment, FRAGMENT_TAG)
                 .commit();
         final FrameLayout container = (FrameLayout) findViewById(R.id.quiz_fragment_container);
+        container.setBackgroundColor(ContextCompat.
+                getColor(this, mCategory.getTheme().getWindowBackgroundColor()));
         revealFragmentContainer(clickedView, container);
         // the toolbar should not have more elevation than the content while playing
         setToolbarElevation(false);
@@ -439,6 +441,7 @@ public class QuizActivity extends AppCompatActivity {
         }
     }
 
+    @SuppressWarnings("unused")
     @VisibleForTesting
     public CountingIdlingResource getCountingIdlingResource() {
         return mCountingIdlingResource;

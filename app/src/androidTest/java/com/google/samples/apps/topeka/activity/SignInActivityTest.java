@@ -39,6 +39,7 @@ import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.matcher.ViewMatchers.isChecked;
 import static android.support.test.espresso.matcher.ViewMatchers.isClickable;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.isEnabled;
@@ -115,11 +116,6 @@ public class SignInActivityTest {
     }
 
     @Test
-    public void avatar_allClickable() {
-        checkOnAvatar(isClickable());
-    }
-
-    @Test
     public void avatar_allDisplayed() {
         checkOnAvatar(isDisplayed());
     }
@@ -130,8 +126,18 @@ public class SignInActivityTest {
     }
 
     @Test
-    public void avatar_isFocusable() {
-        checkOnAvatar(isFocusable());
+    public void avatar_notFocusable() {
+        checkOnAvatar(not(isFocusable()));
+    }
+
+    @Test
+    public void avatar_notClickable() {
+        checkOnAvatar(not(isClickable()));
+    }
+
+    @Test
+    public void avatar_noneChecked() {
+        checkOnAvatar(not(isChecked()));
     }
 
     private void checkOnAvatar(Matcher<View> matcher) {

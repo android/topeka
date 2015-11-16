@@ -54,6 +54,17 @@ public final class FillTwoBlanksQuiz extends Quiz<String[]> {
     }
 
     @Override
+    public boolean isAnswerCorrect(String[] answer) {
+        String[] correctAnswers = getAnswer();
+        for (int i = 0; i < answer.length; i++) {
+            if (!answer[i].equalsIgnoreCase(correctAnswers[i])) {
+                return false;
+            }
+        }
+        return answer.length == correctAnswers.length;
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;
