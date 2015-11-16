@@ -20,7 +20,9 @@ import android.app.Activity;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
+import android.os.Build;
 import android.support.annotation.ColorRes;
+import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.widget.RecyclerView;
@@ -31,6 +33,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.samples.apps.topeka.R;
+import com.google.samples.apps.topeka.helper.ApiLevelHelper;
 import com.google.samples.apps.topeka.model.Category;
 import com.google.samples.apps.topeka.model.Theme;
 import com.google.samples.apps.topeka.persistence.TopekaDatabaseHelper;
@@ -126,7 +129,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
                 ICON_CATEGORY + category.getId(), DRAWABLE, mPackageName);
         final boolean solved = category.isSolved();
         if (solved) {
-            LayerDrawable solvedIcon = loadSolvedIcon(category, categoryImageResource);
+            Drawable solvedIcon = loadSolvedIcon(category, categoryImageResource);
             icon.setImageDrawable(solvedIcon);
         } else {
             icon.setImageResource(categoryImageResource);
@@ -144,11 +147,23 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
      * @param categoryImageResource The category's identifying image.
      * @return The icon indicating that the category has been solved.
      */
-    private LayerDrawable loadSolvedIcon(Category category, int categoryImageResource) {
+    private Drawable loadSolvedIcon(Category category, int categoryImageResource) {
+        if (ApiLevelHelper.isAtLeast(Build.VERSION_CODES.LOLLIPOP)) {
+            return loadSolvedIconLollipop(category, categoryImageResource);
+        }
+        return loadSolvedIconPreLollipop(category, categoryImageResource);
+    }
+
+    @NonNull
+    private LayerDrawable loadSolvedIconLollipop(Category category, int categoryImageResource) {
         final Drawable done = loadTintedDoneDrawable();
         final Drawable categoryIcon = loadTintedCategoryDrawable(category, categoryImageResource);
         Drawable[] layers = new Drawable[]{categoryIcon, done}; // ordering is back to front
         return new LayerDrawable(layers);
+    }
+
+    private Drawable loadSolvedIconPreLollipop(Category category, int categoryImageResource) {
+        return loadTintedCategoryDrawable(category, categoryImageResource);
     }
 
     /**

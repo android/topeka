@@ -52,7 +52,7 @@ public class SignInFragment extends Fragment {
     private Player mPlayer;
     private EditText mFirstName;
     private EditText mLastInitial;
-    private Avatar mSelectedAvatar = Avatar.ONE;
+    private Avatar mSelectedAvatar;
     private View mSelectedAvatarView;
     private GridView mAvatarGrid;
     private FloatingActionButton mDoneFab;
@@ -200,7 +200,9 @@ public class SignInFragment extends Fragment {
             }
         });
         mAvatarGrid.setNumColumns(calculateSpanCount());
-        mAvatarGrid.setItemChecked(mSelectedAvatar.ordinal(), true);
+        if (mSelectedAvatar != null) {
+            mAvatarGrid.setItemChecked(mSelectedAvatar.ordinal(), true);
+        }
     }
 
 

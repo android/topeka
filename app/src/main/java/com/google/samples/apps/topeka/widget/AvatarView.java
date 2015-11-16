@@ -53,8 +53,6 @@ public class AvatarView extends ImageView implements Checkable {
 
     public AvatarView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        setFocusable(true);
-        setClickable(true);
     }
 
     @Override
