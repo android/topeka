@@ -79,8 +79,7 @@ public class SignInFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         final View contentView = inflater.inflate(R.layout.fragment_sign_in, container, false);
-        contentView.addOnLayoutChangeListener(new View.
-                OnLayoutChangeListener() {
+        contentView.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
             @Override
             public void onLayoutChange(View v, int left, int top, int right, int bottom,
                                        int oldLeft, int oldTop, int oldRight, int oldBottom) {
@@ -134,17 +133,18 @@ public class SignInFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                // showing the floating action button if text is entered
+                // hiding the floating action button if text is empty
                 if (s.length() == 0) {
                     mDoneFab.hide();
-                } else {
-                    mDoneFab.show();
                 }
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-                /* no-op */
+                // showing the floating action button if avatar is selected and input data is valid
+                if (isAvatarSelected() && isInputDataValid()) {
+                    mDoneFab.show();
+                }
             }
         };
 
@@ -197,6 +197,10 @@ public class SignInFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 mSelectedAvatarView = view;
                 mSelectedAvatar = Avatar.values()[position];
+                // showing the floating action button if input data is valid
+                if (isInputDataValid()) {
+                    mDoneFab.show();
+                }
             }
         });
         mAvatarGrid.setNumColumns(calculateSpanCount());
@@ -204,7 +208,6 @@ public class SignInFragment extends Fragment {
             mAvatarGrid.setItemChecked(mSelectedAvatar.ordinal(), true);
         }
     }
-
 
     private void performSignInWithTransition(View v) {
         final Activity activity = getActivity();
@@ -236,6 +239,14 @@ public class SignInFragment extends Fragment {
         mPlayer = new Player(mFirstName.getText().toString(), mLastInitial.getText().toString(),
                 mSelectedAvatar);
         PreferencesHelper.writeToPreferences(activity, mPlayer);
+    }
+
+    private boolean isAvatarSelected() {
+        return mSelectedAvatarView != null || mSelectedAvatar != null;
+    }
+
+    private boolean isInputDataValid() {
+        return PreferencesHelper.isInputDataValid(mFirstName.getText(), mLastInitial.getText());
     }
 
     /**
