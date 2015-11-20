@@ -79,8 +79,7 @@ public class SignInFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         final View contentView = inflater.inflate(R.layout.fragment_sign_in, container, false);
-        contentView.addOnLayoutChangeListener(new View.
-                OnLayoutChangeListener() {
+        contentView.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
             @Override
             public void onLayoutChange(View v, int left, int top, int right, int bottom,
                                        int oldLeft, int oldTop, int oldRight, int oldBottom) {
@@ -137,14 +136,16 @@ public class SignInFragment extends Fragment {
                 // showing the floating action button if text is entered
                 if (s.length() == 0) {
                     mDoneFab.hide();
-                } else {
-                    mDoneFab.show();
                 }
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-                /* no-op */
+                if (PreferencesHelper.isInputValid(mFirstName.getText(), mLastInitial.getText())) {
+                    if (mSelectedAvatarView != null || mSelectedAvatar != null) {
+                        mDoneFab.show();
+                    }
+                }
             }
         };
 
@@ -197,6 +198,9 @@ public class SignInFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 mSelectedAvatarView = view;
                 mSelectedAvatar = Avatar.values()[position];
+                if (PreferencesHelper.isInputValid(mFirstName.getText(), mLastInitial.getText())) {
+                    mDoneFab.show();
+                }
             }
         });
         mAvatarGrid.setNumColumns(calculateSpanCount());
@@ -204,7 +208,6 @@ public class SignInFragment extends Fragment {
             mAvatarGrid.setItemChecked(mSelectedAvatar.ordinal(), true);
         }
     }
-
 
     private void performSignInWithTransition(View v) {
         final Activity activity = getActivity();
