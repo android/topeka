@@ -17,7 +17,7 @@
 apply plugin: 'com.android.application'
 
 android {
-    buildToolsVersion "23.0.1"
+    buildToolsVersion "23.0.2"
     compileSdkVersion 23
 
     defaultConfig {
@@ -40,30 +40,38 @@ android {
     }
 }
 
+ext {
+    supportLibVersion = "23.1.1"
+    espressoVersion = "2.2.1"
+    androidTestVersion = "0.4"
+    hamcrestVersion = "1.3"
+    junitVersion = "4.12"
+}
+
 dependencies {
-    compile 'com.android.support:appcompat-v7:23.1.1'
-    compile 'com.android.support:cardview-v7:23.1.1'
-    compile 'com.android.support:design:23.1.1'
-    compile 'com.android.support:recyclerview-v7:23.1.1'
-    compile 'com.android.support.test.espresso:espresso-idling-resource:2.2.1'
-    testCompile 'junit:junit:4.12'
+    compile "com.android.support:appcompat-v7:${supportLibVersion}"
+    compile "com.android.support:cardview-v7:${supportLibVersion}"
+    compile "com.android.support:design:${supportLibVersion}"
+    compile "com.android.support:recyclerview-v7:${supportLibVersion}"
+    compile "com.android.support.test.espresso:espresso-idling-resource:${espressoVersion}"
+    testCompile "junit:junit:${junitVersion}"
 
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.1') {
-        exclude module: 'espresso-idling-resource'
-        exclude group: 'com.android.support'
+    androidTestCompile("com.android.support.test.espresso:espresso-core:${espressoVersion}") {
+        exclude module: "espresso-idling-resource"
+        exclude group: "com.android.support"
     }
-    androidTestCompile('com.android.support.test.espresso:espresso-contrib:2.2.1') {
-        exclude module: 'espresso-core'
-        exclude module: 'recyclerview-v7'
-        exclude group: 'com.android.support'
+    androidTestCompile("com.android.support.test.espresso:espresso-contrib:${espressoVersion}") {
+        exclude module: "espresso-core"
+        exclude module: "recyclerview-v7"
+        exclude group: "com.android.support"
     }
-    androidTestCompile('com.android.support.test:rules:0.4') {
-        exclude group: 'com.android.support'
-    }
-
-    androidTestCompile('com.android.support.test:runner:0.4') {
-        exclude group: 'com.android.support'
+    androidTestCompile("com.android.support.test:rules:${androidTestVersion}") {
+        exclude group: "com.android.support"
     }
 
-    androidTestCompile 'org.hamcrest:hamcrest-core:1.3'
+    androidTestCompile("com.android.support.test:runner:${androidTestVersion}") {
+        exclude group: "com.android.support"
+    }
+
+    androidTestCompile "org.hamcrest:hamcrest-core:${hamcrestVersion}"
 }

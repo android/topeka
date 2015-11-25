@@ -18,6 +18,7 @@ package com.google.samples.apps.topeka.helper;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.text.TextUtils;
 
 import com.google.samples.apps.topeka.model.Avatar;
 import com.google.samples.apps.topeka.model.Player;
@@ -40,7 +41,7 @@ public class PreferencesHelper {
      * Writes a {@link com.google.samples.apps.topeka.model.Player} to preferences.
      *
      * @param context The Context which to obtain the SharedPreferences from.
-     * @param player The {@link com.google.samples.apps.topeka.model.Player} to write.
+     * @param player  The {@link com.google.samples.apps.topeka.model.Player} to write.
      */
     public static void writeToPreferences(Context context, Player player) {
         SharedPreferences.Editor editor = getEditor(context);
@@ -68,7 +69,7 @@ public class PreferencesHelper {
             avatar = null;
         }
 
-        if (null == firstName && null == lastInitial && null == avatar) {
+        if (null == firstName || null == lastInitial || null == avatar) {
             return null;
         }
         return new Player(firstName, lastInitial, avatar);
@@ -88,7 +89,7 @@ public class PreferencesHelper {
     }
 
     /**
-     * Check whether a user is currently signed in.
+     * Checks whether a player is currently signed in.
      *
      * @param context The context to check this in.
      * @return <code>true</code> if login data exists, else <code>false</code>.
@@ -98,6 +99,17 @@ public class PreferencesHelper {
         return preferences.contains(PREFERENCE_FIRST_NAME) &&
                 preferences.contains(PREFERENCE_LAST_INITIAL) &&
                 preferences.contains(PREFERENCE_AVATAR);
+    }
+
+    /**
+     * Checks whether the player's input data is valid.
+     *
+     * @param firstName   The player's first name to be examined.
+     * @param lastInitial The player's last initial to be examined.
+     * @return <code>true</code> if both strings are not null nor 0-length, else <code>false</code>.
+     */
+    public static boolean isInputDataValid(CharSequence firstName, CharSequence lastInitial) {
+        return !TextUtils.isEmpty(firstName) && !TextUtils.isEmpty(lastInitial);
     }
 
     private static SharedPreferences.Editor getEditor(Context context) {
