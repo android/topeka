@@ -69,8 +69,10 @@ public class SignInFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         if (savedInstanceState != null) {
-            int savedAvatarIndex = savedInstanceState.getInt(KEY_SELECTED_AVATAR_INDEX);
-            mSelectedAvatar = Avatar.values()[savedAvatarIndex];
+            final int savedAvatarIndex = savedInstanceState.getInt(KEY_SELECTED_AVATAR_INDEX);
+            if (savedAvatarIndex != GridView.INVALID_POSITION) {
+                mSelectedAvatar = Avatar.values()[savedAvatarIndex];
+            }
         }
         super.onCreate(savedInstanceState);
     }
@@ -92,7 +94,11 @@ public class SignInFragment extends Fragment {
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
-        outState.putInt(KEY_SELECTED_AVATAR_INDEX, mSelectedAvatar.ordinal());
+        if (mAvatarGrid != null) {
+            outState.putInt(KEY_SELECTED_AVATAR_INDEX, mAvatarGrid.getCheckedItemPosition());
+        } else {
+            outState.putInt(KEY_SELECTED_AVATAR_INDEX, GridView.INVALID_POSITION);
+        }
         super.onSaveInstanceState(outState);
     }
 
@@ -101,7 +107,7 @@ public class SignInFragment extends Fragment {
         assurePlayerInit();
         checkIsInEditMode();
 
-        if (null == mPlayer || edit) {
+        if (mPlayer == null || edit) {
             view.findViewById(R.id.empty).setVisibility(View.GONE);
             view.findViewById(R.id.content).setVisibility(View.VISIBLE);
             initContentViews(view);
@@ -117,7 +123,7 @@ public class SignInFragment extends Fragment {
     private void checkIsInEditMode() {
         final Bundle arguments = getArguments();
         //noinspection SimplifiableIfStatement
-        if (null == arguments) {
+        if (arguments == null) {
             edit = false;
         } else {
             edit = arguments.getBoolean(ARG_EDIT, false);
@@ -222,7 +228,7 @@ public class SignInFragment extends Fragment {
 
     private void initContents() {
         assurePlayerInit();
-        if (null != mPlayer) {
+        if (mPlayer != null) {
             mFirstName.setText(mPlayer.getFirstName());
             mLastInitial.setText(mPlayer.getLastInitial());
             mSelectedAvatar = mPlayer.getAvatar();
@@ -230,7 +236,7 @@ public class SignInFragment extends Fragment {
     }
 
     private void assurePlayerInit() {
-        if (null == mPlayer) {
+        if (mPlayer == null) {
             mPlayer = PreferencesHelper.getPlayer(getActivity());
         }
     }
