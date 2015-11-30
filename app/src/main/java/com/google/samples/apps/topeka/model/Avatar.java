@@ -56,6 +56,6 @@ public enum Avatar {
     }
 
     public String getNameForAccessibility() {
-        return TAG + " " + ordinal() + 1;
+        return TAG + " " + (ordinal() + 1);
     }
 }
