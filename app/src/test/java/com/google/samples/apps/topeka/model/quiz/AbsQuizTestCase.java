@@ -18,6 +18,7 @@ package com.google.samples.apps.topeka.model.quiz;
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 /**
@@ -27,7 +28,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
  */
 public abstract class AbsQuizTestCase<Q extends Quiz> {
 
-    protected static final String QUESTION = "Is this the real world? Is this just fantasy?";
+    protected static final String QUESTION = "Is this the real life? Is this just fantasy?";
     protected static final int[] INT_ARRAY = new int[]{0, 1, 2};
     protected static final String[] STRING_ARRAY = new String[]{"one", "two", "three", "four"};
 
@@ -37,8 +38,38 @@ public abstract class AbsQuizTestCase<Q extends Quiz> {
     }
 
     @Test
-    public void getQuestion() throws Exception {
+    public void question_isStoredCorrectly() throws Exception {
         assertThat(QUESTION, is(getQuiz().getQuestion()));
+    }
+
+    @Test
+    public void quiz_answer_stringRepresentation_exists() {
+        assertThat(getQuiz().getStringAnswer(), notNullValue());
+    }
+
+    @Test
+    public void quiz_answer_isCorrect() {
+        assertThat(getQuiz().isAnswerCorrect(getQuiz().getAnswer()), is(true));
+    }
+
+    @Test
+    public void quiz_answer_isIncorrect() {
+        assertThat(getQuiz().isAnswerCorrect(null), is(false));
+    }
+
+    @Test
+    public void quiz_equalsSelf_true() {
+        assertThat(getQuiz().equals(getQuiz()), is(true));
+    }
+
+    @Test
+    public void quiz_equalsOther_false() {
+        assertThat(getQuiz().equals("Foobar"), is(true));
+    }
+
+    @Test
+    public void quiz_hashCode_consistent() {
+        assertThat(getQuiz().hashCode() == getQuiz().hashCode(), is(true));
     }
 
     /**

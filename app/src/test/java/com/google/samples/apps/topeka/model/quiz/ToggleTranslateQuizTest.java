@@ -24,15 +24,16 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public class ToggleTranslateQuizTest extends AbsQuizTestCase<ToggleTranslateQuiz> {
 
     private static final String[][] OPTIONS = new String[][]{STRING_ARRAY, STRING_ARRAY};
+    private static final int[] CORRECT_ANSWER = new int[]{0, 1};
 
     @Override
     public void quiz_answer_correctlyStored() {
-        assertThat(INT_ARRAY, is(getQuiz().getAnswer()));
+        assertThat(CORRECT_ANSWER, is(getQuiz().getAnswer()));
     }
 
     @Override
     public ToggleTranslateQuiz getQuiz() {
-        return new ToggleTranslateQuiz(QUESTION, INT_ARRAY, OPTIONS, false);
+        return new ToggleTranslateQuiz(QUESTION, CORRECT_ANSWER, OPTIONS, false);
     }
 
     @Override
