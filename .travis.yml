@@ -7,7 +7,6 @@ android:
   components:
     - platform-tools
     - tools
-    - $ANDROID_TARGET
     - android-23
     - build-tools-23.0.2
     - extra-android-m2repository
@@ -32,7 +31,6 @@ env:
   matrix:
     - ANDROID_TARGET=android-17
     - ANDROID_TARGET=android-19
-    - ANDROID_TARGET=android-22
 
 notifications:
   email: false
