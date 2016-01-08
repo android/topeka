@@ -1,0 +1,42 @@
+language: android
+
+jdk:
+ - oraclejdk8
+
+android:
+  components:
+    - platform-tools
+    - tools
+    - android-23
+    - build-tools-23.0.2
+    - extra-android-m2repository
+    - sys-img-armeabi-v7a-$ANDROID_TARGET
+
+before_script:
+  - echo no | android create avd --force -n test -t $ANDROID_TARGET --abi armeabi-v7a --sdcard 200M
+  - emulator -avd test -no-audio -no-window &
+  - android-wait-for-emulator
+  - sleep 10
+  - adb shell settings put global window_animation_scale 0 &
+  - adb shell settings put global transition_animation_scale 0 &
+  - adb shell settings put global animator_duration_scale 0 &
+  - adb shell input keyevent 82 &
+
+script:
+  - ./gradlew check connectedCheck -i
+
+env:
+  global:
+    - ADB_INSTALL_TIMEOUT=8
+  matrix:
+    - ANDROID_TARGET=android-17
+    - ANDROID_TARGET=android-19
+
+notifications:
+  email: false
+
+sudo: required
+
+cache:
+  directories:
+    - $HOME/.gradle
