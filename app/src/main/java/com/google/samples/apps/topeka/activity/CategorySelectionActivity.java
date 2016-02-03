@@ -70,8 +70,12 @@ public class CategorySelectionActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_category_selection);
         Player player = getIntent().getParcelableExtra(EXTRA_PLAYER);
-        if (!PreferencesHelper.isSignedIn(this) && player != null) {
-            PreferencesHelper.writeToPreferences(this, player);
+        if (!PreferencesHelper.isSignedIn(this)) {
+            if (player == null) {
+                player = PreferencesHelper.getPlayer(this);
+            } else {
+                PreferencesHelper.writeToPreferences(this, player);
+            }
         }
         setUpToolbar(player);
         if (savedInstanceState == null) {
