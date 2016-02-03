@@ -274,7 +274,7 @@ public class QuizActivity extends AppCompatActivity {
         int centerX = (startView.getLeft() + startView.getRight()) / 2;
         // Subtract the start view's height to adjust for relative coordinates on screen.
         int centerY = (startView.getTop() + startView.getBottom()) / 2 - startView.getHeight();
-        float endRadius = (float) Math.hypot((double) centerX, (double) centerY);
+        float endRadius = (float) Math.hypot(centerX, centerY);
         mCircularReveal = ViewAnimationUtils.createCircularReveal(
                 targetView, centerX, centerY, startView.getWidth(), endRadius);
         mCircularReveal.setInterpolator(new FastOutLinearInInterpolator());
