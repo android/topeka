@@ -34,7 +34,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
  */
 @RunWith(AndroidJUnit4.class)
 @SmallTest
-public abstract class AbsQuizTestCase<Q extends Quiz> {
+public abstract class AbsQuizAndroidTestCase<Q extends Quiz> {
 
     protected static final String QUESTION = "Is this the real world? Is this just fantasy?";
     protected static final int[] INT_ARRAY = new int[]{0, 1, 2};

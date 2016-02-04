@@ -16,14 +16,10 @@
 
 package com.google.samples.apps.topeka.model.quiz;
 
-public class FillBlankQuizTest extends AbsQuizTestCase<FillBlankQuiz> {
-
-    private static final String ANSWER = "answer";
-    private static final String START = "start";
-    private static final String END = "end";
+public class FillTwoBlanksQuizAndroidTest extends AbsQuizAndroidTestCase<FillTwoBlanksQuiz> {
 
     @Override
-    public FillBlankQuiz getQuiz() {
-        return new FillBlankQuiz(QUESTION, ANSWER, START, END, false);
+    public FillTwoBlanksQuiz getQuiz() {
+        return new FillTwoBlanksQuiz(QUESTION, STRING_ARRAY, false);
     }
 }

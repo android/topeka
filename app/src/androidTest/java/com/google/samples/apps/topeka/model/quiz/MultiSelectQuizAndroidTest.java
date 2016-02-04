@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 Google Inc. All Rights Reserved.
+ * Copyright 2015 Google Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,14 +14,12 @@
  * limitations under the License.
  */
 
-package com.google.samples.apps.topeka.activity.quiz;
+package com.google.samples.apps.topeka.model.quiz;
 
-import com.google.samples.apps.topeka.CategoryPosition;
-
-public class HistoryQuizTest extends BaseQuizActivityTest {
+public class MultiSelectQuizAndroidTest extends AbsQuizAndroidTestCase<MultiSelectQuiz> {
 
     @Override
-    int getCategory() {
-        return CategoryPosition.HISTORY;
+    public MultiSelectQuiz getQuiz() {
+        return new MultiSelectQuiz(QUESTION, INT_ARRAY, STRING_ARRAY, false);
     }
 }

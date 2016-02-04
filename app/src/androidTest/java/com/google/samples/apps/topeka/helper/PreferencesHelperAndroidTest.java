@@ -31,9 +31,13 @@ import org.junit.runner.RunWith;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+
+/**
+ * Tests whether the perference helper works correctly.
+ */
 @SmallTest
 @RunWith(AndroidJUnit4.class)
-public class PreferencesHelperTest {
+public class PreferencesHelperAndroidTest {
 
     private static final Player TEST_PLAYER = new Player("Zaphod", "B", Avatar.FOUR);
 
@@ -42,6 +46,10 @@ public class PreferencesHelperTest {
         PreferencesHelper.signOut(InstrumentationRegistry.getTargetContext());
     }
 
+
+    /**
+     * Creates a player and stores it to the preferences. Then tries to read it.
+     */
     @Test
     public void performPreferenceCycle() throws Exception {
         final Context context = InstrumentationRegistry.getTargetContext();

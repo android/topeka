@@ -147,8 +147,7 @@ public class SignInActivityTest {
     }
 
     private void editTextIsEmpty(int id) {
-        onView(withId(id))
-                .check(matches(withText(isEmptyOrNullString())));
+        onView(withId(id)).check(matches(withText(isEmptyOrNullString())));
     }
 
     @Test

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.google.samples.apps.topeka.helper;
+package com.google.samples.apps.topeka;
 
 import android.support.annotation.NonNull;
 import android.support.test.InstrumentationRegistry;
@@ -56,8 +56,16 @@ import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.instanceOf;
 
-public class SolveQuizHelper {
+/**
+ * Utility for quiz solving.
+ */
+public class SolveQuizUtil {
 
+    /**
+     * Solves a given quiz.
+     *
+     * @param quiz Quiz to solve.
+     */
     public static void solveQuiz(Quiz quiz) {
         switch (quiz.getType()) {
             case ALPHA_PICKER:

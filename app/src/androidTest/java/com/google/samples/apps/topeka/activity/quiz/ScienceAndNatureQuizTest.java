@@ -16,10 +16,12 @@
 
 package com.google.samples.apps.topeka.activity.quiz;
 
+import com.google.samples.apps.topeka.CategoryPosition;
+
 public class ScienceAndNatureQuizTest extends BaseQuizActivityTest {
 
     @Override
     int getCategory() {
-        return 4;
+        return CategoryPosition.SCIENCE_AND_NATURE;
     }
 }

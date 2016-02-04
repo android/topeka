@@ -35,7 +35,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 @SmallTest
 @RunWith(AndroidJUnit4.class)
-public class CategoryTest {
+public class CategoryAndroidTest {
 
     private static final String CATEGORY_NAME = "test";
     private static final String CATEGORY_ID = "testId";
