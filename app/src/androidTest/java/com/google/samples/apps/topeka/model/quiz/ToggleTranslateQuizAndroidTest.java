@@ -16,10 +16,12 @@
 
 package com.google.samples.apps.topeka.model.quiz;
 
-public class MultiSelectQuizTest extends AbsQuizTestCase<MultiSelectQuiz> {
+public class ToggleTranslateQuizAndroidTest extends AbsQuizAndroidTestCase<ToggleTranslateQuiz> {
+
+    private static final String[][] OPTIONS = new String[][]{STRING_ARRAY, STRING_ARRAY};
 
     @Override
-    public MultiSelectQuiz getQuiz() {
-        return new MultiSelectQuiz(QUESTION, INT_ARRAY, STRING_ARRAY, false);
+    public ToggleTranslateQuiz getQuiz() {
+        return new ToggleTranslateQuiz(QUESTION, INT_ARRAY, OPTIONS, false);
     }
 }

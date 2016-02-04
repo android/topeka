@@ -16,13 +16,10 @@
 
 package com.google.samples.apps.topeka.model.quiz;
 
-public class AlphaPickerQuizTest extends AbsQuizTestCase<AlphaPickerQuiz> {
-
-    private static final String ANSWER = "answer";
+public class MultiSelectQuizAndroidTest extends AbsQuizAndroidTestCase<MultiSelectQuiz> {
 
     @Override
-    public AlphaPickerQuiz getQuiz() {
-        return new AlphaPickerQuiz(QUESTION, ANSWER, false);
+    public MultiSelectQuiz getQuiz() {
+        return new MultiSelectQuiz(QUESTION, INT_ARRAY, STRING_ARRAY, false);
     }
-
 }

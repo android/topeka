@@ -16,12 +16,13 @@
 
 package com.google.samples.apps.topeka.model.quiz;
 
-public class TrueFalseQuizTest extends AbsQuizTestCase<TrueFalseQuiz> {
+public class AlphaPickerQuizAndroidTest extends AbsQuizAndroidTestCase<AlphaPickerQuiz> {
 
-    private static final boolean ANSWER = true;
+    private static final String ANSWER = "answer";
 
     @Override
-    public TrueFalseQuiz getQuiz() {
-        return new TrueFalseQuiz(QUESTION, ANSWER, false);
+    public AlphaPickerQuiz getQuiz() {
+        return new AlphaPickerQuiz(QUESTION, ANSWER, false);
     }
+
 }

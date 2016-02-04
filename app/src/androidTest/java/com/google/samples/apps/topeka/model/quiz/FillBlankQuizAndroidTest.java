@@ -16,12 +16,14 @@
 
 package com.google.samples.apps.topeka.model.quiz;
 
-public class ToggleTranslateQuizTest extends AbsQuizTestCase<ToggleTranslateQuiz> {
+public class FillBlankQuizAndroidTest extends AbsQuizAndroidTestCase<FillBlankQuiz> {
 
-    private static final String[][] OPTIONS = new String[][]{STRING_ARRAY, STRING_ARRAY};
+    private static final String ANSWER = "answer";
+    private static final String START = "start";
+    private static final String END = "end";
 
     @Override
-    public ToggleTranslateQuiz getQuiz() {
-        return new ToggleTranslateQuiz(QUESTION, INT_ARRAY, OPTIONS, false);
+    public FillBlankQuiz getQuiz() {
+        return new FillBlankQuiz(QUESTION, ANSWER, START, END, false);
     }
 }

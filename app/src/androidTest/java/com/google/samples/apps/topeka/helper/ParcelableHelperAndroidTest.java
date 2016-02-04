@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.google.samples.apps.topeka.model;
+package com.google.samples.apps.topeka.helper;
 
 import android.os.Parcel;
 import android.support.test.runner.AndroidJUnit4;
@@ -26,25 +26,20 @@ import org.junit.runner.RunWith;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+/**
+ * Tests whether the parcelable helper stores and retrieves data correctly.
+ */
 @SmallTest
 @RunWith(AndroidJUnit4.class)
-public class PlayerTest {
-
-    private static final Avatar AVATAR = Avatar.TWELVE;
-    private static final String LAST_INITIAL = "a";
-    private static final String FIRST_NAME = "first";
-
-    private static Player getPlayerUnderTest() {
-        return new Player(FIRST_NAME, LAST_INITIAL, AVATAR);
-    }
+public class ParcelableHelperAndroidTest {
 
     @Test
-    public void writeToParcel() throws Exception {
-        Player initial = getPlayerUnderTest();
-        Parcel dest = Parcel.obtain();
-        initial.writeToParcel(dest, 0);
-        dest.setDataPosition(0);
-        Player unparcelled = new Player(dest);
-        assertThat(initial, is(unparcelled));
+    public void writeReadBoolean() throws Exception {
+        Parcel testParcel = Parcel.obtain();
+        final boolean testValue = true;
+        ParcelableHelper.writeBoolean(testParcel, testValue);
+        testParcel.setDataPosition(0);
+        final boolean resultValue = ParcelableHelper.readBoolean(testParcel);
+        assertThat(testValue, is(resultValue));
     }
 }

@@ -16,16 +16,12 @@
 
 package com.google.samples.apps.topeka.model.quiz;
 
-public class PickerQuizTest extends AbsQuizTestCase<PickerQuiz> {
+public class TrueFalseQuizAndroidTest extends AbsQuizAndroidTestCase<TrueFalseQuiz> {
 
-    private static final Integer ANSWER = 100;
-    private static final int MIN = 1;
-    private static final int MAX = 1000;
-    private static final int STEP = 10;
+    private static final boolean ANSWER = true;
 
     @Override
-    public PickerQuiz getQuiz() {
-        return new PickerQuiz(QUESTION, ANSWER, MIN, MAX, STEP, false);
+    public TrueFalseQuiz getQuiz() {
+        return new TrueFalseQuiz(QUESTION, ANSWER, false);
     }
-
 }

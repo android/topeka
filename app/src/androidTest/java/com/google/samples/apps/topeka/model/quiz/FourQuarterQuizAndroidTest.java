@@ -16,7 +16,7 @@
 
 package com.google.samples.apps.topeka.model.quiz;
 
-public class FourQuarterQuizTest extends AbsQuizTestCase<FourQuarterQuiz> {
+public class FourQuarterQuizAndroidTest extends AbsQuizAndroidTestCase<FourQuarterQuiz> {
 
     @Override
     public FourQuarterQuiz getQuiz() {
