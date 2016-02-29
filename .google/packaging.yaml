@@ -26,4 +26,4 @@ apiRefs:
     - android:android.view.ViewOutlineProvider
     - android:android.view.ContextThemeWrapper
 
-license: apache2-google
+license: apache2
