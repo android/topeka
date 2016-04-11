@@ -73,8 +73,8 @@ public class TopekaDatabaseHelper extends SQLiteOpenHelper {
     }
 
     private static TopekaDatabaseHelper getInstance(Context context) {
-        if (null == mInstance) {
-            mInstance = new TopekaDatabaseHelper(context);
+        if (mInstance == null) {
+            mInstance = new TopekaDatabaseHelper(context.getApplicationContext());
         }
         return mInstance;
     }
@@ -87,7 +87,7 @@ public class TopekaDatabaseHelper extends SQLiteOpenHelper {
      * @return All categories stored in the database.
      */
     public static List<Category> getCategories(Context context, boolean fromDatabase) {
-        if (null == mCategories || fromDatabase) {
+        if (mCategories == null || fromDatabase) {
             mCategories = loadCategories(context);
         }
         return mCategories;
