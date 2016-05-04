@@ -64,7 +64,7 @@ public abstract class AbsQuizTestCase<Q extends Quiz> {
 
     @Test
     public void quiz_equalsOther_false() {
-        assertThat(getQuiz().equals("Foobar"), is(true));
+        assertThat(getQuiz().equals("Foobar"), is(false));
     }
 
     @Test
