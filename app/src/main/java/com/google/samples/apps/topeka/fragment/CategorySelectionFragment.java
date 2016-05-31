@@ -27,6 +27,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 
 import com.google.samples.apps.topeka.R;
 import com.google.samples.apps.topeka.activity.QuizActivity;
@@ -57,7 +58,7 @@ public class CategorySelectionFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
     }
 
-    private void setUpQuizGrid(RecyclerView categoriesView) {
+    private void setUpQuizGrid(final RecyclerView categoriesView) {
         final int spacing = getContext().getResources()
                 .getDimensionPixelSize(R.dimen.spacing_nano);
         categoriesView.addItemDecoration(new OffsetDecoration(spacing));
@@ -73,12 +74,15 @@ public class CategorySelectionFragment extends Fragment {
                     }
                 });
         categoriesView.setAdapter(mAdapter);
-    }
-
-    @Override
-    public void onResume() {
-        getActivity().supportStartPostponedEnterTransition();
-        super.onResume();
+        categoriesView.getViewTreeObserver()
+                .addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+                    @Override
+                    public boolean onPreDraw() {
+                        categoriesView.getViewTreeObserver().removeOnPreDrawListener(this);
+                        getActivity().supportStartPostponedEnterTransition();
+                        return true;
+                    }
+                });
     }
 
     @Override

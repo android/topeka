@@ -18,6 +18,7 @@ package com.google.samples.apps.topeka.widget;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -53,6 +54,12 @@ public class AvatarView extends ImageView implements Checkable {
 
     public AvatarView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
+        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.AvatarView, defStyle, 0);
+        try {
+            setAvatar(a.getResourceId(R.styleable.AvatarView_avatar, 0));
+        } finally {
+            a.recycle();
+        }
     }
 
     @Override

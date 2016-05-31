@@ -17,8 +17,12 @@
 apply plugin: 'com.android.application'
 
 android {
-    buildToolsVersion "23.0.2"
+    buildToolsVersion "23.0.3"
     compileSdkVersion 23
+
+    dataBinding {
+        enabled = true
+    }
 
     defaultConfig {
         applicationId "com.google.samples.apps.topeka"

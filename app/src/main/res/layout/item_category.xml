@@ -13,28 +13,35 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
+<layout>
+    <data>
+        <variable name="category" type="com.google.samples.apps.topeka.model.Category" />
+    </data>
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                 xmlns:tools="http://schemas.android.com/tools"
+                 android:id="@+id/category_item"
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:foreground="@drawable/selector_subtle"
+                 tools:ignore="UseCompoundDrawables">
 
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:tools="http://schemas.android.com/tools"
-             android:id="@+id/category_item"
-             android:layout_width="match_parent"
-             android:layout_height="wrap_content"
-             android:foreground="@drawable/selector_subtle"
-             tools:ignore="UseCompoundDrawables">
+        <ImageView
+                android:id="@+id/category_icon"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/size_avatar_toolbar"
+                android:contentDescription="@string/category" />
 
-    <ImageView
-            android:id="@+id/category_icon"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/size_avatar_toolbar"
-            android:contentDescription="@string/category" />
+        <TextView
+                android:id="@+id/category_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{category.name}"
+                android:layout_gravity="bottom"
+                android:textAppearance="@style/Topeka.TextAppearance.CategoryItem"
+                android:transitionName="@{category.name}"
+                android:padding="@dimen/spacing_double"
+                tools:targetApi="lollipop"/>
 
-    <TextView
-            android:id="@+id/category_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:textAppearance="@style/Topeka.TextAppearance.CategoryItem"
-            android:padding="@dimen/spacing_double" />
-
-</FrameLayout>
+    </FrameLayout>
+</layout>
