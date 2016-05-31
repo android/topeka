@@ -13,63 +13,71 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
+<layout>
+    <data>
+        <variable name="player" type="com.google.samples.apps.topeka.model.Player" />
+    </data>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="@color/topeka_blank"
-              android:transitionGroup="false"
-              android:orientation="vertical"
-              tools:ignore="Overdraw,UnusedAttribute">
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                  xmlns:tools="http://schemas.android.com/tools"
+                  xmlns:app="http://schemas.android.com/apk/res-auto"
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent"
+                  android:background="@color/topeka_blank"
+                  android:transitionGroup="false"
+                  android:orientation="vertical"
+                  tools:ignore="Overdraw,UnusedAttribute">
 
-    <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar_player"
-            android:layout_width="match_parent"
-            android:layout_height="?android:attr/actionBarSize"
-            style="@style/Topeka.TextAppearance.Title"
-            android:background="@color/topeka_primary"
-            android:elevation="@dimen/elevation_header"
-            tools:ignore="UnusedAttribute">
+        <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar_player"
+                android:layout_width="match_parent"
+                android:layout_height="?android:attr/actionBarSize"
+                style="@style/Topeka.TextAppearance.Title"
+                android:background="@color/topeka_primary"
+                android:elevation="@dimen/elevation_header"
+                tools:ignore="UnusedAttribute">
 
-        <com.google.samples.apps.topeka.widget.AvatarView
-                android:id="@+id/avatar"
-                android:layout_width="@dimen/size_avatar_toolbar"
-                android:layout_height="@dimen/size_avatar_toolbar"
-                android:layout_marginEnd="@dimen/spacing_double"
-                android:layout_marginRight="@dimen/spacing_double"
-                android:transitionName="@string/transition_avatar"
-                tools:ignore="UnusedAttribute" />
+            <com.google.samples.apps.topeka.widget.AvatarView
+                    android:id="@+id/avatar"
+                    android:layout_width="@dimen/size_avatar_toolbar"
+                    android:layout_height="@dimen/size_avatar_toolbar"
+                    android:layout_marginEnd="@dimen/spacing_double"
+                    android:layout_marginRight="@dimen/spacing_double"
+                    android:transitionName="@string/transition_avatar"
+                    app:avatar='@{player.avatar.drawableId}'
+                    tools:ignore="UnusedAttribute" />
 
-        <TextView android:id="@+id/title"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  tools:ignore="PrivateResource"
-                  style="@style/Topeka.TextAppearance.Title.Inverse"
-                  android:layout_gravity="center_vertical|start" />
+            <TextView android:id="@+id/title"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:text='@{player.firstName + " " + player.lastInitial}'
+                      tools:ignore="PrivateResource"
+                      style="@style/Topeka.TextAppearance.Title.Inverse"
+                      android:layout_gravity="center_vertical|start" />
 
-        <TextView android:id="@+id/score"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  style="@style/Topeka.TextAppearance.Title.Inverse"
-                  android:layout_gravity="center_vertical|end"
-                  android:paddingEnd="@dimen/spacing_micro"
-                  android:paddingStart="@dimen/spacing_micro"
-                  tools:ignore="NewApi" />
-    </android.support.v7.widget.Toolbar>
+            <TextView android:id="@+id/score"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      style="@style/Topeka.TextAppearance.Title.Inverse"
+                      android:layout_gravity="center_vertical|end"
+                      android:paddingEnd="@dimen/spacing_micro"
+                      android:paddingStart="@dimen/spacing_micro"
+                      tools:ignore="NewApi" />
+        </android.support.v7.widget.Toolbar>
 
-    <FrameLayout android:id="@+id/category_container"
-                 android:layout_width="match_parent"
-                 android:layout_height="match_parent"
-                 tools:context="activity.QuizSelectionActivity"
-                 tools:ignore="MergeRootFrame">
+        <FrameLayout android:id="@+id/category_container"
+                     android:layout_width="match_parent"
+                     android:layout_height="match_parent"
+                     tools:context="activity.QuizSelectionActivity"
+                     tools:ignore="MergeRootFrame">
 
-        <ProgressBar android:id="@+id/progress"
-                     android:layout_width="@dimen/size_fab"
-                     android:layout_height="@dimen/size_fab"
-                     android:layout_gravity="center"
-                     android:indeterminateOnly="true" />
+            <ProgressBar android:id="@+id/progress"
+                         android:layout_width="@dimen/size_fab"
+                         android:layout_height="@dimen/size_fab"
+                         android:layout_gravity="center"
+                         android:indeterminateOnly="true" />
 
-    </FrameLayout>
+        </FrameLayout>
 
-</LinearLayout>
+    </LinearLayout>
+</layout>

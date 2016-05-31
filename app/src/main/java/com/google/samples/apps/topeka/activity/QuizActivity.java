@@ -80,7 +80,7 @@ public class QuizActivity extends AppCompatActivity {
     private View mToolbarBack;
 
 
-    final View.OnClickListener mOnClickListener = new View.OnClickListener() {
+    private final View.OnClickListener mOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(final View v) {
             switch (v.getId()) {

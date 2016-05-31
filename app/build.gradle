@@ -17,8 +17,12 @@
 apply plugin: 'com.android.application'
 
 android {
-    buildToolsVersion "23.0.2"
+    buildToolsVersion "23.0.3"
     compileSdkVersion 23
+
+    dataBinding {
+        enabled = true
+    }
 
     defaultConfig {
         applicationId "com.google.samples.apps.topeka"
@@ -41,7 +45,7 @@ android {
 }
 
 ext {
-    supportLibVersion = "23.2.0"
+    supportLibVersion = "23.4.0"
     espressoVersion = "2.2.2"
     androidTestVersion = "0.4"
     hamcrestVersion = "1.3"
