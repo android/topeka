@@ -43,7 +43,6 @@ import com.google.samples.apps.topeka.helper.ApiLevelHelper;
 import com.google.samples.apps.topeka.helper.PreferencesHelper;
 import com.google.samples.apps.topeka.model.Player;
 import com.google.samples.apps.topeka.persistence.TopekaDatabaseHelper;
-import com.google.samples.apps.topeka.widget.AvatarView;
 
 public class CategorySelectionActivity extends AppCompatActivity {
 
@@ -138,7 +137,7 @@ public class CategorySelectionActivity extends AppCompatActivity {
                     .inflateTransition(R.transition.category_enter));
         }
         SignInActivity.start(this, false);
-        ActivityCompat.finishAfterTransition(this);
+        finish();
     }
 
     private void attachCategoryGridFragment() {
