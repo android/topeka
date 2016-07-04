@@ -43,6 +43,7 @@ import com.google.samples.apps.topeka.widget.outlineprovider.RoundOutlineProvide
 public class AvatarView extends ImageView implements Checkable {
 
     private boolean mChecked;
+    private static final int NOT_FOUND = 0;
 
     public AvatarView(Context context) {
         this(context, null);
@@ -56,7 +57,10 @@ public class AvatarView extends ImageView implements Checkable {
         super(context, attrs, defStyle);
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.AvatarView, defStyle, 0);
         try {
-            setAvatar(a.getResourceId(R.styleable.AvatarView_avatar, 0));
+            final int avatarDrawableId = a.getResourceId(R.styleable.AvatarView_avatar, NOT_FOUND);
+            if (avatarDrawableId != NOT_FOUND) {
+                setAvatar(avatarDrawableId);
+            }
         } finally {
             a.recycle();
         }
