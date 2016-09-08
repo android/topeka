@@ -16,16 +16,14 @@
 
 package com.google.samples.apps.topeka.model.quiz;
 
-public class PickerQuizTest extends AbsQuizTestCase<PickerQuiz> {
+public class FillBlankQuizAndroidTest extends AbsQuizAndroidTestCase<FillBlankQuiz> {
 
-    private static final Integer ANSWER = 100;
-    private static final int MIN = 1;
-    private static final int MAX = 1000;
-    private static final int STEP = 10;
+    private static final String ANSWER = "answer";
+    private static final String START = "start";
+    private static final String END = "end";
 
     @Override
-    public PickerQuiz getQuiz() {
-        return new PickerQuiz(QUESTION, ANSWER, MIN, MAX, STEP, false);
+    public FillBlankQuiz getQuiz() {
+        return new FillBlankQuiz(QUESTION, ANSWER, START, END, false);
     }
-
 }

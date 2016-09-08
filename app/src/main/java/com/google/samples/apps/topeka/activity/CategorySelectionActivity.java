@@ -20,6 +20,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.databinding.DataBindingUtil;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -36,12 +37,12 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.google.samples.apps.topeka.R;
+import com.google.samples.apps.topeka.databinding.ActivityCategorySelectionBinding;
 import com.google.samples.apps.topeka.fragment.CategorySelectionFragment;
 import com.google.samples.apps.topeka.helper.ApiLevelHelper;
 import com.google.samples.apps.topeka.helper.PreferencesHelper;
 import com.google.samples.apps.topeka.model.Player;
 import com.google.samples.apps.topeka.persistence.TopekaDatabaseHelper;
-import com.google.samples.apps.topeka.widget.AvatarView;
 
 public class CategorySelectionActivity extends AppCompatActivity {
 
@@ -67,8 +68,8 @@ public class CategorySelectionActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        setContentView(R.layout.activity_category_selection);
+        ActivityCategorySelectionBinding binding = DataBindingUtil
+                .setContentView(this, R.layout.activity_category_selection);
         Player player = getIntent().getParcelableExtra(EXTRA_PLAYER);
         if (!PreferencesHelper.isSignedIn(this)) {
             if (player == null) {
@@ -77,7 +78,8 @@ public class CategorySelectionActivity extends AppCompatActivity {
                 PreferencesHelper.writeToPreferences(this, player);
             }
         }
-        setUpToolbar(player);
+        binding.setPlayer(player);
+        setUpToolbar();
         if (savedInstanceState == null) {
             attachCategoryGridFragment();
         } else {
@@ -94,15 +96,11 @@ public class CategorySelectionActivity extends AppCompatActivity {
         scoreView.setText(getString(R.string.x_points, score));
     }
 
-    private void setUpToolbar(Player player) {
+    private void setUpToolbar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_player);
         setSupportActionBar(toolbar);
         //noinspection ConstantConditions
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-        final AvatarView avatarView = (AvatarView) toolbar.findViewById(R.id.avatar);
-        avatarView.setAvatar(player.getAvatar().getDrawableId());
-        //noinspection PrivateResource
-        ((TextView) toolbar.findViewById(R.id.title)).setText(getDisplayName(player));
     }
 
     @Override
@@ -139,12 +137,7 @@ public class CategorySelectionActivity extends AppCompatActivity {
                     .inflateTransition(R.transition.category_enter));
         }
         SignInActivity.start(this, false);
-        ActivityCompat.finishAfterTransition(this);
-    }
-
-    private String getDisplayName(Player player) {
-        return getString(R.string.player_display_name, player.getFirstName(),
-                player.getLastInitial());
+        finish();
     }
 
     private void attachCategoryGridFragment() {

@@ -18,6 +18,7 @@ package com.google.samples.apps.topeka.adapter;
 
 import android.app.Activity;
 import android.content.res.Resources;
+import android.databinding.DataBindingUtil;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
 import android.os.Build;
@@ -30,12 +31,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.google.samples.apps.topeka.R;
+import com.google.samples.apps.topeka.databinding.ItemCategoryBinding;
 import com.google.samples.apps.topeka.helper.ApiLevelHelper;
 import com.google.samples.apps.topeka.model.Category;
-import com.google.samples.apps.topeka.model.Theme;
 import com.google.samples.apps.topeka.persistence.TopekaDatabaseHelper;
 
 import java.util.List;
@@ -66,23 +66,24 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new ViewHolder(mLayoutInflater
-                .inflate(R.layout.item_category, parent, false));
+        return new ViewHolder((ItemCategoryBinding) DataBindingUtil
+                .inflate(mLayoutInflater, R.layout.item_category, parent, false));
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, final int position) {
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
+        ItemCategoryBinding binding = holder.getBinding();
         Category category = mCategories.get(position);
-        Theme theme = category.getTheme();
-        setCategoryIcon(category, holder.icon);
-        holder.itemView.setBackgroundColor(getColor(theme.getWindowBackgroundColor()));
-        holder.title.setText(category.getName());
-        holder.title.setTextColor(getColor(theme.getTextPrimaryColor()));
-        holder.title.setBackgroundColor(getColor(theme.getPrimaryColor()));
+        binding.setCategory(category);
+        binding.executePendingBindings();
+        setCategoryIcon(category, binding.categoryIcon);
+        holder.itemView.setBackgroundColor(getColor(category.getTheme().getWindowBackgroundColor()));
+        binding.categoryTitle.setTextColor(getColor(category.getTheme().getTextPrimaryColor()));
+        binding.categoryTitle.setBackgroundColor(getColor(category.getTheme().getPrimaryColor()));
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mOnItemClickListener.onClick(v, position);
+                mOnItemClickListener.onClick(v, holder.getAdapterPosition());
             }
         });
     }
@@ -207,13 +208,15 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
 
     static class ViewHolder extends RecyclerView.ViewHolder {
 
-        final ImageView icon;
-        final TextView title;
+        private ItemCategoryBinding mBinding;
 
-        public ViewHolder(View container) {
-            super(container);
-            icon = (ImageView) container.findViewById(R.id.category_icon);
-            title = (TextView) container.findViewById(R.id.category_title);
+        public ViewHolder(ItemCategoryBinding binding) {
+            super(binding.getRoot());
+            mBinding = binding;
+        }
+
+        public ItemCategoryBinding getBinding() {
+            return mBinding;
         }
     }
 }

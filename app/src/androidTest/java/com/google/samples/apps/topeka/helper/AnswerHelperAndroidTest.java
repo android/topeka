@@ -29,12 +29,11 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 /**
- * Runs tests on device to access {@link SparseBooleanArray} which is being returned by
- * {@link AbsListView#getCheckedItemPositions()}.
+ * Tests whether answers are being correctly stored and retrieved.
  */
 @SmallTest
 @RunWith(AndroidJUnit4.class)
-public class AnswerHelperTest {
+public class AnswerHelperAndroidTest {
 
     private static final int[] OPTIONS = new int[]{0, 1, 2};
     private final int[] WRONG_OPTIONS = new int[]{2, 1};

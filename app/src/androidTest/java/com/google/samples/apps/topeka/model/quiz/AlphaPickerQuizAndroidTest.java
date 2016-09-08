@@ -16,7 +16,7 @@
 
 package com.google.samples.apps.topeka.model.quiz;
 
-public class AlphaPickerQuizTest extends AbsQuizTestCase<AlphaPickerQuiz> {
+public class AlphaPickerQuizAndroidTest extends AbsQuizAndroidTestCase<AlphaPickerQuiz> {
 
     private static final String ANSWER = "answer";
 

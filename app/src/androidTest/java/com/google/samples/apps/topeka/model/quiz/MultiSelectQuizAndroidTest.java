@@ -14,26 +14,12 @@
  * limitations under the License.
  */
 
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
+package com.google.samples.apps.topeka.model.quiz;
 
-buildscript {
-    repositories {
-        jcenter()
-    }
-    dependencies {
-        classpath 'com.android.tools.build:gradle:2.1.0'
+public class MultiSelectQuizAndroidTest extends AbsQuizAndroidTestCase<MultiSelectQuiz> {
 
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
-    }
-}
-
-task wrapper(type: Wrapper) {
-    gradleVersion = "2.10"
-}
-
-allprojects {
-    repositories {
-        jcenter()
+    @Override
+    public MultiSelectQuiz getQuiz() {
+        return new MultiSelectQuiz(QUESTION, INT_ARRAY, STRING_ARRAY, false);
     }
 }

@@ -22,7 +22,6 @@ import android.support.test.runner.AndroidJUnit4;
 import android.test.suitebuilder.annotation.LargeTest;
 import android.view.View;
 
-import com.google.samples.apps.topeka.AnimationAwareTestRule;
 import com.google.samples.apps.topeka.R;
 import com.google.samples.apps.topeka.helper.PreferencesHelper;
 import com.google.samples.apps.topeka.model.Avatar;
@@ -67,10 +66,6 @@ public class SignInActivityTest {
                     PreferencesHelper.signOut(InstrumentationRegistry.getTargetContext());
                 }
             };
-
-    @Rule
-    public AnimationAwareTestRule mAnimationAwareTestRule =
-            new AnimationAwareTestRule();
 
     @Before
     public void clearPreferences() throws Exception {
@@ -147,8 +142,7 @@ public class SignInActivityTest {
     }
 
     private void editTextIsEmpty(int id) {
-        onView(withId(id))
-                .check(matches(withText(isEmptyOrNullString())));
+        onView(withId(id)).check(matches(withText(isEmptyOrNullString())));
     }
 
     @Test

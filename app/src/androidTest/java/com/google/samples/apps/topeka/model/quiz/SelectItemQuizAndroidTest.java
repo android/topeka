@@ -16,7 +16,7 @@
 
 package com.google.samples.apps.topeka.model.quiz;
 
-public class SelectItemQuizTest extends AbsQuizTestCase<SelectItemQuiz> {
+public class SelectItemQuizAndroidTest extends AbsQuizAndroidTestCase<SelectItemQuiz> {
 
     @Override
     public SelectItemQuiz getQuiz() {

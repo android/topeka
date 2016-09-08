@@ -24,7 +24,6 @@ import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.test.suitebuilder.annotation.LargeTest;
 
-import com.google.samples.apps.topeka.AnimationAwareTestRule;
 import com.google.samples.apps.topeka.R;
 import com.google.samples.apps.topeka.helper.PreferencesHelper;
 import com.google.samples.apps.topeka.model.Avatar;
@@ -72,10 +71,6 @@ public class CategorySelectionActivityTest {
                     return CategorySelectionActivity.getStartIntent(mTargetContext, player);
                 }
             };
-
-    @Rule
-    public AnimationAwareTestRule mAnimationAwareTestRule =
-            new AnimationAwareTestRule();
 
     @Before
     public void loadCategories() {

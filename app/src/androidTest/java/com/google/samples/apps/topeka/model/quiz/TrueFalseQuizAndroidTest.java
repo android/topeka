@@ -16,10 +16,12 @@
 
 package com.google.samples.apps.topeka.model.quiz;
 
-public class MultiSelectQuizTest extends AbsQuizTestCase<MultiSelectQuiz> {
+public class TrueFalseQuizAndroidTest extends AbsQuizAndroidTestCase<TrueFalseQuiz> {
+
+    private static final boolean ANSWER = true;
 
     @Override
-    public MultiSelectQuiz getQuiz() {
-        return new MultiSelectQuiz(QUESTION, INT_ARRAY, STRING_ARRAY, false);
+    public TrueFalseQuiz getQuiz() {
+        return new TrueFalseQuiz(QUESTION, ANSWER, false);
     }
 }

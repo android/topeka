@@ -16,10 +16,12 @@
 
 package com.google.samples.apps.topeka.activity.quiz;
 
+import com.google.samples.apps.topeka.CategoryPosition;
+
 public class GeographyQuizTest extends BaseQuizActivityTest {
 
     @Override
     int getCategory() {
-        return 3;
+        return CategoryPosition.GEOGRAPHY;
     }
 }

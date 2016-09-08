@@ -17,6 +17,7 @@
 package com.google.samples.apps.topeka.fragment;
 
 import android.app.Activity;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -27,6 +28,7 @@ import android.support.v4.view.ViewCompat;
 import android.support.v4.view.animation.FastOutSlowInInterpolator;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.transition.Transition;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,10 +39,12 @@ import android.widget.GridView;
 import com.google.samples.apps.topeka.R;
 import com.google.samples.apps.topeka.activity.CategorySelectionActivity;
 import com.google.samples.apps.topeka.adapter.AvatarAdapter;
+import com.google.samples.apps.topeka.helper.ApiLevelHelper;
 import com.google.samples.apps.topeka.helper.PreferencesHelper;
 import com.google.samples.apps.topeka.helper.TransitionHelper;
 import com.google.samples.apps.topeka.model.Avatar;
 import com.google.samples.apps.topeka.model.Player;
+import com.google.samples.apps.topeka.widget.TransitionListenerAdapter;
 
 /**
  * Enable selection of an {@link Avatar} and user name.
@@ -217,13 +221,29 @@ public class SignInFragment extends Fragment {
 
     private void performSignInWithTransition(View v) {
         final Activity activity = getActivity();
+        if (v == null || ApiLevelHelper.isLowerThan(Build.VERSION_CODES.LOLLIPOP)) {
+            // Don't run a transition if the passed view is null
+            CategorySelectionActivity.start(activity, mPlayer);
+            activity.finish();
+            return;
+        }
 
-        final Pair[] pairs = TransitionHelper.createSafeTransitionParticipants(activity, true,
-                new Pair<>(v, activity.getString(R.string.transition_avatar)));
-        @SuppressWarnings("unchecked")
-        ActivityOptionsCompat activityOptions = ActivityOptionsCompat
-                .makeSceneTransitionAnimation(activity, pairs);
-        CategorySelectionActivity.start(activity, mPlayer, activityOptions);
+        if (ApiLevelHelper.isAtLeast(Build.VERSION_CODES.LOLLIPOP)) {
+            activity.getWindow().getSharedElementExitTransition().addListener(
+                    new TransitionListenerAdapter() {
+                        @Override
+                        public void onTransitionEnd(Transition transition) {
+                            activity.finish();
+                        }
+                    });
+
+            final Pair[] pairs = TransitionHelper.createSafeTransitionParticipants(activity, true,
+                    new Pair<>(v, activity.getString(R.string.transition_avatar)));
+            @SuppressWarnings("unchecked")
+            ActivityOptionsCompat activityOptions = ActivityOptionsCompat
+                    .makeSceneTransitionAnimation(activity, pairs);
+            CategorySelectionActivity.start(activity, mPlayer, activityOptions);
+        }
     }
 
     private void initContents() {

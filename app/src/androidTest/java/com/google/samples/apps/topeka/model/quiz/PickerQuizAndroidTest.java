@@ -16,12 +16,16 @@
 
 package com.google.samples.apps.topeka.model.quiz;
 
-public class ToggleTranslateQuizTest extends AbsQuizTestCase<ToggleTranslateQuiz> {
+public class PickerQuizAndroidTest extends AbsQuizAndroidTestCase<PickerQuiz> {
 
-    private static final String[][] OPTIONS = new String[][]{STRING_ARRAY, STRING_ARRAY};
+    private static final Integer ANSWER = 100;
+    private static final int MIN = 1;
+    private static final int MAX = 1000;
+    private static final int STEP = 10;
 
     @Override
-    public ToggleTranslateQuiz getQuiz() {
-        return new ToggleTranslateQuiz(QUESTION, INT_ARRAY, OPTIONS, false);
+    public PickerQuiz getQuiz() {
+        return new PickerQuiz(QUESTION, ANSWER, MIN, MAX, STEP, false);
     }
+
 }

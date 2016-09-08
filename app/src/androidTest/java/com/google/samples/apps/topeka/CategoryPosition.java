@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 Google Inc.
+ * Copyright 2016 Google Inc. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,12 +14,20 @@
  * limitations under the License.
  */
 
-package com.google.samples.apps.topeka.model.quiz;
+package com.google.samples.apps.topeka;
 
-public class FillTwoBlanksQuizTest extends AbsQuizTestCase<FillTwoBlanksQuiz> {
-
-    @Override
-    public FillTwoBlanksQuiz getQuiz() {
-        return new FillTwoBlanksQuiz(QUESTION, STRING_ARRAY, false);
-    }
+/**
+ * Manual copy of the category positions within app/src/main/res/raw/categories.json
+ * for testing purposes.
+ */
+public interface CategoryPosition {
+    int FOOD = 0;
+    int GENERAL_KNOWLEDGE = 1;
+    int HISTORY = 2;
+    int GEOGRAPHY = 3;
+    int SCIENCE_AND_NATURE = 4;
+    int TV_AND_MOVIES = 5;
+    int MUSIC = 6;
+    int ENTERTAINMENT = 7;
+    int SPORTS = 8;
 }

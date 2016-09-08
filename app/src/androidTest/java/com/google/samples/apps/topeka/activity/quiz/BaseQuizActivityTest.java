@@ -24,11 +24,10 @@ import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.test.suitebuilder.annotation.LargeTest;
 
-import com.google.samples.apps.topeka.AnimationAwareTestRule;
 import com.google.samples.apps.topeka.R;
 import com.google.samples.apps.topeka.activity.QuizActivity;
 import com.google.samples.apps.topeka.helper.PreferencesHelper;
-import com.google.samples.apps.topeka.helper.SolveQuizHelper;
+import com.google.samples.apps.topeka.SolveQuizUtil;
 import com.google.samples.apps.topeka.model.Avatar;
 import com.google.samples.apps.topeka.model.Category;
 import com.google.samples.apps.topeka.model.Player;
@@ -53,9 +52,11 @@ import static org.hamcrest.Matchers.allOf;
 
 @RunWith(AndroidJUnit4.class)
 @LargeTest
+/**
+ * Parent class for all quiz activity tests.
+ */
 public abstract class BaseQuizActivityTest {
 
-    private List<Category> mCategories;
     @Rule
     public final ActivityTestRule<QuizActivity> mActivityRule =
             new ActivityTestRule<QuizActivity>(QuizActivity.class) {
@@ -77,22 +78,40 @@ public abstract class BaseQuizActivityTest {
                 }
             };
 
-    @Rule
-    public final AnimationAwareTestRule mAnimationAwareTestRule =
-            new AnimationAwareTestRule();
+    private List<Category> mCategories;
 
+    /**
+     * @return The category's position.
+     */
     abstract int getCategory();
 
+    /**
+     * Register idling resources for the activity under test.
+     */
     @Before
     public void registerIdlingResources() {
         Espresso.registerIdlingResources(mActivityRule.getActivity().getCountingIdlingResource());
     }
 
+    /**
+     * Unregister idling resources for the activity under test.
+     */
+    @After
+    public void unregisterIdlingResources() {
+        Espresso.unregisterIdlingResources(mActivityRule.getActivity().getCountingIdlingResource());
+    }
+
+    /**
+     * Tests whether a category with it's given name is currently didsplayed.
+     */
     @Test
     public void categoryName_isDisplayed() {
         onView(withText(getCurrentCategory().getName())).check(matches(isDisplayed()));
     }
 
+    /**
+     * Presses back from within the toolbar.
+     */
     @Test
     public void goBack_fromToolbar() {
         onView(withId(R.id.back)).perform(click());
@@ -103,11 +122,14 @@ public abstract class BaseQuizActivityTest {
         testCategory();
     }
 
+    /**
+     * End to end test for the given category.
+     */
     protected void testCategory() {
         final Category category = getCurrentCategory();
         onView(withId(R.id.fab_quiz)).perform(click());
         for (Quiz quiz : category.getQuizzes()) {
-            SolveQuizHelper.solveQuiz(quiz);
+            SolveQuizUtil.solveQuiz(quiz);
             onView(allOf(withId(R.id.submitAnswer), isDisplayed()))
                     .check(matches(isDisplayed()))
                     .perform(click());
@@ -116,11 +138,6 @@ public abstract class BaseQuizActivityTest {
 
     private Category getCurrentCategory() {
         return mCategories.get(getCategory());
-    }
-
-    @After
-    public void unregisterIdlingResources() {
-        Espresso.unregisterIdlingResources(mActivityRule.getActivity().getCountingIdlingResource());
     }
 
 }
