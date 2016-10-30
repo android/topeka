@@ -164,6 +164,7 @@ public class QuizActivity extends AppCompatActivity {
             }
             findViewById(R.id.quiz_fragment_container).setVisibility(View.VISIBLE);
             mQuizFab.hide();
+            mIcon.setVisibility(View.GONE);
         } else {
             initQuizFragment();
         }
