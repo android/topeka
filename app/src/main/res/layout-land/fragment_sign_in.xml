@@ -44,15 +44,13 @@
                 android:orientation="horizontal">
 
             <include
-                    layout="@layout/sign_in_username"
+                    layout="@layout/sign_in_avatars"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_marginEnd="@dimen/spacing_double"
-                    android:layout_marginRight="@dimen/spacing_double"
                     android:layout_weight="1" />
 
             <include
-                    layout="@layout/sign_in_avatars"
+                    layout="@layout/sign_in_username"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1" />
