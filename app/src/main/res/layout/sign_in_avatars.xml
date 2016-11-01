@@ -42,10 +42,10 @@
             android:clipToPadding="false"
             android:fadeScrollbars="true"
             android:listSelector="@android:color/transparent"
-            android:paddingBottom="16dp"
+            android:paddingBottom="@dimen/spacing_double"
             android:paddingEnd="@dimen/spacing_double"
             android:paddingStart="@dimen/spacing_double"
-            android:scrollbarSize="4dp"
+            android:scrollbarSize="@dimen/spacing_micro"
             android:scrollbarThumbVertical="@color/topeka_accent"
             android:smoothScrollbar="true"
             android:verticalSpacing="@dimen/spacing_double"/>
