@@ -39,9 +39,14 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:choiceMode="singleChoice"
+            android:clipToPadding="false"
+            android:fadeScrollbars="true"
             android:listSelector="@android:color/transparent"
-            android:verticalSpacing="@dimen/spacing_double"
+            android:paddingBottom="@dimen/spacing_double"
             android:paddingEnd="@dimen/spacing_double"
             android:paddingStart="@dimen/spacing_double"
-            android:clipToPadding="false" />
+            android:scrollbarSize="@dimen/spacing_micro"
+            android:scrollbarThumbVertical="@color/topeka_accent"
+            android:smoothScrollbar="true"
+            android:verticalSpacing="@dimen/spacing_double"/>
 </LinearLayout>
