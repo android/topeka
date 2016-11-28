@@ -52,12 +52,11 @@ import com.google.samples.apps.topeka.widget.TransitionListenerAdapter;
 public class SignInFragment extends Fragment {
 
     private static final String ARG_EDIT = "EDIT";
-    private static final String KEY_SELECTED_AVATAR_INDEX = "selectedAvatarIndex";
+    private static final String KEY_AVATAR_POSITION = "avatarPosition";
     private Player mPlayer;
     private EditText mFirstName;
     private EditText mLastInitial;
-    private Avatar mSelectedAvatar;
-    private View mSelectedAvatarView;
+    private Avatar mAvatar;
     private GridView mAvatarGrid;
     private FloatingActionButton mDoneFab;
     private boolean edit;
@@ -73,9 +72,9 @@ public class SignInFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         if (savedInstanceState != null) {
-            final int savedAvatarIndex = savedInstanceState.getInt(KEY_SELECTED_AVATAR_INDEX);
-            if (savedAvatarIndex != GridView.INVALID_POSITION) {
-                mSelectedAvatar = Avatar.values()[savedAvatarIndex];
+            final int savedAvatarPosition = savedInstanceState.getInt(KEY_AVATAR_POSITION);
+            if (savedAvatarPosition != GridView.INVALID_POSITION) {
+                mAvatar = Avatar.values()[savedAvatarPosition];
             }
         }
         super.onCreate(savedInstanceState);
@@ -99,9 +98,9 @@ public class SignInFragment extends Fragment {
     @Override
     public void onSaveInstanceState(Bundle outState) {
         if (mAvatarGrid != null) {
-            outState.putInt(KEY_SELECTED_AVATAR_INDEX, mAvatarGrid.getCheckedItemPosition());
+            outState.putInt(KEY_AVATAR_POSITION, mAvatarGrid.getCheckedItemPosition());
         } else {
-            outState.putInt(KEY_SELECTED_AVATAR_INDEX, GridView.INVALID_POSITION);
+            outState.putInt(KEY_AVATAR_POSITION, GridView.INVALID_POSITION);
         }
         super.onSaveInstanceState(outState);
     }
@@ -152,7 +151,7 @@ public class SignInFragment extends Fragment {
             @Override
             public void afterTextChanged(Editable s) {
                 // showing the floating action button if avatar is selected and input data is valid
-                if (isAvatarSelected() && isInputDataValid()) {
+                if (mAvatar != null && isInputDataValid()) {
                     mDoneFab.show();
                 }
             }
@@ -172,12 +171,7 @@ public class SignInFragment extends Fragment {
                         removeDoneFab(new Runnable() {
                             @Override
                             public void run() {
-                                if (null == mSelectedAvatarView) {
-                                    performSignInWithTransition(mAvatarGrid.getChildAt(
-                                            mSelectedAvatar.ordinal()));
-                                } else {
-                                    performSignInWithTransition(mSelectedAvatarView);
-                                }
+                                performSignInWithTransition(getSharedViewForAvatarTransition());
                             }
                         });
                         break;
@@ -199,14 +193,30 @@ public class SignInFragment extends Fragment {
                 .start();
     }
 
+    /**
+     * Returns the view to be used as a shared view for the avatar transition.
+     * <p/>
+     * If the checked avatar has been scrolled out, returns the removed FAB as a last resort.
+     *
+     * @return The avatar view if it's displayed on screen, the FAB view otherwise.
+     */
+    private View getSharedViewForAvatarTransition() {
+        // child position within the adapter's data set for the avatar when is displayed on screen
+        final int childPosition = mAvatar.ordinal() - mAvatarGrid.getFirstVisiblePosition();
+        // use the FAB as the initial view during the transition when the avatar is out of view
+        if (childPosition < 0 || childPosition >= mAvatarGrid.getChildCount()) {
+            return mDoneFab;
+        }
+        return mAvatarGrid.getChildAt(childPosition);
+    }
+
     private void setUpGridView(View container) {
         mAvatarGrid = (GridView) container.findViewById(R.id.avatars);
         mAvatarGrid.setAdapter(new AvatarAdapter(getActivity()));
         mAvatarGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                mSelectedAvatarView = view;
-                mSelectedAvatar = Avatar.values()[position];
+                mAvatar = Avatar.values()[position];
                 // showing the floating action button if input data is valid
                 if (isInputDataValid()) {
                     mDoneFab.show();
@@ -214,8 +224,8 @@ public class SignInFragment extends Fragment {
             }
         });
         mAvatarGrid.setNumColumns(calculateSpanCount());
-        if (mSelectedAvatar != null) {
-            mAvatarGrid.setItemChecked(mSelectedAvatar.ordinal(), true);
+        if (mAvatar != null) {
+            mAvatarGrid.setItemChecked(mAvatar.ordinal(), true);
         }
     }
 
@@ -251,7 +261,7 @@ public class SignInFragment extends Fragment {
         if (mPlayer != null) {
             mFirstName.setText(mPlayer.getFirstName());
             mLastInitial.setText(mPlayer.getLastInitial());
-            mSelectedAvatar = mPlayer.getAvatar();
+            mAvatar = mPlayer.getAvatar();
         }
     }
 
@@ -263,12 +273,8 @@ public class SignInFragment extends Fragment {
 
     private void savePlayer(Activity activity) {
         mPlayer = new Player(mFirstName.getText().toString(), mLastInitial.getText().toString(),
-                mSelectedAvatar);
+                mAvatar);
         PreferencesHelper.writeToPreferences(activity, mPlayer);
-    }
-
-    private boolean isAvatarSelected() {
-        return mSelectedAvatarView != null || mSelectedAvatar != null;
     }
 
     private boolean isInputDataValid() {
