@@ -1,5 +1,7 @@
 # Topeka for Android
 
+[![Join the chat at https://gitter.im/googlesamples/android-topeka](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/googlesamples/android-topeka?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 A fun to play quiz that showcases material design on Android
 
 ### Introduction
