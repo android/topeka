@@ -59,7 +59,7 @@ public class SelectItemQuizView extends AbsQuizView<SelectItemQuiz> {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 allowAnswer();
-                toggleAnswerFor(position);
+                getAnswers()[position] = true;
             }
         });
         return mListView;
@@ -88,14 +88,20 @@ public class SelectItemQuizView extends AbsQuizView<SelectItemQuiz> {
         if (mAnswers == null) {
             return;
         }
-        final ListAdapter adapter = mListView.getAdapter();
-        for (int i = 0; i < mAnswers.length; i++) {
-            mListView.performItemClick(mListView.getChildAt(i), i, adapter.getItemId(i));
-        }
-    }
 
-    private void toggleAnswerFor(int answerId) {
-        getAnswers()[answerId] = !mAnswers[answerId];
+        mListView.post(new Runnable() {
+            @Override
+            public void run() {
+                final ListAdapter adapter = mListView.getAdapter();
+                for (int i = 0; i < mAnswers.length; i++) {
+                    if (mAnswers[i]) {
+                        mListView.requestFocusFromTouch();
+                        mListView.performItemClick(mListView.getChildAt(i), i, adapter.getItemId(i));
+                        mListView.setSelection(i);
+                    }
+                }
+            }
+        });
     }
 
     private boolean[] getAnswers() {

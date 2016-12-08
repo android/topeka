@@ -162,9 +162,9 @@ public class QuizFragment extends android.support.v4.app.Fragment {
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
-        View focusedChild = mQuizView.getFocusedChild();
-        if (focusedChild instanceof ViewGroup) {
-            View currentView = ((ViewGroup) focusedChild).getChildAt(0);
+        View childView = mQuizView.getCurrentView();
+        if (childView instanceof ViewGroup) {
+            View currentView = ((ViewGroup) childView).getChildAt(0);
             if (currentView instanceof AbsQuizView) {
                 outState.putBundle(KEY_USER_INPUT, ((AbsQuizView) currentView).getUserInput());
             }
