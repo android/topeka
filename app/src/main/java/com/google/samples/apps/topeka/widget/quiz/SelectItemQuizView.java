@@ -59,6 +59,7 @@ public class SelectItemQuizView extends AbsQuizView<SelectItemQuiz> {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 allowAnswer();
+                resetAnswer();
                 getAnswers()[position] = true;
             }
         });
@@ -104,6 +105,14 @@ public class SelectItemQuizView extends AbsQuizView<SelectItemQuiz> {
         });
     }
 
+    private void resetAnswer() {
+        if (mAnswers != null) {
+            for (int i = 0; i < mAnswers.length; i++) {
+                mAnswers[i] = false;
+            }
+        }
+    }
+    
     private boolean[] getAnswers() {
         if (null == mAnswers) {
             mAnswers = new boolean[getQuiz().getOptions().length];
