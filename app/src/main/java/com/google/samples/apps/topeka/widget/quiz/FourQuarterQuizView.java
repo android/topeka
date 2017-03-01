@@ -91,10 +91,15 @@ public class FourQuarterQuizView extends AbsQuizView<FourQuarterQuiz> {
     }
 
     private void setUpUserInput() {
-        mAnswerView.performItemClick(mAnswerView.getChildAt(mAnswered), mAnswered,
-                mAnswerView.getAdapter().getItemId(mAnswered));
-        mAnswerView.getChildAt(mAnswered).setSelected(true);
-        mAnswerView.setSelection(mAnswered);
+        mAnswerView.post(new Runnable() {
+            @Override
+            public void run() {
+                mAnswerView.requestFocusFromTouch();
+                mAnswerView.performItemClick(mAnswerView.getChildAt(mAnswered), mAnswered,
+                        mAnswerView.getAdapter().getItemId(mAnswered));
+                mAnswerView.setSelection(mAnswered);
+            }
+        });
     }
 
     @Override

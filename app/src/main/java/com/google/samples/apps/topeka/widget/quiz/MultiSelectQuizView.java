@@ -82,8 +82,11 @@ public class MultiSelectQuizView extends AbsQuizView<MultiSelectQuiz> {
         if (null == answers) {
             return;
         }
+
         for (int i = 0; i < answers.length; i++) {
-            mListView.setItemChecked(i, answers[i]);
+            if (answers[i]) {
+                mListView.performItemClick(mListView.getChildAt(i), i, mListView.getAdapter().getItemId(i));
+            }
         }
     }
 

@@ -96,10 +96,20 @@ public class ToggleTranslateQuizView extends AbsQuizView<ToggleTranslateQuiz> {
             initAnswerSpace();
             return;
         }
-        ListAdapter adapter = mListView.getAdapter();
-        for (int i = 0; i < mAnswers.length; i++) {
-            mListView.performItemClick(mListView.getChildAt(i), i, adapter.getItemId(i));
-        }
+
+        mListView.post(new Runnable() {
+            @Override
+            public void run() {
+                ListAdapter adapter = mListView.getAdapter();
+                for (int i = 0; i < mAnswers.length; i++) {
+                    if (mAnswers[i]) {
+                        mListView.requestFocusFromTouch();
+                        mListView.performItemClick(mListView.getChildAt(i), i, adapter.getItemId(i));
+                        mListView.setSelection(i);
+                    }
+                }
+            }
+        });
     }
 
     private void toggleAnswerFor(int answerId) {
