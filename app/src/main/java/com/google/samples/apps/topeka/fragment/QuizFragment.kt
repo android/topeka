@@ -157,7 +157,7 @@ class QuizFragment : Fragment() {
     private fun restoreQuizState(savedInstanceState: Bundle?) {
         if (savedInstanceState == null) return
         quizView?.onLayoutChange {
-            val currentChild = quizView?.getChildAt(0)
+            val currentChild = (this as ViewGroup).getChildAt(0)
             if (currentChild is ViewGroup) {
                 val potentialQuizView = currentChild.getChildAt(0)
                 if (potentialQuizView is AbsQuizView<*>) {
