@@ -432,8 +432,11 @@ class TopekaDatabaseHelper private constructor(
 }
 
 inline fun SQLiteDatabase.transact(transaction: SQLiteDatabase.() -> Unit) {
-    beginTransaction()
-    transaction()
-    setTransactionSuccessful()
-    endTransaction()
+    try {
+        beginTransaction()
+        transaction()
+        setTransactionSuccessful()
+    } finally {
+        endTransaction()
+    }
 }
