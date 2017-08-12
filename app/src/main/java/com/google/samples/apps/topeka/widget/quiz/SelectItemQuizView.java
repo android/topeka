@@ -23,7 +23,6 @@ import android.util.SparseBooleanArray;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 
 import com.google.samples.apps.topeka.R;
@@ -59,7 +58,8 @@ public class SelectItemQuizView extends AbsQuizView<SelectItemQuiz> {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 allowAnswer();
-                toggleAnswerFor(position);
+                resetAnswer();
+                getAnswers()[position] = true;
             }
         });
         return mListView;
@@ -88,16 +88,22 @@ public class SelectItemQuizView extends AbsQuizView<SelectItemQuiz> {
         if (mAnswers == null) {
             return;
         }
-        final ListAdapter adapter = mListView.getAdapter();
+
         for (int i = 0; i < mAnswers.length; i++) {
-            mListView.performItemClick(mListView.getChildAt(i), i, adapter.getItemId(i));
+            if (mAnswers[i]) {
+                setUpUserListSelection(mListView, i);
+            }
         }
     }
 
-    private void toggleAnswerFor(int answerId) {
-        getAnswers()[answerId] = !mAnswers[answerId];
+    private void resetAnswer() {
+        if (mAnswers != null) {
+            for (int i = 0; i < mAnswers.length; i++) {
+                mAnswers[i] = false;
+            }
+        }
     }
-
+    
     private boolean[] getAnswers() {
         if (null == mAnswers) {
             mAnswers = new boolean[getQuiz().getOptions().length];
