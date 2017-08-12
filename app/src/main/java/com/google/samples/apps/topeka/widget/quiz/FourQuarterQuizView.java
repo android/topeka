@@ -74,7 +74,7 @@ public class FourQuarterQuizView extends AbsQuizView<FourQuarterQuiz> {
         mAnswered = savedInput.getInt(KEY_ANSWER);
         if (mAnswered != -1) {
             if (ApiLevelHelper.isAtLeast(Build.VERSION_CODES.KITKAT) && isLaidOut()) {
-                setUpUserListSelection(mAnswerView, mAnswered);
+                setUpUserInput();
             } else {
                 addOnLayoutChangeListener(new OnLayoutChangeListener() {
                     @Override
@@ -83,11 +83,23 @@ public class FourQuarterQuizView extends AbsQuizView<FourQuarterQuiz> {
                                                int oldLeft, int oldTop,
                                                int oldRight, int oldBottom) {
                         v.removeOnLayoutChangeListener(this);
-                        setUpUserListSelection(mAnswerView, mAnswered);
+                        setUpUserInput();
                     }
                 });
             }
         }
+    }
+
+    private void setUpUserInput() {
+        mAnswerView.post(new Runnable() {
+            @Override
+            public void run() {
+                mAnswerView.requestFocusFromTouch();
+                mAnswerView.performItemClick(mAnswerView.getChildAt(mAnswered), mAnswered,
+                        mAnswerView.getAdapter().getItemId(mAnswered));
+                mAnswerView.setSelection(mAnswered);
+            }
+        });
     }
 
     @Override
