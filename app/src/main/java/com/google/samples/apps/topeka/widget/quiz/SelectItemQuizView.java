@@ -59,7 +59,7 @@ public class SelectItemQuizView extends AbsQuizView<SelectItemQuiz> {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 allowAnswer();
                 resetAnswer();
-                getAnswers()[position] = true;
+                mAnswers[position] = true;
             }
         });
         return mListView;
