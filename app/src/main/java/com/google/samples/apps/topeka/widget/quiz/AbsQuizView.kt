@@ -274,7 +274,7 @@ abstract class AbsQuizView<out Q : Quiz<*>>
         if (context is QuizActivity) (context as QuizActivity).proceed()
     }
 
-    protected fun <T> inflate(@LayoutRes resId: Int) =
+    protected fun <T: View> inflate(@LayoutRes resId: Int) =
             layoutInflater.inflate(resId, this, false) as T
 
 }
