@@ -2,6 +2,12 @@
 
 A fun to play quiz that showcases material design on Android
 
+### DEPRECATION NOTICE
+
+This branch contains the Java implementation of Topeka, which is kept
+for reference purposes. Please do not file issues and pull requests
+agains the implementation in this branch.
+
 ### Introduction
 
 Material design is a new system for visual, interaction and motion design.
