@@ -19,7 +19,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 
 android {
-    buildToolsVersion "26.0.0"
+    buildToolsVersion "26.0.1"
     compileSdkVersion 26
 
     dataBinding {
@@ -44,10 +44,16 @@ android {
     packagingOptions {
         exclude 'LICENSE.txt'
     }
+
+    splits {
+        density {
+            enable true
+        }
+    }
 }
 
 ext {
-    supportLibVersion = "26.0.0-beta2"
+    supportLibVersion = "26.0.1"
     espressoVersion = "2.2.2"
     androidTestVersion = "0.5"
     hamcrestVersion = "1.3"
