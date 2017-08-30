@@ -24,7 +24,6 @@ import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.CompoundButton;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 
 import com.google.samples.apps.topeka.R;
@@ -96,9 +95,11 @@ public class ToggleTranslateQuizView extends AbsQuizView<ToggleTranslateQuiz> {
             initAnswerSpace();
             return;
         }
-        ListAdapter adapter = mListView.getAdapter();
+
         for (int i = 0; i < mAnswers.length; i++) {
-            mListView.performItemClick(mListView.getChildAt(i), i, adapter.getItemId(i));
+            if (mAnswers[i]) {
+                setUpUserListSelection(mListView, i);
+            }
         }
     }
 
