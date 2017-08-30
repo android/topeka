@@ -36,6 +36,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Interpolator;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AbsListView;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -358,5 +359,17 @@ public abstract class AbsQuizView<Q extends Quiz> extends FrameLayout {
 
     private void setMinHeightInternal(View view) {
         view.setMinimumHeight(getResources().getDimensionPixelSize(R.dimen.min_height_question));
+    }
+
+    protected void setUpUserListSelection(final AbsListView listView, final int index) {
+        listView.post(new Runnable() {
+            @Override
+            public void run() {
+                listView.requestFocusFromTouch();
+                listView.performItemClick(listView.getChildAt(index), index,
+                        listView.getAdapter().getItemId(index));
+                listView.setSelection(index);
+            }
+        });
     }
 }
