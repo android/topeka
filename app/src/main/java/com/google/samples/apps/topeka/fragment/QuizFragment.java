@@ -20,6 +20,7 @@ import android.annotation.TargetApi;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.view.animation.FastOutLinearInInterpolator;
 import android.view.ContextThemeWrapper;
@@ -241,6 +242,7 @@ public class QuizFragment extends android.support.v4.app.Fragment {
         scorecardView.setAdapter(mScoreAdapter);
         scorecardView.setVisibility(View.VISIBLE);
         mQuizView.setVisibility(View.GONE);
+        Snackbar.make(mQuizView, "Congratulations! You gained " + mCategory.getScore() + " marks in this category!", Snackbar.LENGTH_SHORT).setAction("Action", null).show();
     }
 
     public boolean hasSolvedStateListener() {
