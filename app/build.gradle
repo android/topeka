@@ -24,6 +24,10 @@ android {
         enabled = true
     }
 
+    lintOptions {
+    	abortOnError false
+    }
+
     defaultConfig {
         applicationId "com.google.samples.apps.topeka"
         minSdkVersion 14
