@@ -22,7 +22,6 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.support.v4.app.ActivityCompat
 import android.support.v4.app.ActivityOptionsCompat
 import android.support.v4.app.Fragment
 import android.support.v4.util.Pair
@@ -73,8 +72,8 @@ class CategorySelectionFragment : Fragment() {
         }
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
-        if (requestCode == REQUEST_CATEGORY && resultCode == R.id.solved) {
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == REQUEST_CATEGORY && resultCode == R.id.solved && data != null) {
             adapter?.notifyItemChanged(data.getStringExtra(JsonAttributes.ID))
         }
         super.onActivityResult(requestCode, resultCode, data)
@@ -92,10 +91,7 @@ class CategorySelectionFragment : Fragment() {
 
         // Start the activity with the participants, animating from one to the other.
         val startIntent = QuizActivity.getStartIntent(activity, category)
-        ActivityCompat.startActivityForResult(activity,
-                startIntent,
-                REQUEST_CATEGORY,
-                animationBundle)
+        startActivityForResult(startIntent, REQUEST_CATEGORY, animationBundle)
     }
 
     companion object {
