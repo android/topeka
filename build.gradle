@@ -39,11 +39,11 @@ allprojects {
 }
 
 ext {
-
     buildTools = "27.0.3"
     compileSdk = 27
     targetSdk = 27
-    minSdk = 21
+    minSdkInstant = 21
+    minSdk = 14
 
     supportLibVersion = "27.1.1"
     playServicesAuthVersion = "11.8.0"
