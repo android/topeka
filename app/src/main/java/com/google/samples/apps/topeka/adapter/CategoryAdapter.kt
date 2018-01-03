@@ -54,11 +54,14 @@ class CategoryAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         with(holder.binding) {
             category = categories[position]
+            val cat = category!!
             executePendingBindings()
-            setCategoryIcon(category, categoryIcon)
-            with(categoryTitle) {
-                setTextColor(getColor(category.theme.textPrimaryColor))
-                setBackgroundColor(getColor(category.theme.primaryColor))
+            with(cat) {
+                setCategoryIcon(this, categoryIcon)
+                with(categoryTitle) {
+                    setTextColor(getColor(theme.textPrimaryColor))
+                    setBackgroundColor(getColor(theme.primaryColor))
+                }
             }
         }
         with(holder.itemView) {
@@ -129,20 +132,22 @@ class CategoryAdapter(
      * @return The tinted resource
      */
     private fun loadTintedCategoryDrawable(category: Category, @DrawableRes imageRes: Int) =
-            getTintentDrawable(imageRes, category.theme.primaryColor)
+            getTintedDrawable(imageRes, category.theme.primaryColor)
 
     /**
      * Loads and tints a check mark.
 
      * @return The tinted check mark
      */
-    private fun loadTintedDoneDrawable() = getTintentDrawable(R.drawable.ic_tick)
+    private fun loadTintedDoneDrawable() = getTintedDrawable(R.drawable.ic_tick)
 
-    private fun getTintentDrawable(@DrawableRes imageRes: Int,
-                                   @ColorRes tintColorRes: Int = android.R.color.white) =
-            ContextCompat.getDrawable(activity, imageRes).mutate().apply {
+    private fun getTintedDrawable(@DrawableRes imageRes: Int,
+                                  @ColorRes tintColorRes: Int = android.R.color.white
+    ): Drawable {
+            return ContextCompat.getDrawable(activity, imageRes)!!.mutate().apply {
                 wrapAndTint(this, tintColorRes)
             }
+    }
 
     private fun wrapAndTint(drawable: Drawable, @ColorRes color: Int) =
             DrawableCompat.wrap(drawable)

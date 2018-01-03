@@ -76,7 +76,7 @@ open class TextSharedElementCallback(
     }
 
     private fun getTextView(sharedElements: List<View>) =
-            sharedElements.filter { it is TextView }.first() as TextView?
+            sharedElements.first { it is TextView } as TextView?
 
     companion object {
         private const val TAG = "TextResize"

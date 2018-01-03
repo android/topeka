@@ -17,6 +17,7 @@
 package com.google.samples.apps.topeka.adapter
 
 import android.content.Context
+import android.graphics.drawable.Drawable
 import android.support.annotation.ColorRes
 import android.support.annotation.DrawableRes
 import android.support.v4.content.ContextCompat
@@ -34,7 +35,7 @@ import com.google.samples.apps.topeka.R
 /**
  * Adapter for displaying score cards.
  */
-class ScoreAdapter(private val category: Category, private val context: Context) : BaseAdapter() {
+class ScoreAdapter(private val context: Context, private val category: Category) : BaseAdapter() {
 
     private val quizList = category.quizzes
     private val count = quizList.size
@@ -77,9 +78,11 @@ class ScoreAdapter(private val category: Category, private val context: Context)
      *
      * @return The tinted drawable.
      */
-    private fun loadAndTint(@DrawableRes drawableId: Int, @ColorRes tintColor: Int) =
-            DrawableCompat.wrap(ContextCompat.getDrawable(context, drawableId))
-                    .apply { DrawableCompat.setTint(this, ContextCompat.getColor(context, tintColor)) }
+    private fun loadAndTint(@DrawableRes drawableId: Int, @ColorRes tintColor: Int): Drawable {
+        val drawable = ContextCompat.getDrawable(context, drawableId)!!
+        return DrawableCompat.wrap(drawable)
+                .apply { DrawableCompat.setTint(this, ContextCompat.getColor(context, tintColor)) }
+    }
 
     private fun createView(parent: ViewGroup) =
             (parent.context.inflate(R.layout.item_scorecard, parent, false) as ViewGroup)

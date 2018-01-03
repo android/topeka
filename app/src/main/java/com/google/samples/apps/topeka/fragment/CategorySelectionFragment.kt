@@ -43,13 +43,15 @@ import com.google.samples.apps.topeka.widget.OffsetDecoration
 class CategorySelectionFragment : Fragment() {
 
     private val adapter: CategoryAdapter? by lazy(LazyThreadSafetyMode.NONE) {
-        CategoryAdapter(activity,
-                AdapterView.OnItemClickListener { _, v, position, _ ->
-                    adapter?.getItem(position)?.let {
-                        startQuizActivityWithTransition(activity,
-                                v.findViewById(R.id.category_title), it)
-                    }
-                })
+        activity?.run {
+            CategoryAdapter(this,
+                    AdapterView.OnItemClickListener { _, v, position, _ ->
+                        adapter?.getItem(position)?.let {
+                            startQuizActivityWithTransition(this,
+                                    v.findViewById(R.id.category_title), it)
+                        }
+                    })
+        }
     }
 
     override fun onCreateView(inflater: LayoutInflater,
@@ -58,7 +60,7 @@ class CategorySelectionFragment : Fragment() {
             inflater.inflate(R.layout.fragment_categories, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        setUpQuizGrid(view.findViewById<RecyclerView>(R.id.categories))
+        setUpQuizGrid(view.findViewById(R.id.categories))
         super.onViewCreated(view, savedInstanceState)
     }
 
@@ -68,7 +70,7 @@ class CategorySelectionFragment : Fragment() {
             addItemDecoration(OffsetDecoration(context.resources
                     .getDimensionPixelSize(R.dimen.spacing_nano)))
             adapter = this@CategorySelectionFragment.adapter
-            beforeDrawing { activity.supportStartPostponedEnterTransition() }
+            beforeDrawing { activity?.supportStartPostponedEnterTransition() }
         }
     }
 

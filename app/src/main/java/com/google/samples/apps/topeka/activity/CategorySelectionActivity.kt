@@ -52,7 +52,7 @@ class CategorySelectionActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         val binding = DataBindingUtil
                 .setContentView<ActivityCategorySelectionBinding>(this,
-                        R.layout.activity_category_selection)
+                        R.layout.activity_category_selection)!!
 
         var player = intent.getParcelableExtra<Player>(EXTRA_PLAYER)
         if (!isSignedIn()) {

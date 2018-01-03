@@ -20,6 +20,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.Drawable
 import android.os.Build
 import android.support.annotation.DrawableRes
 import android.support.v4.content.ContextCompat
@@ -94,7 +95,7 @@ class AvatarView @JvmOverloads constructor(
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         if (isChecked) {
-            ContextCompat.getDrawable(context, R.drawable.selector_avatar).apply {
+            ContextCompat.getDrawable(context, R.drawable.selector_avatar)!!.apply {
                 setBounds(0, 0, width, height)
                 draw(canvas)
             }

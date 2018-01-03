@@ -48,16 +48,26 @@ import com.google.samples.apps.topeka.widget.quiz.AbsQuizView
 class QuizFragment : Fragment() {
 
     private val category by lazy(LazyThreadSafetyMode.NONE) {
-        val categoryId = arguments.getString(Category.TAG)
-        activity.database().getCategoryWith(categoryId)
+        val categoryId = arguments!!.getString(Category.TAG)
+        activity!!.database().getCategoryWith(categoryId)
     }
 
-    private val quizAdapter by lazy(LazyThreadSafetyMode.NONE) { QuizAdapter(context, category) }
-    val scoreAdapter by lazy(LazyThreadSafetyMode.NONE) { ScoreAdapter(category, context) }
+    private val quizAdapter by lazy(LazyThreadSafetyMode.NONE) {
+        context?.run {
+            QuizAdapter(this, category)
+        }
+    }
+
+    val scoreAdapter by lazy(LazyThreadSafetyMode.NONE) {
+        context?.run {
+            ScoreAdapter(this, category)
+        }
+    }
 
     val quizView by lazy(LazyThreadSafetyMode.NONE) {
         view?.findViewById<AdapterViewAnimator>(R.id.quiz_view)
     }
+
     private val progressText by lazy(LazyThreadSafetyMode.NONE) {
         view?.findViewById<TextView>(R.id.progress_text)
     }
@@ -69,9 +79,9 @@ class QuizFragment : Fragment() {
     }
     private var solvedStateListener: SolvedStateListener? = null
 
-    override fun onCreateView(inflater: LayoutInflater?,
+    override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+                              savedInstanceState: Bundle?): View {
         // Create a themed Context and custom LayoutInflater
         // to get custom themed views in this Fragment.
         val context = ContextThemeWrapper(activity, category.theme.styleId)
@@ -82,7 +92,7 @@ class QuizFragment : Fragment() {
         setProgress(category.firstUnsolvedQuizPosition)
         decideOnViewToDisplay()
         setQuizViewAnimations()
-        setAvatarDrawable(view.findViewById<AvatarView>(R.id.avatar))
+        setAvatarDrawable(view.findViewById(R.id.avatar))
         super.onViewCreated(view, savedInstanceState)
     }
 
@@ -117,15 +127,16 @@ class QuizFragment : Fragment() {
     }
 
     private fun setAvatarDrawable(avatarView: AvatarView) {
-        val player = activity.getPlayer()
-        player.valid().let {
-            avatarView.setAvatar(player.avatar!!.drawableId)
-            with(ViewCompat.animate(avatarView)) {
-                interpolator = FastOutLinearInInterpolator()
-                startDelay = 500
-                scaleX(1f)
-                scaleY(1f)
-                start()
+        activity?.getPlayer()?.let { player ->
+            if (player.valid()) {
+                avatarView.setAvatar(player.avatar!!.drawableId)
+                with(ViewCompat.animate(avatarView)) {
+                    interpolator = FastOutLinearInInterpolator()
+                    startDelay = 500
+                    scaleX(1f)
+                    scaleY(1f)
+                    start()
+                }
             }
         }
     }
@@ -138,12 +149,12 @@ class QuizFragment : Fragment() {
         }
     }
 
-    override fun onSaveInstanceState(outState: Bundle?) {
+    override fun onSaveInstanceState(outState: Bundle) {
         val focusedChild = quizView?.focusedChild
         if (focusedChild is ViewGroup) {
             val currentView = focusedChild.getChildAt(0)
             if (currentView is AbsQuizView<*>) {
-                outState?.putBundle(KEY_USER_INPUT, currentView.userInput)
+                outState.putBundle(KEY_USER_INPUT, currentView.userInput)
             }
         }
         super.onSaveInstanceState(outState)
@@ -180,7 +191,7 @@ class QuizFragment : Fragment() {
             setProgress(nextItem)
             if (nextItem < it.adapter.count) {
                 it.showNext()
-                activity.database().updateCategory(category)
+                activity?.database()?.updateCategory(category)
                 return true
             }
         }
@@ -190,7 +201,7 @@ class QuizFragment : Fragment() {
 
     private fun markCategorySolved() {
         category.solved = true
-        activity.database().updateCategory(category)
+        activity?.database()?.updateCategory(category)
     }
 
     fun hasSolvedStateListener() = solvedStateListener != null

@@ -29,7 +29,7 @@ import android.view.ViewOutlineProvider
 class RoundOutlineProvider(private val size: Int) : ViewOutlineProvider() {
 
     init {
-        if (0 > size) throw IllegalArgumentException("size needs to be > 0. Actually was " + size)
+        if (0 > size) throw IllegalArgumentException("size needs to be > 0. Actually was $size")
     }
 
     override fun getOutline(view: View, outline: Outline) = outline.setOval(0, 0, size, size)

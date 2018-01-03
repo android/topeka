@@ -75,9 +75,9 @@ class SignInFragment : Fragment() {
         super.onCreate(savedInstanceState)
     }
 
-    override fun onAttach(context: Context?) {
+    override fun onAttach(context: Context) {
         super.onAttach(context)
-        player = activity.getPlayer()
+        player = context.getPlayer()
     }
 
     override fun onCreateView(inflater: LayoutInflater,
@@ -86,9 +86,8 @@ class SignInFragment : Fragment() {
         val contentView = inflater.inflate(R.layout.fragment_sign_in, container, false)
         contentView.onLayoutChange {
             avatarGrid?.apply {
-                adapter = AvatarAdapter(activity)
-                onItemClickListener = AdapterView.OnItemClickListener {
-                    _, view, position, _ ->
+                adapter = AvatarAdapter(activity!!)
+                onItemClickListener = AdapterView.OnItemClickListener { _, view, position, _ ->
                     selectedAvatarView = view
                     selectedAvatar = Avatar.values()[position]
                     // showing the floating action button if input data is valid
@@ -112,8 +111,8 @@ class SignInFragment : Fragment() {
         return (avatarGrid?.width ?: 0) / (avatarSize + avatarPadding)
     }
 
-    override fun onSaveInstanceState(outState: Bundle?) {
-        outState?.putInt(KEY_SELECTED_AVATAR_INDEX, (avatarGrid?.checkedItemPosition ?: 0))
+    override fun onSaveInstanceState(outState: Bundle) {
+        outState.putInt(KEY_SELECTED_AVATAR_INDEX, (avatarGrid?.checkedItemPosition ?: 0))
         super.onSaveInstanceState(outState)
     }
 
@@ -131,18 +130,16 @@ class SignInFragment : Fragment() {
             initContentViews()
             initContents()
         } else {
-            CategorySelectionActivity.start(activity, player)
-            activity.finish()
+            activity?.run {
+                CategorySelectionActivity.start(this, player)
+                finish()
+            }
         }
         super.onViewCreated(view, savedInstanceState)
     }
 
     private fun checkIsInEditMode() {
-        if (arguments == null) {
-            edit = false
-        } else {
-            edit = arguments.getBoolean(ARG_EDIT, false)
-        }
+        edit = arguments?.getBoolean(ARG_EDIT, false) ?: false
     }
 
     @SuppressLint("NewApi")
@@ -169,7 +166,7 @@ class SignInFragment : Fragment() {
                 player = Player(firstName = firstNameView?.text?.toString(),
                         lastInitial = lastInitialView?.text?.toString(),
                         avatar = selectedAvatar)
-                activity.savePlayer(player)
+                activity?.savePlayer(player)
                 removeDoneFab(Runnable {
                     performSignInWithTransition(selectedAvatarView ?:
                             avatarGrid?.getChildAt(selectedAvatar!!.ordinal))
@@ -193,7 +190,7 @@ class SignInFragment : Fragment() {
     private fun performSignInWithTransition(v: View?) {
         if (v == null || ApiLevelHelper.isLowerThan(Build.VERSION_CODES.LOLLIPOP)) {
             // Don't run a transition if the passed view is null
-            with(activity) {
+            activity?.run {
                 CategorySelectionActivity.start(this, player)
                 finish()
             }
@@ -201,15 +198,19 @@ class SignInFragment : Fragment() {
         }
 
         if (ApiLevelHelper.isAtLeast(Build.VERSION_CODES.LOLLIPOP)) {
-            activity.window.sharedElementExitTransition.addListener(object :
-                    Transition.TransitionListener by TransitionListenerAdapter {
-                override fun onTransitionEnd(transition: Transition) = activity.finish()
-            })
+            activity?.run {
+                window.sharedElementExitTransition.addListener(object :
+                        Transition.TransitionListener by TransitionListenerAdapter {
+                    override fun onTransitionEnd(transition: Transition) {
+                        finish()
+                    }
+                })
 
-            val pairs = TransitionHelper.createSafeTransitionParticipants(activity, true,
-                    Pair(v, activity.getString(R.string.transition_avatar)))
-            val options = ActivityOptionsCompat.makeSceneTransitionAnimation(activity, *pairs)
-            CategorySelectionActivity.start(activity, player, options)
+                val pairs = TransitionHelper.createSafeTransitionParticipants(this, true,
+                        Pair(v, getString(R.string.transition_avatar)))
+                val options = ActivityOptionsCompat.makeSceneTransitionAnimation(this, *pairs)
+                CategorySelectionActivity.start(this, player, options)
+            }
         }
     }
 
