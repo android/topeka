@@ -36,6 +36,8 @@ data class Player(
         }
     }
 
+    override fun toString() = "$firstName $lastInitial"
+
     fun valid() = !(firstName.isNullOrEmpty() || lastInitial.isNullOrEmpty()) && avatar != null
 
     override fun describeContents() = 0

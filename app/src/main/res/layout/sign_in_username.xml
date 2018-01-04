@@ -19,8 +19,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        tools:showIn="@layout/fragment_sign_in">
+        android:orientation="vertical">
 
     <TextView
             android:id="@+id/toolbar_sign_in"

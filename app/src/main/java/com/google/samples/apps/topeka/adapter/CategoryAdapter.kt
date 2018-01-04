@@ -17,7 +17,6 @@
 package com.google.samples.apps.topeka.adapter
 
 import android.app.Activity
-import android.databinding.DataBindingUtil
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.LayerDrawable
 import android.os.Build
@@ -30,8 +29,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ImageView
+import android.widget.TextView
 import com.google.samples.apps.topeka.R
-import com.google.samples.apps.topeka.databinding.ItemCategoryBinding
 import com.google.samples.apps.topeka.helper.ApiLevelHelper
 import com.google.samples.apps.topeka.helper.database
 import com.google.samples.apps.topeka.model.Category
@@ -45,26 +44,23 @@ class CategoryAdapter(
     private val layoutInflater = LayoutInflater.from(activity)
     private var categories = activity.database().getCategories(fromDatabase = true)
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =
-            ViewHolder(DataBindingUtil.inflate<ItemCategoryBinding>(layoutInflater,
-                    R.layout.item_category,
-                    parent,
-                    false))
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
+            ViewHolder(layoutInflater
+                    .inflate(R.layout.item_category, parent, false) as ViewGroup)
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        with(holder.binding) {
-            category = categories[position]
-            val cat = category!!
-            executePendingBindings()
-            with(cat) {
-                setCategoryIcon(this, categoryIcon)
-                with(categoryTitle) {
+        with(holder.itemView) {
+            categories[position].run {
+                setCategoryIcon(this, holder.categoryIcon)
+                holder.categoryTitle.run {
+                    text = name
+                    if (ApiLevelHelper.isAtLeast(Build.VERSION_CODES.LOLLIPOP)) {
+                        transitionName = name
+                    }
                     setTextColor(getColor(theme.textPrimaryColor))
                     setBackgroundColor(getColor(theme.primaryColor))
                 }
             }
-        }
-        with(holder.itemView) {
             setBackgroundColor(getColor(categories[position].theme.windowBackgroundColor))
             setOnClickListener {
                 onItemClickListener.onItemClick(null, it, holder.adapterPosition, holder.itemId)
@@ -144,9 +140,9 @@ class CategoryAdapter(
     private fun getTintedDrawable(@DrawableRes imageRes: Int,
                                   @ColorRes tintColorRes: Int = android.R.color.white
     ): Drawable {
-            return ContextCompat.getDrawable(activity, imageRes)!!.mutate().apply {
-                wrapAndTint(this, tintColorRes)
-            }
+        return ContextCompat.getDrawable(activity, imageRes)!!.mutate().apply {
+            wrapAndTint(this, tintColorRes)
+        }
     }
 
     private fun wrapAndTint(drawable: Drawable, @ColorRes color: Int) =
@@ -162,6 +158,9 @@ class CategoryAdapter(
      */
     private fun getColor(@ColorRes colorRes: Int) = ContextCompat.getColor(activity, colorRes)
 
-    class ViewHolder(val binding: ItemCategoryBinding) : RecyclerView.ViewHolder(binding.root)
+    class ViewHolder(categoryView: ViewGroup) : RecyclerView.ViewHolder(categoryView) {
+        val categoryIcon: ImageView = categoryView.findViewById(R.id.category_icon)
+        val categoryTitle: TextView = categoryView.findViewById(R.id.category_title)
+    }
 
 }

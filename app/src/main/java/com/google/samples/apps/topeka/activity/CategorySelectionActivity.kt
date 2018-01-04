@@ -20,21 +20,18 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.databinding.DataBindingUtil
 import android.os.Build
 import android.os.Bundle
 import android.support.annotation.VisibleForTesting
 import android.support.v4.app.ActivityCompat
 import android.support.v4.app.ActivityOptionsCompat
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.Toolbar
 import android.transition.TransitionInflater
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
 import com.google.samples.apps.topeka.R
-import com.google.samples.apps.topeka.databinding.ActivityCategorySelectionBinding
 import com.google.samples.apps.topeka.fragment.CategorySelectionFragment
 import com.google.samples.apps.topeka.helper.ApiLevelHelper
 import com.google.samples.apps.topeka.helper.database
@@ -45,15 +42,13 @@ import com.google.samples.apps.topeka.helper.replaceFragment
 import com.google.samples.apps.topeka.helper.savePlayer
 import com.google.samples.apps.topeka.helper.signOut
 import com.google.samples.apps.topeka.model.Player
+import com.google.samples.apps.topeka.widget.AvatarView
 
 class CategorySelectionActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val binding = DataBindingUtil
-                .setContentView<ActivityCategorySelectionBinding>(this,
-                        R.layout.activity_category_selection)!!
-
+        setContentView(R.layout.activity_category_selection)
         var player = intent.getParcelableExtra<Player>(EXTRA_PLAYER)
         if (!isSignedIn()) {
             if (player == null) {
@@ -62,7 +57,9 @@ class CategorySelectionActivity : AppCompatActivity() {
                 savePlayer(player)
             }
         }
-        binding.player = player
+        findViewById<TextView>(R.id.title).text = player.toString()
+        player.avatar?.run { findViewById<AvatarView>(R.id.avatar).setAvatar(this) }
+
         setUpToolbar()
         if (savedInstanceState == null) {
             attachCategoryGridFragment()
@@ -73,7 +70,7 @@ class CategorySelectionActivity : AppCompatActivity() {
     }
 
     private fun setUpToolbar() {
-        setSupportActionBar(findViewById<Toolbar>(R.id.toolbar_player))
+        setSupportActionBar(findViewById(R.id.toolbar_player))
         supportActionBar?.setDisplayShowTitleEnabled(false)
     }
 

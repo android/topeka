@@ -16,15 +16,10 @@
 
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-kapt'
 
 android {
     buildToolsVersion rootProject.buildTools
     compileSdkVersion rootProject.compileSdk
-
-    dataBinding {
-        enabled = true
-    }
 
     defaultConfig {
         applicationId "com.google.samples.apps.topeka"
@@ -53,7 +48,6 @@ android {
 }
 
 dependencies {
-    kapt "com.android.databinding:compiler:3.0.1"
 
     implementation "com.android.support:appcompat-v7:$supportLibVersion"
     implementation "com.android.support:design:$supportLibVersion"

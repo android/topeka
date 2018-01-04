@@ -32,6 +32,7 @@ import android.widget.Checkable
 
 import com.google.samples.apps.topeka.R
 import com.google.samples.apps.topeka.helper.ApiLevelHelper
+import com.google.samples.apps.topeka.model.Avatar
 import com.google.samples.apps.topeka.widget.outlineprovider.RoundOutlineProvider
 
 /**
@@ -66,6 +67,10 @@ class AvatarView @JvmOverloads constructor(
     override fun isChecked() = isChecked
 
     override fun toggle() = setChecked(!isChecked)
+
+    fun setAvatar(avatar: Avatar) {
+        setAvatar(avatar.drawableId)
+    }
 
     /**
      * Set the image for this avatar. Will be used to create a round version of this avatar.
