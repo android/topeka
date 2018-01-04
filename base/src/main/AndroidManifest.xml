@@ -53,36 +53,5 @@
             <meta-data android:name="default-url"
                 android:value="https://topeka.instantappsample.com/signin" />
         </activity>
-
-        <activity android:name="com.google.samples.apps.topeka.activity.CategorySelectionActivity"
-                  android:theme="@style/Topeka.CategorySelectionActivity">
-            <intent-filter android:autoVerify="true">
-                <category android:name="android.intent.category.BROWSABLE" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <action android:name="android.intent.action.VIEW" />
-
-                <data android:scheme="http" />
-                <data android:scheme="https" />
-                <data android:host="topeka.instantappsample.com" />
-                <data android:path="/categories" />
-            </intent-filter>
-        </activity>
-
-        <activity android:name="com.google.samples.apps.topeka.activity.QuizActivity"
-                  android:launchMode="singleTop"
-                  android:windowSoftInputMode="adjustPan"
-                  android:theme="@style/Topeka.QuizActivity">
-            <intent-filter android:autoVerify="true">
-                <category android:name="android.intent.category.BROWSABLE" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <action android:name="android.intent.action.VIEW" />
-
-                <data android:scheme="http" />
-                <data android:scheme="https" />
-                <data android:host="topeka.instantappsample.com" />
-                <data android:pathPrefix="/quiz" />
-            </intent-filter>
-        </activity>
-
     </application>
 </manifest>

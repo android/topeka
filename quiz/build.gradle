@@ -21,8 +21,6 @@ android {
     buildToolsVersion rootProject.buildTools
     compileSdkVersion rootProject.compileSdk
 
-    baseFeature true
-
     defaultConfig {
         minSdkVersion rootProject.minSdk
         targetSdkVersion rootProject.targetSdk
@@ -33,6 +31,7 @@ android {
 
     buildTypes {
         release {
+            minifyEnabled true
         }
     }
 
@@ -43,19 +42,10 @@ android {
 }
 
 dependencies {
-    application project(':installed')
-    feature project(':categories')
-    feature project(':quiz')
 
-    api "com.android.support:appcompat-v7:$supportLibVersion"
-    api "com.android.support:design:$supportLibVersion"
-    api "com.android.support:support-v4:$supportLibVersion"
-    api 'com.google.android.instantapps:instantapps:1.1.0'
-    api "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+    implementation project(":base")
 
-    implementation "com.google.android.gms:play-services-auth:$playServicesAuthVersion"
-
-    testImplementation "junit:junit:$junitVersion"
+    implementation "com.android.support.test.espresso:espresso-idling-resource:$espressoVersion"
 
     androidTestImplementation("com.android.support.test.espresso:espresso-core:$espressoVersion") {
         exclude module: "espresso-idling-resource"

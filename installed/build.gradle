@@ -27,4 +27,6 @@ android {
 
 dependencies {
     implementation project(':base')
+    implementation project(':categories')
+    implementation project(':quiz')
 }

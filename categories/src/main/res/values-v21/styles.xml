@@ -15,20 +15,12 @@
   -->
 
 <resources>
-    <style name="Topeka" parent="Topeka.Base">
-        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
-        <item name="android:windowContentTransitions">true</item>
-        <item name="android:actionOverflowButtonStyle">@style/Topeka.ActionButton</item>
+    <style name="Topeka.CategorySelectionActivity">
+        <item name="android:windowSharedElementEnterTransition">
+            @transition/category_shared_enter
+        </item>
+        <item name="android:windowEnterTransition">@transition/category_enter</item>
+        <item name="android:windowExitTransition">@transition/category_exit</item>
+        <item name="android:windowBackground">@color/topeka_blank</item>
     </style>
-
-    <style name="Topeka.SignInActivity">
-        <item name="android:windowEnterTransition">@transition/signin_enter</item>
-        <item name="android:windowExitTransition">@transition/signin_exit</item>
-    </style>
-
-
-    <style name="Topeka.ActionButton" parent="Widget.AppCompat.ActionButton.Overflow">
-        <item name="android:tint">@color/light_grey</item>
-    </style>
-
 </resources>
