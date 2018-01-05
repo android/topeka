@@ -16,7 +16,6 @@
 
 package com.google.samples.apps.topeka.activity.quiz
 
-import android.content.Intent
 import android.support.test.InstrumentationRegistry
 import android.support.test.espresso.Espresso
 import android.support.test.espresso.Espresso.onView
@@ -28,11 +27,12 @@ import android.support.test.espresso.matcher.ViewMatchers.withText
 import android.support.test.rule.ActivityTestRule
 import android.support.test.runner.AndroidJUnit4
 import android.view.View
-import com.google.samples.apps.topeka.base.R
 import com.google.samples.apps.topeka.SolveQuizUtil
 import com.google.samples.apps.topeka.TestLogin
 import com.google.samples.apps.topeka.activity.QuizActivity
 import com.google.samples.apps.topeka.activity.countingIdlingResource
+import com.google.samples.apps.topeka.base.R
+import com.google.samples.apps.topeka.helper.ActivityLaunchHelper
 import com.google.samples.apps.topeka.helper.database
 import com.google.samples.apps.topeka.helper.login
 import com.google.samples.apps.topeka.helper.logout
@@ -66,10 +66,7 @@ class BaseQuizActivityTest {
             }
         }
 
-        override fun getActivityIntent(): Intent {
-            return QuizActivity.getStartIntent(InstrumentationRegistry.getTargetContext(),
-                    currentCategory)
-        }
+        override fun getActivityIntent() = ActivityLaunchHelper.quizIntent(currentCategory)
     }
 
     private val categories: List<Category> get() {

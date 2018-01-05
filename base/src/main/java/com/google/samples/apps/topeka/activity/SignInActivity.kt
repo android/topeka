@@ -49,5 +49,4 @@ class SignInActivity : AppCompatActivity() {
     }
 
     private val isInEditMode get() = intent.getBooleanExtra(EXTRA_EDIT, false)
-
 }

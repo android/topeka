@@ -21,7 +21,6 @@ import android.annotation.SuppressLint
 import android.annotation.TargetApi
 import android.content.Intent
 import android.graphics.Color
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.support.annotation.RequiresApi
@@ -91,7 +90,15 @@ class QuizActivity : AppCompatActivity() {
         if (null != savedInstanceState) {
             savedStateIsPlaying = savedInstanceState.getBoolean(STATE_IS_PLAYING)
         }
-        populate(intent.getStringExtra(Category.TAG))
+        with(intent.data) {
+            if (path.startsWith("/quiz")) {
+                populate(lastPathSegment)
+            } else {
+                Log.w(FRAGMENT_TAG, "Path is invalid, finishing activity")
+                ActivityLaunchHelper.launchCategorySelection(this@QuizActivity)
+                supportFinishAfterTransition()
+            }
+        }
         val categoryNameTextSize = resources
                 .getDimensionPixelSize(R.dimen.category_item_text_size)
         val paddingStart = resources.getDimensionPixelSize(R.dimen.spacing_double)

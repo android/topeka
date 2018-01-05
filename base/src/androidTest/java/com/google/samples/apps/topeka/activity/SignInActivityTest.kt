@@ -16,7 +16,6 @@
 
 package com.google.samples.apps.topeka.activity
 
-import android.content.Intent
 import android.support.test.InstrumentationRegistry
 import android.support.test.espresso.Espresso.onData
 import android.support.test.espresso.Espresso.onView
@@ -37,6 +36,7 @@ import android.support.test.runner.AndroidJUnit4
 import android.view.View
 import com.google.samples.apps.topeka.TestLogin
 import com.google.samples.apps.topeka.base.R
+import com.google.samples.apps.topeka.helper.ActivityLaunchHelper
 import com.google.samples.apps.topeka.helper.login
 import com.google.samples.apps.topeka.helper.logout
 import com.google.samples.apps.topeka.model.Avatar
@@ -65,10 +65,7 @@ class SignInActivityTest {
                 login = TestLogin
             }
 
-            override fun getActivityIntent(): Intent {
-                val targetContext = InstrumentationRegistry.getTargetContext()
-                return Intent(targetContext, SignInActivity::class.java).putExtra("EDIT", true)
-            }
+            override fun getActivityIntent() = ActivityLaunchHelper.signInIntent(edit = true)
         }
 
     @Before fun clearPreferences() {

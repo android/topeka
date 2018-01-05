@@ -17,7 +17,6 @@
 package com.google.samples.apps.topeka.activity
 
 import android.content.Context
-import android.content.Intent
 import android.support.test.InstrumentationRegistry
 import android.support.test.espresso.Espresso.onView
 import android.support.test.espresso.Espresso.openActionBarOverflowOrOptionsMenu
@@ -34,6 +33,7 @@ import android.support.test.runner.AndroidJUnit4
 import android.support.v7.widget.RecyclerView
 import com.google.samples.apps.topeka.TestLogin
 import com.google.samples.apps.topeka.base.R
+import com.google.samples.apps.topeka.helper.ActivityLaunchHelper
 import com.google.samples.apps.topeka.helper.database
 import com.google.samples.apps.topeka.helper.isLoggedIn
 import com.google.samples.apps.topeka.helper.login
@@ -42,7 +42,6 @@ import com.google.samples.apps.topeka.helper.storePlayerLocally
 import com.google.samples.apps.topeka.model.Avatar
 import com.google.samples.apps.topeka.model.Category
 import com.google.samples.apps.topeka.model.Player
-import com.google.samples.apps.topeka.model.TEST_PLAYER
 import org.junit.Assert.assertFalse
 import org.junit.Before
 import org.junit.Rule
@@ -69,13 +68,11 @@ class CategorySelectionActivityTest {
             }
         }
 
-        override fun getActivityIntent(): Intent {
-            targetContext = InstrumentationRegistry.getTargetContext()
-            return CategorySelectionActivity.getStartIntent(targetContext, TEST_PLAYER)
-        }
+        override fun getActivityIntent() = ActivityLaunchHelper.categorySelectionIntent()
     }
 
     @Before fun loadCategories() {
+        targetContext = InstrumentationRegistry.getTargetContext()
         categories = targetContext.database().getCategories()
     }
 
