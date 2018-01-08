@@ -21,16 +21,15 @@ import android.support.annotation.ColorRes
 import android.support.annotation.DrawableRes
 import android.support.v4.content.ContextCompat
 import android.support.v4.graphics.drawable.DrawableCompat
-import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AbsListView
 import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.TextView
-import com.google.samples.apps.topeka.R
 import com.google.samples.apps.topeka.helper.inflate
 import com.google.samples.apps.topeka.model.Category
+import com.google.samples.apps.topeka.R
 
 /**
  * Adapter for displaying score cards.
@@ -43,7 +42,7 @@ class ScoreAdapter(private val category: Category, private val context: Context)
     private val failedIcon by lazy { loadAndTint(R.drawable.ic_cross, R.color.theme_red_primary) }
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup) =
-            convertView ?: createView(parent)
+            (convertView ?: createView(parent))
                     .apply {
                         with(tag as ViewHolder) {
                             with(getItem(position)) {

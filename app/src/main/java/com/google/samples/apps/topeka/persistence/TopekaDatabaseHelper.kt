@@ -48,6 +48,7 @@ import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStreamReader
 import java.util.Arrays
+import kotlin.collections.ArrayList
 
 /**
  * Database for storing and retrieving info for categories and quizzes.
@@ -248,13 +249,14 @@ class TopekaDatabaseHelper private constructor(
      * @param category The category to update.
      */
     fun updateCategory(category: Category) {
-        if (categories.contains(category)) {
-            with(categories) {
-                val location = indexOf(category)
-                removeAt(location)
-                add(location, category)
+        val index = categories.indexOfFirst { it.id == category.id }
+        if (index != -1) {
+            with (categories) {
+                removeAt(index)
+                add(index, category)
             }
         }
+
         val categoryValues = createContentValuesFor(category)
         writableDatabase.update(CategoryTable.NAME,
                 categoryValues,

@@ -98,6 +98,14 @@ class CategorySelectionActivity : AppCompatActivity() {
         return true
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        data?.let {
+            findFragmentById(R.id.category_container)?.run {
+                onActivityResult(requestCode, resultCode, data)
+            }
+        }
+    }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return if (item.itemId == R.id.sign_out) {
             handleSignOut()

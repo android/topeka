@@ -22,9 +22,8 @@ import android.os.Bundle
 import android.view.View
 import android.widget.AbsListView
 import android.widget.AdapterView
-import android.widget.CompoundButton
+import android.widget.Checkable
 import android.widget.ListView
-
 import com.google.samples.apps.topeka.R
 import com.google.samples.apps.topeka.adapter.OptionsQuizAdapter
 import com.google.samples.apps.topeka.helper.AnswerHelper
@@ -47,11 +46,11 @@ class ToggleTranslateQuizView(
             divider = null
             setSelector(R.drawable.selector_button)
             adapter = OptionsQuizAdapter(quiz.readableOptions,
-                    R.layout.item_answer)
+                    android.R.layout.simple_list_item_multiple_choice)
             choiceMode = AbsListView.CHOICE_MODE_MULTIPLE
             onItemClickListener = AdapterView.OnItemClickListener { _, view, position, _ ->
                 toggleAnswerFor(position)
-                if (view is CompoundButton) {
+                if (view is Checkable) {
                     view.isChecked = answers[position]
                 }
                 allowAnswer()

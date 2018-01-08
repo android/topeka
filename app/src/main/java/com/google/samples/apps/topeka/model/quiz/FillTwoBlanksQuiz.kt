@@ -30,9 +30,8 @@ data class FillTwoBlanksQuiz(
 
     override fun isAnswerCorrect(answer: Array<String>?): Boolean {
         if (answer == null) return false
-        val correctAnswers = answer
-        return if (answer.indices.none { answer[it].equals(correctAnswers[it], ignoreCase = true) })
+        return if (answer.indices.none { answer[it].equals(this.answer[it], ignoreCase = true) })
             false
-        else answer.size == correctAnswers.size
+        else answer.size == this.answer.size
     }
 }

@@ -21,8 +21,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
-import com.google.samples.apps.topeka.R
 import com.google.samples.apps.topeka.helper.inflate
+import com.google.samples.apps.topeka.R
 
 /**
  * A simple adapter to display a options of a quiz.
@@ -57,14 +57,15 @@ class OptionsQuizAdapter(
     /* Important to return true in order to get checked items from this adapter correctly */
     override fun hasStableIds(): Boolean = true
 
-    override fun getView(position: Int, convertView: View?, parent: ViewGroup) =
-            ((convertView ?: parent.context.inflate(layoutId, parent, false)) as TextView)
-                    .apply {
-                        text = getText(position)
-                    }
+    override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
+        return ((convertView ?: parent.context.inflate(layoutId, parent, false)) as TextView)
+                .apply {
+                    text = getText(position)
+                }
+    }
 
     private fun getText(position: Int): String {
-        return if (alphabet.isNotEmpty()) "${getPrefix(position)}${getItem(position)}"
+        return if (alphabet.isNotEmpty()) "${getPrefix(position)} ${getItem(position)}"
         else getItem(position)
     }
 

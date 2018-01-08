@@ -55,9 +55,9 @@ class MultiSelectQuizView(
         get() {
             val checkedItemPositions = listView?.checkedItemPositions
             val answer = quiz.answer
-            return if (checkedItemPositions != null) {
+            return if (checkedItemPositions != null)
                 AnswerHelper.isAnswerCorrect(checkedItemPositions, answer)
-            } else false
+            else false
         }
 
     override var userInput: Bundle
@@ -71,7 +71,7 @@ class MultiSelectQuizView(
         get() {
             val checkedItemPositions = listView?.checkedItemPositions ?: return null
             val answerSize = checkedItemPositions.size()
-            if (answerSize == 0 ) {
+            if (answerSize == 0) {
                 return null
             }
             val optionsSize = quiz.options.size

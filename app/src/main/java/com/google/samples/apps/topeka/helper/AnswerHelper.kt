@@ -56,8 +56,14 @@ object AnswerHelper {
      * @return `true` if correct else `false`.
      */
     fun isAnswerCorrect(checkedItems: SparseBooleanArray, answerIds: IntArray): Boolean {
-        return if (answerIds.any { checkedItems.indexOfKey(it) < 0 }) false
-        else checkedItems.size() == answerIds.size
+        var checkedCount = 0
+        for (i in 0 until answerIds.size) {
+            if (!checkedItems.get(answerIds[i])) {
+                return false
+            }
+            checkedCount++
+        }
+        return checkedCount == answerIds.size
     }
 
 }

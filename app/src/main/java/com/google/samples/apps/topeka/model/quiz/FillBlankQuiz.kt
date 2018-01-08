@@ -27,6 +27,6 @@ data class FillBlankQuiz(
 
     override val type get() = QuizType.FILL_BLANK
 
-    override fun isAnswerCorrect(answer: String?): Boolean = answer
+    override fun isAnswerCorrect(answer: String?): Boolean = this.answer
             .equals(answer, ignoreCase = true)
 }

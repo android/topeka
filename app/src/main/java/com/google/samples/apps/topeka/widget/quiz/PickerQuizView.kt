@@ -67,7 +67,7 @@ class PickerQuizView(
         currentSelection?.text = this.progress.toString()
     }
 
-    override val isAnswerCorrect = quiz.isAnswerCorrect(progress)
+    override val isAnswerCorrect get() = quiz.isAnswerCorrect(progress)
 
     private fun initStep() {
         val tmpStep = quiz.step
