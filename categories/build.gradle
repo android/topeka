@@ -43,7 +43,6 @@ android {
 
 dependencies {
     implementation project(':base')
-    implementation "com.android.support:recyclerview-v7:$supportLibVersion"
 
     androidTestImplementation("com.android.support.test.espresso:espresso-core:$espressoVersion") {
         exclude module: "espresso-idling-resource"
