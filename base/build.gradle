@@ -33,6 +33,9 @@ android {
 
     buildTypes {
         release {
+            minifyEnabled true
+            signingConfig signingConfigs.debug
+            proguardFiles getDefaultProguardFile("proguard-android.txt"), "../instant/proguard.pro"
         }
     }
 

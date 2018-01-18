@@ -23,6 +23,14 @@ android {
         targetSdkVersion rootProject.compileSdk
         minSdkVersion rootProject.minSdk
     }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            signingConfig signingConfigs.debug
+            proguardFiles getDefaultProguardFile("proguard-android.txt")
+        }
+    }
 }
 
 dependencies {
