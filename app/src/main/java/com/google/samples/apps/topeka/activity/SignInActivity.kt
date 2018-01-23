@@ -16,12 +16,14 @@
 
 package com.google.samples.apps.topeka.activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import com.google.samples.apps.topeka.R
 import com.google.samples.apps.topeka.fragment.SignInFragment
 import com.google.samples.apps.topeka.helper.ActivityLaunchHelper.Companion.EXTRA_EDIT
-import com.google.samples.apps.topeka.helper.isSignedIn
+import com.google.samples.apps.topeka.helper.isLoggedIn
+import com.google.samples.apps.topeka.helper.findFragmentById
 import com.google.samples.apps.topeka.helper.replaceFragment
 
 class SignInActivity : AppCompatActivity() {
@@ -30,13 +32,19 @@ class SignInActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_in)
         if (savedInstanceState == null) {
-            replaceFragment(R.id.sign_in_container, SignInFragment.newInstance(isInEditMode))
+            replaceFragment(R.id.sign_in_container,
+                    SignInFragment.newInstance(isInEditMode || !isLoggedIn()))
         }
     }
 
     override fun onStop() {
         super.onStop()
-        if (isSignedIn()) finish()
+        if (isLoggedIn()) finish()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        // Forwarding all results to SignInFragment for further handling.
+        findFragmentById(R.id.sign_in_container)?.onActivityResult(requestCode, resultCode, data)
     }
 
     private val isInEditMode get() = intent.getBooleanExtra(EXTRA_EDIT, false)

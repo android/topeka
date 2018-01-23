@@ -18,6 +18,8 @@
           xmlns:tools="http://schemas.android.com/tools"
           package="com.google.samples.apps.topeka">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application android:allowBackup="false"
                  android:fullBackupContent="false"
                  android:hardwareAccelerated="true"

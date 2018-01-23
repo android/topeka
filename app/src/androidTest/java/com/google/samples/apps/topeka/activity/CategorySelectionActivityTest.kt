@@ -33,10 +33,15 @@ import android.support.test.rule.ActivityTestRule
 import android.support.test.runner.AndroidJUnit4
 import android.support.v7.widget.RecyclerView
 import com.google.samples.apps.topeka.R
+import com.google.samples.apps.topeka.TestLogin
 import com.google.samples.apps.topeka.helper.database
-import com.google.samples.apps.topeka.helper.isSignedIn
-import com.google.samples.apps.topeka.helper.signOut
+import com.google.samples.apps.topeka.helper.isLoggedIn
+import com.google.samples.apps.topeka.helper.login
+import com.google.samples.apps.topeka.helper.logout
+import com.google.samples.apps.topeka.helper.storePlayerLocally
+import com.google.samples.apps.topeka.model.Avatar
 import com.google.samples.apps.topeka.model.Category
+import com.google.samples.apps.topeka.model.Player
 import com.google.samples.apps.topeka.model.TEST_PLAYER
 import org.junit.Assert.assertFalse
 import org.junit.Before
@@ -56,7 +61,12 @@ class CategorySelectionActivityTest {
             ActivityTestRule<CategorySelectionActivity>(CategorySelectionActivity::class.java) {
 
         override fun beforeActivityLaunched() {
-            InstrumentationRegistry.getTargetContext().signOut()
+            login = TestLogin
+            with(InstrumentationRegistry.getTargetContext()) {
+                logout()
+                // Circumventing SmartLock loginPlayer at this point.
+                storePlayerLocally(Player("Zaphod", "B", Avatar.FIVE))
+            }
         }
 
         override fun getActivityIntent(): Intent {
@@ -86,6 +96,6 @@ class CategorySelectionActivityTest {
     fun signOut() {
         openActionBarOverflowOrOptionsMenu(targetContext)
         onView(withText(R.string.sign_out)).perform(click())
-        assertFalse(targetContext.isSignedIn())
+        assertFalse(targetContext.isLoggedIn())
     }
 }

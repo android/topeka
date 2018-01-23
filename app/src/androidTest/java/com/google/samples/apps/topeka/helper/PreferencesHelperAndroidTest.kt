@@ -39,19 +39,19 @@ class PreferencesHelperAndroidTest {
 
     private val TEST_PLAYER = Player(TEST_FIRST_NAME, TEST_LAST_INITIAL, TEST_AVATAR)
 
-    @Before fun clearPreferences() = InstrumentationRegistry.getTargetContext().signOut()
+    @Before fun clearPreferences() = InstrumentationRegistry.getTargetContext().logout()
 
     /**
      * Creates a player and stores it to the preferences. Then tries to read it.
      */
     @Test fun performPreferenceCycle() {
         with(InstrumentationRegistry.getTargetContext()) {
-            signOut()
-            assertThat(isSignedIn(), `is`(false))
-            savePlayer(TEST_PLAYER)
+            logout()
+            assertThat(isLoggedIn(), `is`(false))
+            storePlayerLocally(TEST_PLAYER)
             val resultingPlayer = getPlayer()
             assertThat<Player>(resultingPlayer, `is`(TEST_PLAYER))
-            assertThat(isSignedIn(), `is`(true))
+            assertThat(isLoggedIn(), `is`(true))
         }
     }
 

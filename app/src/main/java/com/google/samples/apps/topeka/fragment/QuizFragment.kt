@@ -35,9 +35,9 @@ import com.google.samples.apps.topeka.adapter.QuizAdapter
 import com.google.samples.apps.topeka.adapter.ScoreAdapter
 import com.google.samples.apps.topeka.helper.ApiLevelHelper
 import com.google.samples.apps.topeka.helper.database
-import com.google.samples.apps.topeka.helper.getPlayer
 import com.google.samples.apps.topeka.helper.inflate
 import com.google.samples.apps.topeka.helper.onLayoutChange
+import com.google.samples.apps.topeka.helper.requestLogin
 import com.google.samples.apps.topeka.model.Category
 import com.google.samples.apps.topeka.widget.AvatarView
 import com.google.samples.apps.topeka.widget.quiz.AbsQuizView
@@ -92,7 +92,7 @@ class QuizFragment : Fragment() {
         setProgress(category.firstUnsolvedQuizPosition)
         decideOnViewToDisplay()
         setQuizViewAnimations()
-        setAvatarDrawable(view.findViewById(R.id.avatar))
+        setAvatarDrawable()
         super.onViewCreated(view, savedInstanceState)
     }
 
@@ -126,20 +126,20 @@ class QuizFragment : Fragment() {
         }
     }
 
-    private fun setAvatarDrawable(avatarView: AvatarView) {
-        activity?.getPlayer()?.let { player ->
-            if (player.valid()) {
-                avatarView.setAvatar(player.avatar!!.drawableId)
-                with(ViewCompat.animate(avatarView)) {
-                    interpolator = FastOutLinearInInterpolator()
-                    startDelay = 500
-                    scaleX(1f)
-                    scaleY(1f)
-                    start()
+    private fun setAvatarDrawable(avatarView: AvatarView? = view?.findViewById(R.id.avatar)) {
+        activity?.requestLogin { player ->
+                if (player.valid()) {
+                    avatarView?.setAvatar(player.avatar!!.drawableId)
+                    with(ViewCompat.animate(avatarView)) {
+                        interpolator = FastOutLinearInInterpolator()
+                        startDelay = 500
+                        scaleX(1f)
+                        scaleY(1f)
+                        start()
+                    }
                 }
             }
         }
-    }
 
     private fun setProgress(currentQuizPosition: Int) {
         if (isAdded) {
@@ -224,7 +224,7 @@ class QuizFragment : Fragment() {
 
     companion object {
 
-        private val KEY_USER_INPUT = "USER_INPUT"
+        private const val KEY_USER_INPUT = "USER_INPUT"
 
         fun newInstance(categoryId: String,
                         listener: SolvedStateListener?

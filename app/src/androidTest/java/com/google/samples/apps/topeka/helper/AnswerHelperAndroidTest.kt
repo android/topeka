@@ -31,24 +31,30 @@ import org.junit.runner.RunWith
 @SmallTest
 @RunWith(AndroidJUnit4::class)
 class AnswerHelperAndroidTest {
-    private val CORRECT_OPTIONS = intArrayOf(0, 1, 2)
-    private val WRONG_OPTIONS = intArrayOf(2, 1)
+    private val ANSWER = intArrayOf(0, 1, 2)
     private lateinit var correctAnswer: SparseBooleanArray
+    private lateinit var wrongAnswer: SparseBooleanArray
 
-    @Before fun setCorrectAnswers() {
+    @Before fun setUpAnswers() {
+
         correctAnswer = SparseBooleanArray().apply {
             put(0, true)
             put(1, true)
             put(2, true)
         }
+
+        wrongAnswer = SparseBooleanArray().apply {
+            put(0, true)
+            put(1, true)
+        }
     }
 
     @Test fun partial_isAnswerCorrect_returnsTrue() {
-        assertThat(AnswerHelper.isAnswerCorrect(correctAnswer, CORRECT_OPTIONS), `is`(true))
+        assertThat(AnswerHelper.isAnswerCorrect(correctAnswer, ANSWER), `is`(true))
     }
 
     @Test fun partial_isAnswerCorrect_returnsFalse() {
-        assertThat(AnswerHelper.isAnswerCorrect(correctAnswer, WRONG_OPTIONS), `is`(false))
+        assertThat(AnswerHelper.isAnswerCorrect(wrongAnswer, ANSWER), `is`(false))
     }
 
 }

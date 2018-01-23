@@ -43,7 +43,15 @@ import android.widget.ListView
 import android.widget.TextView
 import com.google.samples.apps.topeka.R
 import com.google.samples.apps.topeka.fragment.QuizFragment
-import com.google.samples.apps.topeka.helper.*
+import com.google.samples.apps.topeka.helper.ActivityLaunchHelper
+import com.google.samples.apps.topeka.helper.ApiLevelHelper
+import com.google.samples.apps.topeka.helper.FOREGROUND_COLOR
+import com.google.samples.apps.topeka.helper.database
+import com.google.samples.apps.topeka.helper.findFragmentById
+import com.google.samples.apps.topeka.helper.findFragmentByTag
+import com.google.samples.apps.topeka.helper.isLoggedIn
+import com.google.samples.apps.topeka.helper.onSmartLockResult
+import com.google.samples.apps.topeka.helper.requestLogin
 import com.google.samples.apps.topeka.model.Category
 import com.google.samples.apps.topeka.model.JsonAttributes
 import com.google.samples.apps.topeka.widget.TextSharedElementCallback
@@ -114,6 +122,8 @@ class QuizActivity : AppCompatActivity() {
                                 .alpha(1f)
                     }
                 })
+
+        if (!isLoggedIn()) requestLogin {}
     }
 
     @SuppressLint("NewApi")
@@ -186,6 +196,12 @@ class QuizActivity : AppCompatActivity() {
         setToolbarElevation(false)
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        onSmartLockResult(requestCode, resultCode, data,
+                success = {}, failure = { requestLogin {} })
+        super.onActivityResult(requestCode, resultCode, data)
+    }
+
     public override fun onSaveInstanceState(outState: Bundle) {
         outState.putBoolean(STATE_IS_PLAYING, quizFab?.visibility == View.GONE)
         super.onSaveInstanceState(outState)
@@ -218,7 +234,7 @@ class QuizActivity : AppCompatActivity() {
                     override fun onAnimationEnd(view: View?) {
                         if (isFinishing ||
                                 ApiLevelHelper.isAtLeast(Build.VERSION_CODES.JELLY_BEAN_MR1) &&
-                                        isDestroyed) return
+                                isDestroyed) return
                         super@QuizActivity.onBackPressed()
                     }
                 })
@@ -321,49 +337,50 @@ class QuizActivity : AppCompatActivity() {
         setResult(R.id.solved, Intent().apply { putExtra(JsonAttributes.ID, category.id) })
     }
 
-    private val solvedStateListener get() = object : QuizFragment.SolvedStateListener {
-        override fun onCategorySolved() {
-            setResultSolved()
-            setToolbarElevation(true)
-            displayDoneFab()
-        }
+    private val solvedStateListener
+        get() = object : QuizFragment.SolvedStateListener {
+            override fun onCategorySolved() {
+                setResultSolved()
+                setToolbarElevation(true)
+                displayDoneFab()
+            }
 
-        /*
-        * We're re-using the already existing fab and give it some
-        * new values. This has to run delayed due to the queued animation
-        * to hide the fab initially.
-        */
-        private fun displayDoneFab() {
-            with(circularReveal) {
-                if (isRunning) {
-                    addListener(object : AnimatorListenerAdapter() {
-                        override fun onAnimationEnd(animation: Animator) {
-                            showQuizFabWithDoneIcon()
-                            removeListener(this)
-                        }
-                    })
-                } else {
-                    showQuizFabWithDoneIcon()
+            /*
+            * We're re-using the already existing fab and give it some
+            * new values. This has to run delayed due to the queued animation
+            * to hide the fab initially.
+            */
+            private fun displayDoneFab() {
+                with(circularReveal) {
+                    if (isRunning) {
+                        addListener(object : AnimatorListenerAdapter() {
+                            override fun onAnimationEnd(animation: Animator) {
+                                showQuizFabWithDoneIcon()
+                                removeListener(this)
+                            }
+                        })
+                    } else {
+                        showQuizFabWithDoneIcon()
+                    }
                 }
             }
-        }
 
-        private fun showQuizFabWithDoneIcon() {
-            with(quizFab ?: return) {
-                setImageResource(R.drawable.ic_tick)
-                id = R.id.quiz_done
-                visibility = View.VISIBLE
-                scaleX = 0f
-                scaleY = 0f
+            private fun showQuizFabWithDoneIcon() {
+                with(quizFab ?: return) {
+                    setImageResource(R.drawable.ic_tick)
+                    id = R.id.quiz_done
+                    visibility = View.VISIBLE
+                    scaleX = 0f
+                    scaleY = 0f
+                }
+                ViewCompat.animate(quizFab)
+                        .scaleX(1f)
+                        .scaleY(1f)
+                        .setInterpolator(interpolator)
+                        .setListener(null)
+                        .start()
             }
-            ViewCompat.animate(quizFab)
-                    .scaleX(1f)
-                    .scaleY(1f)
-                    .setInterpolator(interpolator)
-                    .setListener(null)
-                    .start()
         }
-    }
 
     private fun submitAnswer() {
         if (!countingIdlingResource.isIdleNow) countingIdlingResource.decrement()

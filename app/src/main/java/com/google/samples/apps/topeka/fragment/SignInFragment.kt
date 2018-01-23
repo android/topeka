@@ -16,9 +16,8 @@
 
 package com.google.samples.apps.topeka.fragment
 
-import android.annotation.SuppressLint
 import android.annotation.TargetApi
-import android.content.Context
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
@@ -30,6 +29,7 @@ import android.support.v4.view.animation.FastOutSlowInInterpolator
 import android.text.Editable
 import android.text.TextWatcher
 import android.transition.Transition
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -38,7 +38,15 @@ import android.widget.EditText
 import android.widget.GridView
 import com.google.samples.apps.topeka.R
 import com.google.samples.apps.topeka.adapter.AvatarAdapter
-import com.google.samples.apps.topeka.helper.*
+import com.google.samples.apps.topeka.helper.ActivityLaunchHelper
+import com.google.samples.apps.topeka.helper.ApiLevelHelper
+import com.google.samples.apps.topeka.helper.DefaultLogin
+import com.google.samples.apps.topeka.helper.TAG
+import com.google.samples.apps.topeka.helper.TransitionHelper
+import com.google.samples.apps.topeka.helper.isLoggedIn
+import com.google.samples.apps.topeka.helper.login
+import com.google.samples.apps.topeka.helper.onLayoutChange
+import com.google.samples.apps.topeka.helper.onSmartLockResult
 import com.google.samples.apps.topeka.model.Avatar
 import com.google.samples.apps.topeka.model.Player
 import com.google.samples.apps.topeka.widget.TextWatcherAdapter
@@ -54,10 +62,10 @@ class SignInFragment : Fragment() {
     private var doneFab: FloatingActionButton? = null
     private var avatarGrid: GridView? = null
 
-    private var edit: Boolean = false
+    private val edit by lazy { arguments?.getBoolean(ARG_EDIT, false) ?: false }
 
     private var selectedAvatarView: View? = null
-    private lateinit var player: Player
+    private var player: Player? = null
     private var selectedAvatar: Avatar? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -67,12 +75,65 @@ class SignInFragment : Fragment() {
                 selectedAvatar = Avatar.values()[avatarIndex]
             }
         }
+
+        activity?.run {
+            if (isLoggedIn()) {
+                navigateToCategoryActivity()
+            } else {
+                login.loginPlayer(this, ::onSuccessfulLogin)
+            }
+        }
         super.onCreate(savedInstanceState)
     }
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        player = context.getPlayer()
+    /**
+     * Called when logged in successfully.
+     */
+    private fun onSuccessfulLogin(player: Player) {
+        if (login != DefaultLogin) return
+        this.player = player
+        if (edit) {
+            with(player) {
+                firstNameView?.setText(player.firstName)
+                lastInitialView?.run {
+                    setText(player.lastInitial)
+                    requestFocus()
+                    setSelection(length())
+                }
+                this@SignInFragment.player = player.also {
+                    if (activity != null)
+                        login.savePlayer(activity!!, this, { selectAvatar(it.avatar!!) })
+                }
+            }
+        } else {
+            navigateToCategoryActivity()
+        }
+    }
+
+    private fun navigateToCategoryActivity() {
+        activity?.run {
+            ActivityLaunchHelper.launchCategorySelection(this)
+            supportFinishAfterTransition()
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        activity?.onSmartLockResult(
+                requestCode,
+                resultCode,
+                data,
+                success = {
+                    player = it
+                    initContents()
+                    navigateToCategoryActivity()
+                },
+                failure = {
+                    activity?.run {
+                        login.loginPlayer(this, ::onSuccessfulLogin)
+                    }
+                }
+        )
+        super.onActivityResult(requestCode, resultCode, data)
     }
 
     override fun onCreateView(inflater: LayoutInflater,
@@ -86,10 +147,10 @@ class SignInFragment : Fragment() {
                     selectedAvatarView = view
                     selectedAvatar = Avatar.values()[position]
                     // showing the floating action button if input data is valid
-                    if (isInputDataValid()) doneFab?.show()
+                    showFab()
                 }
                 numColumns = calculateSpanCount()
-                selectedAvatar?.let { setItemChecked(it.ordinal, true) }
+                selectedAvatar?.run { selectAvatar(this) }
             }
         }
         return contentView
@@ -117,27 +178,21 @@ class SignInFragment : Fragment() {
         doneFab = view.findViewById<FloatingActionButton>(R.id.done)
         avatarGrid = view.findViewById<GridView>(R.id.avatars)
 
-        checkIsInEditMode()
-
-        if (edit || !player.valid()) {
-            view.findViewById<View>(R.id.empty).visibility = View.GONE
-            view.findViewById<View>(R.id.content).visibility = View.VISIBLE
+        if (edit || (player != null && player!!.valid())) {
             initContentViews()
             initContents()
-        } else {
-            activity?.run {
-                ActivityLaunchHelper.launchCategorySelection(this)
-                finish()
-            }
         }
+        hideEmptyView()
         super.onViewCreated(view, savedInstanceState)
     }
 
-    private fun checkIsInEditMode() {
-        edit = arguments?.getBoolean(ARG_EDIT, false) ?: false
+    private fun hideEmptyView() {
+        view?.run {
+            findViewById<View>(R.id.empty).visibility = View.GONE
+            findViewById<View>(R.id.content).visibility = View.VISIBLE
+        }
     }
 
-    @SuppressLint("NewApi")
     private fun initContentViews() {
         val textWatcher = object : TextWatcher by TextWatcherAdapter {
 
@@ -158,21 +213,29 @@ class SignInFragment : Fragment() {
         lastInitialView?.addTextChangedListener(textWatcher)
         doneFab?.setOnClickListener {
             if (it.id == R.id.done) {
-                player = Player(firstName = firstNameView?.text?.toString(),
-                        lastInitial = lastInitialView?.text?.toString(),
-                        avatar = selectedAvatar)
-                activity?.savePlayer(player)
-                removeDoneFab(Runnable {
-                    performSignInWithTransition(selectedAvatarView ?:
-                            avatarGrid?.getChildAt(selectedAvatar!!.ordinal))
-                })
-            } else throw UnsupportedOperationException(
-                    "The onClick method has not been implemented for ${resources
-                            .getResourceEntryName(it.id)}")
+                val first = firstNameView?.text?.toString()
+                val last = lastInitialView?.text?.toString()
+                activity?.run {
+                    val toSave = player?.apply {
+                        // either update the existing player object
+                        firstName = first
+                        lastInitial = last
+                        avatar = selectedAvatar
+                    } ?: Player(first, last, selectedAvatar) /* or create a new one */
+
+                    login.savePlayer(this, toSave) {
+                        Log.d(TAG, "Saving login info successful.")
+                    }
+                }
+            }
+            removeDoneFab {
+                performSignInWithTransition(selectedAvatarView
+                        ?: avatarGrid?.getChildAt(selectedAvatar!!.ordinal))
+            }
         }
     }
 
-    private fun removeDoneFab(endAction: Runnable) {
+    private fun removeDoneFab(endAction: () -> Unit) {
         ViewCompat.animate(doneFab)
                 .scaleX(0f)
                 .scaleY(0f)
@@ -182,12 +245,11 @@ class SignInFragment : Fragment() {
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    private fun performSignInWithTransition(v: View?) {
+    private fun performSignInWithTransition(v: View? = null) {
         if (v == null || ApiLevelHelper.isLowerThan(Build.VERSION_CODES.LOLLIPOP)) {
             // Don't run a transition if the passed view is null
             activity?.run {
-                ActivityLaunchHelper.launchCategorySelection(this)
-                finish()
+                navigateToCategoryActivity()
             }
             return
         }
@@ -210,21 +272,34 @@ class SignInFragment : Fragment() {
     }
 
     private fun initContents() {
-        with(player) {
+        player?.run {
             valid().let {
                 firstNameView?.setText(firstName)
                 lastInitialView?.setText(lastInitial)
-                selectedAvatar = avatar
+                avatar?.run { selectAvatar(this) }
             }
         }
     }
 
     private fun isAvatarSelected() = selectedAvatarView != null || selectedAvatar != null
 
+    private fun selectAvatar(avatar: Avatar) {
+        selectedAvatar = avatar
+        avatarGrid?.run {
+            requestFocusFromTouch()
+            setItemChecked(avatar.ordinal, true)
+        }
+        showFab()
+    }
+
+    private fun showFab() {
+        if (isInputDataValid()) doneFab?.show()
+    }
+
     private fun isInputDataValid() =
             firstNameView?.text?.isNotEmpty() == true &&
-                    lastInitialView?.text?.isNotEmpty() == true
-
+                    lastInitialView?.text?.isNotEmpty() == true &&
+                    selectedAvatar != null
 
     companion object {
 

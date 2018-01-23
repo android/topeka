@@ -30,14 +30,16 @@ import android.support.test.runner.AndroidJUnit4
 import android.view.View
 import com.google.samples.apps.topeka.R
 import com.google.samples.apps.topeka.SolveQuizUtil
+import com.google.samples.apps.topeka.TestLogin
 import com.google.samples.apps.topeka.activity.QuizActivity
 import com.google.samples.apps.topeka.activity.countingIdlingResource
 import com.google.samples.apps.topeka.helper.database
-import com.google.samples.apps.topeka.helper.savePlayer
-import com.google.samples.apps.topeka.helper.signOut
+import com.google.samples.apps.topeka.helper.login
+import com.google.samples.apps.topeka.helper.logout
+import com.google.samples.apps.topeka.helper.storePlayerLocally
 import com.google.samples.apps.topeka.model.Avatar
-import com.google.samples.apps.topeka.model.Player
 import com.google.samples.apps.topeka.model.Category
+import com.google.samples.apps.topeka.model.Player
 import org.hamcrest.Matchers.allOf
 import org.junit.After
 import org.junit.Before
@@ -56,9 +58,11 @@ class BaseQuizActivityTest {
     val activityRule @Rule get() = object :
             ActivityTestRule<QuizActivity>(QuizActivity::class.java) {
         override fun beforeActivityLaunched() {
+            login = TestLogin
             with(InstrumentationRegistry.getTargetContext()) {
-                signOut()
-                savePlayer(Player("Zaphod", "B", Avatar.FIVE))
+                logout()
+                // Circumventing SmartLock loginPlayer at this point.
+                storePlayerLocally(Player("Zaphod", "B", Avatar.FIVE))
             }
         }
 

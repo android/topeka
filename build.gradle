@@ -46,6 +46,7 @@ ext {
     minSdk = 21
 
     supportLibVersion = "27.1.1"
+    playServicesAuthVersion = "11.8.0"
     espressoVersion = "3.0.1"
     androidTestVersion = "0.5"
     hamcrestVersion = "1.3"

@@ -28,7 +28,17 @@ import android.view.View
 import android.widget.TextView
 import com.google.samples.apps.topeka.R
 import com.google.samples.apps.topeka.fragment.CategorySelectionFragment
-import com.google.samples.apps.topeka.helper.*
+import com.google.samples.apps.topeka.helper.ActivityLaunchHelper
+import com.google.samples.apps.topeka.helper.ApiLevelHelper
+import com.google.samples.apps.topeka.helper.REQUEST_LOGIN
+import com.google.samples.apps.topeka.helper.REQUEST_SAVE
+import com.google.samples.apps.topeka.helper.database
+import com.google.samples.apps.topeka.helper.findFragmentById
+import com.google.samples.apps.topeka.helper.logout
+import com.google.samples.apps.topeka.helper.onSmartLockResult
+import com.google.samples.apps.topeka.helper.replaceFragment
+import com.google.samples.apps.topeka.helper.requestLogin
+import com.google.samples.apps.topeka.model.Player
 import com.google.samples.apps.topeka.widget.AvatarView
 
 class CategorySelectionActivity : AppCompatActivity() {
@@ -36,9 +46,7 @@ class CategorySelectionActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_category_selection)
-        var player = getPlayer()
-        findViewById<TextView>(R.id.title).text = player.toString()
-        player.avatar?.run { findViewById<AvatarView>(R.id.avatar).setAvatar(this) }
+        initializePlayer()
 
         setUpToolbar()
         if (savedInstanceState == null) {
@@ -48,6 +56,13 @@ class CategorySelectionActivity : AppCompatActivity() {
         }
         supportPostponeEnterTransition()
     }
+
+    private fun updatePlayerViews(player: Player) {
+        findViewById<TextView>(R.id.title).setText(player.toString())
+        player.avatar?.run { findViewById<AvatarView>(R.id.avatar).setAvatar(this) }
+    }
+
+    private fun initializePlayer() = requestLogin { updatePlayerViews(it) }
 
     private fun setUpToolbar() {
         setSupportActionBar(findViewById(R.id.toolbar_player))
@@ -76,10 +91,21 @@ class CategorySelectionActivity : AppCompatActivity() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        data?.let {
-            findFragmentById(R.id.category_container)?.run {
-                onActivityResult(requestCode, resultCode, data)
+        if (requestCode == CategorySelectionFragment.REQUEST_CATEGORY) {
+            data?.let {
+                findFragmentById(R.id.category_container)?.run {
+                    onActivityResult(requestCode, resultCode, data)
+                }
             }
+        } else if (requestCode == REQUEST_LOGIN || requestCode == REQUEST_SAVE) {
+            onSmartLockResult(
+                    requestCode,
+                    resultCode,
+                    data,
+                    success = { },
+                    failure = { requestLogin { updatePlayerViews(it) } })
+        } else {
+            super.onActivityResult(requestCode, resultCode, data)
         }
     }
 
@@ -92,14 +118,13 @@ class CategorySelectionActivity : AppCompatActivity() {
 
     @SuppressLint("NewApi")
     private fun handleSignOut() {
-        signOut()
-        database().reset()
         if (ApiLevelHelper.isAtLeast(Build.VERSION_CODES.LOLLIPOP)) {
             window.exitTransition = TransitionInflater.from(this)
                     .inflateTransition(R.transition.category_enter)
         }
+        logout()
         ActivityLaunchHelper.launchSignIn(this, true)
-        finish()
+        supportFinishAfterTransition()
     }
 }
 

@@ -101,7 +101,7 @@ class CategorySelectionFragment : Fragment() {
 
     companion object {
 
-        private const val REQUEST_CATEGORY = 0x2300
+        internal const val REQUEST_CATEGORY = 0x2300
     }
 
 }

@@ -36,7 +36,8 @@ android {
     }
 
     packagingOptions {
-        exclude 'LICENSE.txt'
+        pickFirst 'LICENSE.txt'
+        pickFirst 'protobuf.meta'
     }
 
     splits {
@@ -52,6 +53,8 @@ dependencies {
     implementation "com.android.support:design:$supportLibVersion"
     implementation "com.android.support:recyclerview-v7:$supportLibVersion"
     implementation "com.android.support.test.espresso:espresso-idling-resource:$espressoVersion"
+
+    implementation "com.google.android.gms:play-services-auth:$playServicesAuthVersion"
 
     testImplementation "junit:junit:$junitVersion"
 
