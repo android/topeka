@@ -33,11 +33,7 @@ import android.widget.TextView
 import com.google.samples.apps.topeka.R
 import com.google.samples.apps.topeka.adapter.QuizAdapter
 import com.google.samples.apps.topeka.adapter.ScoreAdapter
-import com.google.samples.apps.topeka.helper.ApiLevelHelper
-import com.google.samples.apps.topeka.helper.database
-import com.google.samples.apps.topeka.helper.getPlayer
-import com.google.samples.apps.topeka.helper.inflate
-import com.google.samples.apps.topeka.helper.onLayoutChange
+import com.google.samples.apps.topeka.helper.*
 import com.google.samples.apps.topeka.model.Category
 import com.google.samples.apps.topeka.widget.AvatarView
 import com.google.samples.apps.topeka.widget.quiz.AbsQuizView
@@ -48,12 +44,12 @@ import com.google.samples.apps.topeka.widget.quiz.AbsQuizView
 class QuizFragment : Fragment() {
 
     private val category by lazy(LazyThreadSafetyMode.NONE) {
-        val categoryId = arguments.getString(Category.TAG)
-        activity.database().getCategoryWith(categoryId)
+        val categoryId = arguments!!.getString(Category.TAG)
+        activity!!.database().getCategoryWith(categoryId)
     }
 
-    private val quizAdapter by lazy(LazyThreadSafetyMode.NONE) { QuizAdapter(context, category) }
-    val scoreAdapter by lazy(LazyThreadSafetyMode.NONE) { ScoreAdapter(category, context) }
+    private val quizAdapter by lazy(LazyThreadSafetyMode.NONE) { QuizAdapter(this.context!!, category) }
+    val scoreAdapter by lazy(LazyThreadSafetyMode.NONE) { ScoreAdapter(category, this.context!!) }
 
     val quizView by lazy(LazyThreadSafetyMode.NONE) {
         view?.findViewById<AdapterViewAnimator>(R.id.quiz_view)
@@ -69,9 +65,7 @@ class QuizFragment : Fragment() {
     }
     private var solvedStateListener: SolvedStateListener? = null
 
-    override fun onCreateView(inflater: LayoutInflater?,
-                              container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Create a themed Context and custom LayoutInflater
         // to get custom themed views in this Fragment.
         val context = ContextThemeWrapper(activity, category.theme.styleId)
@@ -82,7 +76,7 @@ class QuizFragment : Fragment() {
         setProgress(category.firstUnsolvedQuizPosition)
         decideOnViewToDisplay()
         setQuizViewAnimations()
-        setAvatarDrawable(view.findViewById<AvatarView>(R.id.avatar))
+        setAvatarDrawable(view.findViewById(R.id.avatar))
         super.onViewCreated(view, savedInstanceState)
     }
 
@@ -117,7 +111,7 @@ class QuizFragment : Fragment() {
     }
 
     private fun setAvatarDrawable(avatarView: AvatarView) {
-        val player = activity.getPlayer()
+        val player = activity!!.getPlayer()
         player.valid().let {
             avatarView.setAvatar(player.avatar!!.drawableId)
             with(ViewCompat.animate(avatarView)) {
@@ -138,12 +132,12 @@ class QuizFragment : Fragment() {
         }
     }
 
-    override fun onSaveInstanceState(outState: Bundle?) {
+    override fun onSaveInstanceState(outState: Bundle) {
         val focusedChild = quizView?.focusedChild
         if (focusedChild is ViewGroup) {
             val currentView = focusedChild.getChildAt(0)
             if (currentView is AbsQuizView<*>) {
-                outState?.putBundle(KEY_USER_INPUT, currentView.userInput)
+                outState.putBundle(KEY_USER_INPUT, currentView.userInput)
             }
         }
         super.onSaveInstanceState(outState)
@@ -180,7 +174,7 @@ class QuizFragment : Fragment() {
             setProgress(nextItem)
             if (nextItem < it.adapter.count) {
                 it.showNext()
-                activity.database().updateCategory(category)
+                activity!!.database().updateCategory(category)
                 return true
             }
         }
@@ -190,7 +184,7 @@ class QuizFragment : Fragment() {
 
     private fun markCategorySolved() {
         category.solved = true
-        activity.database().updateCategory(category)
+        activity!!.database().updateCategory(category)
     }
 
     fun hasSolvedStateListener() = solvedStateListener != null
@@ -213,7 +207,7 @@ class QuizFragment : Fragment() {
 
     companion object {
 
-        private val KEY_USER_INPUT = "USER_INPUT"
+        private const val KEY_USER_INPUT = "USER_INPUT"
 
         fun newInstance(categoryId: String,
                         listener: SolvedStateListener?
