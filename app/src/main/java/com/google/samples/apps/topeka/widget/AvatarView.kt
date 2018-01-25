@@ -95,7 +95,7 @@ class AvatarView @JvmOverloads constructor(
         super.onDraw(canvas)
         if (isChecked) {
             ContextCompat.getDrawable(context, R.drawable.selector_avatar).apply {
-                setBounds(0, 0, width, height)
+                this!!.setBounds(0, 0, width, height)
                 draw(canvas)
             }
         }

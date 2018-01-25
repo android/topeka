@@ -46,7 +46,7 @@ class CategoryAdapter(
     private var categories = activity.database().getCategories(fromDatabase = true)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =
-            ViewHolder(DataBindingUtil.inflate<ItemCategoryBinding>(layoutInflater,
+            ViewHolder(DataBindingUtil.inflate(layoutInflater,
                     R.layout.item_category,
                     parent,
                     false))
@@ -55,10 +55,10 @@ class CategoryAdapter(
         with(holder.binding) {
             category = categories[position]
             executePendingBindings()
-            setCategoryIcon(category, categoryIcon)
+            setCategoryIcon(category!!, categoryIcon)
             with(categoryTitle) {
-                setTextColor(getColor(category.theme.textPrimaryColor))
-                setBackgroundColor(getColor(category.theme.primaryColor))
+                setTextColor(getColor(category!!.theme.textPrimaryColor))
+                setBackgroundColor(getColor(category!!.theme.primaryColor))
             }
         }
         with(holder.itemView) {
@@ -129,18 +129,18 @@ class CategoryAdapter(
      * @return The tinted resource
      */
     private fun loadTintedCategoryDrawable(category: Category, @DrawableRes imageRes: Int) =
-            getTintentDrawable(imageRes, category.theme.primaryColor)
+            getIntentDrawable(imageRes, category.theme.primaryColor)
 
     /**
      * Loads and tints a check mark.
 
      * @return The tinted check mark
      */
-    private fun loadTintedDoneDrawable() = getTintentDrawable(R.drawable.ic_tick)
+    private fun loadTintedDoneDrawable() = getIntentDrawable(R.drawable.ic_tick)
 
-    private fun getTintentDrawable(@DrawableRes imageRes: Int,
-                                   @ColorRes tintColorRes: Int = android.R.color.white) =
-            ContextCompat.getDrawable(activity, imageRes).mutate().apply {
+    private fun getIntentDrawable(@DrawableRes imageRes: Int,
+                                  @ColorRes tintColorRes: Int = android.R.color.white) =
+            ContextCompat.getDrawable(activity, imageRes)!!.mutate().apply {
                 wrapAndTint(this, tintColorRes)
             }
 

@@ -21,7 +21,6 @@ import android.support.annotation.ColorRes
 import android.support.annotation.DrawableRes
 import android.support.v4.content.ContextCompat
 import android.support.v4.graphics.drawable.DrawableCompat
-import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AbsListView
@@ -79,7 +78,7 @@ class ScoreAdapter(private val category: Category, private val context: Context)
      * @return The tinted drawable.
      */
     private fun loadAndTint(@DrawableRes drawableId: Int, @ColorRes tintColor: Int) =
-            DrawableCompat.wrap(ContextCompat.getDrawable(context, drawableId))
+            DrawableCompat.wrap(ContextCompat.getDrawable(context, drawableId)!!)
                     .apply { DrawableCompat.setTint(this, ContextCompat.getColor(context, tintColor)) }
 
     private fun createView(parent: ViewGroup) =
