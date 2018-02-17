@@ -55,10 +55,10 @@ class CategoryAdapter(
         with(holder.binding) {
             category = categories[position]
             executePendingBindings()
-            setCategoryIcon(category, categoryIcon)
+            setCategoryIcon(category!!, categoryIcon)
             with(categoryTitle) {
-                setTextColor(getColor(category.theme.textPrimaryColor))
-                setBackgroundColor(getColor(category.theme.primaryColor))
+                setTextColor(getColor(category!!.theme.textPrimaryColor))
+                setBackgroundColor(getColor(category!!.theme.primaryColor))
             }
         }
         with(holder.itemView) {
