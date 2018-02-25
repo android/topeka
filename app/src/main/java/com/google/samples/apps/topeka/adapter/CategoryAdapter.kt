@@ -129,16 +129,16 @@ class CategoryAdapter(
      * @return The tinted resource
      */
     private fun loadTintedCategoryDrawable(category: Category, @DrawableRes imageRes: Int) =
-            getIntentDrawable(imageRes, category.theme.primaryColor)
+            getTintedDrawable(imageRes, category.theme.primaryColor)
 
     /**
      * Loads and tints a check mark.
 
      * @return The tinted check mark
      */
-    private fun loadTintedDoneDrawable() = getIntentDrawable(R.drawable.ic_tick)
+    private fun loadTintedDoneDrawable() = getTintedDrawable(R.drawable.ic_tick)
 
-    private fun getIntentDrawable(@DrawableRes imageRes: Int,
+    private fun getTintedDrawable(@DrawableRes imageRes: Int,
                                   @ColorRes tintColorRes: Int = android.R.color.white) =
             ContextCompat.getDrawable(activity, imageRes)!!.mutate().apply {
                 wrapAndTint(this, tintColorRes)
