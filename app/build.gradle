@@ -19,8 +19,8 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 
 android {
-    buildToolsVersion "26.0.1"
-    compileSdkVersion 26
+    buildToolsVersion '27.0.3'
+    compileSdkVersion 27
 
     dataBinding {
         enabled = true
@@ -29,7 +29,7 @@ android {
     defaultConfig {
         applicationId "com.google.samples.apps.topeka"
         minSdkVersion 14
-        targetSdkVersion 26
+        targetSdkVersion 27
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
@@ -53,15 +53,16 @@ android {
 }
 
 ext {
-    supportLibVersion = "26.0.1"
-    espressoVersion = "2.2.2"
-    androidTestVersion = "0.5"
-    hamcrestVersion = "1.3"
-    junitVersion = "4.12"
+    supportLibVersion = '27.0.2'
+    espressoVersion = '3.0.1'
+    androidTestVersion = '1.0.1'
+    hamcrestVersion = '1.3'
+    junitVersion = '4.12'
+    kaptVersion = '3.0.1'
 }
 
 dependencies {
-    kapt "com.android.databinding:compiler:2.3.2"
+    kapt "com.android.databinding:compiler:${kaptVersion}"
 
     implementation "com.android.support:appcompat-v7:${supportLibVersion}"
     implementation "com.android.support:cardview-v7:${supportLibVersion}"

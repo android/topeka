@@ -39,11 +39,7 @@ import android.widget.GridView
 import com.google.samples.apps.topeka.R
 import com.google.samples.apps.topeka.activity.CategorySelectionActivity
 import com.google.samples.apps.topeka.adapter.AvatarAdapter
-import com.google.samples.apps.topeka.helper.ApiLevelHelper
-import com.google.samples.apps.topeka.helper.TransitionHelper
-import com.google.samples.apps.topeka.helper.getPlayer
-import com.google.samples.apps.topeka.helper.onLayoutChange
-import com.google.samples.apps.topeka.helper.savePlayer
+import com.google.samples.apps.topeka.helper.*
 import com.google.samples.apps.topeka.model.Avatar
 import com.google.samples.apps.topeka.model.Player
 import com.google.samples.apps.topeka.widget.TextWatcherAdapter
@@ -77,7 +73,7 @@ class SignInFragment : Fragment() {
 
     override fun onAttach(context: Context?) {
         super.onAttach(context)
-        player = activity.getPlayer()
+        player = activity!!.getPlayer()
     }
 
     override fun onCreateView(inflater: LayoutInflater,
@@ -86,9 +82,8 @@ class SignInFragment : Fragment() {
         val contentView = inflater.inflate(R.layout.fragment_sign_in, container, false)
         contentView.onLayoutChange {
             avatarGrid?.apply {
-                adapter = AvatarAdapter(activity)
-                onItemClickListener = AdapterView.OnItemClickListener {
-                    _, view, position, _ ->
+                adapter = AvatarAdapter(context)
+                onItemClickListener = AdapterView.OnItemClickListener { _, view, position, _ ->
                     selectedAvatarView = view
                     selectedAvatar = Avatar.values()[position]
                     // showing the floating action button if input data is valid
@@ -112,16 +107,16 @@ class SignInFragment : Fragment() {
         return (avatarGrid?.width ?: 0) / (avatarSize + avatarPadding)
     }
 
-    override fun onSaveInstanceState(outState: Bundle?) {
-        outState?.putInt(KEY_SELECTED_AVATAR_INDEX, (avatarGrid?.checkedItemPosition ?: 0))
+    override fun onSaveInstanceState(outState: Bundle) {
+        outState.putInt(KEY_SELECTED_AVATAR_INDEX, (avatarGrid?.checkedItemPosition ?: 0))
         super.onSaveInstanceState(outState)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        firstNameView = view.findViewById<EditText>(R.id.first_name)
-        lastInitialView = view.findViewById<EditText>(R.id.last_initial)
-        doneFab = view.findViewById<FloatingActionButton>(R.id.done)
-        avatarGrid = view.findViewById<GridView>(R.id.avatars)
+        firstNameView = view.findViewById(R.id.first_name)
+        lastInitialView = view.findViewById(R.id.last_initial)
+        doneFab = view.findViewById(R.id.done)
+        avatarGrid = view.findViewById(R.id.avatars)
 
         checkIsInEditMode()
 
@@ -131,17 +126,17 @@ class SignInFragment : Fragment() {
             initContentViews()
             initContents()
         } else {
-            CategorySelectionActivity.start(activity, player)
-            activity.finish()
+            CategorySelectionActivity.start(this.activity!!, player)
+            activity!!.finish()
         }
         super.onViewCreated(view, savedInstanceState)
     }
 
     private fun checkIsInEditMode() {
-        if (arguments == null) {
-            edit = false
+        edit = if (arguments == null) {
+            false
         } else {
-            edit = arguments.getBoolean(ARG_EDIT, false)
+            arguments!!.getBoolean(ARG_EDIT, false)
         }
     }
 
@@ -169,10 +164,10 @@ class SignInFragment : Fragment() {
                 player = Player(firstName = firstNameView?.text?.toString(),
                         lastInitial = lastInitialView?.text?.toString(),
                         avatar = selectedAvatar)
-                activity.savePlayer(player)
+                activity!!.savePlayer(player)
                 removeDoneFab(Runnable {
-                    performSignInWithTransition(selectedAvatarView ?:
-                            avatarGrid?.getChildAt(selectedAvatar!!.ordinal))
+                    performSignInWithTransition(selectedAvatarView
+                            ?: avatarGrid?.getChildAt(selectedAvatar!!.ordinal))
                 })
             } else throw UnsupportedOperationException(
                     "The onClick method has not been implemented for ${resources
@@ -194,22 +189,22 @@ class SignInFragment : Fragment() {
         if (v == null || ApiLevelHelper.isLowerThan(Build.VERSION_CODES.LOLLIPOP)) {
             // Don't run a transition if the passed view is null
             with(activity) {
-                CategorySelectionActivity.start(this, player)
+                CategorySelectionActivity.start(this!!, player)
                 finish()
             }
             return
         }
 
         if (ApiLevelHelper.isAtLeast(Build.VERSION_CODES.LOLLIPOP)) {
-            activity.window.sharedElementExitTransition.addListener(object :
+            activity!!.window.sharedElementExitTransition.addListener(object :
                     Transition.TransitionListener by TransitionListenerAdapter {
-                override fun onTransitionEnd(transition: Transition) = activity.finish()
+                override fun onTransitionEnd(transition: Transition) = activity!!.finish()
             })
 
-            val pairs = TransitionHelper.createSafeTransitionParticipants(activity, true,
-                    Pair(v, activity.getString(R.string.transition_avatar)))
-            val options = ActivityOptionsCompat.makeSceneTransitionAnimation(activity, *pairs)
-            CategorySelectionActivity.start(activity, player, options)
+            val pairs = TransitionHelper.createSafeTransitionParticipants(this.activity!!, true,
+                    Pair(v, activity!!.getString(R.string.transition_avatar)))
+            val options = ActivityOptionsCompat.makeSceneTransitionAnimation(this.activity!!, *pairs)
+            CategorySelectionActivity.start(this.activity!!, player, options)
         }
     }
 
