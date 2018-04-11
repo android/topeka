@@ -16,14 +16,9 @@
 
 package com.google.samples.apps.topeka.activity
 
-import android.animation.Animator
-import android.animation.AnimatorListenerAdapter
-import android.animation.AnimatorSet
-import android.animation.ArgbEvaluator
-import android.animation.ObjectAnimator
+import android.animation.*
 import android.annotation.SuppressLint
 import android.annotation.TargetApi
-import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Build
@@ -48,11 +43,7 @@ import android.widget.ListView
 import android.widget.TextView
 import com.google.samples.apps.topeka.R
 import com.google.samples.apps.topeka.fragment.QuizFragment
-import com.google.samples.apps.topeka.helper.ApiLevelHelper
-import com.google.samples.apps.topeka.helper.FOREGROUND_COLOR
-import com.google.samples.apps.topeka.helper.database
-import com.google.samples.apps.topeka.helper.findFragmentById
-import com.google.samples.apps.topeka.helper.findFragmentByTag
+import com.google.samples.apps.topeka.helper.*
 import com.google.samples.apps.topeka.model.Category
 import com.google.samples.apps.topeka.model.JsonAttributes
 import com.google.samples.apps.topeka.widget.TextSharedElementCallback
@@ -409,10 +400,5 @@ class QuizActivity : AppCompatActivity() {
         private val IMAGE_CATEGORY = "image_category_"
         private val STATE_IS_PLAYING = "isPlaying"
         private val FRAGMENT_TAG = "Quiz"
-
-        fun getStartIntent(context: Context, category: Category): Intent {
-            return Intent(context, QuizActivity::class.java)
-                    .apply { putExtra(Category.TAG, category.id) }
-        }
     }
 }

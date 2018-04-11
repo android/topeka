@@ -23,7 +23,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.0.1'
+        classpath 'com.android.tools.build:gradle:3.1.1'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
 
         // NOTE: Do not place your application dependencies here; they belong
@@ -40,11 +40,12 @@ allprojects {
 
 ext {
 
-    buildTools = "27.0.1"
+    buildTools = "27.0.3"
     compileSdk = 27
     targetSdk = 27
+    minSdk = 21
 
-    supportLibVersion = "27.0.2"
+    supportLibVersion = "27.1.1"
     espressoVersion = "3.0.1"
     androidTestVersion = "0.5"
     hamcrestVersion = "1.3"

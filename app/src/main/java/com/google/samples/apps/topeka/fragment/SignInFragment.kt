@@ -37,13 +37,8 @@ import android.widget.AdapterView
 import android.widget.EditText
 import android.widget.GridView
 import com.google.samples.apps.topeka.R
-import com.google.samples.apps.topeka.activity.CategorySelectionActivity
 import com.google.samples.apps.topeka.adapter.AvatarAdapter
-import com.google.samples.apps.topeka.helper.ApiLevelHelper
-import com.google.samples.apps.topeka.helper.TransitionHelper
-import com.google.samples.apps.topeka.helper.getPlayer
-import com.google.samples.apps.topeka.helper.onLayoutChange
-import com.google.samples.apps.topeka.helper.savePlayer
+import com.google.samples.apps.topeka.helper.*
 import com.google.samples.apps.topeka.model.Avatar
 import com.google.samples.apps.topeka.model.Player
 import com.google.samples.apps.topeka.widget.TextWatcherAdapter
@@ -131,7 +126,7 @@ class SignInFragment : Fragment() {
             initContents()
         } else {
             activity?.run {
-                CategorySelectionActivity.start(this, player)
+                ActivityLaunchHelper.launchCategorySelection(this)
                 finish()
             }
         }
@@ -191,7 +186,7 @@ class SignInFragment : Fragment() {
         if (v == null || ApiLevelHelper.isLowerThan(Build.VERSION_CODES.LOLLIPOP)) {
             // Don't run a transition if the passed view is null
             activity?.run {
-                CategorySelectionActivity.start(this, player)
+                ActivityLaunchHelper.launchCategorySelection(this)
                 finish()
             }
             return
@@ -209,7 +204,7 @@ class SignInFragment : Fragment() {
                 val pairs = TransitionHelper.createSafeTransitionParticipants(this, true,
                         Pair(v, getString(R.string.transition_avatar)))
                 val options = ActivityOptionsCompat.makeSceneTransitionAnimation(this, *pairs)
-                CategorySelectionActivity.start(this, player, options)
+                ActivityLaunchHelper.launchCategorySelection(this, options)
             }
         }
     }

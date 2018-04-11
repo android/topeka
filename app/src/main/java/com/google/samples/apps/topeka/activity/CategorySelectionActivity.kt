@@ -17,14 +17,9 @@
 package com.google.samples.apps.topeka.activity
 
 import android.annotation.SuppressLint
-import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.support.annotation.VisibleForTesting
-import android.support.v4.app.ActivityCompat
-import android.support.v4.app.ActivityOptionsCompat
 import android.support.v7.app.AppCompatActivity
 import android.transition.TransitionInflater
 import android.view.Menu
@@ -33,15 +28,7 @@ import android.view.View
 import android.widget.TextView
 import com.google.samples.apps.topeka.R
 import com.google.samples.apps.topeka.fragment.CategorySelectionFragment
-import com.google.samples.apps.topeka.helper.ApiLevelHelper
-import com.google.samples.apps.topeka.helper.database
-import com.google.samples.apps.topeka.helper.findFragmentById
-import com.google.samples.apps.topeka.helper.getPlayer
-import com.google.samples.apps.topeka.helper.isSignedIn
-import com.google.samples.apps.topeka.helper.replaceFragment
-import com.google.samples.apps.topeka.helper.savePlayer
-import com.google.samples.apps.topeka.helper.signOut
-import com.google.samples.apps.topeka.model.Player
+import com.google.samples.apps.topeka.helper.*
 import com.google.samples.apps.topeka.widget.AvatarView
 
 class CategorySelectionActivity : AppCompatActivity() {
@@ -49,14 +36,7 @@ class CategorySelectionActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_category_selection)
-        var player = intent.getParcelableExtra<Player>(EXTRA_PLAYER)
-        if (!isSignedIn()) {
-            if (player == null) {
-                player = getPlayer()
-            } else {
-                savePlayer(player)
-            }
-        }
+        var player = getPlayer()
         findViewById<TextView>(R.id.title).text = player.toString()
         player.avatar?.run { findViewById<AvatarView>(R.id.avatar).setAvatar(this) }
 
@@ -118,30 +98,8 @@ class CategorySelectionActivity : AppCompatActivity() {
             window.exitTransition = TransitionInflater.from(this)
                     .inflateTransition(R.transition.category_enter)
         }
-        SignInActivity.start(this)
+        ActivityLaunchHelper.launchSignIn(this, true)
         finish()
-    }
-
-    companion object {
-
-        private val EXTRA_PLAYER = "player"
-
-        fun start(activity: Activity, player: Player, options: ActivityOptionsCompat) {
-            val starter = getStartIntent(activity, player)
-            ActivityCompat.startActivity(activity, starter, options.toBundle())
-        }
-
-        fun start(context: Context, player: Player) {
-            val starter = getStartIntent(context, player)
-            context.startActivity(starter)
-        }
-
-        @VisibleForTesting
-        fun getStartIntent(context: Context, player: Player): Intent {
-            return Intent(context, CategorySelectionActivity::class.java).apply {
-                putExtra(EXTRA_PLAYER, player)
-            }
-        }
     }
 }
 

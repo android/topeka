@@ -22,6 +22,7 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.support.v4.app.ActivityCompat
 import android.support.v4.app.ActivityOptionsCompat
 import android.support.v4.app.Fragment
 import android.support.v4.util.Pair
@@ -30,10 +31,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
-
 import com.google.samples.apps.topeka.R
-import com.google.samples.apps.topeka.activity.QuizActivity
 import com.google.samples.apps.topeka.adapter.CategoryAdapter
+import com.google.samples.apps.topeka.helper.ActivityLaunchHelper
 import com.google.samples.apps.topeka.helper.TransitionHelper
 import com.google.samples.apps.topeka.helper.beforeDrawing
 import com.google.samples.apps.topeka.model.Category
@@ -92,8 +92,11 @@ class CategorySelectionFragment : Fragment() {
                 .toBundle()
 
         // Start the activity with the participants, animating from one to the other.
-        val startIntent = QuizActivity.getStartIntent(activity, category)
-        startActivityForResult(startIntent, REQUEST_CATEGORY, animationBundle)
+        val startIntent = ActivityLaunchHelper.quizIntent(category, activity)
+        ActivityCompat.startActivityForResult(activity,
+                startIntent,
+                REQUEST_CATEGORY,
+                animationBundle)
     }
 
     companion object {
