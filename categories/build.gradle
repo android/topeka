@@ -43,6 +43,26 @@ android {
         pickFirst 'LICENSE.txt'
         pickFirst 'protobuf.meta'
     }
+
+    flavorDimensions 'delivery'
+
+    productFlavors {
+        instant {
+            dimension 'delivery'
+            minSdkVersion rootProject.minSdkInstant
+        }
+        installed {
+            dimension 'delivery'
+        }
+    }
+
+    generatePureSplits true
+
+    splits {
+        density {
+            enable true
+        }
+    }
 }
 
 dependencies {

@@ -17,7 +17,9 @@
 apply plugin: 'com.android.instantapp'
 
 android {
-    defaultConfig {}
+    defaultConfig {
+        missingDimensionStrategy 'delivery', 'instant'
+    }
 }
 
 dependencies {
