@@ -20,7 +20,7 @@ android {
     compileSdkVersion rootProject.compileSdk
 
     defaultConfig {
-        targetSdkVersion rootProject.compileSdk
+        targetSdkVersion rootProject.targetSdk
         minSdkVersion rootProject.minSdk
         missingDimensionStrategy 'delivery', 'installed'
     }
