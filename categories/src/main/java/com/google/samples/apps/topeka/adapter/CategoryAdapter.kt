@@ -30,10 +30,12 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ImageView
 import android.widget.TextView
+import com.google.android.instantapps.InstantApps
 import com.google.samples.apps.topeka.categories.R
 import com.google.samples.apps.topeka.helper.ApiLevelHelper
 import com.google.samples.apps.topeka.helper.database
 import com.google.samples.apps.topeka.model.Category
+import java.time.Instant
 
 class CategoryAdapter(
         private val activity: Activity,
@@ -91,8 +93,13 @@ class CategoryAdapter(
     }
 
     private fun setCategoryIcon(category: Category, icon: ImageView) {
+        val packageName =
+                if (InstantApps.isInstantApp(activity))
+                    "${activity.packageName}.categories"
+                else activity.packageName
+
         val imageRes = resources.getIdentifier("icon_category_${category.id}",
-                "drawable", "${activity.packageName}.categories")
+                "drawable", packageName)
         if (category.solved) {
             icon.setImageDrawable(loadSolvedIcon(category, imageRes))
         } else {

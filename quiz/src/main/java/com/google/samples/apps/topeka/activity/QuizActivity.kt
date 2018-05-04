@@ -46,6 +46,7 @@ import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.ListView
 import android.widget.TextView
+import com.google.android.instantapps.InstantApps
 import com.google.samples.apps.topeka.fragment.QuizFragment
 import com.google.samples.apps.topeka.helper.ActivityLaunchHelper
 import com.google.samples.apps.topeka.helper.ApiLevelHelper
@@ -155,10 +156,15 @@ class QuizActivity : AppCompatActivity() {
     private fun initLayout(categoryId: String) {
         setContentView(R.layout.activity_quiz)
 
+        val packageName =
+                if (InstantApps.isInstantApp(this))
+                    "$packageName.quiz"
+                else packageName
+
         icon = (findViewById<ImageView>(R.id.icon)).apply {
             val resId = resources.getIdentifier("$IMAGE_CATEGORY$categoryId",
                     "drawable",
-                    "$packageName.quiz")
+                    packageName)
 
             setImageResource(resId)
             ViewCompat.animate(this)
