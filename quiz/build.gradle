@@ -18,7 +18,6 @@ apply plugin: 'com.android.feature'
 apply plugin: 'kotlin-android'
 
 android {
-    buildToolsVersion rootProject.buildTools
     compileSdkVersion rootProject.compileSdk
 
     defaultConfig {
@@ -31,11 +30,8 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled true
             signingConfig signingConfigs.debug
-            proguardFiles getDefaultProguardFile("proguard-android.txt"),
-                    "../instant/proguard.pro",
-                    "proguard.pro"
+            proguardFiles "../instant/proguard.pro", "proguard.pro"
         }
     }
 
@@ -62,6 +58,11 @@ android {
         density {
             enable true
         }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 }
 
