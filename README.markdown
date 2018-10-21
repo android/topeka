@@ -27,7 +27,7 @@ tests](http://google.github.io/android-testing-support-library) which can be
 executed with the `connectedAndroidTest` gradle task.
 
 You can read more about the project on the [Android Developers
-blog](http://android-developers.blogspot.co.uk/2015/06/more-material-design-with-topeka-for_16.html).
+blog](https://android-developers.googleblog.com/2015/06/more-material-design-with-topeka-for.html).
 
 ### Screenshots
 
