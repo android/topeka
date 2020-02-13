@@ -27,17 +27,17 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
-import android.support.annotation.RequiresApi
-import android.support.annotation.VisibleForTesting
-import android.support.design.widget.FloatingActionButton
-import android.support.test.espresso.idling.CountingIdlingResource
-import android.support.v4.app.ActivityCompat
-import android.support.v4.content.ContextCompat
-import android.support.v4.view.ViewCompat
-import android.support.v4.view.ViewPropertyAnimatorListenerAdapter
-import android.support.v4.view.animation.FastOutLinearInInterpolator
-import android.support.v4.view.animation.FastOutSlowInInterpolator
-import android.support.v7.app.AppCompatActivity
+import androidx.annotation.RequiresApi
+import androidx.annotation.VisibleForTesting
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import androidx.test.espresso.idling.CountingIdlingResource
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.ViewPropertyAnimatorListenerAdapter
+import androidx.interpolator.view.animation.FastOutLinearInInterpolator
+import androidx.interpolator.view.animation.FastOutSlowInInterpolator
+import androidx.appcompat.app.AppCompatActivity
 import android.util.Log
 import android.view.View
 import android.view.ViewAnimationUtils
@@ -132,7 +132,7 @@ class QuizActivity : AppCompatActivity() {
                                 sharedElements,
                                 sharedElementSnapshots)
                         // Make sure to perform this animation after the transition has ended.
-                        ViewCompat.animate(toolbarBack)
+                        ViewCompat.animate(toolbarBack!!)
                                 .setStartDelay(startDelay)
                                 .scaleX(1f)
                                 .scaleY(1f)
@@ -231,7 +231,7 @@ class QuizActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
 
-        ViewCompat.animate(toolbarBack)
+        ViewCompat.animate(toolbarBack!!)
                 .scaleX(0f)
                 .scaleY(0f)
                 .alpha(0f)
@@ -239,14 +239,14 @@ class QuizActivity : AppCompatActivity() {
                 .start()
 
         // Scale the icon and fab to 0 size before calling onBackPressed if it exists.
-        ViewCompat.animate(icon)
+        ViewCompat.animate(icon!!)
                 .scaleX(.7f)
                 .scaleY(.7f)
                 .alpha(0f)
                 .setInterpolator(interpolator)
                 .start()
 
-        ViewCompat.animate(quizFab)
+        ViewCompat.animate(quizFab!!)
                 .scaleX(0f)
                 .scaleY(0f)
                 .setInterpolator(interpolator)
@@ -267,7 +267,7 @@ class QuizActivity : AppCompatActivity() {
         initQuizFragment()
         supportFragmentManager
                 .beginTransaction()
-                .replace(R.id.quiz_fragment_container, quizFragment, FRAGMENT_TAG)
+                .replace(R.id.quiz_fragment_container, quizFragment!!, FRAGMENT_TAG)
                 .commit()
         val container = (findViewById<FrameLayout>(R.id.quiz_fragment_container)).apply {
             setBackgroundColor(ContextCompat.getColor(
@@ -395,7 +395,7 @@ class QuizActivity : AppCompatActivity() {
                     scaleX = 0f
                     scaleY = 0f
                 }
-                ViewCompat.animate(quizFab)
+                ViewCompat.animate(quizFab!!)
                         .scaleX(1f)
                         .scaleY(1f)
                         .setInterpolator(interpolator)

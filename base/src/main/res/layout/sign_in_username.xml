@@ -34,7 +34,7 @@
             android:clipToPadding="false"
             tools:ignore="UnusedAttribute,NewApi" />
 
-    <android.support.design.widget.TextInputLayout
+    <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:minHeight="?android:attr/actionBarSize"
@@ -51,9 +51,9 @@
                 android:imeOptions="actionNext"
                 android:inputType="textCapWords"
                 android:textSize="@dimen/size_edit_text" />
-    </android.support.design.widget.TextInputLayout>
+    </com.google.android.material.textfield.TextInputLayout>
 
-    <android.support.design.widget.TextInputLayout
+    <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:minHeight="?android:attr/actionBarSize"
@@ -71,5 +71,5 @@
                 android:inputType="textNoSuggestions|textCapWords"
                 android:maxLength="1"
                 android:textSize="@dimen/size_edit_text" />
-    </android.support.design.widget.TextInputLayout>
+    </com.google.android.material.textfield.TextInputLayout>
 </LinearLayout>

@@ -24,7 +24,7 @@ android {
         minSdkVersion rootProject.minSdk
         targetSdkVersion rootProject.targetSdk
         versionName "1.0"
-        testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
+        testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
     }
 
     buildTypes {
@@ -37,27 +37,26 @@ android {
 
 dependencies {
 
-    api "com.android.support:appcompat-v7:$supportLibVersion"
-    api "com.android.support:design:$supportLibVersion"
-    api "com.android.support:support-v4:$supportLibVersion"
+    api 'androidx.appcompat:appcompat:1.1.0'
+    api 'com.google.android.material:material:1.1.0'
+    api 'androidx.legacy:legacy-support-v4:1.0.0'
     api 'com.google.android.instantapps:instantapps:1.1.0'
     api "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
-    implementation "com.google.android.gms:play-services-auth:$playServicesAuthVersion"
+    implementation "com.google.android.gms:play-services-auth:17.0.0"
 
-    testImplementation "junit:junit:$junitVersion"
+    testImplementation "junit:junit:4.12"
 
-    androidTestImplementation("com.android.support.test.espresso:espresso-core:$espressoVersion") {
+    androidTestImplementation('androidx.test.espresso:espresso-core:3.2.0') {
         exclude module: "espresso-idling-resource"
     }
 
-    androidTestImplementation("com.android.support.test.espresso:espresso-contrib:$espressoVersion") {
+    androidTestImplementation('androidx.test.espresso:espresso-contrib:3.2.0') {
         exclude module: "espresso-core"
     }
 
-    androidTestImplementation "com.android.support.test:rules:$androidTestVersion"
-    androidTestImplementation "com.android.support.test:runner:$androidTestVersion"
-    androidTestImplementation "org.hamcrest:hamcrest-core:$hamcrestVersion"
-    androidTestImplementation "com.google.android.gms:play-services-auth:$playServicesAuthVersion"
-
+    androidTestImplementation 'androidx.test:rules:1.2.0'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    androidTestImplementation "com.google.android.gms:play-services-auth:17.0.0"
+    androidTestImplementation "org.hamcrest:hamcrest-core:1.3"
 }

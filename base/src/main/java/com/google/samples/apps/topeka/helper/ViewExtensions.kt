@@ -18,7 +18,7 @@ package com.google.samples.apps.topeka.helper
 
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.support.v4.view.ViewCompat
+import androidx.core.view.ViewCompat
 import android.transition.ChangeBounds
 import android.util.Property
 import android.util.TypedValue

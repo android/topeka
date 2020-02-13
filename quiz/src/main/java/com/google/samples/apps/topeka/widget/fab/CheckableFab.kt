@@ -17,7 +17,7 @@
 package com.google.samples.apps.topeka.widget.fab
 
 import android.content.Context
-import android.support.design.widget.FloatingActionButton
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import android.util.AttributeSet
 import android.view.View
 import android.widget.Checkable
@@ -36,7 +36,8 @@ class CheckableFab(
     private var _checked = true
 
     init {
-        setImageResource(R.drawable.answer_quiz_fab)
+        // TODO #126 fix image resource crash
+//        setImageResource(R.drawable.answer_quiz_fab)
     }
 
     private val attrs = intArrayOf(android.R.attr.state_checked)

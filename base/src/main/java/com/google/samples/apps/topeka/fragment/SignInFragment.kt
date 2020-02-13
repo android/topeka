@@ -20,12 +20,10 @@ import android.annotation.TargetApi
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.support.design.widget.FloatingActionButton
-import android.support.v4.app.ActivityOptionsCompat
-import android.support.v4.app.Fragment
-import android.support.v4.util.Pair
-import android.support.v4.view.ViewCompat
-import android.support.v4.view.animation.FastOutSlowInInterpolator
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import androidx.fragment.app.Fragment
+import androidx.core.view.ViewCompat
+import androidx.interpolator.view.animation.FastOutSlowInInterpolator
 import android.text.Editable
 import android.text.TextWatcher
 import android.transition.Transition
@@ -42,7 +40,6 @@ import com.google.samples.apps.topeka.helper.ActivityLaunchHelper
 import com.google.samples.apps.topeka.helper.ApiLevelHelper
 import com.google.samples.apps.topeka.helper.DefaultLogin
 import com.google.samples.apps.topeka.helper.TAG
-import com.google.samples.apps.topeka.helper.TransitionHelper
 import com.google.samples.apps.topeka.helper.isLoggedIn
 import com.google.samples.apps.topeka.helper.login
 import com.google.samples.apps.topeka.helper.onLayoutChange
@@ -237,7 +234,7 @@ class SignInFragment : Fragment() {
     }
 
     private fun removeDoneFab(endAction: () -> Unit) {
-        ViewCompat.animate(doneFab)
+        ViewCompat.animate(doneFab!!)
                 .scaleX(0f)
                 .scaleY(0f)
                 .setInterpolator(FastOutSlowInInterpolator())

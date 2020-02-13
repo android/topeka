@@ -17,7 +17,7 @@
 package com.google.samples.apps.topeka.widget
 
 import android.graphics.Rect
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.View
 
 class OffsetDecoration(private val offset: Int) : RecyclerView.ItemDecoration() {
@@ -25,7 +25,7 @@ class OffsetDecoration(private val offset: Int) : RecyclerView.ItemDecoration() 
     override fun getItemOffsets(outRect: Rect,
                                 view: View,
                                 parent: RecyclerView,
-                                state: RecyclerView.State?) {
+                                state: RecyclerView.State) {
         outRect.set(offset, offset, offset, offset)
     }
 }

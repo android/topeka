@@ -19,8 +19,8 @@ package com.google.samples.apps.topeka.helper
 import android.annotation.TargetApi
 import android.app.Activity
 import android.os.Build
-import android.support.annotation.IdRes
-import android.support.v4.util.Pair
+import androidx.annotation.IdRes
+import androidx.core.util.Pair
 import android.view.View
 
 /**

@@ -44,10 +44,4 @@ ext {
     minSdkInstant = 21
     minSdk = 14
 
-    supportLibVersion = "27.1.1"
-    playServicesAuthVersion = "11.8.0"
-    espressoVersion = "3.0.1"
-    androidTestVersion = "0.5"
-    hamcrestVersion = "1.3"
-    junitVersion = "4.12"
 }

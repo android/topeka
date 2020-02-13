@@ -6,7 +6,7 @@ import android.content.ContentValues.TAG
 import android.content.Context
 import android.content.Intent
 import android.content.IntentSender
-import android.support.annotation.VisibleForTesting
+import androidx.annotation.VisibleForTesting
 import android.util.Log
 import com.google.android.gms.auth.api.credentials.Credential
 import com.google.android.gms.auth.api.credentials.CredentialRequest
@@ -42,8 +42,8 @@ fun Activity.requestLogin(success: (Player) -> Unit) {
                     .setPasswordLoginSupported(true)
                     .build())
             .addOnCompleteListener {
-                if (it.isSuccessful) {
-                    val player = Player(it.result.credential)
+                if (it.isSuccessful && it.result != null) {
+                    val player = Player(it.result!!.credential)
                     storePlayerLocally(player)
                     success(player)
                 } else {

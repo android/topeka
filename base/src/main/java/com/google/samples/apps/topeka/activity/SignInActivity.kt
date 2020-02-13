@@ -18,7 +18,7 @@ package com.google.samples.apps.topeka.activity
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 
 import com.google.samples.apps.topeka.base.R
 import com.google.samples.apps.topeka.fragment.SignInFragment

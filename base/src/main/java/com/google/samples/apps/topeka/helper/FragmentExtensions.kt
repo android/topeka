@@ -16,9 +16,9 @@
 
 package com.google.samples.apps.topeka.helper
 
-import android.support.annotation.IdRes
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentActivity
+import androidx.annotation.IdRes
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 
 fun FragmentActivity.replaceFragment(@IdRes id: Int, fragment: Fragment) {
     supportFragmentManager.beginTransaction().replace(id, fragment).commit()

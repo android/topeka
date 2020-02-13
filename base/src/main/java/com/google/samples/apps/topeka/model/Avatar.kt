@@ -16,7 +16,7 @@
 
 package com.google.samples.apps.topeka.model
 
-import android.support.annotation.DrawableRes
+import androidx.annotation.DrawableRes
 
 import com.google.samples.apps.topeka.base.R
 

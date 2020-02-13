@@ -25,11 +25,11 @@ import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
-import android.support.annotation.ColorInt
-import android.support.annotation.LayoutRes
-import android.support.v4.content.ContextCompat
-import android.support.v4.view.MarginLayoutParamsCompat
-import android.support.v4.view.animation.LinearOutSlowInInterpolator
+import androidx.annotation.ColorInt
+import androidx.annotation.LayoutRes
+import androidx.core.content.ContextCompat
+import androidx.core.view.MarginLayoutParamsCompat
+import androidx.interpolator.view.animation.LinearOutSlowInInterpolator
 import android.util.Property
 import android.view.Gravity
 import android.view.LayoutInflater

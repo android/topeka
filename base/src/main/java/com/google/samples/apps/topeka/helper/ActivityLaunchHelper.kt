@@ -21,8 +21,8 @@ import android.content.Intent
 import android.content.Context
 import android.net.Uri
 import com.google.samples.apps.topeka.model.Category
-import android.support.v4.app.ActivityCompat
-import android.support.v4.app.ActivityOptionsCompat
+import androidx.core.app.ActivityCompat
+import androidx.core.app.ActivityOptionsCompat
 
 class ActivityLaunchHelper {
 

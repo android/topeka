@@ -14,7 +14,7 @@
   ~ limitations under the License.
   -->
 
-<android.support.v7.widget.RecyclerView
+<androidx.recyclerview.widget.RecyclerView
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
@@ -25,6 +25,6 @@
         android:clipToPadding="false"
         android:scrollbarStyle="outsideOverlay"
         android:scrollbars="vertical"
-        app:layoutManager="android.support.v7.widget.GridLayoutManager"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         android:transitionGroup="false"
         app:spanCount="2" tools:ignore="UnusedAttribute" />

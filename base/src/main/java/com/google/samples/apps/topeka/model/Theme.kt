@@ -16,8 +16,8 @@
 
 package com.google.samples.apps.topeka.model
 
-import android.support.annotation.ColorRes
-import android.support.annotation.StyleRes
+import androidx.annotation.ColorRes
+import androidx.annotation.StyleRes
 import com.google.samples.apps.topeka.base.R
 
 /**

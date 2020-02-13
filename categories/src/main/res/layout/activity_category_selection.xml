@@ -22,7 +22,7 @@
     android:transitionGroup="false"
     tools:ignore="Overdraw,UnusedAttribute">
 
-    <android.support.v7.widget.Toolbar
+    <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar_player"
         style="@style/Topeka.TextAppearance.Title"
         android:layout_width="match_parent"
@@ -57,7 +57,7 @@
             android:paddingEnd="@dimen/spacing_micro"
             android:paddingStart="@dimen/spacing_micro"
             tools:ignore="NewApi" />
-    </android.support.v7.widget.Toolbar>
+    </androidx.appcompat.widget.Toolbar>
 
     <FrameLayout
         android:id="@+id/category_container"
