@@ -15,6 +15,7 @@
  */
 
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
 
 android {
     compileSdkVersion rootProject.compileSdk
@@ -22,21 +23,18 @@ android {
     defaultConfig {
         targetSdkVersion rootProject.targetSdk
         minSdkVersion rootProject.minSdk
-        missingDimensionStrategy 'delivery', 'installed'
+        versionCode 1
     }
 
     buildTypes {
         release {
-            minifyEnabled true
             signingConfig signingConfigs.debug
-            proguardFiles getDefaultProguardFile("proguard-android.txt")
         }
     }
 
+    dynamicFeatures = [":categories", ":quiz"]
 }
 
 dependencies {
-    implementation project(':base')
-    implementation project(':categories')
-    implementation project(':quiz')
+    implementation project(":base")
 }

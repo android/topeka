@@ -14,4 +14,5 @@
  * limitations under the License.
  */
 
-include ':base', ':quiz', ':categories', ':installed', ':instant'
+include ':app'
+include ':base', ':quiz', ':categories'

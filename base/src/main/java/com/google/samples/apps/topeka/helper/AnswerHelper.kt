@@ -23,7 +23,7 @@ import android.util.SparseBooleanArray
  */
 object AnswerHelper {
 
-    val SEPARATOR: String = System.getProperty("line.separator")
+    val SEPARATOR: String = System.getProperty("line.separator")!!
 
     /**
      * Converts an array of answers to a readable answer.

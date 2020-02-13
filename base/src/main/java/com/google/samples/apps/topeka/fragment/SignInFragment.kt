@@ -101,8 +101,9 @@ class SignInFragment : Fragment() {
                     setSelection(length())
                 }
                 this@SignInFragment.player = player.also {
-                    if (activity != null)
+                    if (activity != null) {
                         login.savePlayer(activity!!, this, { selectAvatar(it.avatar!!) })
+                    }
                 }
             }
         } else {
@@ -263,10 +264,12 @@ class SignInFragment : Fragment() {
                     }
                 })
 
-                val pairs = TransitionHelper.createSafeTransitionParticipants(this, true,
-                        Pair(v, getString(R.string.transition_avatar)))
-                val options = ActivityOptionsCompat.makeSceneTransitionAnimation(this, *pairs)
-                ActivityLaunchHelper.launchCategorySelection(this, options)
+// TODO: #125 Fix crash and re-enable shared element transition.
+//                val pairs = TransitionHelper.createSafeTransitionParticipants(this, true,
+//                        Pair(v, getString(R.string.transition_avatar)))
+//                val options = ActivityOptionsCompat.makeSceneTransitionAnimation(this, *pairs)
+//                ActivityLaunchHelper.launchCategorySelection(this, options)
+                ActivityLaunchHelper.launchCategorySelection(this)
             }
         }
     }

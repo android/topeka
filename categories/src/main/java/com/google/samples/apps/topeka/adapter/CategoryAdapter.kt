@@ -98,8 +98,10 @@ class CategoryAdapter(
                     "${activity.packageName}.categories"
                 else activity.packageName
 
-        val imageRes = resources.getIdentifier("icon_category_${category.id}",
-                "drawable", packageName)
+        val imageRes = resources.getIdentifier(
+                "icon_category_${category.id}",
+                "drawable",
+                "$packageName.categories")
         if (category.solved) {
             icon.setImageDrawable(loadSolvedIcon(category, imageRes))
         } else {

@@ -14,67 +14,34 @@
  * limitations under the License.
  */
 
-apply plugin: 'com.android.feature'
+apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 
 android {
-    buildToolsVersion rootProject.buildTools
     compileSdkVersion rootProject.compileSdk
-
-    baseFeature true
 
     defaultConfig {
         minSdkVersion rootProject.minSdk
         targetSdkVersion rootProject.targetSdk
-        versionCode 1
         versionName "1.0"
         testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
     }
 
     buildTypes {
         release {
-            minifyEnabled true
             signingConfig signingConfigs.debug
-            proguardFiles getDefaultProguardFile("proguard-android.txt"), "../instant/proguard.pro"
         }
     }
 
-    packagingOptions {
-        pickFirst 'LICENSE.txt'
-        pickFirst 'protobuf.meta'
-    }
-
-    flavorDimensions 'delivery'
-
-    productFlavors {
-        instant {
-            dimension 'delivery'
-            minSdkVersion rootProject.minSdkInstant
-        }
-        installed {
-            dimension 'delivery'
-        }
-    }
-
-    generatePureSplits true
-
-    splits {
-        density {
-            enable true
-        }
-    }
 }
 
 dependencies {
-    application project(':installed')
-    feature project(':categories')
-    feature project(':quiz')
 
     api "com.android.support:appcompat-v7:$supportLibVersion"
     api "com.android.support:design:$supportLibVersion"
     api "com.android.support:support-v4:$supportLibVersion"
     api 'com.google.android.instantapps:instantapps:1.1.0'
-    api "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+    api "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
     implementation "com.google.android.gms:play-services-auth:$playServicesAuthVersion"
 
@@ -91,4 +58,6 @@ dependencies {
     androidTestImplementation "com.android.support.test:rules:$androidTestVersion"
     androidTestImplementation "com.android.support.test:runner:$androidTestVersion"
     androidTestImplementation "org.hamcrest:hamcrest-core:$hamcrestVersion"
+    androidTestImplementation "com.google.android.gms:play-services-auth:$playServicesAuthVersion"
+
 }

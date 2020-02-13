@@ -14,11 +14,10 @@
  * limitations under the License.
  */
 
-apply plugin: 'com.android.feature'
+apply plugin: 'com.android.dynamic-feature'
 apply plugin: 'kotlin-android'
 
 android {
-    buildToolsVersion rootProject.buildTools
     compileSdkVersion rootProject.compileSdk
 
     defaultConfig {
@@ -31,11 +30,7 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled true
             signingConfig signingConfigs.debug
-            proguardFiles getDefaultProguardFile("proguard-android.txt"),
-                    "../instant/proguard.pro",
-                    "proguard.pro"
         }
     }
 
@@ -46,26 +41,10 @@ android {
 
     flavorDimensions 'delivery'
 
-    productFlavors {
-        instant {
-            dimension 'delivery'
-            minSdkVersion rootProject.minSdkInstant
-        }
-        installed {
-            dimension 'delivery'
-        }
-    }
-
-    generatePureSplits true
-
-    splits {
-        density {
-            enable true
-        }
-    }
 }
 
 dependencies {
+    implementation project(":app")
     implementation project(':base')
 
     androidTestImplementation("com.android.support.test.espresso:espresso-core:$espressoVersion") {

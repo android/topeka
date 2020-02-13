@@ -99,7 +99,6 @@ abstract class AbsQuizView<out Q : Quiz<*>>
     }
 
     private val ANSWER_HIDE_DELAY = 500L
-
     private val FOREGROUND_COLOR_CHANGE_DELAY = 750L
     private val doubleSpacing = resources.getDimensionPixelSize(
             com.google.samples.apps.topeka.base.R.dimen.spacing_double)
@@ -148,8 +147,7 @@ abstract class AbsQuizView<out Q : Quiz<*>>
     }
 
     private fun addContentView(container: LinearLayout, quizContentView: View) {
-        val layoutParams = FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,
-                FrameLayout.LayoutParams.WRAP_CONTENT)
+        val layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT)
         container.run {
             addView((layoutInflater.inflate(R.layout.question, this, false) as TextView).apply {
                 setBackgroundColor(ContextCompat.getColor(context,
@@ -165,7 +163,7 @@ abstract class AbsQuizView<out Q : Quiz<*>>
         val fabSize = resources.getDimensionPixelSize(
                 com.google.samples.apps.topeka.base.R.dimen.size_fab)
         val bottomOfQuestionView = findViewById<View>(R.id.question_view).bottom
-        val fabLayoutParams = FrameLayout.LayoutParams(fabSize, fabSize, Gravity.END or Gravity.TOP)
+        val fabLayoutParams = LayoutParams(fabSize, fabSize, Gravity.END or Gravity.TOP)
         val halfAFab = fabSize / 2
         fabLayoutParams.setMargins(0, // left
                 bottomOfQuestionView - halfAFab, // top
@@ -278,6 +276,7 @@ abstract class AbsQuizView<out Q : Quiz<*>>
         if (context is QuizActivity) (context as QuizActivity).proceed()
     }
 
+    @Suppress("UNCHECKED_CAST")
     protected fun <T: View> inflate(@LayoutRes resId: Int) =
             layoutInflater.inflate(resId, this, false) as T
 

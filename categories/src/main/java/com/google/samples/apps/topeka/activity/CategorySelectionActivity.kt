@@ -26,6 +26,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
+import com.google.samples.apps.topeka.R as baseR
 import com.google.samples.apps.topeka.categories.R
 import com.google.samples.apps.topeka.fragment.CategorySelectionFragment
 import com.google.samples.apps.topeka.helper.ActivityLaunchHelper
@@ -87,7 +88,7 @@ class CategorySelectionActivity : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.menu_category, menu)
+        menuInflater.inflate(baseR.menu.menu_category, menu)
         return true
     }
 
@@ -111,7 +112,7 @@ class CategorySelectionActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return if (item.itemId == R.id.sign_out) {
+        return if (item.itemId == baseR.id.sign_out) {
             handleSignOut()
             true
         } else super.onOptionsItemSelected(item)

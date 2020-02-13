@@ -19,39 +19,4 @@
           package="com.google.samples.apps.topeka.base">
 
     <uses-permission android:name="android.permission.INTERNET" />
-
-    <application android:allowBackup="false"
-                 android:fullBackupContent="false"
-                 android:hardwareAccelerated="true"
-                 android:icon="@mipmap/ic_launcher"
-                 android:label="@string/app_name"
-                 android:supportsRtl="false"
-                 android:theme="@style/Topeka"
-                 tools:ignore="GoogleAppIndexingWarning,UnusedAttribute">
-
-        <activity android:name="com.google.samples.apps.topeka.activity.SignInActivity"
-                  android:theme="@style/Topeka.SignInActivity"
-                  android:windowSoftInputMode="adjustPan">
-
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-
-            <intent-filter android:autoVerify="true">
-                <category android:name="android.intent.category.DEFAULT" />
-
-                <category android:name="android.intent.category.BROWSABLE" />
-                <action android:name="android.intent.action.VIEW" />
-
-                <data android:scheme="http" />
-                <data android:scheme="https" />
-                <data android:host="topeka.instantappsample.com" />
-                <data android:path="/signin" />
-            </intent-filter>
-
-            <meta-data android:name="default-url"
-                android:value="https://topeka.instantappsample.com/signin" />
-        </activity>
-    </application>
 </manifest>

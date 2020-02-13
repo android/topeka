@@ -96,13 +96,15 @@ class QuizActivity : AppCompatActivity() {
         if (null != savedInstanceState) {
             savedStateIsPlaying = savedInstanceState.getBoolean(STATE_IS_PLAYING)
         }
-        with(intent.data) {
-            if (path.startsWith("/quiz")) {
-                populate(lastPathSegment)
-            } else {
-                Log.w(FRAGMENT_TAG, "Path is invalid, finishing activity")
-                ActivityLaunchHelper.launchCategorySelection(this@QuizActivity)
-                supportFinishAfterTransition()
+        intent.data?.also {
+            if (it.path != null) {
+                if (it.path!!.startsWith("/quiz")) {
+                    populate(it.lastPathSegment!!)
+                } else {
+                    Log.w(FRAGMENT_TAG, "Path is invalid, finishing activity")
+                    ActivityLaunchHelper.launchCategorySelection(this@QuizActivity)
+                    supportFinishAfterTransition()
+                }
             }
         }
         val categoryNameTextSize = resources
@@ -164,7 +166,7 @@ class QuizActivity : AppCompatActivity() {
         icon = (findViewById<ImageView>(R.id.icon)).apply {
             val resId = resources.getIdentifier("$IMAGE_CATEGORY$categoryId",
                     "drawable",
-                    packageName)
+                    "$packageName.quiz")
 
             setImageResource(resId)
             ViewCompat.animate(this)

@@ -48,7 +48,7 @@ import com.google.samples.apps.topeka.widget.quiz.AbsQuizView
 class QuizFragment : Fragment() {
 
     private val category by lazy(LazyThreadSafetyMode.NONE) {
-        val categoryId = arguments!!.getString(Category.TAG)
+        val categoryId = arguments?.getString(Category.TAG)!!
         activity!!.database().getCategoryWith(categoryId)
     }
 
