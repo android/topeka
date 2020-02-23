@@ -35,12 +35,11 @@ class CheckableFab(
 
     private var _checked = true
 
-    init {
-        // TODO #126 fix image resource crash
-//        setImageResource(R.drawable.answer_quiz_fab)
-    }
+    private val attrs: IntArray = intArrayOf(android.R.attr.state_checked)
 
-    private val attrs = intArrayOf(android.R.attr.state_checked)
+    init {
+        setImageResource(R.drawable.answer_quiz_fab)
+    }
 
     override fun onCreateDrawableState(extraSpace: Int): IntArray {
         val drawableState = super.onCreateDrawableState(1 + extraSpace)
