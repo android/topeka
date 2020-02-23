@@ -35,7 +35,7 @@ class CheckableFab(
 
     private var _checked = true
 
-    private val attrs: IntArray = intArrayOf(android.R.attr.state_checked)
+    private val attrs = intArrayOf(android.R.attr.state_checked)
 
     init {
         setImageResource(R.drawable.answer_quiz_fab)
