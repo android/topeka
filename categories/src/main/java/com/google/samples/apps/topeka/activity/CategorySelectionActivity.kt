@@ -59,7 +59,7 @@ class CategorySelectionActivity : AppCompatActivity() {
     }
 
     private fun updatePlayerViews(player: Player) {
-        findViewById<TextView>(R.id.title).setText(player.toString())
+        findViewById<TextView>(R.id.title).text = player.toString()
         player.avatar?.run { findViewById<AvatarView>(R.id.avatar).setAvatar(this) }
     }
 
