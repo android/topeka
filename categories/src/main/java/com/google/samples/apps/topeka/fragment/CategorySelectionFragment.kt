@@ -40,7 +40,7 @@ import com.google.samples.apps.topeka.model.Category
 import com.google.samples.apps.topeka.model.JsonAttributes
 import com.google.samples.apps.topeka.widget.OffsetDecoration
 
-class CategorySelectionFragment : Fragment() {
+class CategorySelectionFragment : Fragment(R.layout.fragment_categories) {
 
     private val adapter: CategoryAdapter? by lazy(LazyThreadSafetyMode.NONE) {
         activity?.run {
@@ -53,11 +53,6 @@ class CategorySelectionFragment : Fragment() {
                     })
         }
     }
-
-    override fun onCreateView(inflater: LayoutInflater,
-                              container: ViewGroup?,
-                              savedInstanceState: Bundle?): View =
-            inflater.inflate(R.layout.fragment_categories, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         setUpQuizGrid(view.findViewById(R.id.categories))
